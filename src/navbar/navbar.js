@@ -1,5 +1,5 @@
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+// import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -25,8 +25,8 @@ function OffcanvasExample() {
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href= "/">Home</Nav.Link>
+                <Nav className="justify-content-end flex-grow-1 pe-3" >
+                  <Nav.Link href= "/" >Home</Nav.Link>
                   <Nav.Link href="/SecondPage">Another </Nav.Link>
                   {/* 下拉式 */}
                   <NavDropdown
@@ -43,17 +43,19 @@ function OffcanvasExample() {
                     </NavDropdown.Item>
                   </NavDropdown>
                 </Nav>
-                {/* search 欄位&Button */}
-                <Form className="d-flex">
-                  <Form.Control
-                    type="search"
-                    placeholder="Search"
-                    className="me-2"
-                    aria-label="Search"
-                  />
-                  <Button variant="outline-success">Search</Button>
-                </Form>
+                <div className="m-1" >
+                  {/* 登入 */}
+                  <Button variant="outline-primary" size='lg' >Sign In</Button>
+                  
+                  </div>
+
+                  <div className="m-1">
+                  {/* 註冊 */}
+                  <Button variant="outline-success" size='lg'>Sign up</Button>
+                </div>
+                
               </Offcanvas.Body>
+
             </Navbar.Offcanvas>
           </Container>
         </Navbar>
