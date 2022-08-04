@@ -19,47 +19,47 @@ import Row from 'react-bootstrap/Row';
 const images = [
   {
     // static\images\button\Room1.jpeg
-    url: require('../../src/assets/images/button/Room1.jpeg'),
+    url: require('../../../src/assets/images/button/Room1.jpeg'),
     title: 'Room1',
     width: '30%',
   },
   {
-    url: require('../../src/assets/images/button/Room2.jpeg'),
+    url: require('../../../src/assets/images/button/Room2.jpeg'),
     title: 'Room2',
     width: '30%',
   },
   {
-    url: require('../../src/assets/images/button/Room3.jpeg'),
+    url: require('../../../src/assets/images/button/Room3.jpeg'),
     title: 'Room3',
     width: '30%',
   },
   {
-    url: require('../../src/assets/images/button/Room4.jpeg'),
+    url: require('../../../src/assets/images/button/Room4.jpeg'),
     title: 'Room4',
     width: '30%',
   },
   {
-    url: require('../../src/assets/images/button/Room5.jpeg'),
+    url: require('../../../src/assets/images/button/Room5.jpeg'),
     title: 'Room5',
     width: '30%',
   },
   {
-    url: require('../../src/assets/images/button/Room6.jpeg'),
+    url: require('../../../src/assets/images/button/Room6.jpeg'),
     title: 'Room6',
     width: '30%',
   },
   {
-    url: require('../../src/assets/images/button/Room7.jpeg'),
+    url: require('../../../src/assets/images/button/Room7.jpeg'),
     title: 'Room7',
     width: '30%',
   },
   {
-    url: require('../../src/assets/images/button/Room8.jpeg'),
+    url: require('../../../src/assets/images/button/Room8.jpeg'),
     title: 'Room8',
     width: '30%',
   },
   {
-    url: require('../../src/assets/images/button/Room9.jpeg'),
+    url: require('../../../src/assets/images/button/Room9.jpeg'),
     title: 'Room9',
     width: '30%',
   },
