@@ -1391,6 +1391,13 @@
     prop-types "^15.8.1"
     react-is "^18.2.0"
 
+"@mui/icons-material@^5.8.4":
+  version "5.8.4"
+  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-5.8.4.tgz#3f2907c9f8f5ce4d754cb8fb4b68b5a1abf4d095"
+  integrity sha512-9Z/vyj2szvEhGWDvb+gG875bOGm8b8rlHBKOD1+nA3PcgC3fV6W1AU6pfOorPeBfH2X4mb9Boe97vHvaSndQvA==
+  dependencies:
+    "@babel/runtime" "^7.17.2"
+
 "@mui/material@^5.9.3":
   version "5.9.3"
   resolved "https://registry.yarnpkg.com/@mui/material/-/material-5.9.3.tgz#23aa8a6f651f3f139a38e0eea39468ced7f509d0"
@@ -10834,6 +10841,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
+
+typescript@^4.7.4:
+  version "4.7.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.4.tgz#1a88596d1cf47d59507a1bcdfb5b9dfe4d488235"
+  integrity sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
 
 uglify-js@3.4.x:
   version "3.4.10"
