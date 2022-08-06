@@ -1,6 +1,4 @@
-
 import './App.css';
-
 import React , { useState }  from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
@@ -9,6 +7,7 @@ import SecondPage from "./pages/SecondPage";
 // import Login from './pages/Authorities/Login';
 // import Signup from './pages/Authorities/SignUp';
 import Login from './components/Login/Login';
+
 function App() {
   const [token, setToken] = useState();
   if(!token) {
