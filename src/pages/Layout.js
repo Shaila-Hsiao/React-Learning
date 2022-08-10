@@ -1,6 +1,6 @@
 import { Outlet} from "react-router-dom";
 import OffcanvasExample from "../components/navbar/navbar";
-import React , { useState }  from 'react';
+import React   from 'react';
 
 const Layout = () => {
   return (
