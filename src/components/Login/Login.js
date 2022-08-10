@@ -1,13 +1,9 @@
-import React , { useState } from 'react';
-// Add in the PropType from 
-// the new prop and destructure the props object 
-// to pull out the setToken prop
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import './Login.css';
 
 
-//  create a function to make a POST request to the server. 
 async function loginUser(credentials) {
   return fetch('http://localhost:8080/login', {
     method: 'POST',
@@ -17,16 +13,11 @@ async function loginUser(credentials) {
     body: JSON.stringify(credentials)
   })
     .then(data => data.json())
-}
+ }
 
-
-export default function Login({setToken}) {
-  // create a local state to capture the Username and Password
+export default function Login({ setToken }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
-  
-  // submit handler
-  // will call loginUser with the username and password
   const handleSubmit = async e => {
     e.preventDefault();
     const token = await loginUser({
@@ -35,7 +26,7 @@ export default function Login({setToken}) {
     });
     setToken(token);
   }
-  
+
   return(
     <div className="login-wrapper">
       <h1>Please Log In</h1>
@@ -49,7 +40,7 @@ export default function Login({setToken}) {
           <input type="password" onChange={e => setPassword(e.target.value)}/>
         </label>
         <div>
-          <button type="submit" >Submit</button>
+          <button type="submit">Submit</button>
         </div>
       </form>
     </div>
@@ -58,4 +49,4 @@ export default function Login({setToken}) {
 
 Login.propTypes = {
   setToken: PropTypes.func.isRequired
-}
+};
