@@ -47,13 +47,17 @@ function OffcanvasExample() {
                 </Nav>
                 <div className="m-1" >
                   {/* 登入 */}
-                  <Button variant="outline-primary" size='lg' >Sign In</Button>
+                  <a href="/SignIn">
+                    <Button variant="outline-primary" size='lg' >Sign In</Button>
+                  </a>
                   
                   </div>
 
                   <div className="m-1">
                   {/* 註冊 */}
-                  <Button variant="outline-success" size='lg'>Sign up</Button>
+                  <a href="SignUp">
+                    <Button variant="outline-success" size='lg'>Sign up</Button>
+                  </a>
                 </div>
                 
               </Offcanvas.Body>

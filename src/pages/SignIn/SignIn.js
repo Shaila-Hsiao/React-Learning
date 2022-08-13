@@ -17,18 +17,18 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+// function Copyright(props) {
+//   return (
+//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
+//       {'Copyright © '}
+//       <Link color="inherit" href="https://mui.com/">
+//         Your Website
+//       </Link>{' '}
+//       {new Date().getFullYear()}
+//       {'.'}
+//     </Typography>
+//   );
+// }
 
 const theme = createTheme({
   palette: {
@@ -62,7 +62,7 @@ export default function SignIn() {
     <ThemeProvider theme={theme}>
       <AppBar position="relative" bgcolor='#182e2e'>
         <Toolbar>
-          <Button color="inherit" startIcon={<ArrowBackIcon />} size='large' onClick={() => navigate("/login")}>Back</Button>
+          <Button color="inherit" startIcon={<ArrowBackIcon />} size='large' onClick={() => navigate("/")}>Back</Button>
         </Toolbar>
       </AppBar>
       <Container component="main">
@@ -125,7 +125,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link to="/signup" variant="body2">
+                <Link to="/SignUp" variant="body2">
                   {"還沒有帳戶？註冊"}
                 </Link>
               </Grid>

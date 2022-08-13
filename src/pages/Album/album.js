@@ -59,27 +59,7 @@ export default function Album() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar>
-          <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-            <MenuIcon />
-          </IconButton>
-          <HomeRoundedIcon sx={{ mr: 2 }} />
-          <Typography variant="h6" color="inherit" sx={{ flexGrow: 1 }} noWrap>
-            首頁
-          </Typography>
-          <AccountCircleIcon sx={{ mr: 2 }} />
-          <Typography variant="h6" color="inherit" noWrap>
-            Alex
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      
       <main>
         {/* Hero unit */}
         <Box

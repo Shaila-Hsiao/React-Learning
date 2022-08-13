@@ -1,15 +1,17 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 // import Progress from './Progress';
 import reportWebVitals from './reportWebVitals';
 // Importing the Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Router } from './Router';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <App/>
+  <React.StrictMode>
+    <Router/>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your Progress, pass a function
