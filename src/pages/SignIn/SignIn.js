@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -40,7 +39,7 @@ const theme = createTheme({
       main: '#f50057',
     },
     background: {
-      default: '#efd9a7',
+      default: '#bca878',
       paper: '#7f0808',
     },
   },
@@ -62,7 +61,7 @@ export default function SignIn() {
     <ThemeProvider theme={theme}>
       <AppBar position="relative" bgcolor='#182e2e'>
         <Toolbar>
-          <Button color="inherit" startIcon={<ArrowBackIcon />} size='large' onClick={() => navigate("/")}>Back</Button>
+          <Button color="inherit" startIcon={<ArrowBackIcon />} size='large' onClick={() => navigate("/login")}>Back</Button>
         </Toolbar>
       </AppBar>
       <Container component="main">
@@ -73,12 +72,11 @@ export default function SignIn() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            bgcolor: ' #617f7f',
+            bgcolor: '#efd9a7',
             padding: '50px',
-            color: '#fff',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'background.paper', color: '#fff' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'background.paper', color: '#efd9a7' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -90,7 +88,7 @@ export default function SignIn() {
               required
               fullWidth
               id="Account"
-              label="Account"
+              label="帳戶"
               name="Account"
               autoComplete="Account"
               autoFocus
@@ -100,7 +98,7 @@ export default function SignIn() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="密碼"
               type="password"
               id="password"
               autoComplete="current-password"
