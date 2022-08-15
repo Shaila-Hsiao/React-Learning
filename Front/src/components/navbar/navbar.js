@@ -5,9 +5,13 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import React  from 'react';
+import React from 'react';
+
+
+
 
 function OffcanvasExample() {
+  
   return (
     <>
     {/*false = 縮起來的 */}
@@ -45,21 +49,20 @@ function OffcanvasExample() {
                     </NavDropdown.Item>
                   </NavDropdown>
                 </Nav>
-                <div className="m-1" >
-                  {/* 登入 */}
-                  <a href="/SignIn">
-                    <Button variant="outline-primary" size='lg' >Sign In</Button>
-                  </a>
-                  
-                  </div>
-
-                  <div className="m-1">
-                  {/* 註冊 */}
-                  <a href="SignUp">
-                    <Button variant="outline-success" size='lg'>Sign up</Button>
-                  </a>
-                </div>
                 
+                    <div className="m-1" >
+                      {/* 登入 */}
+                      <a href="/SignIn">
+                        <Button variant="outline-primary" size='lg' >Sign In</Button>
+                      </a>
+                      </div>
+
+                      <div className="m-1">
+                      {/* 註冊 */}
+                      <a href="SignUp">
+                        <Button variant="outline-success" size='lg'>Sign up</Button>
+                      </a>
+                    </div>
               </Offcanvas.Body>
 
             </Navbar.Offcanvas>

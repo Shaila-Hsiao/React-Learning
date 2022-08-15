@@ -1,26 +1,24 @@
 import React from 'react'
 import { BrowserRouter,Routes, Route } from "react-router-dom";
-import Layout from "./pages/Layout";
-import Album from "./pages/Album/album"
+// import Album from "./pages/Album/album"
 // import Home from "./pages/Home/index";
 // import SecondPage from "./pages/SecondPage";
 // import LogIn from './pages/Album/album_login';
 import SignUp from './pages/SignUp/SignUp';
 import SignIn from './pages/SignIn/SignIn';
+// import LandingPage from './pages/Home';
+// import Album from './pages/Album/album';
+import DrawerItem from './pages/Album/drawerItem';
 export const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Album />} />
-          {/* <Route path="/SecondPage" element={<SecondPage />} /> */}
+        
+          <Route index element={<DrawerItem />} />
           <Route path="/SignUp" element={<SignUp />} />
-          {/* <Route path="/Album" element={<Album />} /> */}
-          {/* <Route path="/LogIn" element={<LogIn />} /> */}
           <Route path="/SignIn" element={<SignIn />} />
-
-        </Route>
-
+          {/* <Route path="/Album" element={<Album />} /> */}
+          <Route path="/DrawerItem" element={<DrawerItem />} />
       </Routes>
     </BrowserRouter>
   )

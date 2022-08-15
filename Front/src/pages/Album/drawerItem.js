@@ -1,40 +1,51 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-// import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import CssBaseline from '@mui/material/CssBaseline';
+import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from "react-router-dom";
+import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
 
-
-// function Copyright() {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center">
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
-
+const drawerWidth = 240;
 const cards = [1, 2, 3, 4];
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  }),
+);
+
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: 'flex-end',
+}));
 
 const theme = createTheme({
   palette: {
@@ -52,24 +63,17 @@ const theme = createTheme({
   },
 });
 
-// const theme = createTheme();
+function DrawerItem() {
+  const [open, setOpen] = React.useState(false);
 
-export default function LogIn() {
-  const navigate = useNavigate();
   return (
     <ThemeProvider theme={theme}>
+    <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="relative">
-        <Toolbar>
-          <HomeRoundedIcon sx={{ mr: 2 }} />
-          <Typography variant="h6" color="inherit" sx={{ flexGrow: 1 }} noWrap>
-            首頁
-          </Typography>
-          {/* <Link to="signin"></Link> */}
-          <Button color="inherit" size='large' onClick={() => navigate("/signin")}>Login</Button>
-        </Toolbar>
-      </AppBar>
-      <main>
+      <NavbarDrawer/>
+      <Main open={open}>
+        <DrawerHeader />
+        <main>
         {/* Hero unit */}
         <Box
           sx={{
@@ -78,7 +82,7 @@ export default function LogIn() {
             pb: 3,
           }}
         >
-          <Container maxWidth="sm">
+          <Container maxWidth="sm" align = "center">
             <Typography
               component="h1"
               variant="h2"
@@ -228,7 +232,10 @@ export default function LogIn() {
         </Typography> */}
         {/* <Copyright /> */}
       </Box>
-      {/* End footer */}
+      </Main>
+    </Box>
     </ThemeProvider>
   );
 }
+
+export default DrawerItem;

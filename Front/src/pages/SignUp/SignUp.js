@@ -5,9 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -17,6 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
+import httpClient from '../../httpClient';
 
 // function Copyright(props) {
 //   return (
@@ -50,20 +48,34 @@ const theme = createTheme({
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const email = data.get('email');
+    const username =  data.get('username');
+    const password =  data.get('password');
+    
+    try {
+      const resp = await httpClient.post("//localhost:5000/register", {
+        email,
+        username,
+        password
+      });
+      console.log(resp.data)
+      window.location.href = "/";
+    } catch (error) {
+      if (error.response.status === 401) {
+        alert("Invalid credentials");
+      }
+    }
   };
+  
 
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="relative" bgcolor='#182e2e'>
         <Toolbar>
-          <Button color="inherit" startIcon={<ArrowBackIcon />} size='large' onClick={() => navigate("/login")}>Back</Button>
+          <Button color="inherit" startIcon={<ArrowBackIcon />} size='large' onClick={() => navigate("/")}>Back</Button>
         </Toolbar>
       </AppBar>
       <Container component="main">
@@ -88,11 +100,11 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
-                  name="Account"
+                  name="username"
                   required
                   fullWidth
-                  id="Account"
-                  label="帳戶"
+                  id="username"
+                  label="使用者名稱"
                   autoFocus
                 />
               </Grid>
@@ -106,7 +118,7 @@ export default function SignUp() {
                   autoComplete="email"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
@@ -116,14 +128,14 @@ export default function SignUp() {
                   id="password"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
-                  name="password"
+                  name="passwordAuth"
                   label="密碼驗證"
                   type="password"
-                  id="password"
+                  id="passwordAuth"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -147,7 +159,7 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, bgcolor: 'background.paper', color: '#efd9a7' }}
+              sx={{ mt: 3, mb: 2, bgcolor: 'background.paper', color: '#fff' }}
             >
               註冊
             </Button>

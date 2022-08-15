@@ -16,7 +16,7 @@ import { useNavigate, Link } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import httpClient from '../../httpClient';
 // function Copyright(props) {
 //   return (
 //     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -40,8 +40,9 @@ const theme = createTheme({
       main: '#f50057',
     },
     background: {
-      default: '#efd9a7',
+      default: '#bca878',
       paper: '#7f0808',
+      
     },
   },
 });
@@ -49,15 +50,32 @@ const theme = createTheme({
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const email = data.get('email');
+    const password =  data.get('password');
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+     email,password
     });
-  };
+    // Post 給後端檢查
+    try {
+      const resp = await httpClient.post("//localhost:5000/login", {
+        email,
+        password,
+      });
+      console.log(resp)
+      // if login success
+      window.location.href = "/";
+    } catch (error) {
+      if (error.response.status === 401) {
+        alert("Invalid credentials");
+      }
+    }
 
+
+  };
+  
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="relative" bgcolor='#182e2e'>
@@ -73,12 +91,13 @@ export default function SignIn() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            bgcolor: ' #617f7f',
+            bgcolor: '#efd9a7',
             padding: '50px',
             color: '#fff',
+            
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'background.paper', color: '#fff' }}>
+           <Avatar sx={{ m: 1, bgcolor: 'background.paper', color: '#efd9a7' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -89,10 +108,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="Account"
-              label="Account"
-              name="Account"
-              autoComplete="Account"
+              id="email"
+              label="信箱"
+              name="email"
+              autoComplete="email"
               autoFocus
             />
             <TextField
@@ -100,7 +119,7 @@ export default function SignIn() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="密碼"
               type="password"
               id="password"
               autoComplete="current-password"
