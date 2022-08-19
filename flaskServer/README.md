@@ -3,6 +3,7 @@
 python app.py
 ```
 ## 目錄架構
+```
 flaskServer
 |_ myModule
 |    connectDB.py
@@ -33,7 +34,7 @@ flaskServer
     |_ rooms
         |_ textures
         |_ thumbnails
-
+```
 ## 檔案介紹
 ### myModule
 - connectDB.py 連接資料庫
