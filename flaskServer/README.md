@@ -12,28 +12,32 @@ flaskServer
 |    room.py
 |    user.py
 |_ static
-    |_ css
-    |    boostrap.css
-    |    example.css
-    |_ fonts
-    |    glyphicons-halflings-regular.eot
-    |    ...(省略)
-    |_ js
-    |    blueprint3d.js
-    |    boostrap.js
-    |    example.js
-    |    items.js
-    |    jquery.js
-    |    OBJLoader.js
-    |_ models
-        |_ js
-        |_ source
-        |_ textures
-        |_ thumbnails
-    |_ node_modules
-    |_ rooms
-        |_ textures
-        |_ thumbnails
+|    |_ css
+|    |    boostrap.css
+|    |    example.css
+|    |_ fonts
+|    |    glyphicons-halflings-regular.eot
+|    |    ...(省略)
+|    |_ js
+|    |    blueprint3d.js
+|    |    boostrap.js
+|    |    example.js
+|    |    items.js
+|    |    jquery.js
+|    |    OBJLoader.js
+|    |_ models
+|        |_ js
+|        |_ source
+|        |_ textures
+|        |_ thumbnails
+|    |_ node_modules
+|    |_ rooms
+|        |_ textures
+|        |_ thumbnails
+|_ templates
+|    index.html
+|_ app.py
+|_ package.js
 ```
 ## 檔案介紹
 ### myModule
