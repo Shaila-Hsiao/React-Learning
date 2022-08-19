@@ -1,8 +1,8 @@
 # model test
-./Alice
+./flaskServer/Alice
 # blueprint
-./node_modules/*
-./static/*
-./templates/*
+./flaskServer/node_modules/*
+./flaskServer/static/*
+./flaskServer/templates/*
 # cache
-./myModule/__pycache__
+./flaskServer/myModule/__pycache__
