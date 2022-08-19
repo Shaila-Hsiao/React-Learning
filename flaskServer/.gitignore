@@ -1,6 +1,7 @@
 # model test
 ./Alice
 # blueprint
+./node_modules/*
 ./static/*
 ./templates/*
 # cache
