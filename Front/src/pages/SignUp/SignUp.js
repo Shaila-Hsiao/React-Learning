@@ -5,6 +5,9 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+// import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -14,20 +17,19 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
-import httpClient from '../../httpClient';
 
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+function Copyright(props) {
+  return (
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://mui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
 const theme = createTheme({
     palette: {
@@ -48,34 +50,20 @@ const theme = createTheme({
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const email = data.get('email');
-    const username =  data.get('username');
-    const password =  data.get('password');
-    
-    try {
-      const resp = await httpClient.post("//localhost:5000/register", {
-        email,
-        username,
-        password
-      });
-      console.log(resp.data)
-      window.location.href = "/";
-    } catch (error) {
-      if (error.response.status === 401) {
-        alert("Invalid credentials");
-      }
-    }
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
   };
-  
 
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="relative" bgcolor='#182e2e'>
         <Toolbar>
-          <Button color="inherit" startIcon={<ArrowBackIcon />} size='large' onClick={() => navigate("/")}>Back</Button>
+          <Button color="inherit" startIcon={<ArrowBackIcon />} size='large' onClick={() => navigate("/login")}>Back</Button>
         </Toolbar>
       </AppBar>
       <Container component="main">
@@ -98,13 +86,23 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+            <Grid item xs={12}>
                 <TextField
-                  name="username"
+                  name="UserName"
                   required
                   fullWidth
-                  id="username"
+                  id="UserName"
                   label="使用者名稱"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  name="Account"
+                  required
+                  fullWidth
+                  id="Account"
+                  label="帳戶"
                   autoFocus
                 />
               </Grid>
@@ -132,10 +130,10 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="passwordAuth"
+                  name="password"
                   label="密碼驗證"
                   type="password"
-                  id="passwordAuth"
+                  id="password"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -165,7 +163,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent='flex-end'>
               <Grid item>
-                <Link to="/SignIn" variant="body2">
+                <Link to="/signin" variant="body2">
                   已經有帳戶了？登入
                 </Link>
               </Grid>
