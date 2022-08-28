@@ -1,0 +1,10 @@
+# model test
+./flaskServer/flaskServer/Alice
+# blueprint
+./flaskServer/node_modules/*
+./flaskServer/static/*
+./flaskServer/templates/*
+# cache
+./flaskServer/myModule/__pycache__
+./flaskServer/myModule/test.py
+./flaskServer/test.py
