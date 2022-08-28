@@ -550,7 +550,7 @@ var uploadInit = function(){
   async function handleTexture() {
     const reader = new FileReader();//建立FileReader物件
     // 使用 readAsDataURL 將圖片轉成 Base64
-    reader.readAsDataURL(texture.files[0]);
+    reader.readAsDataURL($('#texture')[0].files[0]);
     reader.onload = function (e) {
       textureContent = e.target.result
       $('#canvas').attr('src', textureContent);//放入讀取到的圖片
@@ -558,51 +558,81 @@ var uploadInit = function(){
   }
   async function handleObj(){
     var reader = new FileReader();
-    reader.readAsText(obj.files[0]);
+    reader.readAsText($('#obj')[0].files[0]);
     reader.onload = function() {
       objContent = reader.result;
     };
   }
   async function handleMtl(){
     var reader = new FileReader();
-    reader.readAsText(mtl.files[0]);
+    reader.readAsText($('#mtl')[0].files[0]);
     reader.onload = function() {
       mtlContent = reader.result;
     };
   }
+  async function handleThumbnail() {
+    const reader = new FileReader();//建立FileReader物件
+    // 使用 readAsDataURL 將圖片轉成 Base64
+    reader.readAsDataURL($('#thumbnail')[0].files[0]);
+    reader.onload = function (e) {
+      thumbnailContent = e.target.result
+      $('#canvas_1').attr('src', thumbnailContent);//放入讀取到的圖片
+    };
+  }
   
   function uploadModel(){
-    if (texture.files.length == 0 || mtl.files.length == 0 || obj.files.length == 0){
-      alert("check the files is upload.");
+    let thumbnail = $("#thumbnail")[0];
+    let obj = $("#obj")[0];
+    let mtl = $("#mtl")[0];
+    let texture = $("#texture")[0];
+    // 缺一個檔案
+    if (texture.files.length == 0 || mtl.files.length == 0 || obj.files.length == 0 || thumbnail.files.length == 0){
+      alert("Please check all the files is upload.");
       return;
     }
     // 圖片處理
-    alert("uploadModel");
+    alert("upload model");
     // obj and mtl 檔案移動並合併成 json
     $.ajax({
       url: '/upload',
       type: "POST",
-      data: {'textureName':texture.files[0].name,
-             'texture':textureContent,
+      data: {//'textureName':texture.files[0].name,
              'objName':obj.files[0].name,
              'mtlName':mtl.files[0].name,
+             //'thumbnailName':thumbnail.files[0].name,
+             'thumbnail':thumbnailContent,
              'obj':objContent,
-             'mtl':mtlContent},
-      async: false, // 異步
+             'mtl':mtlContent,
+             'texture':textureContent
+            },
+      async: true, // 異步
       /*result為后端函式回傳的json*/
-      success: function (result) {
-        alert(result.result);
+      success: function (item) {
+        alert(item.result);
+        if (item.result == "上傳成功"){
+          var html = '<div class="col-`sm-4">' +
+            '<a class="thumbnail add-item" model-name="' +
+            item.name +
+            '" model-url="' +
+            // item.model +
+            item.model +
+            '" model-type="' +
+            item.type +
+            '"><img src="' +
+            item.image +
+            '" alt="Add Item"> ' +
+            item.name +
+            '</a></div>';
+            $("#items-wrapper").append(html);
+        }
       }
     });
   }
   function init(){
-    var texture = document.getElementById("texture");
-    var obj = document.getElementById("obj");
-    var mtl = document.getElementById("mtl");
-    var textureContent,objContent,mtlContent;
-    texture.addEventListener("change", handleTexture);
-    obj.addEventListener("change", handleObj);
-    mtl.addEventListener("change", handleMtl);
+    $('#obj').change(handleObj);
+    $('#thumbnail').change(handleThumbnail);
+    $('#mtl').change(handleMtl);
+    $('#texture').change(handleTexture);
     $("#uploadBtn").click(uploadModel);
   }
   init();

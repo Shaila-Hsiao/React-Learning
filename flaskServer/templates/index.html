@@ -229,13 +229,16 @@
           <div id="add-items">
             <!-- 檔案顯示 -->
             <label class="text-center mb-5 image-preview-wrapper" for="texture">
-              <img src="" id="canvas" alt="image-placehoder" class="img-thumbnail">
+              <img src="../static/other/photo.png" id="canvas" alt="image-placehoder">
             </label>
-            <input type="file" id="texture" accept="image/*"/>
+            <input type="file" id="texture" accept="image/*" />
             <input type="file" id="mtl" accept=".mtl"/>
             <input type="file" id="obj" accept=".obj"/>
+            <label class="text-center mb-5 image-preview-wrapper" for="thumbnail">
+              <img src="../static/other/photo.png" id="canvas_1" alt="image-placehoder">
+            </label>
+            <input type="file" id="thumbnail" accept="image/*"/>
             <button id="uploadBtn" >upload model</button>
-
             <div class="row" id="items-wrapper">
 
               <!-- Items added here by items.js -->
