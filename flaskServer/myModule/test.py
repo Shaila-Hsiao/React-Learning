@@ -1,4 +1,5 @@
-from connectDB import setting
+from myModule.connectDB import connection,cursor
+
 items = [
       {
       "name": "Closed Door",
@@ -151,12 +152,10 @@ items = [
       "type": "2"
     }
   ]
-connection = setting()
 for data in items:
     # command = f"INSERT INTO `item`(`name`, `thumbnailPath`, `jsPath`, `type`) VALUES ('{data['name']}','{data['image']}','{data['model']}','{data['type']}')"
     # print(command)
     
-    with connection.cursor() as cursor:
-        command = f"INSERT INTO `item`(`name`, `thumbnailPath`, `jsPath`, `type`) VALUES ('{data['name']}','{data['image']}','{data['model']}','{data['type']}')"
-        cursor.execute(command)
-        connection.commit()
+    command = f"INSERT INTO `item`(`name`, `thumbnailPath`, `jsPath`, `type`) VALUES ('{data['name']}','{data['image']}','{data['model']}','{data['type']}')"
+    cursor.execute(command)
+    connection.commit()

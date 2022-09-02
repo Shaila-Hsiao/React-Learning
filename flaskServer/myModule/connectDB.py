@@ -19,3 +19,6 @@ def setting():
     except Exception as ex:
         print("error",ex)
         return
+# 建立連結
+connection = setting()
+cursor = connection.cursor()

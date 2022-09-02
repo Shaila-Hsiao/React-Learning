@@ -112,8 +112,8 @@ def saveRoom():
     private_public = request.form.get('private_public')
     userID = request.form.get('userID')
     # 已存在的房間
-    if roomExist(roomID) == True:
-        updateRoom(roomID,name,roomContent,userID,private_public)
+    if roomExist(roomID,userID) == True:
+        updateRoom(roomID,name,roomContent,private_public)
     # 不是房間編輯者
     elif isRoomEditor(roomID,userID) == False:
         result = "您不是房間擁有者"
