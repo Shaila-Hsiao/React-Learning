@@ -2,9 +2,9 @@ from flask_bcrypt import Bcrypt
 # path: ./myModule
 from myModule.connectDB import setting
 
+connection = setting()
 # register
 def userRegister(name,id,passwd,email):
-    connection = setting()
     # 建立連結
     cursor = connection.cursor()
     # 檢查帳號有沒有重複
@@ -26,7 +26,6 @@ def userRegister(name,id,passwd,email):
     return True
 # login
 def userLogin(id,passwd):
-    connection = setting()
     # 回傳使用者的 name and id
     result = ""
     # 搜尋資料庫
@@ -45,9 +44,24 @@ def userLogin(id,passwd):
     if isCorrect:
         result = dataList[0][0]
     return result
+# model 上傳成功要新增到資料庫的 modelList
+def updateModelList(modelID,userID):
+    # update user's modelList
+    with connection.cursor() as cursor:
+        command = f"UPDATE `account` SET `modelList`=CONCAT(`modelList`,',{modelID}') WHERE id = '{userID}'"
+        cursor.execute(command)
+        connection.commit()
 
-
-
+# FIXME:檢查使用者是不是房間所有者 => table room 的 userID 要變成可多個編輯者加入?
+# def isRoomEditor(roomID,userID):
+#     connection = setting()
+#     # update user's modelList
+#     with connection.cursor() as cursor:
+#         command = f"SELECT `userID` FROM `room` WHERE roomID = '{roomID}' userID LIKE '%{userID}%'"
+#         cursor.execute(command)
+#         dataList = cursor.fetchall()
+#         ???
+    
 
     # with connection.cursor() as cursor:
     #     # sql 指令

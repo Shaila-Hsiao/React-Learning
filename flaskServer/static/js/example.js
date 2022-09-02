@@ -490,7 +490,6 @@ var mainControls = function (blueprint3d) {
 
   function download() {
     var data = blueprint3d.model.exportSerialized();
-    console.log(data);
     var a = window.document.createElement('a');
     var blob = new Blob([data], { type: 'text' });
     a.href = window.URL.createObjectURL(blob);
@@ -499,30 +498,54 @@ var mainControls = function (blueprint3d) {
     a.click();
     document.body.removeChild(a)
   }
+  // FIXME: 檢查房間所有者
+  function checkRoomEditor(userID){
+    $.ajax({
+      url: '/checkRoomEditor',
+      type: "POST",
+      data: {
+              'userID':userID
+            },
+      async: true, // 異步
+      /*result為后端函式回傳的json*/
+      success: function (result) {
+        return result.result
+      }
+    });
+  }
   // 存進 DB
-  function saveInDB(roomName,private_public) {
+  function saveRoomInDB() {
+    // FIXME: 先檢查 user 是不是這個房間的所有人
+    // isEditor = checkRoomEditor(userID)
+    // // FIXME: 不是房間所有者無法存取房間
+    // if (isEditor == false){
+    //   alert("您沒有編輯權限，無法存取房間");
+    //   return
+    // }
+    var data = blueprint3d.model.exportSerialized();
     // 跳出框框
     $.ajax({
       url: '/saveRoom',
       type: "POST",
       data: {
-              'roomName':roomName,
+              // 'roomName':$('#roomName').value,
+              'roomName':"test_to_repeat",
               'roomContent':data,
-              'userID':userID,
-              'private_public':private_public
+              'userID':"test",
+              // 'private_public':$('private_public').value
+              'private_public':"test"
             },
-      async: false, // 異步
+      async: true, // 異步
       /*result為后端函式回傳的json*/
       success: function (result) {
-        alert("存取成功");
+        if (result.result == true){
+          alert('存取成功');
+        }
+        else{
+          alert("您沒有編輯權限或是名字重複")
+        }
       }
     });
-  }
-  // 讓使用者填入房間名稱以及選擇是否公開
-  function roomData(){
-    let roomName = $('#roomName').value
-    let private_public = $('private_public').value
-    saveInDB(roomName,private_public);
   }
   // 取消
   function cancel(){
@@ -530,7 +553,7 @@ var mainControls = function (blueprint3d) {
   }
   // 顯示 modal
   function showRoomData(){
-    $("#roomData").show()
+    $("#roomData").show();
   }
   function init() {
     $("#new").click(newDesign);
@@ -538,7 +561,7 @@ var mainControls = function (blueprint3d) {
     $("#download").click(download);
     $("#saveRoom").click(showRoomData);
     $("#cancel_button").click(cancel);
-    $("#save_button").click(roomData);
+    $("#save_button").click(saveRoomInDB);
   }
 
   init();

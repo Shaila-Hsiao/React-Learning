@@ -1,4 +1,4 @@
-from myModule.connectDB import setting
+from connectDB import setting
 items = [
       {
       "name": "Closed Door",

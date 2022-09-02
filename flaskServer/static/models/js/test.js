@@ -2,7 +2,7 @@
     "metadata" :
     {
         "formatVersion" : 3.1,
-        "sourceFile"    : "Alice.obj",
+        "sourceFile"    : "test.obj",
         "generatedBy"   : "OBJConverter",
         "vertices"      : 24996,
         "faces"         : 44496,
@@ -20,7 +20,7 @@
 	"colorDiffuse" : [0.8, 0.8, 0.8],
 	"colorSpecular" : [0.5, 0.5, 0.5],
 	"illumination" : 3,
-	"mapDiffuse" : "k2XbOkp8Ec4GFOFJRwZoKVMGBhU=.jpg",
+	"mapDiffuse" : "1uiiFwlLiOZaDZUj15owxRRDt0s=.jpg",
 	"opticalDensity" : 1.45,
 	"specularCoef" : 154.698873,
 	"transparency" : 1.0

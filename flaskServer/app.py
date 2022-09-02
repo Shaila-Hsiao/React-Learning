@@ -3,8 +3,10 @@ from datetime import timedelta
 import os
 from base64 import b64encode
 # path : /flaskServer/myModule
-from myModule.user import userRegister,userLogin
+from myModule.user import userRegister,userLogin,updateModelList
 from myModule.model import uploadFile,modelInsert,getEntireItem
+from myModule.model import saveMessage,saveRecording,saveImage,modelInfo
+from myModule.room import roomInsert,isRoomEditor
 
 app = Flask(__name__)
 app.config['SESSION_USE_SIGNER'] = True
@@ -39,19 +41,22 @@ def login():
     # result: 回傳使用者的資料(name and id)，如果沒有代表沒有找到相符的
     if name :
         # 設置session
+        session['id'] = id
         print(session)
-        return "login"
-    return "Fail"
+        return True
+    return False
 @app.route("/upload",methods=["POST"])
 def upload():
+    # FIXME: 需要傳送 userID
+    # userID = request.form.get('userID')
     # model files
     objName = request.form.get('objName')
     mtlName = request.form.get('mtlName')
     obj = request.form.get('obj')
     mtl = request.form.get('mtl')
-    jsName = objName.split(".obj")[0]
+    modelName = objName.split(".obj")[0]
     inputPath = f"./static/models/source/{objName}"
-    outputPath = f"./static/models/js/{jsName}.js"
+    outputPath = f"./static/models/js/{modelName}.js"
     # images
     thumbnail = request.form.get('thumbnail')
     texture = request.form.get('texture')
@@ -79,23 +84,76 @@ def upload():
         thumbnailPath = f"{thumbnailPath}/{thumbnailName}.jpg"
         texturePath = f"{texturePath}/{textureName}.jpg"
         # 成功插入資料庫
-        if modelInsert(thumbnailPath,texturePath,outputPath):
+        modelID = modelInsert(thumbnailPath,texturePath,outputPath)
+        if  modelID > 0:
             result = "上傳成功"
         else:
             result = "上傳失敗，請注意檔案名稱不可為中文"
+    # FIXME:model 上傳成功，新增使用者的資料庫的 modelList
+    # if result == "上傳成功":
+    #     updateModelList(modelID,userID)
     # user 上傳的 model 做處理: obj to file and insert into database
-    return {'result':result,'name':objName,'model':outputPath,'type':1,'image':thumbnailPath}
+    return {'result':result,'name':modelName,'model':outputPath,'type':1,'image':thumbnailPath}
 @app.route("/getItem",methods=["POST"])
 def getItem():
     items = getEntireItem()
     return {'itemList':items}
-# @app.route("/saveRoom",method=["POST"])
-# def saveRoom():
-#     name = request.form.get('name')  # 房間名字
-#     roomContent = request.form.get('room')
+@app.route("/saveRoom",methods=["POST"])
+def saveRoom():
+    roomID = request.form.get('roomID')
+    name = request.form.get('roomName')
+    roomContent = request.form.get('roomContent')
+    userID = request.form.get('userID')
+    private_public = request.form.get('private_public')
+    # 確認是否為房間編輯者
+    if isRoomEditor(roomID,userID) == False:
+        result = "您不是房間擁有者"
+    elif roomInsert(name,roomContent,userID,private_public) == False:
+        result = "您已經有相同房間名字存在，請重新命名"
+    else:
+        result = "房間存取成功"
+    return {'result':result}
+@app.route("/getModelInfo",methods=["POST"])
+def getModelInfo():
+    modelID = request.form.get('modelID')
+    userID = request.form.get('userID')
+    result = dict()
+    result['message'] = modelInfo(modelID,userID,"message")
+    result['recording'] = modelInfo(modelID,userID,"recording")
+    result['image'] = modelInfo(modelID,userID,"image")
+    return result
+# message: insert the infomation into table message and update the messageID
+@app.route("/messageInfo",methods=["POST"])
+def messageInfo():
+    modelID = request.form.get('modelID')
+    title = request.form.get('title')
+    weather = request.form.get('weather')
+    content = request.form.get('content')
+    color = request.form.get('color')
+    userID = request.form.get('userID')
+    result = saveMessage(modelID,title,weather,content,color,userID)
+    return {'result':result}
+# recording
+@app.route("/recordingInfo",methods=["POST"])
+def recordingInfo():
+    modelID = request.form.get('modelID')
+    name = request.form.get('name')
+    path = request.form.get('path')
+    userID = request.form.get('userID')
+    result = saveRecording(modelID,name,path,userID)
+    return {'result':result}
+# image
+@app.route("/imageInfo",methods=["POST"])
+def imageInfo():
+    modelID = request.form.get('modelID')
+    name = request.form.get('name')
+    path = request.form.get('path')
+    userID = request.form.get('userID')
+    result = saveImage(modelID,name,path,userID)
+    return {'result':result}
 #     userID = request.form.get('userID')
-#     private_public = request.form.get('private_public')
+
+
     
-#     return {'room':}
 if __name__ == "__main__":
     app.run(host="localhost",port=5000,debug=True)
