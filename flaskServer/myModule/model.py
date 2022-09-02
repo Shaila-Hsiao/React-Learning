@@ -1,4 +1,3 @@
-from email import message
 from myModule.connectDB import setting
 import base64
 from datetime import datetime

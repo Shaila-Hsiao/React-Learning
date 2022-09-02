@@ -6,7 +6,7 @@ from base64 import b64encode
 from myModule.user import userRegister,userLogin,updateModelList
 from myModule.model import uploadFile,modelInsert,getEntireItem
 from myModule.model import saveMessage,saveRecording,saveImage,modelInfo
-from myModule.room import roomInsert,isRoomEditor
+from myModule.room import findRoom,roomExist,updateRoom,roomInsert,isRoomEditor
 
 app = Flask(__name__)
 app.config['SESSION_USE_SIGNER'] = True
@@ -98,15 +98,24 @@ def upload():
 def getItem():
     items = getEntireItem()
     return {'itemList':items}
+# user 所有的房間資料
+@app.route("/userAllRoom",methods=["POST"])
+def userAllRoom():
+    userID = request.form.get('userID')
+    result = findRoom(userID)
+    return {'result':result}
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():
     roomID = request.form.get('roomID')
     name = request.form.get('roomName')
     roomContent = request.form.get('roomContent')
-    userID = request.form.get('userID')
     private_public = request.form.get('private_public')
-    # 確認是否為房間編輯者
-    if isRoomEditor(roomID,userID) == False:
+    userID = request.form.get('userID')
+    # 已存在的房間
+    if roomExist(roomID) == True:
+        updateRoom(roomID,name,roomContent,userID,private_public)
+    # 不是房間編輯者
+    elif isRoomEditor(roomID,userID) == False:
         result = "您不是房間擁有者"
     elif roomInsert(name,roomContent,userID,private_public) == False:
         result = "您已經有相同房間名字存在，請重新命名"
@@ -151,8 +160,11 @@ def imageInfo():
     userID = request.form.get('userID')
     result = saveImage(modelID,name,path,userID)
     return {'result':result}
-#     userID = request.form.get('userID')
-
+# message board : 訪客的留言板，同樣將資料存入 table message，並將 messageID 存入 table room 的 msgList
+# @app.route("/board",methods = ["POST"])
+# def board():
+#     roomID = request.form.get('roomID')
+    
 
     
 if __name__ == "__main__":

@@ -52,16 +52,7 @@ def updateModelList(modelID,userID):
         cursor.execute(command)
         connection.commit()
 
-# FIXME:檢查使用者是不是房間所有者 => table room 的 userID 要變成可多個編輯者加入?
-# def isRoomEditor(roomID,userID):
-#     connection = setting()
-#     # update user's modelList
-#     with connection.cursor() as cursor:
-#         command = f"SELECT `userID` FROM `room` WHERE roomID = '{roomID}' userID LIKE '%{userID}%'"
-#         cursor.execute(command)
-#         dataList = cursor.fetchall()
-#         ???
-    
+
 
     # with connection.cursor() as cursor:
     #     # sql 指令
