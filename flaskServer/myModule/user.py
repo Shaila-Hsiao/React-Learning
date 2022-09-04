@@ -1,12 +1,9 @@
 from flask_bcrypt import Bcrypt
 # path: ./myModule
-from myModule.connectDB import setting
+from myModule.connectDB import connection,cursor
 
 # register
 def userRegister(name,id,passwd,email):
-    connection = setting()
-    # 建立連結
-    cursor = connection.cursor()
     # 檢查帳號有沒有重複
     sql = f"SELECT * FROM `account`  WHERE id = '{id}'"
     # 此帳號已經註冊過
@@ -26,11 +23,8 @@ def userRegister(name,id,passwd,email):
     return True
 # login
 def userLogin(id,passwd):
-    connection = setting()
     # 回傳使用者的 name and id
     result = ""
-    # 搜尋資料庫
-    cursor = connection.cursor()
     sql = f"SELECT name,passwd FROM `account` WHERE id = '{id}'"
     cursor.execute(sql) # 執行 sql 指令
     dataList = cursor.fetchall()
@@ -45,7 +39,12 @@ def userLogin(id,passwd):
     if isCorrect:
         result = dataList[0][0]
     return result
-
+# model 上傳成功要新增到資料庫的 modelList
+def updateModelList(modelID,userID):
+    # update user's modelList
+    command = f"UPDATE `account` SET `modelList`=CONCAT(`modelList`,',{modelID}') WHERE id = '{userID}'"
+    cursor.execute(command)
+    connection.commit()
 
 
 
@@ -58,3 +57,6 @@ def userLogin(id,passwd):
     #     # 取得前五筆資料
     #     # result = cursor.fetchmany(5)
     #     # print(result)
+
+    # 連接資料庫
+    # with connection.cursor() as cursor:
