@@ -1,12 +1,12 @@
 from flask_bcrypt import Bcrypt
 # path: ./myModule
-from Model.connectDB import setting
+from Model.connectDB import setting,connection,cursor
 
 # register
 def userRegister(name,id,passwd,email):
-    connection = setting()
+    # connection = setting()
     # 建立連結
-    cursor = connection.cursor()
+    # cursor = connection.cursor()
     # 檢查帳號有沒有重複
     sql = f"SELECT * FROM `account`  WHERE id = '{id}'"
     # 此帳號已經註冊過
@@ -30,12 +30,12 @@ def userRegister(name,id,passwd,email):
     return True
 # login
 def userLogin(id,passwd):
-    connection = setting()
+    # connection = setting()
     # 回傳使用者的 name and id
     result = ""
     
     # 搜尋資料庫
-    cursor = connection.cursor()
+    # cursor = connection.cursor()
     sql = f"SELECT name,passwd FROM `account` WHERE id = '{id}'"
     cursor.execute(sql) # 執行 sql 指令
     dataList = cursor.fetchall()
@@ -53,13 +53,13 @@ def userLogin(id,passwd):
     return result
 
 def getUserId(user_id):
-    connection = setting()
+    # connection = setting()
 
     # 回傳使用者的 name and id
     result = ""
     
     # 搜尋資料庫
-    cursor = connection.cursor()
+    # cursor = connection.cursor()
     sql = f"SELECT id,name,email FROM `account` WHERE id = '{user_id}'"
     cursor.execute(sql) # 執行 sql 指令
     dataList = cursor.fetchall()
