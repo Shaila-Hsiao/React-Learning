@@ -103,7 +103,6 @@ export const NavbarDrawer = () => {
           
           console.log(resp.data.id)
           console.log(resp.data.email)
-          
           setUser(resp.data);
         } catch (error) {
           console.log("Not authenticated");
@@ -138,7 +137,7 @@ export const NavbarDrawer = () => {
               aria-haspopup="true"
               aria-expanded={openEl ? 'true' : undefined}
               >
-              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+              <Avatar sx={{ width: 32, height: 32 }}>S</Avatar>
             </IconButton>
           </Tooltip>
           )}
@@ -184,7 +183,7 @@ export const NavbarDrawer = () => {
             <Avatar /> Profile
           </MenuItem>
           <MenuItem>
-            <Avatar /> {user.username}'s account
+            <Avatar /> {user.name}'s account
           </MenuItem>
           <Divider />
           <MenuItem>
@@ -202,7 +201,7 @@ export const NavbarDrawer = () => {
         </Menu>
         ):(
             <Toolbar>
-                <Button color="inherit" size='large' onClick={() => navigate("/SignIn")}>Login</Button>
+                <Button color="inherit" size='large' onClick={() => navigate("/Login")}>Login</Button>
                 <Button color="inherit" size='large' onClick={() => navigate("/SignUp")}>SignUp</Button>
             </Toolbar>
         )}
