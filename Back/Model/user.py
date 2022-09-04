@@ -1,6 +1,6 @@
 from flask_bcrypt import Bcrypt
 # path: ./myModule
-from Model.connectDB import setting,connection,cursor
+from Model.connectDB import connection,cursor
 
 # register
 def userRegister(name,id,passwd,email):
