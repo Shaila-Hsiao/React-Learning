@@ -17,6 +17,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import httpClient from '../../httpClient';
+
 // function Copyright(props) {
 //   return (
 //     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -46,23 +47,26 @@ const theme = createTheme({
     },
   },
 });
-// const theme = createTheme();
 
-export default function SignIn() {
+
+export default function Login() {
+  
+
   const navigate = useNavigate();
+ 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const email = data.get('email');
-    const password =  data.get('password');
+    const id = data.get('id');
+    const passwd =  data.get('passwd');
     console.log({
-     email,password
+     id,passwd
     });
     // Post 給後端檢查
     try {
       const resp = await httpClient.post("//localhost:5000/login", {
-        email,
-        password,
+        id,
+        passwd,
       });
       console.log(resp)
       // if login success
@@ -70,6 +74,7 @@ export default function SignIn() {
     } catch (error) {
       if (error.response.status === 401) {
         alert("Invalid credentials");
+        
       }
     }
 
@@ -108,9 +113,9 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
+              id="id"
               label="信箱"
-              name="email"
+              name="id"
               autoComplete="email"
               autoFocus
             />
@@ -118,10 +123,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              name="password"
+              name="passwd"
               label="密碼"
               type="password"
-              id="password"
+              id="passwd"
               autoComplete="current-password"
             />
             <FormControlLabel
