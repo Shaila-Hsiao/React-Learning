@@ -41,7 +41,7 @@ def login():
     # result: 回傳使用者的資料(name and id)，如果沒有代表沒有找到相符的
     if name :
         # 設置session
-        session['id'] = id
+        session[name] = id
         print(session)
         return True
     return False
