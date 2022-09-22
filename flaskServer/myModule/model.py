@@ -69,6 +69,7 @@ def modelInfo(modelID,userID,table):
     else:
         result = ""
     return result
+# 留言板
 # FIXME: 中文輸入時可能會報錯誤
 # 點擊 model 填入資料(message, recording, image)，存到資料庫，如果是修改資料，依樣會將資料進行更新
 def saveMessage(modelID,title,weather,content,color,userID):

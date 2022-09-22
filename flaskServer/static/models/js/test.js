@@ -20,7 +20,7 @@
 	"colorDiffuse" : [0.8, 0.8, 0.8],
 	"colorSpecular" : [0.5, 0.5, 0.5],
 	"illumination" : 3,
-	"mapDiffuse" : "1uiiFwlLiOZaDZUj15owxRRDt0s=.jpg",
+	"mapDiffuse" : "luAFoYZLQXYvDt1ux9nWwhUm9eU=.jpg",
 	"opticalDensity" : 1.45,
 	"specularCoef" : 154.698873,
 	"transparency" : 1.0

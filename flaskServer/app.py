@@ -3,7 +3,7 @@ from datetime import timedelta
 import os
 from base64 import b64encode
 # path : /flaskServer/myModule
-from myModule.user import userRegister,userLogin,updateModelList
+from myModule.user import userRegister,userLogin,updateModelList,getUserId
 from myModule.model import uploadFile,modelInsert,getEntireItem
 from myModule.model import saveMessage,saveRecording,saveImage,modelInfo
 from myModule.room import findRoom,roomExist,updateRoom,roomInsert,isRoomEditor
@@ -17,49 +17,66 @@ app.config['SESSION_PERMANENT'] = False   # session 期限是否為永久
 
 @app.route("/")
 def root():
-    return render_template("index.html")
-# 測試
-@app.route("/menbers")
-def menbers():
-    return {"menbers":['test1','test2','test3']}
-# 註冊
+    # return render_template("index.html")
+    return render_template("verification.html")
+
+############# 註冊 #############
 @app.route("/register",methods=["POST"])
 def register():
-    id = request.form.get('id')
-    name = request.form.get('name')
-    passwd = request.form.get('passwd')
-    email = request.form.get('email')
+    id = request.json('id')
+    name = request.json('name')
+    passwd = request.json('passwd')
+    email = request.json('email')
     result = userRegister(name,id,passwd,email)
     # True: 註冊成功 False: 註冊失敗(有重複帳號)
     return result
-# 登入
+############# 登入 #############
 @app.route("/login",methods=["POST"])
 def login():
-    id = request.form.get('id')
-    passwd = request.form.get('passwd')
+    id = request.json('id')
+    passwd = request.json('passwd')
     name = userLogin(id, passwd)
     # result: 回傳使用者的資料(name and id)，如果沒有代表沒有找到相符的
     if name :
         # 設置session
-        session[name] = id
+        session['user_id'] = id
         print(session)
         return True
     return False
+############# 登出 #############
+@app.route("/logout",meyhod=["POST"])
+def logout_user():
+    session['user_id']
+# 取得使用者 ID
+@app.route("/@me",methods = ["GET"])
+def get_current_user():
+    user_id = session.get("user_id")
+    # if don't have user session
+    if not user_id :
+        return {"error": "UnAuthorized"},401
+    user = getUserId(user_id)
+    # id,name,email
+    return {
+        "id":user[0],
+        "name":user[1],
+        "email":user[2]
+    }
+
+############# 上傳 model #############
 @app.route("/upload",methods=["POST"])
 def upload():
-    # FIXME: 需要傳送 userID
-    # userID = request.form.get('userID')
+    userID = session['user_id']
     # model files
-    objName = request.form.get('objName')
-    mtlName = request.form.get('mtlName')
-    obj = request.form.get('obj')
-    mtl = request.form.get('mtl')
+    objName = request.json('objName')
+    mtlName = request.json('mtlName')
+    obj = request.json('obj')
+    mtl = request.json('mtl')
     modelName = objName.split(".obj")[0]
     inputPath = f"./static/models/source/{objName}"
     outputPath = f"./static/models/js/{modelName}.js"
     # images
-    thumbnail = request.form.get('thumbnail')
-    texture = request.form.get('texture')
+    thumbnail = request.json('thumbnail')
+    texture = request.json('texture')
     thumbnailName = b64encode(os.urandom(20)).decode('utf-8')
     textureName = b64encode(os.urandom(20)).decode('utf-8')
     thumbnailPath = "./static/models/thumbnails"
@@ -74,6 +91,7 @@ def upload():
     # 確認有沒有 JS 重複的檔案
     if os.path.exists(outputPath) == True:
         result = "model 已存在"
+    # FIXME: 檢查照片檔名重複
     # 找不到 input
     elif os.path.exists(inputPath) == False:
         result = "檔案上傳失敗，請檢查您的檔案是否正確"
@@ -89,28 +107,31 @@ def upload():
             result = "上傳成功"
         else:
             result = "上傳失敗，請注意檔案名稱不可為中文"
-    # FIXME:model 上傳成功，新增使用者的資料庫的 modelList
-    # if result == "上傳成功":
-    #     updateModelList(modelID,userID)
+    if result == "上傳成功":
+        updateModelList(modelID,userID)
     # user 上傳的 model 做處理: obj to file and insert into database
     return {'result':result,'name':modelName,'model':outputPath,'type':1,'image':thumbnailPath}
+
+############# 取得所有 model 資訊 #############
 @app.route("/getItem",methods=["POST"])
 def getItem():
     items = getEntireItem()
     return {'itemList':items}
-# user 所有的房間資料
+
+############# user 所有的房間資料 #############
 @app.route("/userAllRoom",methods=["POST"])
 def userAllRoom():
-    userID = request.form.get('userID')
+    userID = session['user_id']
     result = findRoom(userID)
     return {'result':result}
+############# 儲存房間 #############
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():
-    roomID = request.form.get('roomID')
-    name = request.form.get('roomName')
-    roomContent = request.form.get('roomContent')
-    private_public = request.form.get('private_public')
-    userID = request.form.get('userID')
+    roomID = request.json('roomID')
+    name = request.json('roomName')
+    roomContent = request.json('roomContent')
+    private_public = request.json('private_public')
+    userID = session['user_id']
     # 已存在的房間
     if roomExist(roomID,userID) == True:
         updateRoom(roomID,name,roomContent,private_public)
@@ -122,48 +143,51 @@ def saveRoom():
     else:
         result = "房間存取成功"
     return {'result':result}
+############# 點擊 model 取得內部資訊(照片、文字等) #############
 @app.route("/getModelInfo",methods=["POST"])
 def getModelInfo():
-    modelID = request.form.get('modelID')
-    userID = request.form.get('userID')
+    modelID = request.json('modelID')
+    userID = session['user_id']
     result = dict()
     result['message'] = modelInfo(modelID,userID,"message")
     result['recording'] = modelInfo(modelID,userID,"recording")
     result['image'] = modelInfo(modelID,userID,"image")
     return result
+############# 訊息插入到 model #############
 # message: insert the infomation into table message and update the messageID
 @app.route("/messageInfo",methods=["POST"])
 def messageInfo():
-    modelID = request.form.get('modelID')
-    title = request.form.get('title')
-    weather = request.form.get('weather')
-    content = request.form.get('content')
-    color = request.form.get('color')
-    userID = request.form.get('userID')
+    modelID = request.json('modelID')
+    title = request.json('title')
+    weather = request.json('weather')
+    content = request.json('content')
+    color = request.json('color')
+    userID = session['user_id']
     result = saveMessage(modelID,title,weather,content,color,userID)
     return {'result':result}
-# recording
+############# insert into recording #############
 @app.route("/recordingInfo",methods=["POST"])
 def recordingInfo():
-    modelID = request.form.get('modelID')
-    name = request.form.get('name')
-    path = request.form.get('path')
-    userID = request.form.get('userID')
+    modelID = request.json('modelID')
+    name = request.json('name')
+    path = request.json('path')
+    userID = session['user_id']
     result = saveRecording(modelID,name,path,userID)
     return {'result':result}
-# image
+############# insert into image #############
 @app.route("/imageInfo",methods=["POST"])
 def imageInfo():
-    modelID = request.form.get('modelID')
-    name = request.form.get('name')
-    path = request.form.get('path')
-    userID = request.form.get('userID')
+    modelID = request.json('modelID')
+    name = request.json('name')
+    path = request.json('path')
+    userID = session['user_id']
     result = saveImage(modelID,name,path,userID)
     return {'result':result}
+
 # message board : 訪客的留言板，同樣將資料存入 table message，並將 messageID 存入 table room 的 msgList
 # @app.route("/board",methods = ["POST"])
 # def board():
-#     roomID = request.form.get('roomID')
+#     roomID = request.json('roomID')
     
 
     
