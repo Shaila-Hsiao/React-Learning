@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, jsonify
 from datetime import timedelta
 import os
 from base64 import b64encode
@@ -7,16 +7,16 @@ from myModule.user import userRegister,userLogin,updateModelList,getUserId
 from myModule.model import uploadFile,modelInsert,getEntireItem
 from myModule.model import saveMessage,saveRecording,saveImage,modelInfo
 from myModule.room import findRoom,roomExist,updateRoom,roomInsert,isRoomEditor
-from flask_cors import CORS,cross_origin
+from flask_cors import CORS
+
 app = Flask(__name__)
 app.config['SESSION_USE_SIGNER'] = True
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1) # session 可以存活的時間
 app.config['SESSION_PERMANENT'] = False   # session 期限是否為永久
-app.config['CORS_HEADERS'] = 'application/json'
+# app.config['CORS_HEADERS'] = 'application/json'
 CORS(app,supports_credentials=True)
 # cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
-# CORS(app)
 # CORS(app, resources={r"/.*": {"origins": ["http://localhost"]}})
 @app.route("/")
 def root():
@@ -35,7 +35,6 @@ def register():
     return result
 ############# 登入 #############
 @app.route("/login",methods=["POST"])
-@cross_origin(supports_credentials=True)
 def login():
     userID = request.json('userID')
     passwd = request.json('passwd')
@@ -48,24 +47,24 @@ def login():
         return True
     return False
 ############# 登出 #############
-# @app.route("/logout",meyhod=["POST"])
-# def logout_user():
-#     session.pop("userID")
-#     return "200"
+@app.route("/logout",method=["POST"])
+def logout_user():
+    session.pop("userID")
+    return "200"
 ############# 取得使用者 ID #############
 @app.route("/@me",methods = ["GET"])
 def get_current_user():
     userID = session.get("userID")
     # if don't have user session
     if not userID :
-        return {"error": "UnAuthorized"},401
+        return jsonify({"error": "UnAuthorized"},401)
     user = getUserId(userID)
     # id,name,email
-    return {
+    return jsonify({
         "id":user[0],
         "name":user[1],
         "email":user[2]
-    }
+    })
 
 ############# 上傳 model #############
 @app.route("/upload",methods=["POST"])
@@ -115,20 +114,20 @@ def upload():
     if result == "上傳成功":
         updateModelList(modelID,userID)
     # user 上傳的 model 做處理: obj to file and insert into database
-    return {'result':result,'name':modelName,'model':outputPath,'type':1,'image':thumbnailPath}
+    return jsonify({'result':result,'name':modelName,'model':outputPath,'type':1,'image':thumbnailPath})
 
 ############# 取得所有 model 資訊 #############
 @app.route("/getItem",methods=["POST"])
 def getItem():
     items = getEntireItem()
-    return {'itemList':items}
+    return jsonify({'itemList':items})
 
 ############# user 所有的房間資料 #############
 @app.route("/userAllRoom",methods=["POST"])
 def userAllRoom():
     userID = session['userID']
     result = findRoom(userID)
-    return {'result':result}
+    return jsonify({'result':result})
 ############# 儲存房間 #############
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():
@@ -147,7 +146,7 @@ def saveRoom():
         result = "您已經有相同房間名字存在，請重新命名"
     else:
         result = "房間存取成功"
-    return {'result':result}
+    return jsonify({'result':result})
 ############# 點擊 model 取得內部資訊(照片、文字等) #############
 @app.route("/getModelInfo",methods=["POST"])
 def getModelInfo():
@@ -157,7 +156,7 @@ def getModelInfo():
     result['message'] = modelInfo(modelID,userID,"message")
     result['recording'] = modelInfo(modelID,userID,"recording")
     result['image'] = modelInfo(modelID,userID,"image")
-    return result
+    return jsonify(result)
 ############# 訊息插入到 model #############
 # message: insert the infomation into table message and update the messageID
 @app.route("/messageInfo",methods=["POST"])
@@ -169,7 +168,7 @@ def messageInfo():
     color = request.json('color')
     userID = session['userID']
     result = saveMessage(modelID,title,weather,content,color,userID)
-    return {'result':result}
+    return jsonify({'result':result})
 ############# insert into recording #############
 @app.route("/recordingInfo",methods=["POST"])
 def recordingInfo():
@@ -178,7 +177,7 @@ def recordingInfo():
     path = request.json('path')
     userID = session['userID']
     result = saveRecording(modelID,name,path,userID)
-    return {'result':result}
+    return jsonify({'result':result})
 ############# insert into image #############
 @app.route("/imageInfo",methods=["POST"])
 def imageInfo():
@@ -187,7 +186,7 @@ def imageInfo():
     path = request.json('path')
     userID = session['userID']
     result = saveImage(modelID,name,path,userID)
-    return {'result':result}
+    return jsonify({'result':result})
 
 # message board : 訪客的留言板，同樣將資料存入 table message，並將 messageID 存入 table room 的 msgList
 # @app.route("/board",methods = ["POST"])
@@ -196,5 +195,6 @@ def imageInfo():
     
 
     
+
 if __name__ == "__main__":
     app.run(host="localhost",port=5000,debug=True)
