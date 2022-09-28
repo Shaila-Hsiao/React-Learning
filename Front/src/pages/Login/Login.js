@@ -57,15 +57,15 @@ export default function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const id = data.get('id');
+    const userID = data.get('userID');
     const passwd =  data.get('passwd');
     console.log({
-     id,passwd
+     userID,passwd
     });
     // Post 給後端檢查
     try {
       const resp = await httpClient.post("//localhost:5000/login", {
-        id,
+        userID,
         passwd,
       });
       console.log(resp)
@@ -113,9 +113,9 @@ export default function Login() {
               margin="normal"
               required
               fullWidth
-              id="id"
-              label="信箱"
-              name="id"
+              id="userID"
+              label="帳號(userID)"
+              name="userID"
               autoComplete="email"
               autoFocus
             />

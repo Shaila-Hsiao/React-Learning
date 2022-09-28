@@ -53,13 +53,13 @@ export  default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const id = data.get('id');
+    const userID = data.get('userID');
     const name =  data.get('name');
     const email =  data.get('email');
     const passwd =  data.get('passwd');
     // Post 給後端檢查
     console.log({
-      id : data.get('id'),
+      userID : data.get('userID'),
       name : data.get('name'),
       email: data.get('email'),
       passwd: data.get('passwd'),
@@ -68,7 +68,7 @@ export  default function SignUp() {
     });
     try {
       const resp = await httpClient.post("//localhost:5000/register", {
-        id,
+        userID,
         name,
         email,
         passwd,
@@ -113,11 +113,11 @@ export  default function SignUp() {
             <Grid container spacing={2}>
             <Grid item xs={12}>
                 <TextField
-                  name="id"
+                  name="userID"
                   required
                   fullWidth
-                  id="id"
-                  label="使用者名稱(id)"
+                  id="userID"
+                  label="帳號(userID)"
                   autoFocus
                 />
               </Grid>
@@ -127,7 +127,7 @@ export  default function SignUp() {
                   required
                   fullWidth
                   id="name"
-                  label="帳戶(name)"
+                  label="使用者名稱(name)"
                   autoFocus
                 />
               </Grid>
