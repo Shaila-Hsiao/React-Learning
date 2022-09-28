@@ -7,18 +7,21 @@ from myModule.user import userRegister,userLogin,updateModelList,getUserId
 from myModule.model import uploadFile,modelInsert,getEntireItem
 from myModule.model import saveMessage,saveRecording,saveImage,modelInfo
 from myModule.room import findRoom,roomExist,updateRoom,roomInsert,isRoomEditor
-
+from flask_cors import CORS,cross_origin
 app = Flask(__name__)
 app.config['SESSION_USE_SIGNER'] = True
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1) # session 可以存活的時間
 app.config['SESSION_PERMANENT'] = False   # session 期限是否為永久
-
-
+app.config['CORS_HEADERS'] = 'application/json'
+CORS(app,supports_credentials=True)
+# cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
+# CORS(app)
+# CORS(app, resources={r"/.*": {"origins": ["http://localhost"]}})
 @app.route("/")
 def root():
-    # return render_template("index.html")
-    return render_template("verification.html")
+    return render_template("index.html")
+    # return render_template("verification.html")
 
 ############# 註冊 #############
 @app.route("/register",methods=["POST"])
@@ -32,6 +35,7 @@ def register():
     return result
 ############# 登入 #############
 @app.route("/login",methods=["POST"])
+@cross_origin(supports_credentials=True)
 def login():
     id = request.json('id')
     passwd = request.json('passwd')
@@ -44,10 +48,11 @@ def login():
         return True
     return False
 ############# 登出 #############
-@app.route("/logout",meyhod=["POST"])
-def logout_user():
-    session['user_id']
-# 取得使用者 ID
+# @app.route("/logout",meyhod=["POST"])
+# def logout_user():
+#     session.pop("user_id")
+#     return "200"
+############# 取得使用者 ID #############
 @app.route("/@me",methods = ["GET"])
 def get_current_user():
     user_id = session.get("user_id")
