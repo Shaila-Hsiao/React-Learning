@@ -29,9 +29,13 @@ def register():
     name = request.json['name']
     passwd = request.json['passwd']
     email = request.json['email']
-    result = userRegister(name,userID,passwd,email)
+    userRegister(name,userID,passwd,email)
     # True: 註冊成功 False: 註冊失敗(有重複帳號)
-    return result
+    return jsonify({
+        "userID":userID,
+        "email":email,
+        "username":name
+    })
 ############# 登入 #############
 @app.route("/login",methods=["POST"])
 def login():
