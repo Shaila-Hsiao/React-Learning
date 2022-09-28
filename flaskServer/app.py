@@ -14,10 +14,9 @@ app.config['SESSION_USE_SIGNER'] = True
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1) # session 可以存活的時間
 app.config['SESSION_PERMANENT'] = False   # session 期限是否為永久
-# app.config['CORS_HEADERS'] = 'application/json'
-CORS(app,supports_credentials=True)
-# cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
-# CORS(app, resources={r"/.*": {"origins": ["http://localhost"]}})
+
+CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://localhost:3000"]}})
+
 @app.route("/")
 def root():
     return render_template("index.html")
@@ -26,28 +25,30 @@ def root():
 ############# 註冊 #############
 @app.route("/register",methods=["POST"])
 def register():
-    userID = request.json('userID')
-    name = request.json('name')
-    passwd = request.json('passwd')
-    email = request.json('email')
+    userID = request.json['userID']
+    name = request.json['name']
+    passwd = request.json['passwd']
+    email = request.json['email']
     result = userRegister(name,userID,passwd,email)
     # True: 註冊成功 False: 註冊失敗(有重複帳號)
     return result
 ############# 登入 #############
 @app.route("/login",methods=["POST"])
 def login():
-    userID = request.json('userID')
-    passwd = request.json('passwd')
+    userID = request.json['userID']
+    passwd = request.json['passwd']
     name = userLogin(userID, passwd)
     # result: 回傳使用者的資料(name and userID)，如果沒有代表沒有找到相符的
     if name :
         # 設置session
         session['userID'] = userID
         print(session)
-        return True
-    return False
+        return jsonify({
+            "login":name
+        })
+    return "Fail"
 ############# 登出 #############
-@app.route("/logout",method=["POST"])
+@app.route("/logout",methods=["POST"])
 def logout_user():
     session.pop("userID")
     return "200"
@@ -55,13 +56,15 @@ def logout_user():
 @app.route("/@me",methods = ["GET"])
 def get_current_user():
     userID = session.get("userID")
+    print("userID",userID)
     # if don't have user session
     if not userID :
-        return jsonify({"error": "UnAuthorized"},401)
+        print("gogo")
+        return jsonify({"error": "UnAuthorized"}),401
     user = getUserId(userID)
     # id,name,email
     return jsonify({
-        "id":user[0],
+        "userID":user[0],
         "name":user[1],
         "email":user[2]
     })
@@ -71,16 +74,16 @@ def get_current_user():
 def upload():
     userID = session['userID']
     # model files
-    objName = request.json('objName')
-    mtlName = request.json('mtlName')
-    obj = request.json('obj')
-    mtl = request.json('mtl')
+    objName = request.json['objName']
+    mtlName = request.json['mtlName']
+    obj = request.json['obj']
+    mtl = request.json['mtl']
     modelName = objName.split(".obj")[0]
     inputPath = f"./static/models/source/{objName}"
     outputPath = f"./static/models/js/{modelName}.js"
     # images
-    thumbnail = request.json('thumbnail')
-    texture = request.json('texture')
+    thumbnail = request.json['thumbnail']
+    texture = request.json['texture']
     thumbnailName = b64encode(os.urandom(20)).decode('utf-8')
     textureName = b64encode(os.urandom(20)).decode('utf-8')
     thumbnailPath = "./static/models/thumbnails"
@@ -131,10 +134,10 @@ def userAllRoom():
 ############# 儲存房間 #############
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():
-    roomID = request.json('roomID')
-    name = request.json('roomName')
-    roomContent = request.json('roomContent')
-    private_public = request.json('private_public')
+    roomID = request.json['roomID']
+    name = request.json['roomName']
+    roomContent = request.json['roomContent']
+    private_public = request.json['private_public']
     userID = session['userID']
     # 已存在的房間
     if roomExist(roomID,userID) == True:
@@ -150,7 +153,7 @@ def saveRoom():
 ############# 點擊 model 取得內部資訊(照片、文字等) #############
 @app.route("/getModelInfo",methods=["POST"])
 def getModelInfo():
-    modelID = request.json('modelID')
+    modelID = request.json['modelID']
     userID = session['userID']
     result = dict()
     result['message'] = modelInfo(modelID,userID,"message")
@@ -161,29 +164,29 @@ def getModelInfo():
 # message: insert the infomation into table message and update the messageID
 @app.route("/messageInfo",methods=["POST"])
 def messageInfo():
-    modelID = request.json('modelID')
-    title = request.json('title')
-    weather = request.json('weather')
-    content = request.json('content')
-    color = request.json('color')
+    modelID = request.json['modelID']
+    title = request.json['title']
+    weather = request.json['weather']
+    content = request.json['content']
+    color = request.json['color']
     userID = session['userID']
     result = saveMessage(modelID,title,weather,content,color,userID)
     return jsonify({'result':result})
 ############# insert into recording #############
 @app.route("/recordingInfo",methods=["POST"])
 def recordingInfo():
-    modelID = request.json('modelID')
-    name = request.json('name')
-    path = request.json('path')
+    modelID = request.json['modelID']
+    name = request.json['name']
+    path = request.json['path']
     userID = session['userID']
     result = saveRecording(modelID,name,path,userID)
     return jsonify({'result':result})
 ############# insert into image #############
 @app.route("/imageInfo",methods=["POST"])
 def imageInfo():
-    modelID = request.json('modelID')
-    name = request.json('name')
-    path = request.json('path')
+    modelID = request.json['modelID']
+    name = request.json['name']
+    path = request.json['path']
     userID = session['userID']
     result = saveImage(modelID,name,path,userID)
     return jsonify({'result':result})
@@ -191,7 +194,7 @@ def imageInfo():
 # message board : 訪客的留言板，同樣將資料存入 table message，並將 messageID 存入 table room 的 msgList
 # @app.route("/board",methods = ["POST"])
 # def board():
-#     roomID = request.json('roomID')
+#     roomID = request.json['roomID']
     
 
     
