@@ -26,40 +26,40 @@ def root():
 ############# 註冊 #############
 @app.route("/register",methods=["POST"])
 def register():
-    id = request.json('id')
+    userID = request.json('userID')
     name = request.json('name')
     passwd = request.json('passwd')
     email = request.json('email')
-    result = userRegister(name,id,passwd,email)
+    result = userRegister(name,userID,passwd,email)
     # True: 註冊成功 False: 註冊失敗(有重複帳號)
     return result
 ############# 登入 #############
 @app.route("/login",methods=["POST"])
 @cross_origin(supports_credentials=True)
 def login():
-    id = request.json('id')
+    userID = request.json('userID')
     passwd = request.json('passwd')
-    name = userLogin(id, passwd)
-    # result: 回傳使用者的資料(name and id)，如果沒有代表沒有找到相符的
+    name = userLogin(userID, passwd)
+    # result: 回傳使用者的資料(name and userID)，如果沒有代表沒有找到相符的
     if name :
         # 設置session
-        session['user_id'] = id
+        session['userID'] = userID
         print(session)
         return True
     return False
 ############# 登出 #############
 # @app.route("/logout",meyhod=["POST"])
 # def logout_user():
-#     session.pop("user_id")
+#     session.pop("userID")
 #     return "200"
 ############# 取得使用者 ID #############
 @app.route("/@me",methods = ["GET"])
 def get_current_user():
-    user_id = session.get("user_id")
+    userID = session.get("userID")
     # if don't have user session
-    if not user_id :
+    if not userID :
         return {"error": "UnAuthorized"},401
-    user = getUserId(user_id)
+    user = getUserId(userID)
     # id,name,email
     return {
         "id":user[0],
@@ -70,7 +70,7 @@ def get_current_user():
 ############# 上傳 model #############
 @app.route("/upload",methods=["POST"])
 def upload():
-    userID = session['user_id']
+    userID = session['userID']
     # model files
     objName = request.json('objName')
     mtlName = request.json('mtlName')
@@ -126,7 +126,7 @@ def getItem():
 ############# user 所有的房間資料 #############
 @app.route("/userAllRoom",methods=["POST"])
 def userAllRoom():
-    userID = session['user_id']
+    userID = session['userID']
     result = findRoom(userID)
     return {'result':result}
 ############# 儲存房間 #############
@@ -136,7 +136,7 @@ def saveRoom():
     name = request.json('roomName')
     roomContent = request.json('roomContent')
     private_public = request.json('private_public')
-    userID = session['user_id']
+    userID = session['userID']
     # 已存在的房間
     if roomExist(roomID,userID) == True:
         updateRoom(roomID,name,roomContent,private_public)
@@ -152,7 +152,7 @@ def saveRoom():
 @app.route("/getModelInfo",methods=["POST"])
 def getModelInfo():
     modelID = request.json('modelID')
-    userID = session['user_id']
+    userID = session['userID']
     result = dict()
     result['message'] = modelInfo(modelID,userID,"message")
     result['recording'] = modelInfo(modelID,userID,"recording")
@@ -167,7 +167,7 @@ def messageInfo():
     weather = request.json('weather')
     content = request.json('content')
     color = request.json('color')
-    userID = session['user_id']
+    userID = session['userID']
     result = saveMessage(modelID,title,weather,content,color,userID)
     return {'result':result}
 ############# insert into recording #############
@@ -176,7 +176,7 @@ def recordingInfo():
     modelID = request.json('modelID')
     name = request.json('name')
     path = request.json('path')
-    userID = session['user_id']
+    userID = session['userID']
     result = saveRecording(modelID,name,path,userID)
     return {'result':result}
 ############# insert into image #############
@@ -185,7 +185,7 @@ def imageInfo():
     modelID = request.json('modelID')
     name = request.json('name')
     path = request.json('path')
-    userID = session['user_id']
+    userID = session['userID']
     result = saveImage(modelID,name,path,userID)
     return {'result':result}
 
