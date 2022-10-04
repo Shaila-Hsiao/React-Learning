@@ -1,32 +1,36 @@
 import * as React from 'react';
 import { styled, useTheme, createTheme, ThemeProvider } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import Badge from '@mui/material/Badge';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
+import SearchIcon from '@mui/icons-material/Search';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import MoreIcon from '@mui/icons-material/MoreVert';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import BedroomChildIcon from '@mui/icons-material/BedroomChild';
-import ListSubheader from '@mui/material/ListSubheader';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import Avatar from '@mui/material/Avatar';
+import Collapse from '@mui/material/Collapse';
 import { useNavigate } from "react-router-dom";
-import Menu from '@mui/material/Menu';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import Divider from '@mui/material/Divider';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Drawer from '@mui/material/Drawer';
+import ListSubheader from '@mui/material/ListSubheader';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
-import SearchIcon from '@mui/icons-material/Search';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -35,13 +39,12 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
-import Collapse from '@mui/material/Collapse';
 import { CardActionArea } from '@mui/material';
-import room1 from '../../assets/images/room1.jpg';
-import user from '../../assets/images/user.jpg';
+import room1 from '../../images/room1.jpg';
+import user from '../../images/user.jpg';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
+import Avatar from '@mui/material/Avatar';
 
 const drawerWidth = 240;
 const cards = [1, 2, 3, 4];
@@ -108,23 +111,165 @@ const theme = createTheme({
 });
 
 function Album() {
-  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const openEl = Boolean(anchorEl);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [mesEl, setMESEl] = React.useState(null);
 
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const mesOpen = Boolean(mesEl);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMESOpen = (event) => {
+    setMESEl(event.currentTarget);
+  };
+
+  const handleMESClose = () => {
+    setMESEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+      PaperProps={{
+        elevation: 0,
+        sx: {
+          overflow: 'visible',
+          filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+          mt: 1.5,
+          '& .MuiAvatar-root': {
+            width: 32,
+            height: 32,
+            ml: -0.5,
+            mr: 1,
+          },
+          '&:before': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            top: 0,
+            right: 14,
+            width: 10,
+            height: 10,
+            bgcolor: 'background.paper',
+            transform: 'translateY(-50%) rotate(45deg)',
+            zIndex: 0,
+          },
+        },
+      }}
+    >
+      <MenuItem onClick={handleMenuClose}>
+        <Avatar src={user} /> Profile
+      </MenuItem>
+      <Divider />
+      <MenuItem onClick={handleMenuClose}>
+        <ListItemIcon>
+          <Settings fontSize="small" />
+        </ListItemIcon>
+        Settings
+      </MenuItem>
+      <MenuItem onClick={() => navigate("/login")}>
+        <ListItemIcon>
+          <Logout fontSize="small" />
+        </ListItemIcon>
+        Logout
+      </MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 4 new mails"
+          color="inherit"
+          onClick={handleMESOpen}>
+          <Badge badgeContent={4} color="error">
+            <MailIcon />
+          </Badge>
+        </IconButton>
+        <p>Messages</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={17} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+    </Menu>
+  );
+
+  const navigate = useNavigate();
   const [openlist, setOpenList] = React.useState(true);
 
   const handleClickList = () => {
     setOpenList(!openlist);
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  // const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -132,14 +277,10 @@ function Album() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
 
   return (
     <ThemeProvider theme={theme}>
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
+    <Box sx={{ display: 'flex', bgcolor: 'background.default' }}>
       <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
@@ -156,75 +297,47 @@ function Album() {
               首頁
             </Typography>
           </Button>
-          <Typography sx={{ flexGrow: 1 }} noWrap />
-          <Tooltip title="Account settings">
-            <IconButton
-              onClick={handleClick}
-              size="small"
-              sx={{ ml: 2 }}
-              aria-controls={openEl ? 'account-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={openEl ? 'true' : undefined}
-            >
-              <Avatar 
-                sx={{ width: 32, height: 32 }}
-                src={user}
-              />
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={4} color="error">
+                <MailIcon />
+              </Badge>
             </IconButton>
-          </Tooltip>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={7} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </Box>
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </Box>
         </Toolbar>
-        <Menu
-          anchorEl={anchorEl}
-          id="account-menu"
-          open={openEl}
-          onClose={handleClose}
-          onClick={handleClose}
-          PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: 'visible',
-              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-              mt: 1.5,
-              '& .MuiAvatar-root': {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1,
-              },
-              '&:before': {
-                content: '""',
-                display: 'block',
-                position: 'absolute',
-                top: 0,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: 'background.paper',
-                transform: 'translateY(-50%) rotate(45deg)',
-                zIndex: 0,
-              },
-            },
-          }}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        >
-          <MenuItem>
-            <Avatar src={user} /> Profile
-          </MenuItem>
-          <Divider />
-          <MenuItem>
-            <ListItemIcon>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            Settings
-          </MenuItem>
-          <MenuItem onClick={() => navigate("/login")}>
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
-            Logout
-          </MenuItem>
-        </Menu>
       </AppBar>
       <Drawer
         sx={{
@@ -251,38 +364,21 @@ function Album() {
           aria-labelledby="nested-list-subheader"
           subheader={
             <ListSubheader component="div" id="nested-list-subheader">
-              現有房間
-            </ListSubheader>
-          }>
-        </List>
-        <List>
-          {['米奇妙妙屋', 'Red_Room', 'Bed_Room'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <BedroomChildIcon />
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List
-          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
               選單
             </ListSubheader>
           }
         >
+          <ListItemButton onClick={() => navigate("/allroom")}>
+            <ListItemIcon>
+              <BedroomChildIcon />
+            </ListItemIcon>
+            <ListItemText primary="全部房間" />
+          </ListItemButton>
           <ListItemButton onClick={handleClickList}>
             <ListItemIcon>
               <BedroomChildIcon />
             </ListItemIcon>
-            <ListItemText primary="現有房間" />
+            <ListItemText primary="個別房間" />
             {openlist ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
           <Collapse in={openlist} timeout="auto" unmountOnExit>
@@ -303,6 +399,8 @@ function Album() {
           </Collapse>
         </List>
       </Drawer>
+      {renderMobileMenu}
+      {renderMenu}
       <Main open={open}>
         <DrawerHeader />
         <main>
@@ -333,11 +431,11 @@ function Album() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" size="large">新增房間</Button>
+              <Button variant="contained" size="large" onClick={() => navigate("/createroom")}>新增房間</Button>
               {/* <Button variant="outlined">Secondary action</Button>  */} {/* 第二種按鈕 */}
               <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                   <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
-                  <TextField variant="standard" fullWidth label="Room Number" id="RoomNum" />
+                  <TextField variant="standard" fullWidth label="Room Name" id="RoomName" />
                 </Box>
             </Stack>
           </Container>
@@ -373,11 +471,11 @@ function Album() {
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <CardActionArea onClick={() => navigate("/intro")}>
-                  <CardMedia
-                    component="img"
-                    image={room1}
-                    alt="random"
-                  />
+                    <CardMedia
+                      component="img"
+                      image={room1}
+                      alt="random"
+                    />
                   </CardActionArea>
                 </Card>
               </Grid>
@@ -385,7 +483,7 @@ function Album() {
           </Grid>
         </Container>
         <Box sx={{ bgcolor: 'background.paper', p: 3 }} />
-        <Container sx={{ py: 8 }} maxWidth="md">
+        <Container sx={{ py: 8 }}>
           {/* End hero unit  */}
           <Grid container spacing={4}>
             {cards.map((card) => (
@@ -393,27 +491,13 @@ function Album() {
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
-                  <CardMedia
-                    component="img"
-                    sx={{
-                      // 16:9
-                      pt: '56.25%',
-                    }}
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      房間名稱
-                    </Typography>
-                    <Typography>
-                      空間佈置說明
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small">參觀</Button>
-                    {/* <Button size="small">Edit</Button> */}
-                  </CardActions>
+                  <CardActionArea onClick={() => navigate("/intro")}>
+                    <CardMedia
+                      component="img"
+                      image={room1}
+                      alt="random"
+                    />
+                  </CardActionArea>
                 </Card>
               </Grid>
             ))}

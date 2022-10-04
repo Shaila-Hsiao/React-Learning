@@ -7,8 +7,13 @@ import { BrowserRouter,Routes, Route } from "react-router-dom";
 import SignUp from './pages/SignUp/SignUp';
 import Login from './pages/Login/Login';
 // import LandingPage from './pages/Home';
-// import Album from './pages/Album/album';
+import Album from './pages/Album/album';
 import DrawerItem from './pages/Album/drawerItem';
+import Room from './pages/Room/room';
+import RoomIntro from './pages/Room/RoomIntro';
+import CreateRoom from './pages/Room/createRoom';
+import AllRoom from './pages/Room/AllRoom';
+import SelectRoom from './pages/Room/selectRoom';
 export const Router = () => {
   return (
     <BrowserRouter>
@@ -17,9 +22,12 @@ export const Router = () => {
           <Route index element={<DrawerItem />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Login" element={<Login />} />
-          {/* <Route path="/Album" element={<Album />} /> */}
-          {/* <Route path='room' element={<Room />} /> */}
-          {/* <Route path='intro' element={<RoomIntro />} /> */}
+          <Route path="/Album" element={<Album />} />  {/* 已登入的用戶介面 */}
+          <Route path='/Room' element={<Room />} />  {/* 個別房間畫面 */}
+          <Route path='/Intro' element={<RoomIntro />} />  {/* 房間簡介 */}
+          <Route path='/CreateRoom' element={<CreateRoom />} /> {/* 創建房間 */}
+          <Route path='/AllRoom' element={<AllRoom />} /> {/* 查看所有房間 */}
+          <Route path='/SelectRoom' element={<SelectRoom />} /> {/* 房間模板選擇 */}
           <Route path="/DrawerItem" element={<DrawerItem />} />
       </Routes>
     </BrowserRouter>
