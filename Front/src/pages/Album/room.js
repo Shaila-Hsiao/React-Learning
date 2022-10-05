@@ -39,8 +39,8 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import Collapse from '@mui/material/Collapse';
-import room1 from '../../assets/images/room1.jpg';
-import user from '../../assets/images/user.jpg';
+import room1 from '../../../src/assets/images/room1.jpg';
+import user from '../../../src/assets/images/user.jpg';
 
 const drawerWidth = 240;
 const cards = [1, 2, 3];
