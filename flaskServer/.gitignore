@@ -1,7 +1,9 @@
 # cache
 myModule/__pycache__
+# test
 myModule/test.py
 test.py
+# other package
 node_modules
 static/dist
 static/models
