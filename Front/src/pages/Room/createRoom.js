@@ -150,7 +150,7 @@ export default function CreateRoom() {
     antoine: true,
   });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event) => {
     setState({
       ...state,
       [event.target.name]: event.target.checked,
