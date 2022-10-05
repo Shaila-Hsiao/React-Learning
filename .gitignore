@@ -8,3 +8,4 @@
 ./flaskServer/myModule/__pycache__
 ./flaskServer/myModule/test.py
 ./flaskServer/test.py
+./node_modules

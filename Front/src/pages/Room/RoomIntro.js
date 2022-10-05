@@ -41,9 +41,9 @@ import StarBorder from '@mui/icons-material/StarBorder';
 import Collapse from '@mui/material/Collapse';
 import { CardActionArea } from '@mui/material';
 import { CenterFocusStrong } from '@mui/icons-material';
-import room1 from '../../images/room1.jpg';
-import user from '../../images/user.jpg';
-import user2 from '../../images/user2.jpg';
+import room1 from '../../assets/images/room1.jpg';
+import user from '../../assets/images/user.jpg';
+import user2 from '../../assets/images/user2.jpg';
 
 const drawerWidth = 240;
 const cards = [1, 2, 3, 4];

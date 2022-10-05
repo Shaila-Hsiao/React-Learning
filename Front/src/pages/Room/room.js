@@ -39,7 +39,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import Collapse from '@mui/material/Collapse';
-import user from '../../images/user.jpg';
+import user from '../../assets/images/user.jpg';
 import { CardActionArea } from '@mui/material';
 
 const drawerWidth = 240;
