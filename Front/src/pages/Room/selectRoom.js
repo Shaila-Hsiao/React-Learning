@@ -39,19 +39,11 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import Collapse from '@mui/material/Collapse';
-<<<<<<< HEAD
 import user from '../../assets/images/user.jpg';
 import { CardActionArea } from '@mui/material';
 import bedroom from '../../assets/images/1.png';
 import classroom from '../../assets/images/3.png';
 import nullroom from '../../assets/images/2.png';
-=======
-import user from '../../../src/assets/images/user.jpg';
-import { CardActionArea } from '@mui/material';
-import bedroom from '../../../src/assets/images/2.png';
-import classroom from '../../../src/assets/images/3.png';
-import nullroom from '../../../src/assets/images/1.png';
->>>>>>> 15ff6fb302d19361fec8a0949551f787fd562f8b
 import Radio, { radioClasses } from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';

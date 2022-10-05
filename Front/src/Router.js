@@ -11,7 +11,7 @@ import Album from './pages/Album/album';
 import DrawerItem from './pages/Album/drawerItem';
 import Room from './pages/Room/room';
 import RoomIntro from './pages/Room/RoomIntro';
-import CreateRoom from './pages/Room/creatRoom';
+import CreateRoom from './pages/Room/createRoom';
 import AllRoom from './pages/Room/AllRoom';
 import SelectRoom from './pages/Room/selectRoom';
 export const Router = () => {

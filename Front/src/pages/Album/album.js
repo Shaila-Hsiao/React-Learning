@@ -40,13 +40,8 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { CardActionArea } from '@mui/material';
-<<<<<<< HEAD
 import room1 from '../../assets/images/room1.jpg';
 import user from '../../assets/images/user.jpg';
-=======
-import room1 from '../../../src/assets/images/room1.jpg';
-import user from '../../../src/assets/images/user.jpg';
->>>>>>> 15ff6fb302d19361fec8a0949551f787fd562f8b
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import Avatar from '@mui/material/Avatar';
