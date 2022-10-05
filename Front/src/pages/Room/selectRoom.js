@@ -39,7 +39,7 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import Collapse from '@mui/material/Collapse';
-import user from '../../images/user.jpg';
+import user from '../../../src/assets/images/user.jpg';
 import { CardActionArea } from '@mui/material';
 import bedroom from '../../../src/assets/images/2.png';
 import classroom from '../../../src/assets/images/3.png';
