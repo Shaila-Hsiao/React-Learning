@@ -6,7 +6,8 @@ test.py
 # other package
 node_modules
 static/dist
-static/models
+static/models/source
+static/models/textures
 static/js/lib
 static/js/src
 static/package-lock.json
