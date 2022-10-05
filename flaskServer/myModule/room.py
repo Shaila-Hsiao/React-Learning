@@ -1,34 +1,32 @@
 from myModule.connectDB import connection,cursor
 
-# 房間有沒有存在
-def roomExist(roomID,userID):
-    command = f"SELECT * FROM `room` WHERE id = '{roomID}' and Find_in_set('{userID}',room.userID)"
+# 房間有沒有重複的名字
+def repeatRoomName(roomName,userID):
+    command = f"SELECT * FROM `room` WHERE name = '{roomName}' and Find_in_set('{userID}',room.userID)"
     cursor.execute(command)
     dataList = cursor.fetchall()
-    # the same userID with the same room of name
+    # user 有重複名字的房間
     if len(dataList) > 0:
         return True
-    return True
+    return False
+
 # 更新房間內容
-def updateRoom(roomID,name,roomContent,private_public):
-    command = f"UPDATE `room` SET `name` = '{name}', `roomContent` = '{roomContent}', `private_public` = '{private_public}' WHERE id = '{roomID}'"
+def updateRoom(roomID,name,imgPath,roomContent,private_public):
+    command = f"UPDATE `room` SET `name` = '{name}',`imgPath` = '{imgPath}', `roomContent` = '{roomContent}', `private_public` = '{private_public}' WHERE id = '{roomID}'"
     cursor.execute(command)
     connection.commit()
 
 # insert into DB
-def roomInsert(name,roomContent,userID,private_public):
-    # 檢查同個 userID 有沒有重複的房間名字
-    command = f"SELECT `id`, `name`, `roomContent`, `userID`, `private_public` FROM `room` WHERE userID = '{userID}' and name = '{name}'"
-    cursor.execute(command)
-    dataList = cursor.fetchall()
-    # the same userID with the same room of name
-    if len(dataList) > 0:
-        return False
-    # insert into DB
-    command = f"INSERT INTO `room`(`name`, `roomContent`, `userID`, `private_public`) VALUES ('{name}','{roomContent}','{userID}','{private_public}')"
+def roomInsert(roomName,introduction,roomContent,userID,private_public):
+    command = f"INSERT INTO `room`(`roomName`, `introduction`, `roomContent`, `userID`, `private_public`) VALUES ('{roomName}','{introduction}','{roomContent}','{userID}','{private_public}')"
     cursor.execute(command)
     connection.commit()
-    return True
+
+# delete room
+def roomDelete(roomID):
+    command = f"DELETE FROM `room` WHERE roomID = '{roomID}'"
+    cursor.execute(command)
+    connection.commit()
 
 # FIXME:檢查使用者是不是房間所有者 => table room 的 userID 要變成可多個編輯者加入?
 def isRoomEditor(roomID,userID):
@@ -40,7 +38,7 @@ def isRoomEditor(roomID,userID):
         return True
     return False
 # find all of rooms by user
-def findRoom(userID):
+def findRoomByUserID(userID):
     command = f"SELECT * FROM `room` WHERE Find_in_set('{userID}',room.userID)"
     cursor.execute(command)
     dataList = cursor.fetchall()
