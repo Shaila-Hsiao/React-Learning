@@ -6,6 +6,7 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/icons-material": "^5.8.4",
+    "@mui/joy": "^5.0.0-alpha.48",
     "@mui/material": "^5.10.0",
     "@mui/styled-engine-sc": "^5.8.0",
     "@testing-library/jest-dom": "^5.16.4",
@@ -31,7 +32,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prebuild": "del ..\\flaskServer\\templates\\index.html",
+    "postbuild": "move build\\index.html ..\\flaskServer\\templates\\ && move build\\static ..\\flaskServer\\static"
   },
   "eslintConfig": {
     "extends": [
