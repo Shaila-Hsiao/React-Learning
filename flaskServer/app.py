@@ -5,10 +5,8 @@ from base64 import b64encode
 # path : /flaskServer/myModule
 from myModule.user import userRegister,userLogin,updateModelList,getUserId
 from myModule.model import uploadFile,modelInsert,getEntireItem,saveMessage,saveRecording,saveImage,modelInfo
-from myModule.room import findRoomByUserID,updateRoom,roomInsert,isRoomEditor,repeatRoomName
+from myModule.room import findRoomByUserID,updateRoom,roomInsert,isRoomEditor,repeatRoomName,findRoomByRoomName
 from flask_cors import CORS
-# websocket
-from flask_socketio import SocketIO
 
 app = Flask(__name__)
 app.config['SESSION_USE_SIGNER'] = True
@@ -18,12 +16,7 @@ app.config['SESSION_PERMANENT'] = False   # session 期限是否為永久
 # 設定 CORS
 CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://localhost:3000"]}})
 
-# websocket
-socketio = SocketIO(app)
-# 共同編輯者一起完成房間, data: 房間資訊
-@socketio.on('moveModel')
-def moveModel(data):
-    socketio.send('get',data)
+
 
 @app.route("/")
 def root():
@@ -156,12 +149,13 @@ def createRoom():
         return "name of room is repeat"
     roomID = roomInsert(roomName,introduction,roomContent,userID,private_public)
     return jsonify({'roomID':roomID})
-############# 搜索房間 #############
-# @app.route("/selectRoomName",methods=["POST"])
-# def saveRoom():
-#     roomName = request.json['roomName']
-#      = "public"
-
+############# 搜索房間 by roomName (首頁) #############
+@app.route("/filterRoomName",methods=["POST"])
+def saveRoom():
+    roomName = request.json['roomName']
+    private_public = "public"
+    result = findRoomByRoomName(roomName,private_public)
+    return jsonify({'result':result})
 ############# 儲存房間 #############
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():
