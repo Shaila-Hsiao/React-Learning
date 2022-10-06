@@ -151,7 +151,7 @@ def createRoom():
     return jsonify({'roomID':roomID})
 ############# 搜索房間 by roomName (首頁) #############
 @app.route("/filterRoomName",methods=["POST"])
-def saveRoom():
+def filterRoomName():
     roomName = request.json['roomName']
     private_public = "public"
     result = findRoomByRoomName(roomName,private_public)
