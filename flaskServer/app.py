@@ -20,6 +20,7 @@ CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://loca
 
 @app.route("/")
 def root():
+    print(get_current_user())
     return render_template("blueprint.html")
     # return render_template("verification.html")
 

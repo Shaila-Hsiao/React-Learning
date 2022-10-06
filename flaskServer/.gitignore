@@ -4,15 +4,14 @@ myModule/__pycache__
 myModule/test.py
 test.py
 # other package
-node_modules
-static/dist
-static/models/source
-static/models/textures
-static/js/lib
-static/js/src
-static/package-lock.json
-static/package.json
-static/js/otherSource
+static/blueprint/node_modules
+static/blueprint/models/source
+static/blueprint/models/textures
+static/blueprint/js/lib
+static/blueprint/js/src
+static/blueprint/package-lock.json
+static/blueprint/package.json
+static/blueprint/js/otherSource
 src
 lib
 dist
