@@ -20,8 +20,8 @@ CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://loca
 
 @app.route("/")
 def root():
-    print(get_current_user())
-    return render_template("blueprint.html")
+    # return render_template("blueprint.html")
+    return render_template("index.html")
     # return render_template("verification.html")
 
 ############# 註冊 #############
@@ -131,6 +131,17 @@ def getItem():
     items = getEntireItem()
     return jsonify({'itemList':items})
 
+############# user 點擊房間 #############
+@app.route("/userClickRoom",methods=["GET"])
+def userClickRoom():
+    roomJson = request.json['roomJson']
+    session['roomJson'] = roomJson
+    return render_template("blueprint.html")
+############# 載入房間 #############
+@app.route("/loadRoom",methods=["GET"])
+def loadRoom():
+    roomJson = session['roomJson']
+    return {'roomJsom':roomJson}
 ############# user 所有的房間資料 #############
 @app.route("/userAllRoom",methods=["POST"])
 def userAllRoom():

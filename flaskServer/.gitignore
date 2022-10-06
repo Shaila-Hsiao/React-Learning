@@ -3,10 +3,9 @@ myModule/__pycache__
 # test
 myModule/test.py
 test.py
-# other package
+# blueprint
 static/blueprint/node_modules
-static/blueprint/models/source
-static/blueprint/models/textures
+static/blueprint/models
 static/blueprint/js/lib
 static/blueprint/js/src
 static/blueprint/package-lock.json
@@ -15,3 +14,5 @@ static/blueprint/js/otherSource
 src
 lib
 dist
+# react
+static/static
