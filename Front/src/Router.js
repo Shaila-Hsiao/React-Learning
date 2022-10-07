@@ -15,7 +15,7 @@ import CreateRoom from './pages/Room/createRoom';
 import AllRoom from './pages/Room/AllRoom';
 import SelectRoom from './pages/Room/selectRoom';
 import UserData from './pages/Album/userdata';
-import RoomEdit from './pages/Room/roomEdit';
+import RoomEdit from './pages/Room/RoomEdit';
 
 export const Router = () => {
   return (
@@ -32,8 +32,8 @@ export const Router = () => {
           <Route path='/AllRoom' element={<AllRoom />} /> {/* 查看所有房間 */}
           <Route path='/SelectRoom' element={<SelectRoom />} /> {/* 房間模板選擇 */}
           <Route path="/DrawerItem" element={<DrawerItem />} />
-          <Route path="/userdata" element={<UserData />} />
-          <Route path="/roomedit" element={<RoomEdit />} />
+          <Route path="/userdata" element={<UserData />} /> {/* 用戶資料修改 */}
+          <Route path="/roomedit" element={<RoomEdit />} /> {/* 房間資料修改 */}
       </Routes>
     </BrowserRouter>
   )
