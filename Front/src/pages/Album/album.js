@@ -29,11 +29,11 @@ import Drawer from '@mui/material/Drawer';
 import ListSubheader from '@mui/material/ListSubheader';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ListItem from '@mui/material/ListItem';
+// import ListItem from '@mui/material/ListItem';
 import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
+// import CardActions from '@mui/material/CardActions';
+// import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -431,7 +431,7 @@ function Album() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" size="large" onClick={() => navigate("/createroom")}>新增房間</Button>
+              <Button variant="contained" size="large" onClick={() => navigate("/CreateRoom")}>新增房間</Button>
               {/* <Button variant="outlined">Secondary action</Button>  */} {/* 第二種按鈕 */}
               <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                   <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />

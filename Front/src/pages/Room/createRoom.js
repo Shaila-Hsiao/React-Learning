@@ -50,7 +50,7 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import Switch from '@mui/material/Switch';
-
+import httpClient from '../../httpClient';
 const drawerWidth = 240;
 const cards = [1, 2, 3, 4];
 
@@ -156,6 +156,45 @@ export default function CreateRoom() {
       [event.target.name]: event.target.checked,
     });
   };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const roomName = data.get('roomName');
+    const introduction =  data.get('roomIntro');
+    const private_public =  data.get('gilad');
+    const roomContent = "fgkgdgf";
+    // const email =  data.get('email');
+    // const passwd =  data.get('passwd');
+    // roomIntro
+    // gilad
+    // Post 給後端檢查
+    console.log({
+      roomName : data.get('roomName'),
+      introduction : data.get('roomIntro'),
+      private_public : data.get('gilad'),
+      // roomName = request.json['roomName']
+    // introduction = request.json['introduction']
+    // roomContent = request.json['roomContent']
+    // private_public = request.json['private_public']
+      
+    });
+    try {
+      const resp = await httpClient.post("//localhost:5000/createRoom", {
+        roomName ,
+        introduction,
+        roomContent,
+        private_public ,
+      });
+      console.log(resp)
+      // if login success
+      window.location.href = "/selectRoom";
+    } catch (error) {
+      if (error.response.status === 401) {
+        alert("Invalid credentials");
+        
+      }
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -329,7 +368,7 @@ export default function CreateRoom() {
         <main>
         {/* Hero unit */}
         <Box
-            sx={{
+             sx={ {
                 bgcolor: '#4c364d',
                 padding: 2
             }}
@@ -346,7 +385,7 @@ export default function CreateRoom() {
                         padding: 3
                     }}
                 >
-                    <Grid container>
+                    <Grid container component="form" noValidate onSubmit={handleSubmit} >
                         <Grid item xs={12} sm={6}>
                             <Box
                                 sx={{
@@ -361,6 +400,7 @@ export default function CreateRoom() {
                                         required
                                         fullWidth
                                         id="roomName"
+                                        name="roomName"
                                         label="房間名稱"
                                         bgcolor='#fff'
                                     />
@@ -378,13 +418,13 @@ export default function CreateRoom() {
                                           label="可否公開"
                                           labelPlacement="start"
                                         />
-                                        <FormControlLabel
+                                        {/* <FormControlLabel
                                           control={
                                             <Switch checked={state.jason} onChange={handleChange} name="jason" />
                                           }
                                           label="可否留言"
                                           labelPlacement="start"
-                                        />
+                                        /> */}
                                       </FormGroup>
                                       <FormHelperText>Be careful</FormHelperText>
                                     </FormControl>
@@ -412,6 +452,7 @@ export default function CreateRoom() {
                                         required
                                         fullWidth
                                         id="roomIntro"
+                                        name="roomIntro"
                                         label="房間簡介"
                                         multiline
                                         rows={13}
@@ -422,7 +463,8 @@ export default function CreateRoom() {
                                 <Button 
                                     variant="contained"
                                     size="large"
-                                    onClick={() => navigate("/selectRoom")}
+                                    type="submit"
+                                    // onClick={() => navigate("/selectRoom")}
                                     sx={{ bgcolor: '#7f0808', color: '#fff' }}
                                 >創建</Button>
                             </Box>

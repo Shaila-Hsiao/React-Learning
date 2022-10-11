@@ -27,7 +27,7 @@ def moveModel(data):
 
 @app.route("/")
 def root():
-    return render_template("blueprint.html")
+    return render_template("index.html")
     # return render_template("verification.html")
 
 ############# 註冊 #############
@@ -144,13 +144,13 @@ def userAllRoom():
     result = findRoomByUserID(userID)
     return jsonify({'result':result})
 ########### 創建房間並插入 DB ###########
-@app.route("/createRoom",methods=["GET"])
+@app.route("/createRoom",methods=["POST"])
 def createRoom():
     roomName = request.json['roomName']
     introduction = request.json['introduction']
     roomContent = request.json['roomContent']
     private_public = request.json['private_public']
-    userID = session['userID']
+    userID = session.get("userID")
     # 使用者所擁有的房間中已經有相同的名字
     if repeatRoomName(roomName,userID) == True:
         return "name of room is repeat"

@@ -17,8 +17,8 @@ def updateRoom(roomID,name,imgPath,roomContent,private_public):
     connection.commit()
 
 # insert into DB
-def roomInsert(roomName,introduction,roomContent,userID,private_public):
-    command = f"INSERT INTO `room`(`roomName`, `introduction`, `roomContent`, `userID`, `private_public`) VALUES ('{roomName}','{introduction}','{roomContent}','{userID}','{private_public}')"
+def roomInsert(name,introduction,roomContent,userID,private_public):
+    command = f"INSERT INTO `room`(`name`, `introduction`, `roomContent`, `userID`, `private_public`) VALUES ('{name}','{introduction}','{roomContent}','{userID}','{private_public}')"
     cursor.execute(command)
     connection.commit()
 
