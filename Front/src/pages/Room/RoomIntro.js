@@ -44,13 +44,10 @@ import { CenterFocusStrong } from '@mui/icons-material';
 import room1 from '../../assets/images/room1.jpg';
 import user from '../../assets/images/user.jpg';
 import user2 from '../../assets/images/user2.jpg';
-<<<<<<< HEAD
-=======
 import AppBar from '@mui/material/AppBar';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import Badge from '@mui/material/Badge';
->>>>>>> 63f2a6e88dae040fd2a23ee7cda949b98302a0f2
 
 const cards = [1, 2, 3, 4];
 

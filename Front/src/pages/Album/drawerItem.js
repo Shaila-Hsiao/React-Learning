@@ -15,6 +15,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
 import { useNavigate } from "react-router-dom";
+
 const drawerWidth = 240;
 const cards = [1, 2, 3, 4];
 
@@ -68,9 +69,9 @@ function DrawerItem() {
   const navigate = useNavigate();
   return (
     <ThemeProvider theme={theme}>
+      <NavbarDrawer/>
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <NavbarDrawer/>
       <Main open={open}>
         <DrawerHeader />
         <main>

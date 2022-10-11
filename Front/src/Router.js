@@ -22,7 +22,7 @@ export const Router = () => {
     <BrowserRouter>
       <Routes>
         
-          <Route index element={<DrawerItem />} />
+          <Route index element={<Album />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Album" element={<Album />} />  {/* 已登入的用戶介面 */}

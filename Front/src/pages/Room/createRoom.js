@@ -51,6 +51,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import Switch from '@mui/material/Switch';
 import httpClient from '../../httpClient';
+import Badge from '@mui/material/Badge';
+import AppBar from '@mui/material/AppBar';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
+
 const drawerWidth = 240;
 const cards = [1, 2, 3, 4];
 
@@ -346,7 +351,8 @@ export default function CreateRoom() {
                 padding: 3
               }}
             >
-              <Grid container>
+              
+              <Grid container component="form" noValidate onSubmit={handleSubmit} >
                 <Grid item xs={12} sm={6}>
                   <Box
                     sx={{
@@ -415,7 +421,7 @@ export default function CreateRoom() {
                     <Button
                       variant="contained"
                       size="large"
-                      onClick={() => navigate("/selectRoom")}
+                      type="submit"
                       sx={{ bgcolor: '#7f0808', color: '#fff' }}
                     >創建</Button>
                   </Box>

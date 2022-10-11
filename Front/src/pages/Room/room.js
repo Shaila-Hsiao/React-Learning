@@ -20,13 +20,10 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-<<<<<<< HEAD
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 import Collapse from '@mui/material/Collapse';
-=======
->>>>>>> 63f2a6e88dae040fd2a23ee7cda949b98302a0f2
 import user from '../../assets/images/user.jpg';
 import { CardActionArea } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';

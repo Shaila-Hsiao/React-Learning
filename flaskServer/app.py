@@ -5,7 +5,7 @@ from base64 import b64encode
 # path : /flaskServer/myModule
 from myModule.user import userRegister,userLogin,updateModelList,getUserId
 from myModule.model import uploadFile,modelInsert,getEntireItem,saveMessage,saveRecording,saveImage,modelInfo
-from myModule.room import findRoomByUserID,updateRoom,roomInsert,isRoomEditor,repeatRoomName,findRoomByRoomName
+from myModule.room import findRoomByUserID,updateRoom,roomInsert,isRoomEditor,repeatRoomName
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -161,12 +161,12 @@ def createRoom():
     roomID = roomInsert(roomName,introduction,roomContent,userID,private_public)
     return jsonify({'roomID':roomID})
 ############# 搜索房間 by roomName (首頁) #############
-@app.route("/filterRoomName",methods=["POST"])
-def filterRoomName():
-    roomName = request.json['roomName']
-    private_public = "public"
-    result = findRoomByRoomName(roomName,private_public)
-    return jsonify({'result':result})
+# @app.route("/filterRoomName",methods=["POST"])
+# def filterRoomName():
+#     roomName = request.json['roomName']
+#     private_public = "public"
+#     result = findRoomByRoomName(roomName,private_public)
+#     return jsonify({'result':result})
 ############# 儲存房間 #############
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():
