@@ -42,54 +42,12 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
 import user from '../../assets/images/user.jpg';
 import { CardActionArea } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
+import Badge from '@mui/material/Badge';
 
-const drawerWidth = 240;
 const cards = [1, 2, 3];
-
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  }),
-);
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(['margin', 'width'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const DrawerHeader = styled('div')(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
-}));
 
 const theme = createTheme({
   palette: {
@@ -109,6 +67,33 @@ const theme = createTheme({
 
 function AllRoom() {
   const navigate = useNavigate();
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+  const handleOpenNotifications = (event) => {
+    setAnchorElNotifications(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleCloseNotifications = () => {
+    setAnchorElNotifications(null);
+  };
+
   const [RoomEl, setRoomEl] = React.useState(null);
   const openRoom = Boolean(RoomEl);
   const handleRoomClick = (event) => {
@@ -117,188 +102,186 @@ function AllRoom() {
   const handleRoomClose = () => {
     setRoomEl(null);
   };
-
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const openEl = Boolean(anchorEl);
-
-  const [openlist, setOpenList] = React.useState(true);
-
-  const handleClickList = () => {
-    setOpenList(!openlist);
-  };
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  // const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   return (
     <ThemeProvider theme={theme}>
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: 'none' }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Button onClick={() => navigate("/album")} color="inherit" noWrap>
-            <Typography variant="h6">
-              首頁
-            </Typography>
-          </Button>
-          <Typography sx={{ flexGrow: 1 }} noWrap />
-          <Tooltip title="Account settings">
-            <IconButton
-              onClick={handleClick}
-              size="small"
-              sx={{ ml: 2, alignItems: 'self-end' }}
-              aria-controls={openEl ? 'account-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={openEl ? 'true' : undefined}
-            >
-              <Avatar 
-                sx={{ width: 32, height: 32 }}
-                src={user}
-              />
-            </IconButton>
-          </Tooltip>
-        </Toolbar>
-        <Menu
-          anchorEl={anchorEl}
-          id="account-menu"
-          open={openEl}
-          onClose={handleClose}
-          onClick={handleClose}
-          PaperProps={{
-            elevation: 0,
-            sx: {
-              overflow: 'visible',
-              filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-              mt: 1.5,
-              '& .MuiAvatar-root': {
-                width: 32,
-                height: 32,
-                ml: -0.5,
-                mr: 1,
-              },
-              '&:before': {
-                content: '""',
-                display: 'block',
-                position: 'absolute',
-                top: 0,
-                right: 14,
-                width: 10,
-                height: 10,
-                bgcolor: 'background.paper',
-                transform: 'translateY(-50%) rotate(45deg)',
-                zIndex: 0,
-              },
-            },
-          }}
-          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-        >
-          <MenuItem>
-            <Avatar src={user} /> Profile
-          </MenuItem>
-          <Divider />
-          <MenuItem>
-            <ListItemIcon>
-              <Settings fontSize="small" />
-            </ListItemIcon>
-            Settings
-          </MenuItem>
-          <MenuItem onClick={() => navigate("/login")}>
-            <ListItemIcon>
-              <Logout fontSize="small" />
-            </ListItemIcon>
-            Logout
-          </MenuItem>
-        </Menu>
-      </AppBar>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List
-          sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              選單
-            </ListSubheader>
-          }
-        >
-          <ListItemButton onClick={() => navigate("/allroom")}>
-            <ListItemIcon>
-              <BedroomChildIcon />
-            </ListItemIcon>
-            <ListItemText primary="全部房間" />
-          </ListItemButton>
-          <ListItemButton onClick={handleClickList}>
-            <ListItemIcon>
-              <BedroomChildIcon />
-            </ListItemIcon>
-            <ListItemText primary="個別房間" />
-            {openlist ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <Collapse in={openlist} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItemButton sx={{ pl: 4 }} onClick={() => navigate("/room")}>
-                <ListItemIcon>
-                  {/* <StarBorder /> */}
-                </ListItemIcon>
-                <ListItemText primary="米奇妙妙屋" />
-              </ListItemButton>
-              <ListItemButton sx={{ pl: 4 }} onClick={() => navigate("/room")}>
-                <ListItemIcon>
-                  {/* <StarBorder /> */}
-                </ListItemIcon>
-                <ListItemText primary="小瓦房" />
-              </ListItemButton>
-            </List>
-          </Collapse>
-        </List>
-      </Drawer>
-      <Main open={open}>
-        <DrawerHeader />
-        <main>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="static">
+          <Container maxWidth="xl">
+            <Toolbar disableGutters>
+              <PermContactCalendarIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+              <Typography
+                variant="h6"
+                noWrap
+                component="a"
+                href="/album"
+                sx={{
+                  mr: 2,
+                  display: { xs: 'none', md: 'flex' },
+                  fontFamily: 'monospace',
+                  fontWeight: 700,
+                  letterSpacing: '.3rem',
+                  color: 'inherit',
+                  textDecoration: 'none',
+                }}
+              >
+                首頁
+              </Typography>
+
+              <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: 'block', md: 'none' },
+                  }}
+                >
+                  <MenuItem onClick={() => navigate("/")}>
+                    會員中心
+                  </MenuItem>
+                  <MenuItem onClick={() => navigate("/")}>
+                    服務支援
+                  </MenuItem>
+                  <MenuItem onClick={() => navigate("/")}>
+                    聯絡我們
+                  </MenuItem>
+                </Menu>
+              </Box>
+
+              <PermContactCalendarIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+              <Typography
+                variant="h5"
+                noWrap
+                component="a"
+                href=""
+                sx={{
+                  mr: 2,
+                  display: { xs: 'flex', md: 'none' },
+                  flexGrow: 1,
+                  fontFamily: 'monospace',
+                  fontWeight: 700,
+                  letterSpacing: '.3rem',
+                  color: 'inherit',
+                  textDecoration: 'none',
+                }}
+              >
+                首頁
+              </Typography>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                <MenuItem onClick={() => navigate("/")}>
+                  會員中心
+                </MenuItem>
+                <MenuItem onClick={() => navigate("/")}>
+                  服務支援
+                </MenuItem>
+                <MenuItem onClick={() => navigate("/")}>
+                  聯絡我們
+                </MenuItem>
+              </Box>
+
+              <Box sx={{ mr: 2 }}>
+                <Tooltip title="Open Notifications">
+                  <IconButton onClick={handleOpenNotifications} sx={{ p: 0 }} size="large" aria-label="show 4 new mails" color="inherit">
+                    <Badge badgeContent={4} color="error">
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  classes={theme.menu}
+                  anchorEl={anchorElNotifications}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElNotifications)}
+                  onClose={handleCloseNotifications}
+                >
+                  <MenuItem onClick={() => navigate("")}>
+                    用戶 Rita 訂閱你了！
+                  </MenuItem>
+                </Menu>
+              </Box>
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar src={user} />
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  style={theme.menu}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  <MenuItem onClick={() => navigate("/allroom")}>
+                    <ListItemIcon>
+                      <BedroomChildIcon fontSize="small" />
+                    </ListItemIcon>
+                    全部房間
+                  </MenuItem>
+                  <MenuItem onClick={() => navigate("/userdata")}>
+                    <ListItemIcon>
+                      <Settings fontSize="small" />
+                    </ListItemIcon>
+                    個人基本資料
+                  </MenuItem>
+                  <MenuItem onClick={() => navigate("/login")}>
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    登出
+                  </MenuItem>
+                </Menu>
+              </Box>
+            </Toolbar>
+          </Container>
+        </AppBar>
+      </Box>
+      <main>
         {/* Hero unit */}
         <Box
           sx={{
@@ -334,19 +317,19 @@ function AllRoom() {
                     aria-expanded={openRoom ? 'true' : undefined}
                     onClick={handleRoomClick}
                   >
-                  <CardMedia
-                    component="img"
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      房間名稱
-                    </Typography>
-                    <Typography>
-                      房間簡介
-                    </Typography>
-                  </CardContent>
+                    <CardMedia
+                      component="img"
+                      image="https://source.unsplash.com/random"
+                      alt="random"
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        房間名稱
+                      </Typography>
+                      <Typography>
+                        房間簡介
+                      </Typography>
+                    </CardContent>
                   </CardActionArea>
                   <Menu
                     id="basic-menu"
@@ -357,8 +340,9 @@ function AllRoom() {
                       'aria-labelledby': 'basic-button',
                     }}
                   >
-                    <MenuItem onClick={handleClose}>編輯房間</MenuItem>
-                    <MenuItem onClick={handleClose}>刪除房間</MenuItem>
+                    <MenuItem onClick={handleClose}>房間簡介</MenuItem>
+                    <MenuItem onClick={handleClose}>編輯空間</MenuItem>
+                    <MenuItem onClick={handleClose}>刪除空間</MenuItem>
                   </Menu>
                 </Card>
               </Grid>
@@ -379,19 +363,19 @@ function AllRoom() {
                     aria-expanded={openRoom ? 'true' : undefined}
                     onClick={handleRoomClick}
                   >
-                  <CardMedia
-                    component="img"
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  />
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      房間名稱
-                    </Typography>
-                    <Typography>
-                      房間簡介
-                    </Typography>
-                  </CardContent>
+                    <CardMedia
+                      component="img"
+                      image="https://source.unsplash.com/random"
+                      alt="random"
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        房間名稱
+                      </Typography>
+                      <Typography>
+                        房間簡介
+                      </Typography>
+                    </CardContent>
                   </CardActionArea>
                   <Menu
                     id="basic-menu"
@@ -402,8 +386,9 @@ function AllRoom() {
                       'aria-labelledby': 'basic-button',
                     }}
                   >
-                    <MenuItem onClick={handleClose}>編輯房間</MenuItem>
-                    <MenuItem onClick={handleClose}>刪除房間</MenuItem>
+                    <MenuItem onClick={handleClose}>房間簡介</MenuItem>
+                    <MenuItem onClick={handleClose}>編輯空間</MenuItem>
+                    <MenuItem onClick={handleClose}>刪除空間</MenuItem>
                   </Menu>
                 </Card>
               </Grid>
@@ -426,8 +411,6 @@ function AllRoom() {
         </Typography> */}
         {/* <Copyright /> */}
       </Box>
-      </Main>
-    </Box>
     </ThemeProvider>
   );
 }

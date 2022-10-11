@@ -3,19 +3,19 @@
   <head>
     <title>Room</title>
 
-    <link href="./static/css/bootstrap.css" rel="stylesheet">
-    <link href="./static/css/example.css" rel="stylesheet">
+    <link href="./static/blueprint/css/bootstrap.css" rel="stylesheet">
+    <link href="./static/blueprint/css/example.css" rel="stylesheet">
 
-    <script src="./static/node_modules/three/three.js"></script>
-    <script src="./static/js/three.min.js"></script>
-    <script src="./static/js/blueprint3d.js"></script>
+    <script src="./static/blueprint/node_modules/three/three.js"></script>
+    <script src="./static/blueprint/js/three.min.js"></script>
+    <script src="./static/blueprint/js/blueprint3d.js"></script>
 
-    <script src="./static/js/jquery.js"></script>
+    <script src="./static/blueprint/js/jquery.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"> </script> -->
-    <script src="./static/js/bootstrap.js"></script>
+    <script src="./static/blueprint/js/bootstrap.js"></script>
     
-    <script src="./static/js/items.js"></script>
-    <script src="./static/js/example.js"></script>
+    <script src="./static/blueprint/js/items.js"></script>
+    <script src="./static/blueprint/js/example.js"></script>
 
     <!-- <script src="./static/js/OBJLoader.js"></script> -->
   </head>
@@ -99,8 +99,8 @@
               <div class="panel-body" style="color: #333333">
 
                 <div class="col-sm-6" style="padding: 3px">
-                  <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/rooms/textures/light_fine_wood.jpg" texture-stretch="false" texture-scale="300">
-                    <img alt="Thumbnail light fine wood" src="./static/rooms/thumbnails/thumbnail_light_fine_wood.jpg" />
+                  <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/light_fine_wood.jpg" texture-stretch="false" texture-scale="300">
+                    <img alt="Thumbnail light fine wood" src="./static/blueprint/rooms/thumbnails/thumbnail_light_fine_wood.jpg" />
                   </a>
                 </div>
               </div>
@@ -113,18 +113,18 @@
               <div class="panel-heading">Adjust Wall</div>
               <div class="panel-body" style="color: #333333">
                 <div class="col-sm-6" style="padding: 3px">
-                  <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/rooms/textures/marbletiles.jpg" texture-stretch="false" texture-scale="300">
-                    <img alt="Thumbnail marbletiles" src="./static/rooms/thumbnails/thumbnail_marbletiles.jpg" />
+                  <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/marbletiles.jpg" texture-stretch="false" texture-scale="300">
+                    <img alt="Thumbnail marbletiles" src="./static/blueprint/rooms/thumbnails/thumbnail_marbletiles.jpg" />
                   </a>
                 </div>
                 <div class="col-sm-6" style="padding: 3px">
-                  <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/rooms/textures/wallmap_yellow.png" texture-stretch="true" texture-scale="">
-                    <img alt="Thumbnail wallmap yellow" src="./static/rooms/thumbnails/thumbnail_wallmap_yellow.png" />
+                  <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/wallmap_yellow.png" texture-stretch="true" texture-scale="">
+                    <img alt="Thumbnail wallmap yellow" src="./static/blueprint/rooms/thumbnails/thumbnail_wallmap_yellow.png" />
                   </a>
                 </div>
                 <div class="col-sm-6" style="padding: 3px">
-                  <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/rooms/textures/light_brick.jpg" texture-stretch="false" texture-scale="100">
-                    <img alt="Thumbnail light brick" src="./static/rooms/thumbnails/thumbnail_light_brick.jpg" />
+                  <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/light_brick.jpg" texture-stretch="false" texture-scale="100">
+                    <img alt="Thumbnail light brick" src="./static/blueprint/rooms/thumbnails/thumbnail_light_brick.jpg" />
                   </a>
                 </div>
               </div>
@@ -229,13 +229,13 @@
           <div id="add-items">
             <!-- 檔案顯示 -->
             <label class="text-center mb-5 image-preview-wrapper" for="texture">
-              <img src="../static/other/photo.png" id="canvas" alt="image-placehoder">
+              <img src="../static/blueprint/other/photo.png" id="canvas" alt="image-placehoder">
             </label>
             <input type="file" id="texture" accept="image/*" />
             <input type="file" id="mtl" accept=".mtl"/>
             <input type="file" id="obj" accept=".obj"/>
             <label class="text-center mb-5 image-preview-wrapper" for="thumbnail">
-              <img src="../static/other/photo.png" id="canvas_1" alt="image-placehoder">
+              <img src="../static/blueprint/other/photo.png" id="canvas_1" alt="image-placehoder">
             </label>
             <input type="file" id="thumbnail" accept="image/*"/>
             <button id="uploadBtn" >upload model</button>
