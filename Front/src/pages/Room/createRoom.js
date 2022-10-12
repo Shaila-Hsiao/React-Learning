@@ -146,7 +146,7 @@ export default function CreateRoom() {
       });
       console.log(resp)
       // if login success
-      window.location.href = "/selectRoom";
+      // window.location.href = "/selectRoom";
     } catch (error) {
       if (error.response.status === 401) {
         alert("Invalid credentials");
@@ -367,6 +367,7 @@ export default function CreateRoom() {
                         required
                         fullWidth
                         id="roomName"
+                        name="roomName"
                         label="房間名稱"
                         bgcolor='#fff'
                       />
@@ -411,6 +412,7 @@ export default function CreateRoom() {
                         required
                         fullWidth
                         id="roomIntro"
+                        name="roomIntro"
                         label="房間簡介"
                         multiline
                         rows={13}
