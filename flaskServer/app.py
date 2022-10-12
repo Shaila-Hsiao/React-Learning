@@ -2,10 +2,11 @@ from flask import Flask, render_template, request, session, jsonify
 from datetime import timedelta
 import os
 from base64 import b64encode
+import secrets
 # path : /flaskServer/myModule
 from myModule.user import userRegister,userLogin,updateModelList,getUserId
 from myModule.model import uploadFile,modelInsert,getEntireItem,saveMessage,saveRecording,saveImage,modelInfo
-from myModule.room import findRoomByUserID,updateRoom,roomInsert,isRoomEditor,repeatRoomName,findRoomByRoomName
+from myModule.room import findRoomByUserID,updateRoom,roomInsert,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -20,8 +21,8 @@ CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://loca
 
 @app.route("/")
 def root():
-    # return render_template("blueprint.html")
-    return render_template("index.html")
+    return render_template("blueprint.html")
+    # return render_template("index.html")
     # return render_template("verification.html")
 
 ############# 註冊 #############
@@ -65,7 +66,6 @@ def get_current_user():
     print("userID",userID)
     # if don't have user session
     if not userID :
-        print("gogo")
         return jsonify({"error": "UnAuthorized"}),401
     user = getUserId(userID)
     # id,name,email
@@ -74,31 +74,48 @@ def get_current_user():
         "name":user[1],
         "email":user[2]
     })
-
+# 更改 mtl 中的 texure 圖片
+def updateMTL(mtl,textureName):
+    newContext = ""
+    mtl = mtl.split("\n")
+    for i in range(len(mtl)):
+        print("=======>",mtl[i])
+        if "map_Kd" in mtl[i] or "map_Ka" in mtl[i] or "map_Ks" in mtl[i]:
+            line = mtl[i].split()
+            print(line)
+            mtl[i] = line[0] + " " + textureName
+        newContext += mtl[i] +"\n"
+    return newContext
 ############# 上傳 model #############
 @app.route("/upload",methods=["POST"])
 def upload():
-    userID = session['userID']
     # model files
-    objName = request.json['objName']
-    mtlName = request.json['mtlName']
-    obj = request.json['obj']
-    mtl = request.json['mtl']
+    objName = request.form.get('objName')
+    mtlName = request.form.get('mtlName')
+    obj = request.form.get('obj')
+    mtl = request.form.get('mtl')
     modelName = objName.split(".obj")[0]
-    inputPath = f"./static/models/source/{objName}"
-    outputPath = f"./static/models/js/{modelName}.js"
+    inputPath = f"./static/blueprint/models/source/{objName}"
+    outputPath = f"./static/blueprint/models/js/{modelName}.js"
     # images
-    thumbnail = request.json['thumbnail']
-    texture = request.json['texture']
-    thumbnailName = b64encode(os.urandom(20)).decode('utf-8')
-    textureName = b64encode(os.urandom(20)).decode('utf-8')
-    thumbnailPath = "./static/models/thumbnails"
-    texturePath = "./static/models/js"
+    thumbnail = request.form.get('thumbnail')
+    texture = request.form.get('texture')
+    thumbnailName = secrets.token_hex()+".jpg"
+    textureName = secrets.token_hex()+"jpg"
+    # thumbnailName = b64encode(os.urandom(20)).decode('utf-8')
+    # textureName = b64encode(os.urandom(20)).decode('utf-8')
+    # userID = session.get("userID")
+    # if not userID :
+    #     return {"result":"未登入，無法上傳 model"} 
+    thumbnailPath = "./static/blueprint/models/thumbnails"
+    texturePath = "./static/blueprint/models/js"
     # modify name of texture in mtl
-    mtl = f"{mtl.split('map_Kd')[0]} map_Kd {textureName}.jpg"
+    mtl = updateMTL(mtl,textureName)
+    print(mtl)
+    # mtl = f"{mtl.split('map_Kd')[0]} map_Kd {textureName}.jpg"
     # 上傳檔案到本機
-    uploadFile(objName,obj,'file',"./static/models/source")
-    uploadFile(mtlName,mtl,'file',"./static/models/source")
+    uploadFile(objName,obj,'file',"./static/blueprint/models/source")
+    uploadFile(mtlName,mtl,'file',"./static/blueprint/models/source")
     uploadFile(thumbnailName,thumbnail,'image',thumbnailPath)
     uploadFile(textureName,texture,'image',texturePath)
     # 確認有沒有 JS 重複的檔案
@@ -110,20 +127,22 @@ def upload():
         result = "檔案上傳失敗，請檢查您的檔案是否正確"
     # obj to json and insert into DB
     else:
+        # 確認檔案都在
         os.system(f"python ./myModule/convert_obj_three.py -i {inputPath} -o {outputPath}")
         # 將 model 資料 insert into DB
-        thumbnailPath = f"{thumbnailPath}/{thumbnailName}.jpg"
-        texturePath = f"{texturePath}/{textureName}.jpg"
+        thumbnailPath = f"{thumbnailPath}/{thumbnailName}"
+        texturePath = f"{texturePath}/{textureName}"
         # 成功插入資料庫
         modelID = modelInsert(thumbnailPath,texturePath,outputPath)
         if  modelID > 0:
             result = "上傳成功"
         else:
             result = "上傳失敗，請注意檔案名稱不可為中文"
-    if result == "上傳成功":
-        updateModelList(modelID,userID)
+            os.remove(outputPath)
+    # if result == "上傳成功":
+    #     updateModelList(modelID,userID)
     # user 上傳的 model 做處理: obj to file and insert into database
-    return jsonify({'result':result,'name':modelName,'model':outputPath,'type':1,'image':thumbnailPath})
+    return {'result':result,'name':modelName,'model':outputPath,'type':1,'image':thumbnailPath}
 
 ############# 取得所有 model 資訊 #############
 @app.route("/getItem",methods=["POST"])
@@ -131,52 +150,53 @@ def getItem():
     items = getEntireItem()
     return jsonify({'itemList':items})
 
-############# user 點擊房間 #############
+############# user 選擇房間進入 #############
 @app.route("/userClickRoom",methods=["GET"])
 def userClickRoom():
-    roomJson = request.json['roomJson']
-    session['roomJson'] = roomJson
+    roomContent = request.json['roomContent']
+    # 儲存房間 json
+    session['roomContent'] = roomContent
     return render_template("blueprint.html")
 ############# 載入房間 #############
 @app.route("/loadRoom",methods=["GET"])
 def loadRoom():
-    roomJson = session['roomJson']
-    return {'roomJsom':roomJson}
+    # roomContent = session['roomContent']
+    # return {'roomContent':roomContent}
+    return "test"
 ############# user 所有的房間資料 #############
 @app.route("/userAllRoom",methods=["POST"])
 def userAllRoom():
-    userID = session['userID']
+    userID = session.get("userID")
     result = findRoomByUserID(userID)
     return jsonify({'result':result})
 ########### 創建房間並插入 DB ###########
-@app.route("/createRoom",methods=["GET"])
+@app.route("/createRoom",methods=["POST"])
 def createRoom():
     roomName = request.json['roomName']
     introduction = request.json['introduction']
     roomContent = request.json['roomContent']
     private_public = request.json['private_public']
-    userID = session['userID']
+    userID = session.get("userID")
     # 使用者所擁有的房間中已經有相同的名字
     if repeatRoomName(roomName,userID) == True:
         return "name of room is repeat"
     roomID = roomInsert(roomName,introduction,roomContent,userID,private_public)
     return jsonify({'roomID':roomID})
-############# 搜索房間 by roomName (首頁) #############
-@app.route("/filterRoomName",methods=["POST"])
-def filterRoomName():
-    roomName = request.json['roomName']
-    private_public = "public"
-    result = findRoomByRoomName(roomName,private_public)
-    return jsonify({'result':result})
+########### 刪除房間 ###########
+@app.route("/deleteRoom",methods=["POST"])
+def deleteRoom():
+    roomID = session.get('userID')
+    deleteRoom(roomID)
 ############# 儲存房間 #############
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():
     roomID = request.json['roomID']
     roomName = request.json['roomName']
     imgPath = request.json['imgPath'] # FIXME: 不一定要上傳房間照片
+    introduction = request.json['introduction']
     roomContent = request.json['roomContent']
     private_public = request.json['private_public']
-    userID = session['userID']
+    userID = session.get("userID")
     # 不是房間編輯者
     if isRoomEditor(roomID,userID) == False:
         result = "您不是房間擁有者"
@@ -184,19 +204,28 @@ def saveRoom():
     elif repeatRoomName(roomName,userID) == True:
         result = "您已經有相同房間名字存在，請重新命名"
     else:
-        updateRoom(roomID,roomName,imgPath,roomContent,private_public)
+        updateRoom(roomID,roomName,imgPath,introduction,roomContent,private_public)
         result = "房間存取成功"
     return jsonify({'result':result})
-########### 刪除房間 ###########
-@app.route("/deleteRoom",methods=["POST"])
-def deleteRoom():
-    roomID = request.json['roomID']
-    deleteRoom(roomID)
+############# 搜索房間 by roomName (首頁) #############
+@app.route("/filterRoomName",methods=["GET"])
+def filterRoomName():
+    roomName = request.json['roomName']
+    private_public = "on"
+    result = findRoomByRoomName(roomName,private_public)
+    return jsonify({'result':result})
+############# 首頁瀏覽 #############
+@app.route("/allRoom",methods=["GET"])
+def allRoom():
+    private_public = "on"
+    result = getAllRoom(private_public)
+    return jsonify({'result':result})
+
 ############# 點擊 model 取得內部資訊(照片、文字等) #############
 @app.route("/getModelInfo",methods=["POST"])
 def getModelInfo():
     modelID = request.json['modelID']
-    userID = session['userID']
+    userID = session.get("userID")
     result = dict()
     result['message'] = modelInfo(modelID,userID,"message")
     result['recording'] = modelInfo(modelID,userID,"recording")
@@ -211,7 +240,7 @@ def messageInfo():
     weather = request.json['weather']
     content = request.json['content']
     color = request.json['color']
-    userID = session['userID']
+    userID = session.get("userID")
     result = saveMessage(modelID,title,weather,content,color,userID)
     return jsonify({'result':result})
 ############# insert into recording #############
@@ -220,7 +249,7 @@ def recordingInfo():
     modelID = request.json['modelID']
     name = request.json['name']
     path = request.json['path']
-    userID = session['userID']
+    userID = session.get("userID")
     result = saveRecording(modelID,name,path,userID)
     return jsonify({'result':result})
 ############# insert into image #############
@@ -229,7 +258,7 @@ def imageInfo():
     modelID = request.json['modelID']
     name = request.json['name']
     path = request.json['path']
-    userID = session['userID']
+    userID = session.get("userID")
     result = saveImage(modelID,name,path,userID)
     return jsonify({'result':result})
 
@@ -237,9 +266,7 @@ def imageInfo():
 # @app.route("/board",methods = ["POST"])
 # def board():
 #     roomID = request.json['roomID']
-    
 
-    
 
 if __name__ == "__main__":
     app.run(host="localhost",port=5000,debug=True)

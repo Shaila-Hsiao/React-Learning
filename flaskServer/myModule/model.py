@@ -49,7 +49,7 @@ def uploadFile(fileName,content,fileType,path):
     elif fileType == 'image':
         content = content.split(",")[1]
         content = base64.b64decode(content)
-        writeInFile(f"{path}/{fileName}.jpg",content,"wb")
+        writeInFile(f"{path}/{fileName}",content,"wb")
 def writeInFile(path,text,mode):
     f = open(path, mode)
     f.write(text)
