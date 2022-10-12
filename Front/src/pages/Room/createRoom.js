@@ -55,6 +55,12 @@ import Badge from '@mui/material/Badge';
 import AppBar from '@mui/material/AppBar';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
+import bedroom from '../../assets/images/2.png';
+import classroom from '../../assets/images/3.png';
+import nullroom from '../../assets/images/1.png';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
 
 const drawerWidth = 240;
 const cards = [1, 2, 3, 4];
@@ -160,176 +166,7 @@ export default function CreateRoom() {
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="static">
-          <Container maxWidth="xl">
-            <Toolbar disableGutters>
-              <PermContactCalendarIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-              <Typography
-                variant="h6"
-                noWrap
-                component="a"
-                href="/album"
-                sx={{
-                  mr: 2,
-                  display: { xs: 'none', md: 'flex' },
-                  fontFamily: 'monospace',
-                  fontWeight: 700,
-                  letterSpacing: '.3rem',
-                  color: 'inherit',
-                  textDecoration: 'none',
-                }}
-              >
-                首頁
-              </Typography>
-
-              <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                <IconButton
-                  size="large"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleOpenNavMenu}
-                  color="inherit"
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorElNav}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                  open={Boolean(anchorElNav)}
-                  onClose={handleCloseNavMenu}
-                  sx={{
-                    display: { xs: 'block', md: 'none' },
-                  }}
-                >
-                  <MenuItem onClick={() => navigate("/")}>
-                    會員中心
-                  </MenuItem>
-                  <MenuItem onClick={() => navigate("/")}>
-                    服務支援
-                  </MenuItem>
-                  <MenuItem onClick={() => navigate("/")}>
-                    聯絡我們
-                  </MenuItem>
-                </Menu>
-              </Box>
-
-              <PermContactCalendarIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-              <Typography
-                variant="h5"
-                noWrap
-                component="a"
-                href=""
-                sx={{
-                  mr: 2,
-                  display: { xs: 'flex', md: 'none' },
-                  flexGrow: 1,
-                  fontFamily: 'monospace',
-                  fontWeight: 700,
-                  letterSpacing: '.3rem',
-                  color: 'inherit',
-                  textDecoration: 'none',
-                }}
-              >
-                首頁
-              </Typography>
-              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                <MenuItem onClick={() => navigate("/")}>
-                  會員中心
-                </MenuItem>
-                <MenuItem onClick={() => navigate("/")}>
-                  服務支援
-                </MenuItem>
-                <MenuItem onClick={() => navigate("/")}>
-                  聯絡我們
-                </MenuItem>
-              </Box>
-
-              <Box sx={{ mr: 2 }}>
-                <Tooltip title="Open Notifications">
-                  <IconButton onClick={handleOpenNotifications} sx={{ p: 0 }} size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                      <NotificationsIcon />
-                    </Badge>
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  id="menu-appbar"
-                  classes={theme.menu}
-                  anchorEl={anchorElNotifications}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElNotifications)}
-                  onClose={handleCloseNotifications}
-                >
-                  <MenuItem onClick={() => navigate("")}>
-                    用戶 Rita 訂閱你了！
-                  </MenuItem>
-                </Menu>
-              </Box>
-              <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Open settings">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar src={user} />
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: '45px' }}
-                  style={theme.menu}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  <MenuItem onClick={() => navigate("/allroom")}>
-                    <ListItemIcon>
-                      <BedroomChildIcon fontSize="small" />
-                    </ListItemIcon>
-                    全部房間
-                  </MenuItem>
-                  <MenuItem onClick={() => navigate("/userdata")}>
-                    <ListItemIcon>
-                      <Settings fontSize="small" />
-                    </ListItemIcon>
-                    個人基本資料
-                  </MenuItem>
-                  <MenuItem onClick={() => navigate("/login")}>
-                    <ListItemIcon>
-                      <Logout fontSize="small" />
-                    </ListItemIcon>
-                    登出
-                  </MenuItem>
-                </Menu>
-              </Box>
-            </Toolbar>
-          </Container>
-        </AppBar>
+        <NavbarDrawer />
       </Box>
       <main>
         <Box sx={{ padding: 2 }} />
@@ -434,6 +271,105 @@ export default function CreateRoom() {
             </Box>
           </Box>
         </Box>
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 3,
+          }}
+        >
+          <Container maxWidth="sm">
+            <Typography
+              component="h1"
+              variant="h2"
+              align="center"
+              color="text.primary"
+              gutterBottom
+            >
+              選擇房間模板
+            </Typography>
+          </Container>
+        <Stack
+              sx={{ pt: 4 }}
+              direction="row"
+              spacing={2}
+              justifyContent="center"
+            >
+                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                    <FormControl>
+                        <RadioGroup
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            defaultValue="female"
+                            name="radio-buttons-group"
+                        >
+                            <FormControlLabel value="0" control={<Radio />} label="空白房間" />
+                            <FormControlLabel value="1" control={<Radio />} label="簡易房間" />
+                            <FormControlLabel value="2" control={<Radio />} label="教室" />
+                        </RadioGroup>
+                    </FormControl>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Button 
+                            variant="contained"
+                            // size="large"
+                            onClick={() => navigate("/test")}
+                            sx={{ bgcolor: '#7f0808', color: '#fff' }}
+                            >開始編輯</Button></Box>
+            </Stack>
+        </Box>
+        
+        <Container sx={{ py: 8 }} maxWidth="md">
+        <Grid container spacing={3}>
+            <Grid item xs>
+                <Card
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                >
+                    <CardMedia
+                      component="img"
+                      image={nullroom}
+                      alt="random"
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      空白房間
+                    </Typography>
+                  </CardContent>
+                </Card>
+            </Grid>
+            <Grid item xs>
+                <Card
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                >
+                    <CardMedia
+                      component="img"
+                      image={bedroom}
+                      alt="random"
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      簡易房間
+                    </Typography>
+                  </CardContent>
+                </Card>
+            </Grid>
+            <Grid item xs>
+                <Card
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                >
+                    <CardMedia
+                      component="img"
+                      image={classroom}
+                      alt="random"
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      教室
+                    </Typography>
+                  </CardContent>
+                </Card>
+            </Grid>
+        </Grid>
+        </Container>
       </main>
     </ThemeProvider>
   );
