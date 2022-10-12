@@ -164,9 +164,9 @@ export default function CreateRoom() {
 
   return (
     <ThemeProvider theme={theme}>
+      <NavbarDrawer />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <NavbarDrawer />
       </Box>
       <main>
         <Box sx={{ padding: 2 }}>
