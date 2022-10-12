@@ -93,11 +93,11 @@ function Room() {
 
   return (
     <ThemeProvider theme={theme}>
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <NavbarDrawer />
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <NavbarDrawer />
       </Box>
-        <main>
+      <main>
         {/* Hero unit */}
         <Box
           sx={{
@@ -136,11 +136,11 @@ function Room() {
                     aria-expanded={openRoom ? 'true' : undefined}
                     onClick={handleRoomClick}
                   >
-                  <CardMedia
-                    component="img"
-                    image="https://source.unsplash.com/random"
-                    alt="random"
-                  />
+                    <CardMedia
+                      component="img"
+                      image="https://source.unsplash.com/random"
+                      alt="random"
+                    />
                   </CardActionArea>
                   <Menu
                     id="basic-menu"

@@ -125,8 +125,8 @@ export default function CreateRoom() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const roomName = data.get('roomName');
-    const introduction =  data.get('roomIntro');
-    const private_public =  data.get('gilad');
+    const introduction = data.get('roomIntro');
+    const private_public = data.get('gilad');
     const roomContent = "fgkgdgf";
     // const email =  data.get('email');
     // const passwd =  data.get('passwd');
@@ -134,21 +134,21 @@ export default function CreateRoom() {
     // gilad
     // Post 給後端檢查
     console.log({
-      roomName : data.get('roomName'),
-      introduction : data.get('roomIntro'),
-      private_public : data.get('gilad'),
+      roomName: data.get('roomName'),
+      introduction: data.get('roomIntro'),
+      private_public: data.get('gilad'),
       // roomName = request.json['roomName']
-    // introduction = request.json['introduction']
-    // roomContent = request.json['roomContent']
-    // private_public = request.json['private_public']
-      
+      // introduction = request.json['introduction']
+      // roomContent = request.json['roomContent']
+      // private_public = request.json['private_public']
+
     });
     try {
       const resp = await httpClient.post("//localhost:5000/createRoom", {
-        roomName ,
+        roomName,
         introduction,
         roomContent,
-        private_public ,
+        private_public,
       });
       console.log(resp)
       // if login success
@@ -157,7 +157,7 @@ export default function CreateRoom() {
     } catch (error) {
       if (error.response.status === 401) {
         alert("Invalid credentials");
-        
+
       }
     }
   }
@@ -169,105 +169,106 @@ export default function CreateRoom() {
         <NavbarDrawer />
       </Box>
       <main>
-        <Box sx={{ padding: 2 }} />
-        {/* Hero unit */}
-        <Box
-          sx={{
-            bgcolor: '#4c364d',
-            padding: 2
-          }}
-        >
+        <Box sx={{ padding: 2 }}>
+          {/* Hero unit */}
           <Box
             sx={{
-              bgcolor: '#fff',
-              padding: 1
+              bgcolor: '#4c364d',
+              padding: 2
             }}
           >
             <Box
               sx={{
-                bgcolor: '#617f7f',
-                padding: 3
+                bgcolor: '#fff',
+                padding: 1
               }}
             >
-              
-              <Grid container component="form" noValidate onSubmit={handleSubmit} >
-                <Grid item xs={12} sm={6}>
-                  <Box
-                    sx={{
+              <Box
+                sx={{
+                  bgcolor: '#617f7f',
+                  padding: 3
+                }}
+              >
 
-                      bgcolor: '#617f7f',
-                      padding: 2,
-                      height: '100%',
-                    }}
-                  >
-                    <Box bgcolor='#fff' borderRadius='4px'>
-                      <TextField
-                        required
-                        fullWidth
-                        id="roomName"
-                        name="roomName"
-                        label="房間名稱"
-                        bgcolor='#fff'
-                      />
-                    </Box>
-                    <Box sx={{ p: 4.5 }} ></Box>
-                    <Box bgcolor='#fff' borderRadius='4px' sx={{ p: 5, aligntext: 'center' }}>
+                <Grid container component="form" noValidate onSubmit={handleSubmit} >
+                  <Grid item xs={12} sm={6}>
+                    <Box
+                      sx={{
 
-                      <FormControl component="fieldset" variant="standard">
-                        <FormLabel component="legend">房間設定</FormLabel>
-                        <FormGroup>
-                          <FormControlLabel
-                            control={
-                              <Switch checked={state.gilad} onChange={handleChange} name="gilad" />
-                            }
-                            label="可否公開"
-                            labelPlacement="start"
-                          />
-                        </FormGroup>
-                        <FormHelperText>Be careful</FormHelperText>
-                      </FormControl>
+                        bgcolor: '#617f7f',
+                        padding: 2,
+                        height: '100%',
+                      }}
+                    >
+                      <Box bgcolor='#fff' borderRadius='4px'>
+                        <TextField
+                          required
+                          fullWidth
+                          id="roomName"
+                          name="roomName"
+                          label="房間名稱"
+                          bgcolor='#fff'
+                        />
+                      </Box>
+                      <Box sx={{ p: 4.5 }} ></Box>
+                      <Box bgcolor='#fff' borderRadius='4px' sx={{ p: 5, aligntext: 'center' }}>
+
+                        <FormControl component="fieldset" variant="standard">
+                          <FormLabel component="legend">房間設定</FormLabel>
+                          <FormGroup>
+                            <FormControlLabel
+                              control={
+                                <Switch checked={state.gilad} onChange={handleChange} name="gilad" />
+                              }
+                              label="可否公開"
+                              labelPlacement="start"
+                            />
+                          </FormGroup>
+                          <FormHelperText>Be careful</FormHelperText>
+                        </FormControl>
+                      </Box>
+                      <Box sx={{ p: 2 }} />
+                      <Button
+                        variant="contained"
+                        size="large"
+                        onClick={() => navigate("/")}
+                        sx={{ bgcolor: '#7f0808', color: '#fff' }}
+                      >取消</Button>
                     </Box>
-                    <Box sx={{ p: 2 }} />
-                    <Button
-                      variant="contained"
-                      size="large"
-                      onClick={() => navigate("/")}
-                      sx={{ bgcolor: '#7f0808', color: '#fff' }}
-                    >取消</Button>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Box
-                    sx={{
-                      textAlign: 'right',
-                      bgcolor: '#617f7f',
-                      padding: 2,
-                      height: '100%',
-                    }}
-                  >
-                    <Box bgcolor='#fff' borderRadius='4px'>
-                      <TextField
-                        required
-                        fullWidth
-                        id="roomIntro"
-                        name="roomIntro"
-                        label="房間簡介"
-                        multiline
-                        rows={13}
-                        bgcolor='#fff'
-                      />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Box
+                      sx={{
+                        textAlign: 'right',
+                        bgcolor: '#617f7f',
+                        padding: 2,
+                        height: '100%',
+                      }}
+                    >
+                      <Box bgcolor='#fff' borderRadius='4px'>
+                        <TextField
+                          required
+                          fullWidth
+                          id="roomIntro"
+                          name="roomIntro"
+                          label="房間簡介"
+                          multiline
+                          rows={13}
+                          bgcolor='#fff'
+                        />
+                      </Box>
+                      <Box sx={{ p: 2 }} />
+                      <Button
+                        variant="contained"
+                        size="large"
+                        type="submit"
+                        // onClick={() => navigate("/selectRoom")}
+                        sx={{ bgcolor: '#7f0808', color: '#fff' }}
+                      >創建</Button>
                     </Box>
-                    <Box sx={{ p: 2 }} />
-                    <Button
-                      variant="contained"
-                      size="large"
-                      type="submit"
-                      // onClick={() => navigate("/selectRoom")}
-                      sx={{ bgcolor: '#7f0808', color: '#fff' }}
-                    >創建</Button>
-                  </Box>
+                  </Grid>
                 </Grid>
-              </Grid>
+              </Box>
             </Box>
           </Box>
         </Box>
@@ -289,86 +290,86 @@ export default function CreateRoom() {
               選擇房間模板
             </Typography>
           </Container>
-        <Stack
-              sx={{ pt: 4 }}
-              direction="row"
-              spacing={2}
-              justifyContent="center"
-            >
-                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <FormControl>
-                        <RadioGroup
-                            aria-labelledby="demo-radio-buttons-group-label"
-                            defaultValue="female"
-                            name="radio-buttons-group"
-                        >
-                            <FormControlLabel value="0" control={<Radio />} label="空白房間" />
-                            <FormControlLabel value="1" control={<Radio />} label="簡易房間" />
-                            <FormControlLabel value="2" control={<Radio />} label="教室" />
-                        </RadioGroup>
-                    </FormControl>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Button 
-                            variant="contained"
-                            // size="large"
-                            onClick={() => navigate("/test")}
-                            sx={{ bgcolor: '#7f0808', color: '#fff' }}
-                            >開始編輯</Button></Box>
-            </Stack>
+          <Stack
+            sx={{ pt: 4 }}
+            direction="row"
+            spacing={2}
+            justifyContent="center"
+          >
+            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+              <FormControl>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="female"
+                  name="radio-buttons-group"
+                >
+                  <FormControlLabel value="0" control={<Radio />} label="空白房間" />
+                  <FormControlLabel value="1" control={<Radio />} label="簡易房間" />
+                  <FormControlLabel value="2" control={<Radio />} label="教室" />
+                </RadioGroup>
+              </FormControl>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Button
+                variant="contained"
+                // size="large"
+                onClick={() => navigate("/test")}
+                sx={{ bgcolor: '#7f0808', color: '#fff' }}
+              >開始編輯</Button></Box>
+          </Stack>
         </Box>
-        
+
         <Container sx={{ py: 8 }} maxWidth="md">
-        <Grid container spacing={3}>
+          <Grid container spacing={3}>
             <Grid item xs>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                    <CardMedia
-                      component="img"
-                      image={nullroom}
-                      alt="random"
-                    />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      空白房間
-                    </Typography>
-                  </CardContent>
-                </Card>
+              <Card
+                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+              >
+                <CardMedia
+                  component="img"
+                  image={nullroom}
+                  alt="random"
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    空白房間
+                  </Typography>
+                </CardContent>
+              </Card>
             </Grid>
             <Grid item xs>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                    <CardMedia
-                      component="img"
-                      image={bedroom}
-                      alt="random"
-                    />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      簡易房間
-                    </Typography>
-                  </CardContent>
-                </Card>
+              <Card
+                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+              >
+                <CardMedia
+                  component="img"
+                  image={bedroom}
+                  alt="random"
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    簡易房間
+                  </Typography>
+                </CardContent>
+              </Card>
             </Grid>
             <Grid item xs>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                    <CardMedia
-                      component="img"
-                      image={classroom}
-                      alt="random"
-                    />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      教室
-                    </Typography>
-                  </CardContent>
-                </Card>
+              <Card
+                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+              >
+                <CardMedia
+                  component="img"
+                  image={classroom}
+                  alt="random"
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    教室
+                  </Typography>
+                </CardContent>
+              </Card>
             </Grid>
-        </Grid>
+          </Grid>
         </Container>
       </main>
     </ThemeProvider>
