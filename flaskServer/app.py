@@ -179,13 +179,6 @@ def createRoom():
         return "name of room is repeat"
     roomID = roomInsert(roomName,introduction,roomContent,userID,private_public)
     return jsonify({'roomID':roomID})
-############# 搜索房間 by roomName (首頁) #############
-@app.route("/filterRoomName",methods=["POST"])
-def filterRoomName():
-    roomName = request.json['roomName']
-    private_public = "public"
-    result = findRoomByRoomName(roomName,private_public)
-    return jsonify({'result':result})
 ############# 儲存房間 #############
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():
