@@ -146,7 +146,8 @@ export default function CreateRoom() {
       });
       console.log(resp)
       // if login success
-      // window.location.href = "/selectRoom";
+      navigate("/selectRoom");
+      // window.location.href = "//localhost:5000/createRoom";
     } catch (error) {
       if (error.response.status === 401) {
         alert("Invalid credentials");
@@ -393,7 +394,7 @@ export default function CreateRoom() {
                     <Button
                       variant="contained"
                       size="large"
-                      onClick={() => navigate("/selectRoom")}
+                      onClick={() => navigate("/")}
                       sx={{ bgcolor: '#7f0808', color: '#fff' }}
                     >取消</Button>
                   </Box>
@@ -424,6 +425,7 @@ export default function CreateRoom() {
                       variant="contained"
                       size="large"
                       type="submit"
+                      // onClick={() => navigate("/selectRoom")}
                       sx={{ bgcolor: '#7f0808', color: '#fff' }}
                     >創建</Button>
                   </Box>

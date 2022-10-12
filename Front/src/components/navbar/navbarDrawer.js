@@ -76,6 +76,7 @@ const theme = createTheme({
 export const NavbarDrawer = () => {
     // const [anchorEl, setAnchorEl] = React.useState(null);
     const navigate = useNavigate();
+    // user 更新
     const [user, setUser] = useState();
     
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -112,7 +113,7 @@ export const NavbarDrawer = () => {
       await httpClient.post("//localhost:5000/logout");
       window.location.href = "/";
     };
-
+    // user 狀態確認
     useEffect(() => {
       (async () => {
         try {

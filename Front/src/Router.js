@@ -25,7 +25,7 @@ export const Router = () => {
           <Route index element={<Album />} />
           <Route path="/SignUp" element={<SignUp />} />
           <Route path="/Login" element={<Login />} />
-          <Route path="/Album" element={<Album />} />  {/* 已登入的用戶介面 */}
+          {/* <Route path="/album" element={<Album />} />  已登入的用戶介面 */}
           <Route path='/Room' element={<Room />} />  {/* 個別房間畫面 */}
           <Route path='/Intro' element={<RoomIntro />} />  {/* 房間簡介 */}
           <Route path='/CreateRoom' element={<CreateRoom />} /> {/*創建房間*/}

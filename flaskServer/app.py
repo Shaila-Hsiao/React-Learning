@@ -22,7 +22,6 @@ CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://loca
 def root():
     return render_template("index.html")
     # return render_template("verification.html")
-
 ############# 註冊 #############
 @app.route("/register",methods=["POST"])
 def register():

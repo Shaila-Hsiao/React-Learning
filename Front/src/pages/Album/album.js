@@ -26,7 +26,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { CardActionArea } from '@mui/material';
-import room1 from '../../assets/images/room1.jpg';
+import room1 from '../../assets/images/room1.jpg'; // 圖片的位置
 import user from '../../assets/images/user.jpg';
 import Badge from '@mui/material/Badge';
 import AppBar from '@mui/material/AppBar';
