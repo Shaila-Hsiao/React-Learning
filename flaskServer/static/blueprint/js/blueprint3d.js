@@ -452,21 +452,21 @@ var BP3D;
                 this.fixed = false;
                 /** dragging */
                 this.dragOffset = new THREE.Vector3();
-                /** */
+                /** 設定高度*/
                 this.getHeight = function () {
                     if (this.halfSize.y <= 1){
                         return this.halfSize.y * 100.0;
                     }
                     return this.halfSize.y * 2.0;
                 };
-                /** */
+                /** 設定寬度*/
                 this.getWidth = function () {
                     if (this.halfSize.x <= 1){
                         return this.halfSize.x * 100.0;
                     }
                     return this.halfSize.x * 2.0;
                 };
-                /** */
+                /** 設定深度*/
                 this.getDepth = function () {
                     if (this.halfSize.z <= 1){
                         return this.halfSize.z * 100.0;
@@ -3683,7 +3683,7 @@ var BP3D;
                     var height = wall.height;
                     var width = edge.interiorDistance();
                     texture.wrapT = THREE.RepeatWrapping;
-                    texture.wrapS = THREE.RepeatWrapping;
+                    texturemultiply.wrapS = THREE.RepeatWrapping;
                     texture.repeat.set(width / scale, height / scale);
                     texture.needsUpdate = true;
                 }

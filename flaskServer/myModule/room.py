@@ -11,8 +11,8 @@ def repeatRoomName(roomName,userID):
     return False
 
 # 更新房間內容
-def updateRoom(roomID,name,imgPath,roomContent,private_public):
-    command = f"UPDATE `room` SET `name` = '{name}',`imgPath` = '{imgPath}', `roomContent` = '{roomContent}', `private_public` = '{private_public}' WHERE id = '{roomID}'"
+def updateRoom(roomID,name,imgPath,introduction,roomContent,private_public):
+    command = f"UPDATE `room` SET `name` = '{name}',`imgPath` = '{imgPath}',`introduction` = '{introduction}', `roomContent` = '{roomContent}', `private_public` = '{private_public}' WHERE id = '{roomID}'"
     cursor.execute(command)
     connection.commit()
 
@@ -37,6 +37,24 @@ def isRoomEditor(roomID,userID):
     if userID in dataList:
         return True
     return False
+# 首頁 --- 取得房間資訊
+def getAllRoom(private_public):
+    command = f"SELECT * FROM `room` WHERE private_public = '{private_public}'"
+    cursor.execute(command)
+    dataList = cursor.fetchall()
+    data = []
+    for i in dataList:
+        row = dict()
+        row['id'] = i[0]
+        row['name'] = i[1]
+        row['introduce'] = i[2]
+        row['roomContent'] = i[3]
+        row['userID'] = i[4]
+        row['private_public'] = i[5]
+        row['msgList'] = i[6]
+        data.append(row)
+    return data
+
 # find all of rooms by user
 def findRoomByUserID(userID):
     command = f"SELECT * FROM `room` WHERE Find_in_set('{userID}',room.userID)"
@@ -48,7 +66,23 @@ def findRoomByUserID(userID):
         row['id'] = i[0]
         row['name'] = i[1]
         row['introduce'] = i[2]
-        row['roomJson'] = i[3]
+        row['roomContent'] = i[3]
+        row['userID'] = i[4]
+        row['private_public'] = i[5]
+        row['msgList'] = i[6]
+        data.append(row)
+    return data
+def findRoomByRoomName(roomName,private_public):
+    command = f"SELECT * FROM `room` WHERE `name` = {roomName} and `public_private` = {private_public}"
+    cursor.execute(command)
+    dataList = cursor.fetchall()
+    data = []
+    for i in dataList:
+        row = dict()
+        row['id'] = i[0]
+        row['name'] = i[1]
+        row['introduce'] = i[2]
+        row['roomContent'] = i[3]
         row['userID'] = i[4]
         row['private_public'] = i[5]
         row['msgList'] = i[6]
