@@ -34,7 +34,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prebuild": "del ..\\flaskServer\\templates\\index.html",
-    "postbuild": "move build\\index.html ..\\flaskServer\\templates\\ && move build\\static ..\\flaskServer\\static"
+    "postbuild": "move build\\index.html ..\\flaskServer\\templates\\ && move build\\static ..\\flaskServer\\static\\"
   },
   "eslintConfig": {
     "extends": [

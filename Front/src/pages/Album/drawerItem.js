@@ -14,6 +14,7 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 const cards = [1, 2, 3, 4];
@@ -65,12 +66,12 @@ const theme = createTheme({
 
 function DrawerItem() {
   const [open, setOpen] = React.useState(false);
-
+  const navigate = useNavigate();
   return (
     <ThemeProvider theme={theme}>
+      <NavbarDrawer/>
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <NavbarDrawer/>
       <Main open={open}>
         <DrawerHeader />
         <main>
@@ -101,7 +102,7 @@ function DrawerItem() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" size="large">新增房間</Button>
+              <Button variant="contained" size="large" onClick={() => navigate("/CreateRoom")}>新增房間</Button>
               {/* <Button variant="outlined">Secondary action</Button>  */} {/* 第二種按鈕 */}
               <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                   <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />

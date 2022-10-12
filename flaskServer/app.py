@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, session, jsonify
 from datetime import timedelta
 import os
-from base64 import b64encode
 import secrets
 # path : /flaskServer/myModule
 from myModule.user import userRegister,userLogin,updateModelList,getUserId
@@ -21,10 +20,8 @@ CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://loca
 
 @app.route("/")
 def root():
-    return render_template("blueprint.html")
-    # return render_template("index.html")
+    return render_template("index.html")
     # return render_template("verification.html")
-
 ############# 註冊 #############
 @app.route("/register",methods=["POST"])
 def register():
@@ -170,23 +167,25 @@ def userAllRoom():
     result = findRoomByUserID(userID)
     return jsonify({'result':result})
 ########### 創建房間並插入 DB ###########
-@app.route("/createRoom",methods=["POST"])
+@app.route("/createRoom",methods=["GET"])
 def createRoom():
     roomName = request.json['roomName']
     introduction = request.json['introduction']
     roomContent = request.json['roomContent']
     private_public = request.json['private_public']
-    userID = session.get("userID")
+    userID = session['userID']
     # 使用者所擁有的房間中已經有相同的名字
     if repeatRoomName(roomName,userID) == True:
         return "name of room is repeat"
     roomID = roomInsert(roomName,introduction,roomContent,userID,private_public)
     return jsonify({'roomID':roomID})
-########### 刪除房間 ###########
-@app.route("/deleteRoom",methods=["POST"])
-def deleteRoom():
-    roomID = session.get('userID')
-    deleteRoom(roomID)
+############# 搜索房間 by roomName (首頁) #############
+@app.route("/filterRoomName",methods=["POST"])
+def filterRoomName():
+    roomName = request.json['roomName']
+    private_public = "public"
+    result = findRoomByRoomName(roomName,private_public)
+    return jsonify({'result':result})
 ############# 儲存房間 #############
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():

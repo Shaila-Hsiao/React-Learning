@@ -9,7 +9,7 @@ function Home() {
                 <li><Link to="../signup">註冊</Link></li>
                 <li><Link to="../signin">登入</Link></li>
                 <li><Link to="../login">訪客首頁</Link></li>
-                <li><Link to="../album">用戶登入頁面</Link></li>
+                <li><Link to="../album">用戶登入頁面123</Link></li>
             </ul>
         </div>
     );
