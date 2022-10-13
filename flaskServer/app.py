@@ -170,7 +170,7 @@ def userAllRoom():
     result = findRoomByUserID(userID)
     return jsonify({'result':result})
 ########### 創建房間並插入 DB ###########
-@app.route("/createRoom",methods=["GET"])
+@app.route("/createRoom",methods=["POST"])
 def createRoom():
     roomName = request.json['roomName']
     introduction = request.json['introduction']
@@ -181,6 +181,8 @@ def createRoom():
     if repeatRoomName(roomName,userID) == True:
         return "duplicate name of room"
     roomID = roomInsert(roomName,introduction,roomContent,userID,private_public)
+    # 儲存房間json 的session
+    session['roomContent'] = roomContent
     return jsonify({'roomID':roomID})
 ############# 儲存房間 #############
 @app.route("/saveRoom",methods=["POST"])
