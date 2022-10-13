@@ -1,8 +1,7 @@
 from myModule.connectDB import connection,cursor
-import base64
 from datetime import datetime
 import json
-
+from myModule.upload_save import  uploadFile
 # all the item in DB (FIXME: 1. 抓到 userID 的 modelList，userID 獲取哪些 model)
 def getEntireItem():
     command = f"SELECT name,thumbnailPath,jsPath,type FROM `item` WHERE 1"
@@ -26,10 +25,6 @@ def modelInsert(thumbnailPath,texturePath,jsPath):
     jsName = jsPath.split("/")[-1][:-3]
     print("JSpath:",jsPath)
     print("JSName:",jsName)
-    # read model.js
-    # with open(jsPath) as f:
-    #     data = json.load(f)
-    #     data = json.dumps(data) # json to string
     # insert into DB
     try:
         command = f"INSERT INTO `item`(`name`, `thumbnailPath`, `texturePath`, `jsPath`) VALUES ('{jsName}','{thumbnailPath}','{texturePath}','{jsPath}')"
@@ -40,20 +35,6 @@ def modelInsert(thumbnailPath,texturePath,jsPath):
         return modelID
     except:
         return 0
-# 存取使用者上傳的 obj, mtl, texture
-def uploadFile(fileName,content,fileType,path):
-    # 檔案
-    if fileType == 'file':
-        writeInFile(f"{path}/{fileName}",content,"w")
-    # 圖片
-    elif fileType == 'image':
-        content = content.split(",")[1]
-        content = base64.b64decode(content)
-        writeInFile(f"{path}/{fileName}",content,"wb")
-def writeInFile(path,text,mode):
-    f = open(path, mode)
-    f.write(text)
-    f.close()
 # 取得 message 資訊
 def modelInfo(modelID,userID,table):
     command = f"SELECT `{table}ID` from `item` WHERE id = '{modelID}'"

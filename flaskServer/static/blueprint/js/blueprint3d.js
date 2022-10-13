@@ -3683,7 +3683,7 @@ var BP3D;
                     var height = wall.height;
                     var width = edge.interiorDistance();
                     texture.wrapT = THREE.RepeatWrapping;
-                    texturemultiply.wrapS = THREE.RepeatWrapping;
+                    texture.wrapS = THREE.RepeatWrapping;
                     texture.repeat.set(width / scale, height / scale);
                     texture.needsUpdate = true;
                 }

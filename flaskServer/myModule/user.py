@@ -1,7 +1,6 @@
 from flask_bcrypt import Bcrypt
 # path: ./myModule
 from myModule.connectDB import connection,cursor
-
 # register
 def userRegister(name,userID,passwd,email):
     # 檢查帳號有沒有重複
@@ -9,18 +8,21 @@ def userRegister(name,userID,passwd,email):
     # 此帳號已經註冊過
     if cursor.execute(sql) != 0:
         print("duplicate account")
-        return False
+        return "duplicate account"
     # 密碼雜湊
     bcrypt = Bcrypt()
     passwd = bcrypt.generate_password_hash(password=passwd)
     # bytes to string
     passwd = passwd.decode()
     # 插入資料庫
-    sql = f"INSERT INTO `account`(`name`,`userID`, `passwd`, `email`) VALUES ('{name}','{userID}','{passwd}','{email}')"
-    cursor.execute(sql)
+    try:
+        sql = f"INSERT INTO `account`(`name`,`userID`, `passwd`, `email`) VALUES ('{name}','{userID}','{passwd}','{email}')"
+        cursor.execute(sql)
+        connection.commit()
+        return "success"
+    except:
+        return "chinese can't appear in userID"
     # 更新到 DB
-    connection.commit()
-    return True
 # login
 def userLogin(userID,passwd):
     # 回傳使用者的 name and userID
@@ -56,6 +58,27 @@ def getUserId(userID):
         return result
     result = dataList[0]
     return result
+# 更新密碼
+def updatePersonal(userID,name,passwd,email,introduction):
+    try:
+        # 密碼雜湊
+        bcrypt = Bcrypt()
+        passwd = bcrypt.generate_password_hash(password=passwd)
+        # bytes to string
+        passwd = passwd.decode()
+        command = f"UPDATE `account` SET name = '{name}', passwd = '{passwd}', email = '{email}', introduction = '{introduction}' WHERE userID = '{userID}'"
+        cursor.execute(command)
+        connection.commit()
+        return True
+    except:
+        return False
+# 大頭貼更換
+def updateHeadshot(userID,headshotPath):
+    command = f"UPDATE `account` SET headshotPath = '{headshotPath}' WHERE userID = '{userID}'"
+    cursor.execute(command)
+    connection.commit()
+
+
 
 
     # with connection.cursor() as cursor:

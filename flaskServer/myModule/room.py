@@ -2,7 +2,7 @@ from myModule.connectDB import connection,cursor
 
 # 房間有沒有重複的名字
 def repeatRoomName(roomName,userID):
-    command = f"SELECT * FROM `room` WHERE name = '{roomName}' and Find_in_set('{userID}',room.userID)"
+    command = f"SELECT * FROM `room` WHERE roomName = '{roomName}' and Find_in_set('{userID}',room.userID)"
     cursor.execute(command)
     dataList = cursor.fetchall()
     # user 有重複名字的房間
@@ -11,14 +11,14 @@ def repeatRoomName(roomName,userID):
     return False
 
 # 更新房間內容
-def updateRoom(roomID,name,imgPath,introduction,roomContent,private_public):
-    command = f"UPDATE `room` SET `name` = '{name}',`imgPath` = '{imgPath}',`introduction` = '{introduction}', `roomContent` = '{roomContent}', `private_public` = '{private_public}' WHERE id = '{roomID}'"
+def updateRoom(roomID,roomName,roomImgPath,introduction,roomContent,private_public):
+    command = f"UPDATE `room` SET `roomName` = '{roomName}',`roomImgPath` = '{roomImgPath}',`introduction` = '{introduction}', `roomContent` = '{roomContent}', `private_public` = '{private_public}' WHERE id = '{roomID}'"
     cursor.execute(command)
     connection.commit()
 
 # insert into DB
-def roomInsert(name,introduction,roomContent,userID,private_public):
-    command = f"INSERT INTO `room`(`name`, `introduction`, `roomContent`, `userID`, `private_public`) VALUES ('{name}','{introduction}','{roomContent}','{userID}','{private_public}')"
+def roomInsert(roomName,introduction,roomContent,userID,private_public):
+    command = f"INSERT INTO `room`(`roomName`, `introduction`, `roomContent`, `userID`, `private_public`) VALUES ('{roomName}','{introduction}','{roomContent}','{userID}','{private_public}')"
     cursor.execute(command)
     connection.commit()
 
@@ -37,56 +37,39 @@ def isRoomEditor(roomID,userID):
     if userID in dataList:
         return True
     return False
+# DB 取得的資訊轉換成 dictionary
+def dataDic(dataList):
+    data = []
+    for i in dataList:
+        row = dict()
+        row['id'] = i[0]
+        row['roomName'] = i[1]
+        row['introduce'] = i[2]
+        row['imgPath'] = i[3]
+        row['roomContent'] = i[4]
+        row['userID'] = i[5]
+        row['private_public'] = i[6]
+        row['msgList'] = i[7]
+        data.append(row)
+    return data
 # 首頁 --- 取得房間資訊
 def getAllRoom(private_public):
     command = f"SELECT * FROM `room` WHERE private_public = '{private_public}'"
     cursor.execute(command)
     dataList = cursor.fetchall()
-    data = []
-    for i in dataList:
-        row = dict()
-        row['id'] = i[0]
-        row['name'] = i[1]
-        row['introduce'] = i[2]
-        row['roomContent'] = i[3]
-        row['userID'] = i[4]
-        row['private_public'] = i[5]
-        row['msgList'] = i[6]
-        data.append(row)
-    return data
+    return dataDic(dataList)
 
 # find all of rooms by user
 def findRoomByUserID(userID):
     command = f"SELECT * FROM `room` WHERE Find_in_set('{userID}',room.userID)"
     cursor.execute(command)
     dataList = cursor.fetchall()
-    data = []
-    for i in dataList:
-        row = dict()
-        row['id'] = i[0]
-        row['name'] = i[1]
-        row['introduce'] = i[2]
-        row['roomContent'] = i[3]
-        row['userID'] = i[4]
-        row['private_public'] = i[5]
-        row['msgList'] = i[6]
-        data.append(row)
-    return data
+    return dataDic(dataList)
+
 def findRoomByRoomName(roomName,private_public):
-    command = f"SELECT * FROM `room` WHERE `name` = {roomName} and `public_private` = {private_public}"
+    command = f"SELECT * FROM `room` WHERE `roomName` = {roomName} and `public_private` = {private_public}"
     cursor.execute(command)
     dataList = cursor.fetchall()
-    data = []
-    for i in dataList:
-        row = dict()
-        row['id'] = i[0]
-        row['name'] = i[1]
-        row['introduce'] = i[2]
-        row['roomContent'] = i[3]
-        row['userID'] = i[4]
-        row['private_public'] = i[5]
-        row['msgList'] = i[6]
-        data.append(row)
-    return data
+    return dataDic(dataList)
 # 留言板
 # JSON_CONTAINS(`userID`,'test');
