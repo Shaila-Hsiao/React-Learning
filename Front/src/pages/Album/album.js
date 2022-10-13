@@ -1,20 +1,10 @@
 import * as React from 'react';
-import { styled, useTheme, createTheme, ThemeProvider } from '@mui/material/styles';
+import {  createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Toolbar from '@mui/material/Toolbar';
+// import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import BedroomChildIcon from '@mui/icons-material/BedroomChild';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import Avatar from '@mui/material/Avatar';
 import { useNavigate } from "react-router-dom";
-import Menu from '@mui/material/Menu';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import Card from '@mui/material/Card';
@@ -27,13 +17,8 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { CardActionArea } from '@mui/material';
 import room1 from '../../assets/images/room1.jpg'; // 圖片的位置
-import user from '../../assets/images/user.jpg';
-import Badge from '@mui/material/Badge';
-import AppBar from '@mui/material/AppBar';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
-
+import httpClient from '../../httpClient';
 const cards = [1, 2, 3, 4];
 
 const theme = createTheme({
@@ -59,32 +44,48 @@ const theme = createTheme({
 
 function Album() {
   const navigate = useNavigate();
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
+  // const [anchorElNav, setAnchorElNav] = React.useState(null);
+  // const [anchorElUser, setAnchorElUser] = React.useState(null);
+  // const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-  const handleOpenNotifications = (event) => {
-    setAnchorElNotifications(event.currentTarget);
-  };
+  // const handleOpenNavMenu = (event) => {
+  //   setAnchorElNav(event.currentTarget);
+  // };
+  // const handleOpenUserMenu = (event) => {
+  //   setAnchorElUser(event.currentTarget);
+  // };
+  // const handleOpenNotifications = (event) => {
+  //   setAnchorElNotifications(event.currentTarget);
+  // };
 
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
+  // const handleCloseNavMenu = () => {
+  //   setAnchorElNav(null);
+  // };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+  // const handleCloseUserMenu = () => {
+  //   setAnchorElUser(null);
+  // };
 
-  const handleCloseNotifications = () => {
-    setAnchorElNotifications(null);
-  };
+  // const handleCloseNotifications = () => {
+  //   setAnchorElNotifications(null);
+  // };
+  const CreateRoom = async (event) => {
+    event.preventDefault();
+    try {
+      const resp = await httpClient.get("//localhost:5000/@me", {
+        
+      });
+      console.log(resp)
+      // if login success
+      navigate("/createRoom");
+      // window.location.href = "//localhost:5000/createRoom";
+    } catch (error) {
+      if (error.response.status === 401) {
+        alert("請先登入!");
 
+      }
+    }
+  }
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -118,7 +119,7 @@ function Album() {
             spacing={2}
             justifyContent="center"
           >
-            <Button variant="contained" size="large" onClick={() => navigate("/createroom")}>新增房間</Button>
+            <Button variant="contained" size="large" onClick={CreateRoom}>新增房間</Button>
             {/* <Button variant="outlined">Secondary action</Button>  */} {/* 第二種按鈕 */}
             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                 <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />

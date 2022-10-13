@@ -8,7 +8,7 @@ import SignUp from './pages/SignUp/SignUp';
 import Login from './pages/Login/Login';
 // import LandingPage from './pages/Home';
 import Album from './pages/Album/album';
-import DrawerItem from './pages/Album/drawerItem';
+// import DrawerItem from './pages/Album/drawerItem';
 import Room from './pages/Room/room';
 import RoomIntro from './pages/Room/RoomIntro';
 import CreateRoom from './pages/Room/createRoom';
@@ -30,7 +30,7 @@ export const Router = () => {
           <Route path='/Intro' element={<RoomIntro />} />  {/* 房間簡介 */}
           <Route path='/CreateRoom' element={<CreateRoom />} /> {/*創建房間*/}
           <Route path='/AllRoom' element={<AllRoom />} /> {/* 查看所有房間 */}
-          <Route path="/DrawerItem" element={<DrawerItem />} />
+
           <Route path="/userdata" element={<UserData />} /> {/* 用戶資料修改 */}
           <Route path="/roomedit" element={<RoomEdit />} /> {/* 房間資料修改 */}
       </Routes>
