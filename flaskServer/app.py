@@ -186,7 +186,7 @@ def createRoom():
     userID = session.get("userID")
     # 使用者所擁有的房間中已經有相同的名字
     if repeatRoomName(roomName,userID) == True:
-        return "duplicate name of room"
+        return "name of room is repeat"
     roomID = roomInsert(roomName,introduction,roomContent,userID,private_public)
     # 儲存房間json 的session
     session['roomContent'] = roomContent
