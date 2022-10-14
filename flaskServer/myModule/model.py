@@ -4,6 +4,7 @@ import json
 from myModule.upload_save import  uploadFile
 # all the item in DB (FIXME: 1. 抓到 userID 的 modelList，userID 獲取哪些 model)
 def getEntireItem():
+    # 使用者
     command = f"SELECT name,thumbnailPath,jsPath,type FROM `item` WHERE 1"
     cursor.execute(command)
     dataList = cursor.fetchall()

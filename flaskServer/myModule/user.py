@@ -16,7 +16,10 @@ def userRegister(name,userID,passwd,email):
     passwd = passwd.decode()
     # 插入資料庫
     try:
-        sql = f"INSERT INTO `account`(`name`,`userID`, `passwd`, `email`) VALUES ('{name}','{userID}','{passwd}','{email}')"
+        modelList = "1"
+        for i in range(2,26):
+            modelList += f",{i}"
+        sql = f"INSERT INTO `account`(`name`,`userID`, `passwd`, `email`, `modelList`) VALUES ('{name}','{userID}','{passwd}','{email}','{modelList}')"
         cursor.execute(sql)
         connection.commit()
         return "success"

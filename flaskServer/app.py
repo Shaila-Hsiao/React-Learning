@@ -21,8 +21,8 @@ CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://loca
 
 @app.route("/")
 def root():
-    return render_template("index.html")
-    # return render_template("blueprint.html")
+    # return render_template("index.html")
+    return render_template("blueprint.html")
     # return render_template("verification.html")
 ############# 註冊 #############
 @app.route("/register",methods=["POST"])
@@ -32,6 +32,7 @@ def register():
     passwd = request.json['passwd']
     email = request.json['email']
     result = userRegister(name,userID,passwd,email)
+    session['userID'] = userID
     if result == "success":
         return jsonify({
             "userID":userID,
@@ -53,13 +54,13 @@ def login():
         return jsonify({
             "login":name
         })
-    return "Fail"
+    return "account or password is error."
 ############# 登出 #############
 @app.route("/logout",methods=["POST"])
 def logout_user():
     session.pop("userID")
     return "200"
-############# 取得使用者 ID #############
+############# 取得使用者資料 #############
 @app.route("/@me",methods = ["GET"])
 def get_current_user():
     userID = session.get("userID")
@@ -244,8 +245,6 @@ def modifyHeadshot():
     # 更新大頭照路徑
     updateHeadshot(userID,path)
     return jsonify({'headshotName':headshotName})
-
-
 ############# 點擊 model 取得內部資訊(照片、文字等) #############
 @app.route("/getModelInfo",methods=["POST"])
 def getModelInfo():
