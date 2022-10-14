@@ -1,10 +1,11 @@
 version: '3'
 
 services:
+
   mysql:
     image: mysql:latest
     ports:
-      - 3316:3316
+      - 3316:3306
     volumes:
       - ./db:/docker-entrypoint-initdb.d/:ro
     environment:
