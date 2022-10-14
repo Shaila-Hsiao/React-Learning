@@ -24,6 +24,7 @@ def root():
     # return render_template("index.html")
     return render_template("blueprint.html")
     # return render_template("verification.html")
+
 ############# 註冊 #############
 @app.route("/register",methods=["POST"])
 def register():
@@ -40,6 +41,7 @@ def register():
             "username":name
         })
     return jsonify({'result':result})
+
 ############# 登入 #############
 @app.route("/login",methods=["POST"])
 def login():
@@ -87,6 +89,7 @@ def updateMTL(mtl,textureName):
             mtl[i] = line[0] + " " + textureName
         newContext += mtl[i] +"\n"
     return newContext
+
 ############# 上傳 model #############
 @app.route("/upload",methods=["POST"])
 def upload():
@@ -158,18 +161,21 @@ def userClickRoom():
     # 儲存房間 json
     session['roomContent'] = roomContent
     return render_template("blueprint.html")
+
 ############# 載入房間 #############
 @app.route("/loadRoom",methods=["GET"])
 def loadRoom():
     # roomContent = session['roomContent']
     # return {'roomContent':roomContent}
     return "test"
+
 ############# user 所有的房間資料 #############
 @app.route("/userAllRoom",methods=["POST"])
 def userAllRoom():
     userID = session.get("userID")
     result = findRoomByUserID(userID)
     return jsonify({'result':result})
+
 ########### 創建房間並插入 DB ###########
 @app.route("/createRoom",methods=["POST"])
 def createRoom():
@@ -185,6 +191,7 @@ def createRoom():
     # 儲存房間json 的session
     session['roomContent'] = roomContent
     return jsonify({'roomID':roomID})
+
 ############# 儲存房間 #############
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():
@@ -213,6 +220,7 @@ def saveRoom():
         updateRoom(roomID,roomName,path,introduction,roomContent,private_public)
         result = "房間存取成功"
     return jsonify({'result':result})
+
 ############# 搜索房間 by roomName (首頁) #############
 @app.route("/filterRoomName",methods=["GET"])
 def filterRoomName():
@@ -220,12 +228,14 @@ def filterRoomName():
     private_public = "on"
     result = findRoomByRoomName(roomName,private_public)
     return jsonify({'result':result})
+
 ############# 首頁瀏覽 #############
 @app.route("/allRoom",methods=["GET"])
 def allRoom():
     private_public = "on"
     result = getAllRoom(private_public)
     return jsonify({'result':result})
+
 ############# 修改個人資訊 #############
 @app.route("/modifyPersonal",methods=["POST"])
 def modifyPersonal():
@@ -233,6 +243,7 @@ def modifyPersonal():
     passwd = request.json['passwd']
     result = updatePersonal(userID,passwd)
     return jsonify({'result':result})
+
 ############# 更新大頭貼 #############
 @app.route("/modifyHeadshot",methods=["POST"])
 def modifyHeadshot():
