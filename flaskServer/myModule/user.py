@@ -8,7 +8,7 @@ def userRegister(name,userID,passwd,email):
     # 此帳號已經註冊過
     if cursor.execute(sql) != 0:
         print("duplicate account")
-        return "duplicate account"
+        return "Duplicate account !"
     # 密碼雜湊
     bcrypt = Bcrypt()
     passwd = bcrypt.generate_password_hash(password=passwd)
@@ -24,7 +24,7 @@ def userRegister(name,userID,passwd,email):
         connection.commit()
         return "success"
     except:
-        return "chinese can't appear in userID"
+        return "Chinese can't appear in userID"
     # 更新到 DB
 # login
 def userLogin(userID,passwd):

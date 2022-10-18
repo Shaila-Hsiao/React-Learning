@@ -18,6 +18,16 @@ import { Link } from "react-router-dom";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
 import httpClient from '../../httpClient';
+
+import IconButton from "@mui/material/IconButton";
+// import FilledInput from "@mui/material/FilledInput";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+// import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 // function Copyright(props) {
 //   return (
 //     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -50,6 +60,38 @@ const theme = createTheme({
 
 export  default function SignUp() {
   const navigate = useNavigate();
+
+  // 密碼欄位設定
+  const [values, setValues] = React.useState({
+    // userID: "",
+    // name:"",
+    // email:"",
+    password: "",
+    // pwdVerify:"",
+    showPassword: false
+  });
+  // 密碼輸入更改
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+  // 密碼顯示
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword
+    });
+  };
+  // 滑鼠移置密碼欄位時
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+
+
+
+
+  // ==================================
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -66,21 +108,47 @@ export  default function SignUp() {
 
       
     });
-    try {
-      const resp = await httpClient.post("//localhost:5000/register", {
-        userID,
-        name,
-        email,
-        passwd,
-      });
-      console.log(resp)
-      // if login success
-      window.location.href = "/";
-    } catch (error) {
-      if (error.response.status === 401) {
-        alert("Invalid credentials");
-        
+    // 檢查是否有輸入完全
+    let NullData = [];
+    for (const pair of data.entries()) {
+      if (pair[1] == "" ){
+        // console.log(data.values());
+        // console.log("未填寫: ",pair[0]+pair[1]);
+        // alert();
+        NullData.push(pair[0]); 
       }
+    }
+    let Nullitem="";
+    NullData.forEach(element => {
+      Nullitem += element+",\n"
+      console.log("未填寫項:",element)
+    });
+    console.log(Nullitem)
+    if(Nullitem != ""){
+      alert("尚未填寫以下項目: \n"+Nullitem);
+    }else{
+      try{
+        const resp = await httpClient.post("//localhost:5000/register", {
+          userID,
+          name,
+          email,
+          passwd,
+        });
+        console.log(resp.data.result);
+        if(resp.data.result != null){
+          alert(resp.data.result);
+        }else{
+          // if sign up success , navigate to home
+          window.location.href = "/";
+        }
+      }catch (error) {
+        if (error.response.status == 401) {
+          alert("Invalid credentials");
+          
+        }
+
+    }
+    
     }
   };
 
@@ -120,6 +188,7 @@ export  default function SignUp() {
                   label="帳號(userID)"
                   autoFocus
                 />
+                
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -142,22 +211,46 @@ export  default function SignUp() {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
+                {/* <TextField
                   required
                   fullWidth
                   name="passwd"
                   label="密碼"
                   type="password"
                   id="passwd"
-                />
+                /> */}
+                <FormControl fullWidth required >
+                  <InputLabel htmlFor="outlined-adornment-password">密碼</InputLabel>
+                  <OutlinedInput
+                    id="passwd"
+                    name="passwd"
+                    type={values.showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    onChange={handleChange('password')}
+                    endAdornment={
+                      <InputAdornment position="end" >
+                        
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                        >
+                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="密碼"
+                  />
+                </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
-                  name="password"
+                  // name="PwdVerify"
                   label="密碼驗證"
-                  type="password"
+                  type={values.showPassword ? "text" : "password"}
                   id="password"
                 />
               </Grid>
@@ -165,7 +258,7 @@ export  default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  name="verification"
+                  // name="verification"
                   label="驗證碼"
                   id="verification"
                 />

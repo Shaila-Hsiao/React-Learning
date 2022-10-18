@@ -18,6 +18,16 @@ import Toolbar from '@mui/material/Toolbar';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import httpClient from '../../httpClient';
 
+// password
+import IconButton from "@mui/material/IconButton";
+// import FilledInput from "@mui/material/FilledInput";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+// import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 // function Copyright(props) {
 //   return (
 //     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -50,10 +60,37 @@ const theme = createTheme({
 
 
 export default function Login() {
-  
-
   const navigate = useNavigate();
- 
+  // 密碼
+  // 密碼欄位設定
+  const [values, setValues] = React.useState({
+    // userID: "",
+    // name:"",
+    // email:"",
+    password: "",
+    // pwdVerify:"",
+    showPassword: false
+  });
+  // 密碼輸入更改
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+  // 密碼顯示
+  const handleClickShowPassword = () => {
+    setValues({
+      ...values,
+      showPassword: !values.showPassword
+    });
+  };
+  // 滑鼠移置密碼欄位時
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+
+
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -69,9 +106,15 @@ export default function Login() {
         passwd,
       });
       console.log(resp)
-      // if login success
-      window.location.href = "/";
+      // if Login fail
+      if(resp.data === "LoginFail"){
+        alert("帳號或密碼錯誤! \n請重新輸入!");
+      }else{
+        // if Login Success , navigate to home
+        window.location.href = "/";
+      }
     } catch (error) {
+      console.log(error)
       if (error.response.status === 401) {
         alert("Invalid credentials");
         
@@ -119,7 +162,7 @@ export default function Login() {
               autoComplete="email"
               autoFocus
             />
-            <TextField
+            {/* <TextField
               margin="normal"
               required
               fullWidth
@@ -128,7 +171,31 @@ export default function Login() {
               type="password"
               id="passwd"
               autoComplete="current-password"
-            />
+            /> */}
+            <FormControl fullWidth required >
+              <InputLabel htmlFor="outlined-adornment-password">密碼</InputLabel>
+              <OutlinedInput
+                id="passwd"
+                name="passwd"
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.password}
+                onChange={handleChange('password')}
+                endAdornment={
+                  <InputAdornment position="end" >
+                    
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+                label="密碼"
+              />
+            </FormControl>
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="記住我"

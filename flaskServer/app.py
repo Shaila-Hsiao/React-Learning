@@ -56,7 +56,7 @@ def login():
         return jsonify({
             "login":name
         })
-    return "account or password is error."
+    return "LoginFail"
 ############# 登出 #############
 @app.route("/logout",methods=["POST"])
 def logout_user():
