@@ -3,8 +3,9 @@ from datetime import timedelta
 import os
 import secrets
 # path : /flaskServer/myModule
-from myModule.user import userRegister,userLogin,updateModelList,getUserId,updatePersonal,updateHeadshot
-from myModule.model import uploadFile,modelInsert,getEntireItem,saveMessage,saveRecording,saveImage,modelInfo
+from myModule.user import userRegister,userLogin,updateModelList,userAllModel,getUserId,updatePersonal,updateHeadshot
+from myModule.model import uploadFile,modelInsert,getEntireItem,saveMessage,saveRecording,saveImage
+from myModule.itemInfo import modelInfo
 from myModule.room import findRoomByUserID,updateRoom,roomInsert,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom
 from myModule.upload_save import uploadFile
 from flask_cors import CORS
@@ -105,7 +106,7 @@ def upload():
     thumbnail = request.form.get('thumbnail')
     texture = request.form.get('texture')
     thumbnailName = secrets.token_hex()+".jpg"
-    textureName = secrets.token_hex()+"jpg"
+    textureName = secrets.token_hex()+".jpg"
     # thumbnailName = b64encode(os.urandom(20)).decode('utf-8')
     # textureName = b64encode(os.urandom(20)).decode('utf-8')
     # userID = session.get("userID")
@@ -137,22 +138,25 @@ def upload():
         thumbnailPath = f"{thumbnailPath}/{thumbnailName}"
         texturePath = f"{texturePath}/{textureName}"
         # 成功插入資料庫
-        modelID = modelInsert(thumbnailPath,texturePath,outputPath)
-        if  modelID > 0:
+        itemID = modelInsert(thumbnailPath,texturePath,outputPath)
+        if  itemID > 0:
             result = "上傳成功"
         else:
             result = "上傳失敗，請注意檔案名稱不可為中文"
             os.remove(outputPath)
     # if result == "上傳成功":
-    #     updateModelList(modelID,userID)
+    #     updateModelList(itemID,userID)
     # user 上傳的 model 做處理: obj to file and insert into database
     return {'result':result,'name':modelName,'model':outputPath,'type':1,'image':thumbnailPath}
 
 ############# 取得所有 model 資訊 #############
 @app.route("/getItem",methods=["POST"])
 def getItem():
-    items = getEntireItem()
-    return jsonify({'itemList':items})
+    userID = session.get('userID')
+    print(userID)
+    itemList = userAllModel(userID) # 取得 user 所有 model 清單
+    result = getEntireItem(itemList) # 取得 model 所有資訊
+    return jsonify({'itemsInfo':result})
 
 ############# user 選擇房間進入 #############
 @app.route("/userClickRoom",methods=["GET"])
@@ -256,15 +260,32 @@ def modifyHeadshot():
     # 更新大頭照路徑
     updateHeadshot(userID,path)
     return jsonify({'headshotName':headshotName})
+############# 儲存 model 內部資訊(照片、文字等) #############
+# FIXME: 未完成
+@app.route("/getModelInfo",methods=["POST"])
+def saveModelInfo():
+    roomID = request.json['roomID']
+    itemID = request.json['itemID']
+    title = request.json['title']
+    weather = request.json['weather']
+    message = request.json['message']
+    recordName = request.json['recordName']
+    imageName = request.json['imageName']
+    # 語音處理
+    # 照片處理
+    # recordPath = 
+    # itemID = request.json['itemID']
+    # userID = session.get("userID")
+    # result = modelInfo(itemID)
+    # return jsonify(result)
 ############# 點擊 model 取得內部資訊(照片、文字等) #############
+# FIXME: 未完成
 @app.route("/getModelInfo",methods=["POST"])
 def getModelInfo():
-    modelID = request.json['modelID']
-    userID = session.get("userID")
-    result = dict()
-    result['message'] = modelInfo(modelID,userID,"message")
-    result['recording'] = modelInfo(modelID,userID,"recording")
-    result['image'] = modelInfo(modelID,userID,"image")
+    roomID = request.form.get('roomID')
+    itemID = request.form.get('itemID')
+    # userID = session.get("userID")
+    result = modelInfo(roomID,itemID)
     return jsonify(result)
 
 

@@ -16,10 +16,10 @@ def userRegister(name,userID,passwd,email):
     passwd = passwd.decode()
     # 插入資料庫
     try:
-        modelList = "1"
+        itemList = "1"
         for i in range(2,26):
-            modelList += f",{i}"
-        sql = f"INSERT INTO `account`(`name`,`userID`, `passwd`, `email`, `modelList`) VALUES ('{name}','{userID}','{passwd}','{email}','{modelList}')"
+            itemList += f",{i}"
+        sql = f"INSERT INTO `account`(`name`,`userID`, `passwd`, `email`, `itemList`) VALUES ('{name}','{userID}','{passwd}','{email}','{itemList}')"
         cursor.execute(sql)
         connection.commit()
         return "success"
@@ -44,10 +44,10 @@ def userLogin(userID,passwd):
     if isCorrect:
         result = dataList[0][0]
     return result
-# model 上傳成功要新增到資料庫的 modelList
-def updateModelList(modelID,userID):
-    # update user's modelList
-    command = f"UPDATE `account` SET `modelList`=CONCAT(`modelList`,',{modelID}') WHERE userID = '{userID}'"
+# model 上傳成功要新增到資料庫的 itemList
+def updateItemList(modelID,userID):
+    # update user's itemList
+    command = f"UPDATE `account` SET `itemList`=CONCAT(`itemList`,',{modelID}') WHERE userID = '{userID}'"
     cursor.execute(command)
     connection.commit()
 def getUserId(userID):
@@ -80,7 +80,13 @@ def updateHeadshot(userID,headshotPath):
     command = f"UPDATE `account` SET headshotPath = '{headshotPath}' WHERE userID = '{userID}'"
     cursor.execute(command)
     connection.commit()
-
+# 取得使用者所有 model 清單
+def userAllModel(userID):
+    sql = f"SELECT itemList FROM `account` WHERE userID = '{userID}'"
+    cursor.execute(sql) # 執行 sql 指令
+    dataList = cursor.fetchone()
+    dataList = dataList[0].split(",")
+    return dataList
 
 
 
