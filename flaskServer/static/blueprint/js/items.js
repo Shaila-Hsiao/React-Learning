@@ -8,7 +8,7 @@ $(document).ready(function () {
     async: false,
     /*result為后端函式回傳的json*/
     success: function (result) {
-      items = result.itemList
+      items = result.itemsInfo
       initItemList(items);
     },
     error: function(error){
