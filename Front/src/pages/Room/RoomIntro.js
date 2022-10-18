@@ -73,9 +73,9 @@ export default function RoomIntro() {
   // };
   return (
     <ThemeProvider theme={theme}>
+      <NavbarDrawer />
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <NavbarDrawer />
       </Box>
         <main>
         {/* Hero unit */}
