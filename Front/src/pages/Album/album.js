@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {  createTheme, ThemeProvider } from '@mui/material/styles';
+import React ,{useEffect,useState} from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 // import Toolbar from '@mui/material/Toolbar';
@@ -19,7 +19,7 @@ import { CardActionArea } from '@mui/material';
 import room1 from '../../assets/images/room1.jpg'; // 圖片的位置
 import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
 import httpClient from '../../httpClient';
-const cards = [1, 2, 3, 4];
+var cards = [];
 
 const theme = createTheme({
   palette: {
@@ -44,6 +44,10 @@ const theme = createTheme({
 
 function Album() {
   const navigate = useNavigate();
+
+  // 更新 room 
+  const [rooms, setRoom] = useState();
+
   // const [anchorElNav, setAnchorElNav] = React.useState(null);
   // const [anchorElUser, setAnchorElUser] = React.useState(null);
   // const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
@@ -69,11 +73,11 @@ function Album() {
   // const handleCloseNotifications = () => {
   //   setAnchorElNotifications(null);
   // };
+
   const CreateRoom = async (event) => {
     event.preventDefault();
     try {
       const resp = await httpClient.get("//localhost:5000/@me", {
-        
       });
       console.log(resp)
       // if login success
@@ -86,6 +90,66 @@ function Album() {
       }
     }
   }
+  // 前往房間簡介設定
+  const GoTORoomIntro = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const roomID = data.get('roomID');
+    const passwd =  data.get('passwd');
+    console.log({
+      roomID
+    });
+    // Post 給後端檢查
+    alert("in");
+    try {
+      const resp = await httpClient.post("//localhost:5000/loadRoomInfo", {
+        roomID,
+      });
+        
+      console.log(resp)
+      // if login success
+      window.location.href = "/intro";
+    } catch (error) {
+      if (error.response.status === 401) {
+        alert("NO room");
+      }
+    }
+  };
+
+  // room 狀態確認
+  useEffect(() => {
+    (async () => {
+      try {
+        const resp = await httpClient.get("//localhost:5000/allRoom");
+        // 資料的內容會是一個 json 裡面是一個 list 中有房間資料的 json
+        // { [ {room 1 infor }, {room 2 infor }, {room 3 infor }... ] }
+        console.log(resp.data.result);
+        setRoom(resp.data.result);
+        const temp = resp.data.result;
+        cards = [];
+        console.log("cards", cards);
+        for (let i = 0; i < temp.length; i ++) {
+          cards.push(temp[i]);
+        }
+        console.log("cards", cards);
+      } catch (error) {
+        console.log("No room data");
+      }
+    })();
+  }, []);
+
+  // const PutCards = async (event) => {
+  //   const animals = ["Dog", "Bird", "Cat", "Mouse", "Horse"];
+  //   return (
+  //     animals.map(animal => {animal})
+  //     // <ul>
+  //     //   {animals.map(animal => (
+  //     //     <li>{animal}</li>
+  //     //   ))}
+  //     // </ul>
+  //   )
+  // }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -129,6 +193,29 @@ function Album() {
         </Container>
       </Box>
       {/* Card */}
+      {rooms && (
+        <Container sx={{ py: 8 }}>
+          {/* End hero unit  */}
+          <Grid container spacing={4}>
+            {cards.map((card) => (
+              <Grid item key={card} xs={12} sm={6} md={3}>
+                <Card
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                >
+                  <CardActionArea onClick={GoTORoomIntro("3")}>
+                    <CardMedia
+                      component="img"
+                      image={card[1]}
+                      alt={card[0]}
+                    />
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      )}
+      <Box sx={{ bgcolor: 'background.paper', p: 3 }} />
       <Container sx={{ py: 8 }}>
         {/* End hero unit  */}
         <Grid container spacing={4}>
@@ -141,8 +228,9 @@ function Album() {
                   <CardMedia
                     component="img"
                     image={room1}
-                    alt="random"
+                    alt={card}
                   />
+                  
                 </CardActionArea>
               </Card>
             </Grid>
@@ -162,44 +250,9 @@ function Album() {
                 <CardMedia
                   component="img"
                   image={room1}
-                  alt="random"
+                  alt={card}
                 />
                 </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-      <Box sx={{ bgcolor: 'background.paper', p: 3 }} />
-      <Container sx={{ py: 8 }} maxWidth="md">
-        {/* End hero unit  */}
-        <Grid container spacing={4}>
-          {cards.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={3}>
-              <Card
-                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-              >
-                <CardMedia
-                  component="img"
-                  sx={{
-                    // 16:9
-                    pt: '56.25%',
-                  }}
-                  image="https://source.unsplash.com/random"
-                  alt="random"
-                />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    房間名稱
-                  </Typography>
-                  <Typography>
-                    空間佈置說明
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small">參觀</Button>
-                  {/* <Button size="small">Edit</Button> */}
-                </CardActions>
               </Card>
             </Grid>
           ))}

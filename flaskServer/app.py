@@ -3,8 +3,9 @@ from datetime import timedelta
 import os
 import secrets
 # path : /flaskServer/myModule
-from myModule.user import userRegister,userLogin,updateModelList,getUserId,updatePersonal,updateHeadshot
-from myModule.model import uploadFile,modelInsert,getEntireItem,saveMessage,saveRecording,saveImage,modelInfo
+from myModule.user import userRegister,userLogin,getUserId,updatePersonal,updateHeadshot,updateItemList
+from myModule.model import uploadFile,modelInsert,getEntireItem
+from myModule.itemInfo import modelInfo
 from myModule.room import findRoomByUserID,updateRoom,roomInsert,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom
 from myModule.upload_save import uploadFile
 from flask_cors import CORS
@@ -21,9 +22,10 @@ CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://loca
 
 @app.route("/")
 def root():
-    return render_template("index.html")
-    # return render_template("blueprint.html")
+    # return render_template("index.html")
+    return render_template("blueprint.html")
     # return render_template("verification.html")
+
 ############# 註冊 #############
 @app.route("/register",methods=["POST"])
 def register():
@@ -32,6 +34,7 @@ def register():
     passwd = request.json['passwd']
     email = request.json['email']
     result = userRegister(name,userID,passwd,email)
+    session['userID'] = userID
     if result == "success":
         return jsonify({
             "userID":userID,
@@ -39,6 +42,7 @@ def register():
             "username":name
         })
     return jsonify({'result':result})
+
 ############# 登入 #############
 @app.route("/login",methods=["POST"])
 def login():
@@ -53,13 +57,13 @@ def login():
         return jsonify({
             "login":name
         })
-    return "Fail"
+    return "LoginFail"
 ############# 登出 #############
 @app.route("/logout",methods=["POST"])
 def logout_user():
     session.pop("userID")
     return "200"
-############# 取得使用者 ID #############
+############# 取得使用者資料 #############
 @app.route("/@me",methods = ["GET"])
 def get_current_user():
     userID = session.get("userID")
@@ -86,6 +90,7 @@ def updateMTL(mtl,textureName):
             mtl[i] = line[0] + " " + textureName
         newContext += mtl[i] +"\n"
     return newContext
+
 ############# 上傳 model #############
 @app.route("/upload",methods=["POST"])
 def upload():
@@ -101,7 +106,7 @@ def upload():
     thumbnail = request.form.get('thumbnail')
     texture = request.form.get('texture')
     thumbnailName = secrets.token_hex()+".jpg"
-    textureName = secrets.token_hex()+"jpg"
+    textureName = secrets.token_hex()+".jpg"
     # thumbnailName = b64encode(os.urandom(20)).decode('utf-8')
     # textureName = b64encode(os.urandom(20)).decode('utf-8')
     # userID = session.get("userID")
@@ -133,22 +138,26 @@ def upload():
         thumbnailPath = f"{thumbnailPath}/{thumbnailName}"
         texturePath = f"{texturePath}/{textureName}"
         # 成功插入資料庫
-        modelID = modelInsert(thumbnailPath,texturePath,outputPath)
-        if  modelID > 0:
+        itemID = modelInsert(thumbnailPath,texturePath,outputPath)
+        if  itemID > 0:
             result = "上傳成功"
         else:
             result = "上傳失敗，請注意檔案名稱不可為中文"
             os.remove(outputPath)
+    # 更新 table aacount 的 itemList
     # if result == "上傳成功":
-    #     updateModelList(modelID,userID)
+    #     updateItemList(itemID,userID) 
     # user 上傳的 model 做處理: obj to file and insert into database
     return {'result':result,'name':modelName,'model':outputPath,'type':1,'image':thumbnailPath}
 
 ############# 取得所有 model 資訊 #############
 @app.route("/getItem",methods=["POST"])
 def getItem():
-    items = getEntireItem()
-    return jsonify({'itemList':items})
+    userID = session.get('userID')
+    print(userID)
+    itemList = userAllModel(userID) # 取得 user 所有 model 清單
+    result = getEntireItem(itemList) # 取得 model 所有資訊
+    return jsonify({'itemsInfo':result})
 
 ############# user 選擇房間進入 #############
 @app.route("/userClickRoom",methods=["GET"])
@@ -157,18 +166,21 @@ def userClickRoom():
     # 儲存房間 json
     session['roomContent'] = roomContent
     return render_template("blueprint.html")
+
 ############# 載入房間 #############
 @app.route("/loadRoom",methods=["GET"])
 def loadRoom():
     # roomContent = session['roomContent']
     # return {'roomContent':roomContent}
     return "test"
+
 ############# user 所有的房間資料 #############
-@app.route("/userAllRoom",methods=["POST"])
+@app.route("/userAllRoom",methods=["GET"])
 def userAllRoom():
     userID = session.get("userID")
     result = findRoomByUserID(userID)
     return jsonify({'result':result})
+
 ########### 創建房間並插入 DB ###########
 @app.route("/createRoom",methods=["POST"])
 def createRoom():
@@ -179,11 +191,12 @@ def createRoom():
     userID = session.get("userID")
     # 使用者所擁有的房間中已經有相同的名字
     if repeatRoomName(roomName,userID) == True:
-        return "duplicate name of room"
+        return "name of room is repeat"
     roomID = roomInsert(roomName,introduction,roomContent,userID,private_public)
     # 儲存房間json 的session
     session['roomContent'] = roomContent
     return jsonify({'roomID':roomID})
+
 ############# 儲存房間 #############
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():
@@ -212,6 +225,7 @@ def saveRoom():
         updateRoom(roomID,roomName,path,introduction,roomContent,private_public)
         result = "房間存取成功"
     return jsonify({'result':result})
+
 ############# 搜索房間 by roomName (首頁) #############
 @app.route("/filterRoomName",methods=["GET"])
 def filterRoomName():
@@ -219,12 +233,14 @@ def filterRoomName():
     private_public = "on"
     result = findRoomByRoomName(roomName,private_public)
     return jsonify({'result':result})
+
 ############# 首頁瀏覽 #############
 @app.route("/allRoom",methods=["GET"])
 def allRoom():
     private_public = "on"
     result = getAllRoom(private_public)
     return jsonify({'result':result})
+
 ############# 修改個人資訊 #############
 @app.route("/modifyPersonal",methods=["POST"])
 def modifyPersonal():
@@ -232,6 +248,7 @@ def modifyPersonal():
     passwd = request.json['passwd']
     result = updatePersonal(userID,passwd)
     return jsonify({'result':result})
+
 ############# 更新大頭貼 #############
 @app.route("/modifyHeadshot",methods=["POST"])
 def modifyHeadshot():
@@ -244,17 +261,32 @@ def modifyHeadshot():
     # 更新大頭照路徑
     updateHeadshot(userID,path)
     return jsonify({'headshotName':headshotName})
-
-
+############# 儲存 model 內部資訊(照片、文字等) #############
+# FIXME: 未完成
+@app.route("/getModelInfo",methods=["POST"])
+def saveModelInfo():
+    roomID = request.json['roomID']
+    itemID = request.json['itemID']
+    title = request.json['title']
+    weather = request.json['weather']
+    message = request.json['message']
+    recordName = request.json['recordName']
+    imageName = request.json['imageName']
+    # 語音處理
+    # 照片處理
+    # recordPath = 
+    # itemID = request.json['itemID']
+    # userID = session.get("userID")
+    # result = modelInfo(itemID)
+    # return jsonify(result)
 ############# 點擊 model 取得內部資訊(照片、文字等) #############
+# FIXME: 未完成
 @app.route("/getModelInfo",methods=["POST"])
 def getModelInfo():
-    modelID = request.json['modelID']
-    userID = session.get("userID")
-    result = dict()
-    result['message'] = modelInfo(modelID,userID,"message")
-    result['recording'] = modelInfo(modelID,userID,"recording")
-    result['image'] = modelInfo(modelID,userID,"image")
+    roomID = request.form.get('roomID')
+    itemID = request.form.get('itemID')
+    # userID = session.get("userID")
+    result = modelInfo(roomID,itemID)
     return jsonify(result)
 
 
