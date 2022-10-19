@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React ,{useEffect,useState} from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -9,6 +9,7 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
 import user from '../../assets/images/user.jpg';
+import httpClient from "../../httpClient";
 
 const theme = createTheme({
   palette: {
@@ -33,6 +34,8 @@ const theme = createTheme({
 
 function UserData() {
   const navigate = useNavigate();
+   // user 更新
+  const [user, setUser] = useState();
   // const [anchorElNav, setAnchorElNav] = React.useState(null);
   // const [anchorElUser, setAnchorElUser] = React.useState(null);
   // const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
@@ -58,13 +61,29 @@ function UserData() {
   // const handleCloseNotifications = () => {
   //   setAnchorElNotifications(null);
   // };
-
+  // user 狀態確認
+  useEffect(() => {
+    (async () => {
+      try {
+        const resp = await httpClient.get("//localhost:5000/@me");
+        
+        console.log(resp.data.userID)
+        console.log(resp.data.name)
+        console.log(resp.data.email)
+        setUser(resp.data);
+        console.log(user)
+      } catch (error) {
+        console.log("Not authenticated");
+      }
+    })();
+  }, []);
   return (
     <ThemeProvider theme={theme}>
+      <NavbarDrawer />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <NavbarDrawer />
       </Box>
+    {user && (
       <Box
         sx={{
           padding: 2
@@ -163,7 +182,7 @@ function UserData() {
                         id="roomName"
                         label="個人名稱"
                         bgcolor='#fff'
-                        defaultValue="Lin"
+                        defaultValue= {user.name}
                       />
                     </Box>
                     <Box sx={{ p: 1.5 }} />
@@ -174,11 +193,12 @@ function UserData() {
                         id="roomName"
                         label="電子郵件"
                         bgcolor='#fff'
-                        defaultValue="mikimiomio@gmail.com"
+                        defaultValue={user.email}
                       />
                     </Box>
                     <Box sx={{ p: 1.5 }} />
                     <Box bgcolor='#fff' borderRadius='4px' padding={2}>
+                     
                       <TextField
                         required
                         fullWidth
@@ -187,8 +207,9 @@ function UserData() {
                         multiline
                         rows={9}
                         bgcolor='#fff'
-                        defaultValue="這個人很懶甚麼都沒留下..."
+                        defaultValue={user.name}
                       />
+                      {/* {user.name} */}
                     </Box>
                     <Box sx={{ p: 1.5 }} />
                     <Button
@@ -196,7 +217,7 @@ function UserData() {
                       size="large"
                       onClick={() => navigate("/selectRoom")}
                       sx={{ bgcolor: '#7f0808', color: '#fff', flexGrow: 0 }}
-                    >更新</Button>
+                      >更新</Button>
                   </Box>
                 </Grid>
               </Grid>
@@ -204,6 +225,7 @@ function UserData() {
           </Box>
         </Box>
       </Box>
+    )}
     </ThemeProvider>
   );
 }

@@ -564,7 +564,7 @@ var mainControls = function (blueprint3d) {
 // =====================
 // upload model
 // =====================
-var uploadInit = function(sideMenu){
+var uploadInit = function(){
   async function handleTexture() {
     const reader = new FileReader();//建立FileReader物件
     // 使用 readAsDataURL 將圖片轉成 Base64
@@ -642,7 +642,6 @@ var uploadInit = function(sideMenu){
             item.name +
             '</a></div>';
             $("#items-wrapper").append(html);
-            sideMenu = new SideMenu(blueprint3d, viewerFloorplanner, modalEffects);
             // sideMenu = new SideMenu(blueprint3d, viewerFloorplanner, modalEffects);
             // SideMenu(blueprint3d, viewerFloorplanner, modalEffects);
         }

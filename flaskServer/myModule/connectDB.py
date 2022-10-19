@@ -22,3 +22,14 @@ def setting():
 # 建立連結
 connection = setting()
 cursor = connection.cursor()
+
+"""
+db_settings = {
+    "host": "mysql",
+    'user': 'root',
+    'password': 'root',
+    'port': '3306',
+    'database': 'blueprint',
+    'auth_plugin': 'mysql_native_password'
+}
+"""

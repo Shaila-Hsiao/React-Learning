@@ -119,7 +119,8 @@ export const NavbarDrawer = () => {
         try {
           const resp = await httpClient.get("//localhost:5000/@me");
           
-          console.log(resp.data.id)
+          console.log(resp.data.userID)
+          console.log(resp.data.name)
           console.log(resp.data.email)
           setUser(resp.data);
         } catch (error) {
@@ -139,7 +140,7 @@ export const NavbarDrawer = () => {
               variant="h6"
               noWrap
               component="a"
-              href="/album"
+              href="/"
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -152,9 +153,9 @@ export const NavbarDrawer = () => {
             >
               首頁
             </Typography>
-
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
+            
+            {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}> */}
+              {/* <IconButton
                 size="large"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -163,8 +164,8 @@ export const NavbarDrawer = () => {
                 color="inherit"
               >
                 <MenuIcon />
-              </IconButton>
-              <Menu
+              </IconButton> */}
+              {/* <Menu
                 id="menu-appbar"
                 anchorEl={anchorElNav}
                 anchorOrigin={{
@@ -191,28 +192,11 @@ export const NavbarDrawer = () => {
                 <MenuItem onClick={() => navigate("/")}>
                   聯絡我們
                 </MenuItem>
-              </Menu>
-            </Box>
+              </Menu> */}
+            {/* </Box> */}
 
-            <PermContactCalendarIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href=""
-              sx={{
-                mr: 2,
-                display: { xs: 'flex', md: 'none' },
-                flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              首頁
-            </Typography>
+            
+            
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}}>
               <MenuItem onClick={() => navigate("/")}>
                 會員中心
@@ -284,7 +268,7 @@ export const NavbarDrawer = () => {
                   <ListItemIcon>
                     <BedroomChildIcon fontSize="small" />
                   </ListItemIcon>
-                  全部房間
+                  {user.name}的房間
                 </MenuItem>
                 <MenuItem onClick={() => navigate("/userdata")}>
                   <ListItemIcon>

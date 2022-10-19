@@ -3,7 +3,7 @@ from datetime import timedelta
 import os
 import secrets
 # path : /flaskServer/myModule
-from myModule.user import userRegister,userLogin,getUserId,updatePersonal,updateHeadshot,updateItemList
+from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList
 from myModule.model import uploadFile,modelInsert,getEntireItem
 from myModule.itemInfo import modelInfo
 from myModule.room import findRoomByUserID,updateRoom,roomInsert,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom
@@ -22,8 +22,8 @@ CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://loca
 
 @app.route("/")
 def root():
-    # return render_template("index.html")
-    return render_template("blueprint.html")
+    return render_template("index.html")
+    # return render_template("blueprint.html")
     # return render_template("verification.html")
 
 ############# 註冊 #############
@@ -239,6 +239,7 @@ def filterRoomName():
 def allRoom():
     private_public = "on"
     result = getAllRoom(private_public)
+    print(result)
     return jsonify({'result':result})
 
 ############# 修改個人資訊 #############
