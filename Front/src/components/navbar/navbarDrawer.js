@@ -244,7 +244,7 @@ export const NavbarDrawer = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar src={user} />
+                  <Avatar />
                 </IconButton>
               </Tooltip>
               <Menu

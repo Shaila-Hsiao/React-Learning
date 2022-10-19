@@ -75,7 +75,7 @@ function Album() {
   // };
 
   const CreateRoom = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     try {
       const resp = await httpClient.get("//localhost:5000/@me", {
       });
@@ -91,30 +91,30 @@ function Album() {
     }
   }
   // 前往房間簡介設定
-  const GoTORoomIntro = async (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const roomID = data.get('roomID');
-    const passwd =  data.get('passwd');
-    console.log({
-      roomID
-    });
-    // Post 給後端檢查
-    alert("in");
-    try {
-      const resp = await httpClient.post("//localhost:5000/loadRoomInfo", {
-        roomID,
-      });
+  // const GoTORoomIntro = async (event) => {
+  //   event.preventDefault();
+  //   const data = new FormData(event.currentTarget);
+  //   const roomID = data.get('roomID');
+  //   const passwd =  data.get('passwd');
+  //   console.log({
+  //     roomID
+  //   });
+  //   // Post 給後端檢查
+  //   alert("in");
+  //   try {
+  //     const resp = await httpClient.post("//localhost:5000/loadRoomInfo", {
+  //       roomID,
+  //     });
         
-      console.log(resp)
-      // if login success
-      window.location.href = "/intro";
-    } catch (error) {
-      if (error.response.status === 401) {
-        alert("NO room");
-      }
-    }
-  };
+  //     console.log(resp)
+  //     // if login success
+  //     window.location.href = "/intro";
+  //   } catch (error) {
+  //     if (error.response.status === 401) {
+  //       alert("NO room");
+  //     }
+  //   }
+  // };
 
   // room 狀態確認
   useEffect(() => {
@@ -202,7 +202,8 @@ function Album() {
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
-                  <CardActionArea onClick={GoTORoomIntro("3")}>
+                  {/* <CardActionArea onClick={GoTORoomIntro("3")}> */}
+                  <CardActionArea >
                     <CardMedia
                       component="img"
                       image={card[1]}

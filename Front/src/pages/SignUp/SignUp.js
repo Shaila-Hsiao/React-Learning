@@ -111,7 +111,7 @@ export  default function SignUp() {
     // 檢查是否有輸入完全
     let NullData = [];
     for (const pair of data.entries()) {
-      if (pair[1] == "" ){
+      if (pair[1] === "" ){
         // console.log(data.values());
         // console.log("未填寫: ",pair[0]+pair[1]);
         // alert();
@@ -124,7 +124,7 @@ export  default function SignUp() {
       console.log("未填寫項:",element)
     });
     console.log(Nullitem)
-    if(Nullitem != ""){
+    if(Nullitem !== ""){
       alert("尚未填寫以下項目: \n"+Nullitem);
     }else{
       try{
@@ -142,7 +142,7 @@ export  default function SignUp() {
           window.location.href = "/";
         }
       }catch (error) {
-        if (error.response.status == 401) {
+        if (error.response.status === 401) {
           alert("Invalid credentials");
           
         }
