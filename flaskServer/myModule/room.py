@@ -63,7 +63,7 @@ def findRoomByUserID(userID):
     command = f"SELECT * FROM `room` WHERE Find_in_set('{userID}',room.userID)"
     cursor.execute(command)
     dataList = cursor.fetchall()
-    return dataDic(dataList)
+    return dataList
 
 # find room by roomID
 def findRoomByRoomID(roomID):

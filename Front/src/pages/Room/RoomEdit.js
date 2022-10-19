@@ -80,9 +80,9 @@ export default function RoomEdit() {
 
     return (
         <ThemeProvider theme={theme}>
+            <NavbarDrawer />
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <NavbarDrawer />
             </Box>
             <main>
                 <Box sx={{ padding: 2 }}>
@@ -146,7 +146,7 @@ export default function RoomEdit() {
                                             <Button
                                                 variant="contained"
                                                 size="large"
-                                                onClick={() => navigate("/selectRoom")}
+                                                onClick={() => navigate("/allroom")}
                                                 sx={{ bgcolor: '#7f0808', color: '#fff' }}
                                             >取消</Button>
                                         </Box>
