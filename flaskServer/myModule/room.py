@@ -44,17 +44,16 @@ def dataDic(dataList):
         row = dict()
         row['id'] = i[0]
         row['roomName'] = i[1]
-        row['introduce'] = i[2]
+        row['introduction'] = i[2]
         row['imgPath'] = i[3]
         row['roomContent'] = i[4]
         row['userID'] = i[5]
         row['private_public'] = i[6]
-        row['msgList'] = i[7]
         data.append(row)
     return data
 # 首頁 --- 取得房間資訊
 def getAllRoom(private_public):
-    command = f"SELECT * FROM `room` WHERE private_public = '{private_public}'"
+    command = f"SELECT id, roomImgPath FROM `room` WHERE private_public = '{private_public}'"
     cursor.execute(command)
     dataList = cursor.fetchall()
     return dataDic(dataList)
@@ -62,6 +61,14 @@ def getAllRoom(private_public):
 # find all of rooms by user
 def findRoomByUserID(userID):
     command = f"SELECT * FROM `room` WHERE Find_in_set('{userID}',room.userID)"
+    cursor.execute(command)
+    dataList = cursor.fetchall()
+    return dataDic(dataList)
+
+# find room by roomID
+def findRoomByRoomID(roomID):
+    command = f"SELECT `roomName`,`introduction`,`roomImgPath`, `name`, `passwd`, `introduction`, `headshotPath`\
+                FROM `room` RIGHT JOIN `account` ON `room`.userID= `account`.userID"
     cursor.execute(command)
     dataList = cursor.fetchall()
     return dataDic(dataList)

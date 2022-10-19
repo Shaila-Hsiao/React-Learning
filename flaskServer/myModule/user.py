@@ -87,7 +87,9 @@ def userAllModel(userID):
     dataList = cursor.fetchone()
     dataList = dataList[0].split(",")
     return dataList
-
+# 上傳 model 後，ID 新增到 table `account` 的 itemList
+# def updateItemList(userID):
+#     command = ""
 
 
     # with connection.cursor() as cursor:

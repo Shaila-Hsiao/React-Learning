@@ -3,8 +3,8 @@ from datetime import timedelta
 import os
 import secrets
 # path : /flaskServer/myModule
-from myModule.user import userRegister,userLogin,updateModelList,userAllModel,getUserId,updatePersonal,updateHeadshot
-from myModule.model import uploadFile,modelInsert,getEntireItem,saveMessage,saveRecording,saveImage
+from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList
+from myModule.model import uploadFile,modelInsert,getEntireItem
 from myModule.itemInfo import modelInfo
 from myModule.room import findRoomByUserID,updateRoom,roomInsert,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom
 from myModule.upload_save import uploadFile
@@ -144,8 +144,9 @@ def upload():
         else:
             result = "上傳失敗，請注意檔案名稱不可為中文"
             os.remove(outputPath)
+    # 更新 table aacount 的 itemList
     # if result == "上傳成功":
-    #     updateModelList(itemID,userID)
+    #     updateItemList(itemID,userID) 
     # user 上傳的 model 做處理: obj to file and insert into database
     return {'result':result,'name':modelName,'model':outputPath,'type':1,'image':thumbnailPath}
 
@@ -174,7 +175,7 @@ def loadRoom():
     return "test"
 
 ############# user 所有的房間資料 #############
-@app.route("/userAllRoom",methods=["POST"])
+@app.route("/userAllRoom",methods=["GET"])
 def userAllRoom():
     userID = session.get("userID")
     result = findRoomByUserID(userID)
