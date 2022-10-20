@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
@@ -32,7 +32,7 @@ const theme = createTheme({
 });
 
 export default function RoomIntro() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const [anchorElNav, setAnchorElNav] = React.useState(null);
   // const [anchorElUser, setAnchorElUser] = React.useState(null);
   // const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
@@ -111,7 +111,13 @@ export default function RoomIntro() {
                             <p>度過多少個夜晚多少個白晝</p>
                             <p>以此屋為念</p>
                         </Typography>
-                        <Button variant="contained" size="large">參觀</Button>
+                        <Button
+                            variant="contained"
+                            size="large"
+                            onClick={() => navigate("/allroom")}
+                            sx={{ bgcolor: '#7f0808', color: '#fff' }}
+                        >返回</Button>
+                        
                     </Box>
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -145,6 +151,7 @@ export default function RoomIntro() {
                             <Typography variant='h6'>Author : Lin</Typography>
                             <Typography variant='h6'>上次更新時間 : 3 days ago</Typography>
                         </Box>
+                        <Button variant="contained" size="large">參觀</Button>
                     </Box>
                 </Grid>
             </Grid>

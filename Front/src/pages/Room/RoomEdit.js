@@ -174,7 +174,9 @@ export default function RoomEdit() {
                                                     <FormHelperText>Be careful</FormHelperText>
                                                 </FormControl>
                                             </Box>
+                                            
                                             <Box sx={{ p: 1 }} />
+
                                             <Box bgcolor='#fff' borderRadius='4px'>
                                                 <TextField
                                                     required
@@ -186,7 +188,9 @@ export default function RoomEdit() {
                                                     bgcolor='#fff'
                                                 />
                                             </Box>
+
                                             <Box sx={{ p: 2 }} />
+
                                             <Box sx={{ textAlign: "right" }}>
                                                 <Button
                                                     variant="contained"

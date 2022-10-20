@@ -15,8 +15,8 @@ import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
 import { useNavigate } from "react-router-dom";
 import {useEffect,useState} from 'react';
 import httpClient from '../../httpClient';
-
-const cards = [1, 2, 3];
+import Button from '@mui/material/Button';
+var cards = [];
 
 const theme = createTheme({
   palette: {
@@ -76,15 +76,13 @@ function AllRoom() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   useEffect(() => {
     (async () => {
       try {
         const resp = await httpClient.get("//localhost:5000/userAllRoom");
-        // 資料的內容會是一個 json 裡面是一個 list 中有房間資料的 json
-        // { [ {room 1 infor }, {room 2 infor }, {room 3 infor }... ] }
         console.log(resp.data.result);
-        setRoom(resp.data.result);
+        
+        setRoom(resp.data);
         const temp = resp.data.result;
         cards = [];
         console.log("cards", cards);
@@ -92,18 +90,39 @@ function AllRoom() {
           cards.push(temp[i]);
         }
         console.log("cards", cards);
-      }catch (error) {
-        console.log("No room data");
+      } catch (error) {
+        console.log("Not authenticated");
       }
     })();
   }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const resp = await httpClient.get("//localhost:5000/userAllRoom");
+  //       // 資料的內容會是一個 json 裡面是一個 list 中有房間資料的 json
+  //       // { [ {room 1 infor }, {room 2 infor }, {room 3 infor }... ] }
+  //       console.log(resp.data.result);
+  //       setRoom(resp.data.result);
+  //       const temp = resp.data.result;
+  //       cards = [];
+  //       console.log("cards", cards);
+  //       for (let i = 0; i < temp.length; i ++) {
+  //         cards.push(temp[i]);
+  //       }
+  //       console.log("cards", cards);
+  //     }catch(error) {
+  //       console.log("No room data");
+  //     }
+  //   })();
+  // }, []);
 
   return (
     <ThemeProvider theme={theme}>
+      {rooms && (
       <NavbarDrawer />
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-      </Box>
+      )}
+      
+      <CssBaseline />
       <main>
 
         {/* Hero unit */}
@@ -127,6 +146,7 @@ function AllRoom() {
           </Container>
         </Box>
         {/* Card */}
+        {rooms !=null ?(
         <Container sx={{ py: 8 }} maxWidth="md">
           {/* End hero unit  */}
           <Grid container spacing={4}>
@@ -164,8 +184,8 @@ function AllRoom() {
                       'aria-labelledby': 'basic-button',
                     }}
                   >
-                    <MenuItem onClick={handleClose}>房間簡介</MenuItem>
-                    <MenuItem onClick={handleClose}>編輯空間</MenuItem>
+                    <MenuItem onClick={() => navigate("/RoomIntro")}>房間簡介</MenuItem>
+                    <MenuItem onClick={() => navigate("/RoomEdit")}>編輯空間</MenuItem>
                     <MenuItem onClick={handleClose}>刪除空間</MenuItem>
                   </Menu>
                 </Card>
@@ -173,7 +193,16 @@ function AllRoom() {
             ))}
           </Grid>
         </Container>
-      
+      ):( 
+        <Container maxWidth="sm">
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() => navigate("/CreateRoom")}
+            sx={{ bgcolor: '#7f0808', color: '#fff' }}
+        >創建房間</Button>
+          </Container>
+      )}
       </main>
       {/* Footer */}
       <Box sx={{ bgcolor: 'primary.main', p: 6 }} component="footer">

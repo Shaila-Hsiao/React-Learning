@@ -8,8 +8,8 @@ import { useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
+// import CardActions from '@mui/material/CardActions';
+// import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -153,8 +153,9 @@ function Album() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <NavbarDrawer/>
-      
+      {rooms && (
+        <NavbarDrawer/>
+      )}
     <main>
       {/* Hero unit */}
       <Box

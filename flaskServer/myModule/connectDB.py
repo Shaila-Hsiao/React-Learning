@@ -8,6 +8,7 @@ def setting():
         "user": "root",
         "password": "",
         "db": "blueprint",
+        # "autoconnect":"True"
         # "charset": "utf8"
     }
     try:
@@ -22,7 +23,7 @@ def setting():
 # 建立連結
 connection = setting()
 cursor = connection.cursor()
-
+# cursor.close()
 """
 db_settings = {
     "host": "mysql",

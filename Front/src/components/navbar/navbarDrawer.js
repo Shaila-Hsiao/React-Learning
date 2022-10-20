@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 // import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+// import MenuIcon from '@mui/icons-material/Menu';
 // import Divider from '@mui/material/Divider';
 // import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 // import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -119,9 +119,9 @@ export const NavbarDrawer = () => {
         try {
           const resp = await httpClient.get("//localhost:5000/@me");
           
-          console.log(resp.data.userID)
-          console.log(resp.data.name)
-          console.log(resp.data.email)
+          // console.log(resp.data.userID)
+          // console.log(resp.data.name)
+          // console.log(resp.data.email)
           setUser(resp.data);
         } catch (error) {
           console.log("Not authenticated");
@@ -140,7 +140,7 @@ export const NavbarDrawer = () => {
               variant="h6"
               noWrap
               component="a"
-              href="/"
+              onClick={() => navigate("/")}
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
