@@ -22,10 +22,14 @@ CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://loca
 
 @app.route("/")
 def root():
-    return render_template("index.html")
-    # return render_template("blueprint.html")
+    # return render_template("index.html")
+    return render_template("blueprint.html")
     # return render_template("verification.html")
-
+@app.route("/content")
+def content():
+    # return render_template("index.html")
+    return render_template("content.html")
+    # return render_template("verification.html")
 ############# 註冊 #############
 @app.route("/register",methods=["POST"])
 def register():
@@ -158,6 +162,20 @@ def getItem():
     itemList = userAllModel(userID) # 取得 user 所有 model 清單
     result = getEntireItem(itemList) # 取得 model 所有資訊
     return jsonify({'itemsInfo':result})
+############# 取得目前此 model 資訊 #############
+# @app.route("/getModelInfo",methods=["POST"])
+# def getModelInfo():
+#     roomID = request.form.get('roomID')
+#     itemID = request.form.get('itemID')
+#     # # 取得此model的roomID、modelID
+#     # # 得到itemI
+#     # userID = session.get('userID')
+#     # print(userID)
+#     # itemList = userAllModel(userID) # 取得 user 所有 model 清單
+#     # result = getEntireItem(itemList) # 取得 model 所有資訊
+
+#     # return jsonify({'itemsInfo':result})
+#     return jsonify({'ModelInfo':"hello"})
 
 ############# user 選擇房間進入 #############
 @app.route("/userClickRoom",methods=["GET"])
@@ -264,7 +282,7 @@ def modifyHeadshot():
     return jsonify({'headshotName':headshotName})
 ############# 儲存 model 內部資訊(照片、文字等) #############
 # FIXME: 未完成
-@app.route("/getModelInfo",methods=["POST"])
+@app.route("/saveModelInfo",methods=["POST"])
 def saveModelInfo():
     roomID = request.json['roomID']
     itemID = request.json['itemID']
