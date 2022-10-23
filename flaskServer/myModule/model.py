@@ -7,7 +7,9 @@ def getEntireItem(modelList):
     # list to tuple
     modelList = tuple(modelList)
     # 取得 model 資訊
-    command = f"SELECT name,thumbnailPath,jsPath,type FROM `item` WHERE id in {modelList}"
+    # command = f"SELECT name,thumbnailPath,jsPath,type FROM `item` WHERE id in {modelList}"
+    # FIXME: 暫時測試，所以使用以下 command
+    command = f"SELECT name,thumbnailPath,jsPath,type FROM `item` WHERE 1"
     cursor.execute(command)
     dataList = cursor.fetchall()
     items = []
@@ -38,7 +40,6 @@ def modelInsert(thumbnailPath,texturePath,jsPath):
         return itemID
     except:
         return 0
-
 
 
 
