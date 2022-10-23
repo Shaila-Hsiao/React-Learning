@@ -16,6 +16,7 @@ import AllRoom from './pages/Room/AllRoom';
 // import SelectRoom from './pages/Room/selectRoom';
 import UserData from './pages/Album/userdata';
 import RoomEdit from './pages/Room/RoomEdit';
+import Search from './pages/Album/search';
 
 export const Router = () => {
   return (
@@ -33,6 +34,7 @@ export const Router = () => {
 
           <Route path="/userdata" element={<UserData />} /> {/* 用戶資料修改 */}
           <Route path="/roomedit" element={<RoomEdit />} /> {/* 房間資料修改 */}
+          <Route path="/search" element={<Search />} /> {/* 搜尋房間 */}
       </Routes>
     </BrowserRouter>
   )
