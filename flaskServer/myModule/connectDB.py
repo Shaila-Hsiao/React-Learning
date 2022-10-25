@@ -1,13 +1,17 @@
+# import mysql.connector 
 import pymysql # mysql
 # 連接資料庫
 def setting():
     # 資料庫設定
     db_settings = {
         "host": "localhost",
+        # "host": "mysql",
         "port": 3306,
         "user": "root",
         "password": "",
+        # "password": "root",
         "db": "blueprint",
+        'auth_plugin': 'mysql_native_password'
         # "charset": "utf8"
     }
     try:
@@ -21,7 +25,7 @@ def setting():
         return
 # 建立連結
 connection = setting()
-cursor = connection.cursor()
+cursor = connection.cursor(dictionary = True)
 
 """
 db_settings = {
