@@ -70,20 +70,46 @@ export default function RoomIntro() {
   // const handleClose = () => {
   //   setAnchorEl(null);
   // };
-
+  const redirectToGoogle = () => {
+    // window.location.href = location.href+"/blueprint";
+  };
+  const LoadRoom = async () =>{
+    console.log("RoomID:",RoomInfo);
+    // 前端 取得roomID，
+    try {
+      const resp = await httpClient.post("//localhost:5000/userClickRoom",{
+        RoomInfo
+      });
+      const oauthpage = window.open("/blueprint", "_self", "height=1000,width=500")
+      
+      // navigate("/blueprint");
+      // redirectToGoogle();
+      // console.log(resp.data.userID)
+      // console.log(resp.data.name)
+      // location.href += "/blueprint";
+      // window.location.replace(location.href)
+      // window.location.href = "https://www.typescriptlang.org";
+      // console.log(location.href);
+      //跳轉到HTTP://www.google.com
+      console.log(resp)
+    } catch (error) {
+      console.log("Not authenticated");
+    }
+    
+  }
   // 抓 room 簡介和作者資訊
   useEffect(() => {
     (async () => {
       try {
         var getUrlString = window.location.href;
         var url = new URL(getUrlString);
-        var roomID = url.searchParams.get('roomID')
+        var roomID = url.searchParams.get('roomID');
         console.log(roomID);
         const resp = await httpClient.post("//localhost:5000/RoomIntro", {
             roomID,
-          });
+        });
         console.log(resp.data.result);
-        setRoomInfo(resp.data.result);
+        setRoomInfo(roomID);
         const temp = resp.data.result;
         cards = [];
         for (let i = 0; i < temp[0].length; i ++) {
@@ -97,7 +123,9 @@ export default function RoomIntro() {
   }, []);
   return (
     <ThemeProvider theme={theme}>
-      <NavbarDrawer />
+      {RoomInfo&&(
+        <NavbarDrawer />
+      )}
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       </Box>
@@ -173,7 +201,7 @@ export default function RoomIntro() {
                             <Typography variant='h6'>{cards[5]}</Typography>
 
                         </Box>
-                        <Button variant="contained" size="large">參觀</Button>
+                        <Button variant="contained" size="large" onClick={LoadRoom} >參觀</Button>
                     </Box>
                 </Grid>
             </Grid>

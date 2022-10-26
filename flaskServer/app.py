@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, session, jsonify
+from cgi import print_form
+from flask import Flask, render_template, request, session, jsonify,redirect,url_for
 from datetime import timedelta
 import os
 import secrets
@@ -6,9 +7,10 @@ import secrets
 from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList,updatePasswd
 from myModule.model import modelInsert,getEntireItem
 from myModule.itemInfo import itemInformation
-from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID
+from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect
 from myModule.upload_save import uploadFile
 from flask_cors import CORS
+
 
 app = Flask(__name__)
 app.config['SESSION_USE_SIGNER'] = True
@@ -23,6 +25,11 @@ CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://loca
 @app.route("/")
 def root():
     return render_template("index.html")
+    # return render_template("blueprint.html")
+    # return render_template("verification.html")
+@app.route("/blueprint")
+def blueprint():
+    return render_template("blueprint.html")
     # return render_template("blueprint.html")
     # return render_template("verification.html")
 ############# 註冊 #############
@@ -174,20 +181,28 @@ def getItem():
 #     return jsonify({'ModelInfo':"hello"})
 
 ############# user 選擇房間進入 #############
-@app.route("/userClickRoom",methods=["GET"])
+@app.route("/userClickRoom",methods=["POST"])
 def userClickRoom():
-    roomID = request.json['roomID']
+    roomID = request.json['RoomInfo']
+    # roomID = request.args.get('roomID')
     # roomContent = request.json['roomContent']
     # 儲存房間 json
+    # roomID=4
     session['roomID'] = roomID
-    return render_template("blueprint.html")
+    print("RoomID :",roomID)
+    # return render_template("blueprint.html")
+    # redirect(url_for("blueprint"))
+    return "Success"
 
 ############# 載入房間 #############
 @app.route("/loadRoom",methods=["GET"])
 def loadRoom():
-    # roomContent = session['roomContent']
-    # return {'roomContent':roomContent}
-    return "test"
+    roomID = session.get("roomID")
+    print("RoomID :",roomID)
+    # 取得此 roomID 的 (roomContent)
+    roomContent = roomSelect(roomID)
+    return {'roomContent':roomContent}
+    # return "test"
 
 ############# user 所有的房間資料 #############
 @app.route("/userAllRoom",methods=["GET"])

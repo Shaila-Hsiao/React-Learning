@@ -120,13 +120,13 @@ var ContextMenu = function(blueprint3d) {
   // 
   function ModelInfo(){
     let roomID = 3
-    let itemName = "Closed Door"
+    let itemID = 1
     $.ajax({
         url: '/getItemInfo',
         type: "POST",
         data: {
             'roomID':roomID,
-            'itemName':itemName
+            'itemID':itemID
         },
         /*result為后端函式回傳的json*/
         success: function (resp) {

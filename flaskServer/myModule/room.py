@@ -80,3 +80,9 @@ def findRoomByRoomName(roomName,private_public):
     return dataDic(dataList)
 # 留言板
 # JSON_CONTAINS(`userID`,'test');
+
+def roomSelect(roomID):
+    command = f"SELECT roomContent FROM room WHERE id = {roomID}"
+    cursor.execute(command)
+    roomContent = cursor.fetchone()[0]
+    return roomContent

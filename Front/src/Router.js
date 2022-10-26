@@ -1,5 +1,8 @@
-import React from 'react'
-import { BrowserRouter,Routes, Route } from "react-router-dom";
+// import React from 'react'
+import { BrowserRouter,Routes, Route,Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+
 // import Album from "./pages/Album/album"
 // import Home from "./pages/Home/index";
 // import SecondPage from "./pages/SecondPage";
@@ -31,10 +34,18 @@ export const Router = () => {
           <Route path='/RoomIntro' element={<RoomIntro />} />  {/* 房間簡介 */}
           <Route path='/CreateRoom' element={<CreateRoom />} /> {/*創建房間*/}
           <Route path='/AllRoom' element={<AllRoom />} /> {/* 查看所有房間 */}
-
+          {/* <Route path="/blueprint" component={NotFound}/> */}
+          {/* <Link to="/blueprint"/> */}
           <Route path="/userdata" element={<UserData />} /> {/* 用戶資料修改 */}
           <Route path="/roomedit" element={<RoomEdit />} /> {/* 房間資料修改 */}
           <Route path="/search" element={<Search />} /> {/* 搜尋房間 */}
+          <Route
+            path="/blueprint"
+            component={() => {
+              window.location.replace('http://localhost:5000/blueprint');
+              return null;
+            }}
+          />
       </Routes>
     </BrowserRouter>
   )
