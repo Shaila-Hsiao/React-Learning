@@ -120,13 +120,13 @@ var ContextMenu = function(blueprint3d) {
   // 
   function ModelInfo(){
     let roomID = 3
-    let itemID = 1
+    let itemName = "Closed Door"
     $.ajax({
         url: '/getItemInfo',
         type: "POST",
         data: {
             'roomID':roomID,
-            'itemID':itemID
+            'itemName':itemName
         },
         /*result為后端函式回傳的json*/
         success: function (resp) {
@@ -140,7 +140,7 @@ var ContextMenu = function(blueprint3d) {
   }
   // 
  
-  // 
+  // 選擇物件時
   function itemSelected(item) {
     selectedItem = item;
     console.log("select!!!")

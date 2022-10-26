@@ -22,13 +22,13 @@ CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://loca
 
 @app.route("/")
 def root():
-    # return render_template("index.html")
-    return render_template("blueprint.html")
+    return render_template("index.html")
+    # return render_template("blueprint.html")
     # return render_template("verification.html")
 @app.route("/content")
 def content():
-    # return render_template("index.html")
-    return render_template("content.html")
+    return render_template("index.html")
+    # return render_template("content.html")
     # return render_template("verification.html")
 ############# 註冊 #############
 @app.route("/register",methods=["POST"])
@@ -181,9 +181,10 @@ def getItem():
 ############# user 選擇房間進入 #############
 @app.route("/userClickRoom",methods=["GET"])
 def userClickRoom():
-    roomContent = request.json['roomContent']
+    roomID = request.json['roomID']
+    # roomContent = request.json['roomContent']
     # 儲存房間 json
-    session['roomContent'] = roomContent
+    session['roomID'] = roomID
     return render_template("blueprint.html")
 
 ############# 載入房間 #############
@@ -270,9 +271,7 @@ def allRoom():
 @app.route("/RoomIntro",methods=["POST"])
 def loadRoomInfo():
     roomID = request.json['roomID']
-    print("roomID that we get ",roomID)
     result = findRoomByRoomID(roomID)
-    print("result", result)
     return jsonify({'result':result})
 
 ############# 修改個人資訊 #############

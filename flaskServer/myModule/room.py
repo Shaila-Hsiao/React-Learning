@@ -19,6 +19,7 @@ def updateRoom(roomID,roomName,roomImgPath,introduction,roomContent,private_publ
 # insert into DB
 def roomInsert(roomName,introduction,roomContent,userID,private_public):
     command = f"INSERT INTO `room`(`roomName`, `introduction`, `roomContent`, `userID`, `private_public`) VALUES ('{roomName}','{introduction}','{roomContent}','{userID}','{private_public}')"
+    # 新增至itemInfo
     cursor.execute(command)
     connection.commit()
 
