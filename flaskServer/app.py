@@ -184,25 +184,16 @@ def getItem():
 @app.route("/userClickRoom",methods=["POST"])
 def userClickRoom():
     roomID = request.json['RoomInfo']
-    # roomID = request.args.get('roomID')
-    # roomContent = request.json['roomContent']
-    # 儲存房間 json
-    # roomID=4
     session['roomID'] = roomID
-    print("RoomID :",roomID)
-    # return render_template("blueprint.html")
-    # redirect(url_for("blueprint"))
     return "Success"
 
 ############# 載入房間 #############
 @app.route("/loadRoom",methods=["GET"])
 def loadRoom():
     roomID = session.get("roomID")
-    print("RoomID :",roomID)
     # 取得此 roomID 的 (roomContent)
     roomContent = roomSelect(roomID)
     return {'roomContent':roomContent}
-    # return "test"
 
 ############# user 所有的房間資料 #############
 @app.route("/userAllRoom",methods=["GET"])
