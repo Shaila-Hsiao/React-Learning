@@ -188,7 +188,7 @@ function Album() {
             {/* <Button variant="outlined">Secondary action</Button>  */} {/* 第二種按鈕 */}
             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                 <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
-                <TextField variant="standard" fullWidth label="Room Number" id="RoomNum" />
+                <TextField variant="standard" fullWidth label="Room Name" id="RoomName" />
               </Box>
           </Stack>
         </Container>

@@ -19,7 +19,7 @@ function ModelInfo(){
     let roomID = 3
     let itemID = 1
     $.ajax({
-        url: '/getModelInfo',
+        url: '/getItemInfo',
         type: "POST",
         data: {
             'roomID':roomID,
@@ -28,9 +28,9 @@ function ModelInfo(){
         /*result為后端函式回傳的json*/
         success: function (resp) {
           // data = room.roomContent
-          console.log("success: ",resp);
-          $("#date").text(resp.date) 
-          $("#message").text(resp.message) 
+          console.log("success: ",resp.result);
+          $("#date").text(resp.result.date) 
+          $("#message").text(resp.result.message) 
         }
       });
 }

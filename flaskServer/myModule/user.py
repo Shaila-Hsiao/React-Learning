@@ -61,20 +61,34 @@ def getUserId(userID):
         return result
     result = dataList[0]
     return result
-# 更新密碼
-def updatePersonal(userID,name,passwd,email,introduction):
+# 更新個人資料
+def updatePersonal(userID,name,email,introduction):
     try:
-        # 密碼雜湊
-        bcrypt = Bcrypt()
-        passwd = bcrypt.generate_password_hash(password=passwd)
-        # bytes to string
-        passwd = passwd.decode()
-        command = f"UPDATE `account` SET name = '{name}', passwd = '{passwd}', email = '{email}', introduction = '{introduction}' WHERE userID = '{userID}'"
+        command = f"UPDATE `account` SET name = '{name}', email = '{email}', introduction = '{introduction}' WHERE userID = '{userID}'"
         cursor.execute(command)
         connection.commit()
         return True
     except:
         return False
+# 更新個人密碼
+def updatePasswd(userID,oldPasswd,newPasswd):
+    # 檢查密碼是否正確
+    command = f"SELECT `passwd` FROM `account` WHERE userID = '{userID}'"
+    cursor.execute(command)
+    pw = cursor.fetchone()[0]
+    bcrypt = Bcrypt()
+    isCorrect = bcrypt.check_password_hash(pw, oldPasswd) # 為何不用 WHERE 檢查密碼是否正確的原因: 因為使用者輸入密碼後，密碼採用雜湊存入 DB，導致同樣的密碼雜湊後每一次都不同
+    # 更新密碼
+    if isCorrect == True:
+        newPasswd = bcrypt.generate_password_hash(password=newPasswd).decode()
+        command = f"UPDATE `account` SET passwd = '{newPasswd}' WHERE userID = '{userID}'"
+        cursor.execute(command)
+        connection.commit()
+        return True
+        
+    else:
+        return False
+
 # 大頭貼更換
 def updateHeadshot(userID,headshotPath):
     command = f"UPDATE `account` SET headshotPath = '{headshotPath}' WHERE userID = '{userID}'"

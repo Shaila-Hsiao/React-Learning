@@ -16,3 +16,6 @@ lib
 dist
 # react
 static/static
+# test
+static/blueprint/test
+static/blueprint/myModule/test.py

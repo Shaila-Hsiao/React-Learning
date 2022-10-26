@@ -113,12 +113,41 @@ var ContextMenu = function(blueprint3d) {
   function inToCm(inches) {
     return inches * 2.54;
   }
+  // 
+  
 
+
+  // 
+  function ModelInfo(){
+    let roomID = 3
+    let itemID = 1
+    $.ajax({
+        url: '/getItemInfo',
+        type: "POST",
+        data: {
+            'roomID':roomID,
+            'itemID':itemID
+        },
+        /*result為后端函式回傳的json*/
+        success: function (resp) {
+          // data = room.roomContent
+          console.log("success: ",resp.result.itemName);
+          $("#date").text(resp.result.date) 
+          $("#message").text(resp.result.message) 
+          $("exampleModalLabel").text(resp.result.itemName)
+        }
+      });
+  }
+  // 
+ 
+  // 
   function itemSelected(item) {
     selectedItem = item;
-
+    console.log("select!!!")
     $("#context-menu-name").text(item.metadata.itemName);
-
+    // 當點選物品的時候
+    $("#exampleModal").click(ModelInfo);
+    $('#exampleModal').modal('show')
     $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
     $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
     $("#item-depth").val(cmToIn(selectedItem.getDepth()).toFixed(0));
