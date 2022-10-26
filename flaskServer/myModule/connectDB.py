@@ -11,7 +11,11 @@ def setting():
         "password": "",
         # "password": "root",
         "db": "blueprint",
+<<<<<<< HEAD
         # 'auth_plugin': 'mysql_native_password'
+=======
+        'auth_plugin': 'mysql_native_password'
+>>>>>>> 1e4eb4ef3f0c8b3faeae7a8e1d1699b62f357272
         # "charset": "utf8"
     }
     try:
@@ -25,8 +29,12 @@ def setting():
         return
 # 建立連結
 connection = setting()
+<<<<<<< HEAD
 cursor = connection.cursor()
 # cursor = connection.cursor(dictionary = True)
+=======
+cursor = connection.cursor(dictionary = True)
+>>>>>>> 1e4eb4ef3f0c8b3faeae7a8e1d1699b62f357272
 
 # """
 # db_settings = {

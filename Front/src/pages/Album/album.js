@@ -1,5 +1,5 @@
 import React ,{useEffect,useState} from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {  createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 // import Toolbar from '@mui/material/Toolbar';
@@ -44,10 +44,8 @@ const theme = createTheme({
 
 function Album() {
   const navigate = useNavigate();
-
   // 更新 room 
   const [rooms, setRoom] = useState();
-
   // const [anchorElNav, setAnchorElNav] = React.useState(null);
   // const [anchorElUser, setAnchorElUser] = React.useState(null);
   // const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
@@ -90,32 +88,19 @@ function Album() {
       }
     }
   }
+  const FindRoom = async (event) => {
+    console.log("i want to find a room");
+    navigate("/Search");
+  }
   // 前往房間簡介設定
-  // const GoTORoomIntro = async (event) => {
-  //   event.preventDefault();
-  //   const data = new FormData(event.currentTarget);
-  //   const roomID = data.get('roomID');
-  //   const passwd =  data.get('passwd');
-  //   console.log({
-  //     roomID
-  //   });
-  //   // Post 給後端檢查
-  //   alert("in");
-  //   try {
-  //     const resp = await httpClient.post("//localhost:5000/loadRoomInfo", {
-  //       roomID,
-  //     });
-        
-  //     console.log(resp)
-  //     // if login success
-  //     window.location.href = "/intro";
-  //   } catch (error) {
-  //     if (error.response.status === 401) {
-  //       alert("NO room");
-  //     }
-  //   }
-  // };
-
+  function GoTORoomIntro(roomID) {
+    try {
+      console.log(roomID);
+      navigate("/RoomIntro/?roomID="+roomID);
+    }catch (error) {
+      console.log("can't get room num");
+    }
+  };
   // room 狀態確認
   useEffect(() => {
     (async () => {
@@ -137,25 +122,13 @@ function Album() {
       }
     })();
   }, []);
-
-  // const PutCards = async (event) => {
-  //   const animals = ["Dog", "Bird", "Cat", "Mouse", "Horse"];
-  //   return (
-  //     animals.map(animal => {animal})
-  //     // <ul>
-  //     //   {animals.map(animal => (
-  //     //     <li>{animal}</li>
-  //     //   ))}
-  //     // </ul>
-  //   )
-  // }
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {rooms && (
         <NavbarDrawer/>
       )}
+      
     <main>
       {/* Hero unit */}
       <Box
@@ -187,7 +160,9 @@ function Album() {
             <Button variant="contained" size="large" onClick={CreateRoom}>新增房間</Button>
             {/* <Button variant="outlined">Secondary action</Button>  */} {/* 第二種按鈕 */}
             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+              <Button onClick={FindRoom}>
                 <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
+              </Button>
                 <TextField variant="standard" fullWidth label="Room Number" id="RoomNum" />
               </Box>
           </Stack>
@@ -195,27 +170,27 @@ function Album() {
       </Box>
       {/* Card */}
       {rooms && (
-        <Container sx={{ py: 8 }}>
-          {/* End hero unit  */}
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={3}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  {/* <CardActionArea onClick={GoTORoomIntro("3")}> */}
-                  <CardActionArea >
+      <Container sx={{ py: 8 }}>
+        {/* End hero unit  */}
+        <Grid container spacing={4}>
+          {cards.map((card) => (
+            <Grid item key={card} xs={12} sm={6} md={3}>
+              <Card
+                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+              >
+                <CardActionArea onClick={() => GoTORoomIntro(card[0])}>
+                  {/* <CardActionArea > */}
                     <CardMedia
                       component="img"
                       image={card[1]}
                       alt={card[0]}
                     />
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
       )}
       <Box sx={{ bgcolor: 'background.paper', p: 3 }} />
       <Container sx={{ py: 8 }}>
@@ -226,13 +201,12 @@ function Album() {
               <Card
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
               >
-                <CardActionArea onClick={() => navigate("/intro")}>
+                <CardActionArea onClick={() => navigate("/RoomIntro")}>
                   <CardMedia
                     component="img"
                     image={room1}
                     alt={card}
                   />
-                  
                 </CardActionArea>
               </Card>
             </Grid>
@@ -240,7 +214,7 @@ function Album() {
         </Grid>
       </Container>
       <Box sx={{ bgcolor: 'background.paper', p: 3 }} />
-      <Container sx={{ py: 8 }}>
+      <Container sx={{ py: 8 }} maxWidth="md">
         {/* End hero unit  */}
         <Grid container spacing={4}>
           {cards.map((card) => (
@@ -248,7 +222,7 @@ function Album() {
               <Card
                 sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
               >
-                <CardActionArea onClick={() => navigate("/intro")}>
+                <CardActionArea onClick={() => navigate("/RoomIntro")}>
                 <CardMedia
                   component="img"
                   image={room1}

@@ -68,11 +68,10 @@ def findRoomByUserID(userID):
 
 # find room by roomID
 def findRoomByRoomID(roomID):
-    command = f"SELECT `roomName`,`introduction`,`roomImgPath`, `name`, `passwd`, `introduction`, `headshotPath`\
-                FROM `room` RIGHT JOIN `account` ON `room`.userID= `account`.userID"
+    command = f"SELECT `roomName`,room.introduction,`roomImgPath`, `name`, `email`,account.introduction, `headshotPath` FROM `room`,`account`WHERE room.id = '{roomID}' && account.userID = (SELECT `userID` FROM `room`WHERE room.id = '{roomID}')"
     cursor.execute(command)
     dataList = cursor.fetchall()
-    return dataDic(dataList)
+    return dataList
 
 def findRoomByRoomName(roomName,private_public):
     command = f"SELECT * FROM `room` WHERE `roomName` = {roomName} and `public_private` = {private_public}"
