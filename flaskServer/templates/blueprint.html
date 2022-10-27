@@ -17,6 +17,9 @@
     <script src="./static/blueprint/js/example.js"></script> 
 
     <script src="./static/blueprint/js/OBJLoader.js"></script>
+    
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -145,14 +148,16 @@
                   <form>
                     <div class="mb-3">
                       <label  for="recipient-name" class="col-form-label">日期</label>
-                      <text id="date" for="recipient-name" class="col-form-label"></text>
-                      <!-- <input type="text" class="form-control" id="recipient-name"> -->
+                      <div class="input-group date" id='date1'>
+                        <input type="date" id="date" name="trip-start" class="form-control"
+                        min="1000-01-01" max="2222-12-31">
+                      </div>
+                      
                     </div>
                     <div class="mb-3">
                       <label for="message-text" class="col-form-label">心情</label>
                       <text id="message" for="recipient-name" class="col-form-label"></text>
-                      
-                      <!-- <textarea class="form-control" id="message-text"></textarea> -->
+                      <textarea class="form-control" id="message-text"></textarea>
                     </div>
                   </form>
                 </div>

@@ -118,23 +118,23 @@ var ContextMenu = function(blueprint3d) {
 
 
   // 
-  function ModelInfo(){
-    let roomID = 3
-    let itemID = 1
+  function ModelInfo(itemID){
+    console.log("itemID: ",itemID);
+
     $.ajax({
         url: '/getItemInfo',
         type: "POST",
         data: {
-            'roomID':roomID,
             'itemID':itemID
         },
         /*result為后端函式回傳的json*/
         success: function (resp) {
           // data = room.roomContent
-          console.log("success: ",resp.result.itemName);
+          console.log("success: ",resp.result);
           $("#date").text(resp.result.date) 
-          $("#message").text(resp.result.message) 
-          $("exampleModalLabel").text(resp.result.itemName)
+          $("#message").text(resp.result.message)
+          $("#exampleModalLabel").text(resp.result.itemName)
+
         }
       });
   }
@@ -147,7 +147,10 @@ var ContextMenu = function(blueprint3d) {
     console.log("log itemID in example.js line 147~~~~~",item.metadata.itemID);
     $("#context-menu-name").text(item.metadata.itemName);
     // 當點選物品的時候
-    $("#exampleModal").click(ModelInfo);
+    $("#exampleModal").on('click',ModelInfo(item.metadata.itemID));
+    var today = new Date();
+    console.log(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate())
+    $('#date').val(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate())
     $('#exampleModal').modal('show')
     $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
     $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));

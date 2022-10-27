@@ -195,6 +195,7 @@ def loadRoom():
     roomID = session.get("roomID")
     # roomID = 4
     # 取得此 roomID 的 (roomContent)
+    print("roomID",roomID)
     roomContent = roomSelect(roomID)
     return {'roomContent':roomContent}
 
@@ -335,7 +336,8 @@ def saveItemInfo():
 ############# 點擊 Item 取得內部資訊(照片、文字等) #############
 @app.route("/getItemInfo",methods=["POST"])
 def getItemInfo():
-    roomID = request.form.get('roomID')
+    roomID = session.get("roomID")
+    print("roomID",roomID)
     itemID = request.form.get('itemID')
     # userID = session.get("userID")
     result = itemInformation(roomID,itemID)
