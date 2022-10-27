@@ -423,13 +423,17 @@ var BP3D;
              * @param geometry TODO
              * @param material TODO
              * @param position TODO
-             * @param rotation TODO
+             * @parammetadata =  rotation TODO
              * @param scale TODO
              */
             function Item(model, metadata, geometry, material, position, rotation, scale) {
                 _super.call(this);
+                console.log("================model================\n",model);
+                console.log("================this================\n",this);
+                console.log("=============== line 431 ==========",metadata);
                 this.model = model;
                 this.metadata = metadata;
+                console.log("=============== line 433 ==========",metadata);
                 /** */
                 this.errorGlow = new THREE.Mesh();
                 /** */
@@ -2561,9 +2565,11 @@ var BP3D;
             Model.prototype.exportSerialized = function () {
                 var items_arr = [];
                 var objects = this.scene.getItems();
+                console.log("================look=============",objects);
                 for (var i = 0; i < objects.length; i++) {
                     var object = objects[i];
                     items_arr[i] = {
+                        item_id:object.metadata.itemID,
                         item_name: object.metadata.itemName,
                         item_type: object.metadata.itemType,
                         model_url: object.metadata.modelUrl,
@@ -2589,7 +2595,9 @@ var BP3D;
                 this.floorplan.loadFloorplan(floorplan);
                 items.forEach(function (item) {
                     var position = new THREE.Vector3(item.xpos, item.ypos, item.zpos);
+                    console.log("============ line 2596 ========",item);
                     var metadata = {
+                        itemID:item.item_id,
                         itemName: item.item_name,
                         resizable: item.resizable,
                         itemType: item.item_type,

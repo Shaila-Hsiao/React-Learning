@@ -158,9 +158,11 @@ def upload():
 ############# 取得所有 model #############
 @app.route("/getItem",methods=["POST"])
 def getItem():
+    # FIXME: 測試用， userID 寫死
     userID = session.get('userID')
     print(userID)
-    # itemList = userAllModel(userID) # 取得 user 所有 model 清單
+    # userID = "test"
+    itemList = userAllModel(userID) # 取得 user 所有 model 清單
     # FIXME: 以下暫時測試用
     itemList = []
     result = getEntireItem(itemList) # 取得 model 所有資訊
@@ -191,6 +193,7 @@ def userClickRoom():
 @app.route("/loadRoom",methods=["GET"])
 def loadRoom():
     roomID = session.get("roomID")
+    # roomID = 4
     # 取得此 roomID 的 (roomContent)
     roomContent = roomSelect(roomID)
     return {'roomContent':roomContent}

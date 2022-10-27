@@ -174,7 +174,9 @@ function initItemList(items) {
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
     var html = '<div class="col-`sm-4">' +
-      '<a class="thumbnail add-item" model-name="' +
+      '<a class="thumbnail add-item" model-id ="'+
+      item.id+
+      '"model-name="' +
       item.name +
       '" model-url="' +
       item.model +
@@ -189,3 +191,4 @@ function initItemList(items) {
   }
   console.log(itemsDiv);
 }
+
