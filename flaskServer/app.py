@@ -82,7 +82,9 @@ def get_current_user():
     return jsonify({
         "userID":user[0],
         "name":user[1],
-        "email":user[2]
+        "email":user[2],
+        "headshotPath":user[3],
+        "introduction":user[4]
     })
 # 更改 mtl 中的 texure 圖片
 def updateMTL(mtl,textureName):

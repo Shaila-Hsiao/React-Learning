@@ -90,7 +90,7 @@ function Album() {
   }
   const FindRoom = async (event) => {
     console.log("i want to find a room");
-    navigate("/Search");
+    navigate("/Search/"); // ?searchName="+roomID
   }
   // 前往房間簡介設定
   function GoTORoomIntro(roomID) {
@@ -163,7 +163,7 @@ function Album() {
               <Button onClick={FindRoom}>
                 <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
               </Button>
-                <TextField variant="standard" fullWidth label="Room Number" id="RoomNum" />
+                <TextField variant="standard" fullWidth label="Room Name" id="RoomName" />
               </Box>
           </Stack>
         </Container>
@@ -185,6 +185,7 @@ function Album() {
                       image={card[1]}
                       alt={card[0]}
                     />
+                    {card[2]}
                 </CardActionArea>
               </Card>
             </Grid>
@@ -207,27 +208,7 @@ function Album() {
                     image={room1}
                     alt={card}
                   />
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-      <Box sx={{ bgcolor: 'background.paper', p: 3 }} />
-      <Container sx={{ py: 8 }} maxWidth="md">
-        {/* End hero unit  */}
-        <Grid container spacing={4}>
-          {cards.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={3}>
-              <Card
-                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-              >
-                <CardActionArea onClick={() => navigate("/RoomIntro")}>
-                <CardMedia
-                  component="img"
-                  image={room1}
-                  alt={card}
-                />
+
                 </CardActionArea>
               </Card>
             </Grid>
@@ -241,15 +222,6 @@ function Album() {
         <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
           Footer
         </Typography>
-        {/* <Typography
-          variant="subtitle1"
-          align="center"
-          color='#FFFFFF'
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography> */}
-        {/* <Copyright /> */}
       </Box>
     </ThemeProvider>
   );

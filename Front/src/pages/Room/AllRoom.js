@@ -1,4 +1,4 @@
-import * as React from 'react';import { createTheme, ThemeProvider } from '@mui/material/styles';
+import * as React from 'react'; import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
@@ -9,11 +9,13 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
+import SearchIcon from '@mui/icons-material/Search';
+import TextField from '@mui/material/TextField';
 import { CardActionArea } from '@mui/material';
 import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
 
 import { useNavigate } from "react-router-dom";
-import {useEffect,useState} from 'react';
+import { useEffect, useState } from 'react';
 import httpClient from '../../httpClient';
 import Button from '@mui/material/Button';
 var cards = [];
@@ -81,12 +83,12 @@ function AllRoom() {
       try {
         const resp = await httpClient.get("//localhost:5000/userAllRoom");
         console.log(resp.data.result);
-        
+
         setRoom(resp.data);
         const temp = resp.data.result;
         cards = [];
         console.log("cards", cards);
-        for (let i = 0; i < temp.length; i ++) {
+        for (let i = 0; i < temp.length; i++) {
           cards.push(temp[i]);
         }
         console.log("cards", cards);
@@ -119,9 +121,9 @@ function AllRoom() {
   return (
     <ThemeProvider theme={theme}>
       {rooms && (
-      <NavbarDrawer />
+        <NavbarDrawer />
       )}
-      
+
       <CssBaseline />
       <main>
 
@@ -145,79 +147,74 @@ function AllRoom() {
             </Typography>
           </Container>
         </Box>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+          <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
+          <TextField variant="standard" fullWidth label="Room Name" id="RoomName" />
+        </Box>
         {/* Card */}
-        {rooms !=null ?(
-        <Container sx={{ py: 8 }} maxWidth="md">
-          {/* End hero unit  */}
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardActionArea
-                    aria-controls={openRoom ? 'basic-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={openRoom ? 'true' : undefined}
-                    onClick={handleRoomClick}
+        {rooms != null ? (
+          <Container sx={{ py: 8 }} maxWidth="md">
+            {/* End hero unit  */}
+            <Grid container spacing={4}>
+              {cards.map((card) => (
+                <Grid item key={card} xs={12} sm={6} md={4}>
+                  <Card
+                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                   >
-                    <CardMedia
-                      component="img"
-                      image="https://source.unsplash.com/random"
-                      alt="random"
-                    />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        房間名稱
-                      </Typography>
-                      <Typography>
-                        房間簡介
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={RoomEl}
-                    open={openRoom}
-                    onClose={handleRoomClose}
-                    MenuListProps={{
-                      'aria-labelledby': 'basic-button',
-                    }}
-                  >
-                    <MenuItem onClick={() => navigate("/RoomIntro")}>房間簡介</MenuItem>
-                    <MenuItem onClick={() => navigate("/RoomEdit")}>編輯空間</MenuItem>
-                    <MenuItem onClick={handleClose}>刪除空間</MenuItem>
-                  </Menu>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      ):( 
-        <Container maxWidth="sm">
-          <Button
-            variant="contained"
-            size="large"
-            onClick={() => navigate("/CreateRoom")}
-            sx={{ bgcolor: '#7f0808', color: '#fff' }}
-        >創建房間</Button>
+                    <CardActionArea
+                      aria-controls={openRoom ? 'basic-menu' : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={openRoom ? 'true' : undefined}
+                      onClick={handleRoomClick}
+                    >
+                      <CardMedia
+                        component="img"
+                        image={card[3]}
+                        alt={card[0]}
+                      />
+                      <CardContent sx={{ flexGrow: 1 }}>
+                        <Typography gutterBottom variant="h5" component="h2">
+                          {card[1]}
+                        </Typography>
+                        <Typography>
+                          {card[2]}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                    <Menu
+                      id="basic-menu"
+                      anchorEl={RoomEl}
+                      open={openRoom}
+                      onClose={handleRoomClose}
+                      MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                      }}
+                    >
+                      <MenuItem onClick={() => navigate("/RoomEdit")}>編輯房間簡介</MenuItem>
+                      <MenuItem onClick={() => navigate("/RoomEdit")}>編輯房間</MenuItem>
+                      <MenuItem onClick={handleClose}>刪除房間</MenuItem>
+                    </Menu>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
           </Container>
-      )}
+        ) : (
+          <Container maxWidth="sm">
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => navigate("/CreateRoom")}
+              sx={{ bgcolor: '#7f0808', color: '#fff' }}
+            >創建房間</Button>
+          </Container>
+        )}
       </main>
       {/* Footer */}
       <Box sx={{ bgcolor: 'primary.main', p: 6 }} component="footer">
         <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
           Footer
         </Typography>
-        {/* <Typography
-          variant="subtitle1"
-          align="center"
-          color='#FFFFFF'
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography> */}
-        {/* <Copyright /> */}
       </Box>
     </ThemeProvider>
   );

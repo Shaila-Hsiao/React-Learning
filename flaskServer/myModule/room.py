@@ -54,7 +54,7 @@ def dataDic(dataList):
     return data
 # 首頁 --- 取得房間資訊
 def getAllRoom(private_public):
-    command = f"SELECT `id`, `roomImgPath` FROM `room` WHERE private_public = '{private_public}'"
+    command = f"SELECT `id`, `roomImgPath`,`roomName` FROM `room` WHERE private_public = '{private_public}'"
     cursor.execute(command)
     dataList = cursor.fetchall()
     return dataList

@@ -54,7 +54,7 @@ def getUserId(userID):
     # 回傳使用者的 name and userID
     result = ""
     # 搜尋資料庫
-    sql = f"SELECT userID,name,email FROM `account` WHERE userID = '{userID}'"
+    sql = f"SELECT userID,name,email,headshotPath,introduction FROM `account` WHERE userID = '{userID}'"
     cursor.execute(sql) # 執行 sql 指令
     dataList = cursor.fetchall()
     if len(dataList) == 0:

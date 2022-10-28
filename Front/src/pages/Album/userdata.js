@@ -119,7 +119,7 @@ function UserData() {
                     <Avatar
                       alt="UserName"
                       sx={{ mx:'auto', width: 120, height: 120 }}
-                      src={user} />
+                      src={user.headshotPath} />
                     <Box sx={{ textAlign: 'right' }}>
                       <Button variant="contained" component="label">
                         編輯頭貼
@@ -161,7 +161,7 @@ function UserData() {
                     <Button
                       variant="contained"
                       size="large"
-                      onClick={() => navigate("/selectRoom")}
+                      onClick={() => navigate("/")}
                       sx={{ bgcolor: '#7f0808', color: '#fff', mr:4 }}
                     >取消</Button>
                   </Box>
@@ -207,7 +207,7 @@ function UserData() {
                         multiline
                         rows={9}
                         bgcolor='#fff'
-                        defaultValue={user.name}
+                        defaultValue={user.introduction}
                       />
                       {/* {user.name} */}
                     </Box>
