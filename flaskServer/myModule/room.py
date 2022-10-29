@@ -31,7 +31,7 @@ def roomDelete(roomID):
 
 # FIXME:檢查使用者是不是房間所有者 => table room 的 userID 要變成可多個編輯者加入?
 def isRoomEditor(roomID,userID):
-    command = f"SELECT `userID` FROM `room` WHERE roomID = '{roomID}'"
+    command = f"SELECT `userID` FROM `room` WHERE id = '{roomID}'"
     cursor.execute(command)
     dataList = cursor.fetchone()
     # FIXME: 之後確認 if 'f' in ('結果','f') 需不需要做切割

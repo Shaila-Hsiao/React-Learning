@@ -10,6 +10,11 @@ def uploadFile(fileName,content,fileType,path):
         content = content.split(",")[1]
         content = base64.b64decode(content)
         writeInFile(f"{path}/{fileName}",content,"wb")
+    # 音檔
+    elif fileType == 'recording':
+        content = content.split(",")[1]
+        content = base64.b64decode(content)
+        writeInFile(f"{path}/{fileName}",content,"wb")
 
 def writeInFile(path,text,mode):
     f = open(path, mode)

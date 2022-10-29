@@ -12,7 +12,7 @@ $(document).ready(function () {
       initItemList(items);
     },
     error: function(error){
-      alert("顯示錯誤, 錯誤為 ",error);
+      alert("您現在的身分為訪客");
     }
   });
   // items = [
@@ -174,7 +174,9 @@ function initItemList(items) {
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
     var html = '<div class="col-`sm-4">' +
-      '<a class="thumbnail add-item" model-id ="'+
+      '<a class="thumbnail add-item" itemInfo-id="'+
+      0+
+      '"model-id ="'+
       item.id+
       '"model-name="' +
       item.name +
@@ -188,7 +190,7 @@ function initItemList(items) {
       item.name +
       '</a></div>';
     itemsDiv.append(html);
+    console.log(html);
   }
-  console.log(itemsDiv);
 }
 

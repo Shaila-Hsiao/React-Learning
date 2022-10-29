@@ -133,7 +133,6 @@ img{
   /* z-index: 10; */
   display: none;
 }
-
 .add-item {
   cursor: pointer;
 }
@@ -155,17 +154,4 @@ img{
   opacity: 0;
   cursor: inherit;
   display: block;
-}
-#roomData{
-  display: none;
-  /* 置中 */
-  vertical-align: middle;
-  /* position: absolute; */
-  /* z-index: 2; */
-  /* left: 500px; */
-  background-color: none;
-  /*paleturquoise*/
-  position: fixed;
-  overflow: auto;
-  overscroll-behavior-y: contain;
 }

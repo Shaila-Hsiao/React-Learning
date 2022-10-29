@@ -88,11 +88,11 @@
                 <small><span class="text-muted">Measurements in inches.</span></small>
               </div>
             </div>
-
             <label><input type="checkbox" id="fixed" /> Lock in place</label>
+            
             <br /><br />
-            </div>
           </div>
+        </div>
 
           <!-- Floor textures -->
           <div id="floorTexturesDiv" style="display:none; padding: 0 20px">
@@ -173,17 +173,17 @@
           <div id="viewer">
             <!-- 3 button -->
             <div id="main-controls">
-              <a href="#" class="btn btn-default btn-sm" id="new">
+              <a href="" class="btn btn-default btn-sm" id="new">
                 Create
               </a>
-              <a href="#" class="btn btn-default btn-sm" id="download">
+              <a href="" class="btn btn-default btn-sm" id="download">
                 download
               </a>
               <a class="btn btn-sm btn-default btn-file">
                 <input type="file" class="hidden-input" id="loadFile">
                 Load
               </a>
-              <a href="#" class="btn btn-default btn-sm" id="saveRoom">
+              <a href="" class="btn btn-default btn-sm" id="saveRoom">
                 save
               </a>
               
@@ -191,17 +191,6 @@
             <!--  -->
             <!-- <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button> -->
               
-            <!--  -->
-            <!-- 存取時，使用者輸入房間資訊 -->
-            <div id="roomData">
-              <input type="text" id = "roomName" font-size = "20px">
-              <select id="private_public">
-                <option value="private">private</option>
-                <option value="public">public</option>
-              </select>
-              <button id="cancel_button">取消</button>
-              <button id="save_button" >存取</button>
-            </div>
             <!-- 3個功能: 縮小、reset、放大 -->
             <div id="camera-controls">
               <a href="#" class="btn btn-default bottom" id="zoom-out">
@@ -266,6 +255,14 @@
 
           <!-- Add Items -->
           <div id="add-items">
+            
+            <input type="file" id="recording" accept="mp3/*" />
+            <!-- recording -->
+            <audio controls>
+              <!-- <source src="horse.ogg" type="audio/ogg"> -->
+              <source src="./static/blueprint/test/test.mp3" type="audio/mpeg">
+            </audio>
+            <br/>
             <!-- 檔案顯示 -->
             <label class="text-center mb-5 image-preview-wrapper" for="texture">
               <img src="../static/blueprint/other/photo.png" id="canvas" alt="image-placehoder">

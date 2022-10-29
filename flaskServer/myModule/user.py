@@ -96,11 +96,13 @@ def updateHeadshot(userID,headshotPath):
     connection.commit()
 # 取得使用者所有 model 清單
 def userAllModel(userID):
-    sql = f"SELECT itemList FROM `account` WHERE userID = '{userID}'"
-    cursor.execute(sql) # 執行 sql 指令
-    dataList = cursor.fetchone()
-    dataList = dataList[0].split(",")
-    return dataList
+    if userID:
+        sql = f"SELECT itemList FROM `account` WHERE userID = '{userID}'"
+        cursor.execute(sql) # 執行 sql 指令
+        dataList = cursor.fetchone()
+        dataList = dataList[0].split(",")
+        return dataList
+    return list()
 # 上傳 model 後，ID 新增到 table `account` 的 itemList
 # def updateItemList(userID):
 #     command = ""

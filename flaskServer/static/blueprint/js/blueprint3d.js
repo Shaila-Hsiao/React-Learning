@@ -428,9 +428,6 @@ var BP3D;
              */
             function Item(model, metadata, geometry, material, position, rotation, scale) {
                 _super.call(this);
-                console.log("================model================\n",model);
-                console.log("================this================\n",this);
-                console.log("=============== line 431 ==========",metadata);
                 this.model = model;
                 this.metadata = metadata;
                 console.log("=============== line 433 ==========",metadata);
@@ -2580,7 +2577,8 @@ var BP3D;
                         scale_x: object.scale.x,
                         scale_y: object.scale.y,
                         scale_z: object.scale.z,
-                        fixed: object.fixed
+                        fixed: object.fixed,
+                        itemInfo_id:object.metadata.itemInfoID
                     };
                 }
                 var room = {
@@ -2601,7 +2599,8 @@ var BP3D;
                         itemName: item.item_name,
                         resizable: item.resizable,
                         itemType: item.item_type,
-                        modelUrl: item.model_url
+                        modelUrl: item.model_url,
+                        itemInfoID: item.itemInfo_id
                     };
                     var scale = new THREE.Vector3(item.scale_x, item.scale_y, item.scale_z);
                     _this.scene.addItem(item.item_type, item.model_url, metadata, position, item.rotation, scale, item.fixed);

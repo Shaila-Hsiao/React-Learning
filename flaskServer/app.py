@@ -1,8 +1,8 @@
-from cgi import print_form
 from flask import Flask, render_template, request, session, jsonify,redirect,url_for
 from datetime import timedelta
 import os
-import secrets
+# import secrets
+from base64 import b64encode
 # path : /flaskServer/myModule
 from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList,updatePasswd
 from myModule.model import modelInsert,getEntireItem
@@ -108,15 +108,16 @@ def upload():
     obj = request.form.get('obj')
     mtl = request.form.get('mtl')
     modelName = objName.split(".obj")[0]
-    inputPath = f"./static/blueprint/models/source/{objName}"
+    sourcePath = "./static/blueprint/models/source"
+    inputPath = f"{sourcePath}/{objName}"
     outputPath = f"./static/blueprint/models/js/{modelName}.js"
     # images
     thumbnail = request.form.get('thumbnail')
     texture = request.form.get('texture')
-    thumbnailName = secrets.token_hex()+".jpg"
-    textureName = secrets.token_hex()+".jpg"
-    # thumbnailName = b64encode(os.urandom(20)).decode('utf-8')
-    # textureName = b64encode(os.urandom(20)).decode('utf-8')
+    # thumbnailName = secrets.token_hex()+".jpg"
+    # textureName = secrets.token_hex()+".jpg"
+    thumbnailName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
+    textureName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
     # userID = session.get("userID")
     # if not userID :
     #     return {"result":"未登入，無法上傳 model"} 
@@ -126,8 +127,8 @@ def upload():
     mtl = updateMTL(mtl,textureName)
     # mtl = f"{mtl.split('map_Kd')[0]} map_Kd {textureName}.jpg"
     # 上傳檔案到本機
-    uploadFile(objName,obj,'file',"./static/blueprint/models/source")
-    uploadFile(mtlName,mtl,'file',"./static/blueprint/models/source")
+    uploadFile(objName,obj,'file',sourcePath)
+    uploadFile(mtlName,mtl,'file',sourcePath)
     uploadFile(thumbnailName,thumbnail,'image',thumbnailPath)
     uploadFile(textureName,texture,'image',texturePath)
     # 確認有沒有 JS 重複的檔案
@@ -149,8 +150,11 @@ def upload():
         if  itemID > 0:
             result = "上傳成功"
         else:
-            result = "上傳失敗，請注意檔案名稱不可為中文"
+            result = "上傳失敗"
             os.remove(outputPath)
+            os.remove(outputPath)
+            os.remove(thumbnailPath)
+            os.remove(texturePath)
     # FIXME:更新 table aacount 的 itemList
     # if result == "上傳成功":
     #     updateItemList(itemID,userID) 
@@ -195,11 +199,17 @@ def userClickRoom():
 @app.route("/loadRoom",methods=["GET"])
 def loadRoom():
     roomID = session.get("roomID")
+    try:
+        userID = session.get('userID')
+    except:
+        userID = b64encode(os.urandom(10)).decode('utf-8')
+        print("line 202 =====================>",userID)
+    isEditor = isRoomEditor(roomID,userID)
     # roomID = 4
     # 取得此 roomID 的 (roomContent)
     print("roomID",roomID)
     roomContent = roomSelect(roomID)
-    return {'roomContent':roomContent}
+    return {'roomContent':roomContent,"isEditor":isEditor}
 
 ############# user 所有的房間資料 #############
 @app.route("/userAllRoom",methods=["GET"])
@@ -246,7 +256,8 @@ def saveRoom():
         path = ""
         # 有房間截圖
         if roomImg:
-            roomImgName = secrets.token_hex()+".jpg"
+            # roomImgName = secrets.token_hex()+".jpg"
+            roomImgName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
             path = f'{roomImgPath}/{roomImgName}'
             uploadFile(roomImgName,roomImg,'image',path) # 將房間圖片儲存到房間
         updateRoom(roomID,roomName,path,introduction,roomContent,private_public)
@@ -306,7 +317,8 @@ def modifyHeadshot():
     userID = session.get('userID')
     headshot = request.json['headshot']
     path = request.json['path']
-    headshotName = secrets.token_hex()+".jpg"
+    # headshotName = secrets.token_hex()+".jpg"
+    headshotName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
     # 將照片存到 server
     uploadFile(headshotName,headshot,'image',f'{path}/{headshotName}')
     # 更新大頭照路徑
@@ -316,25 +328,28 @@ def modifyHeadshot():
 # FIXME: 未完成
 @app.route("/saveItemInfo",methods=["POST"])
 def saveItemInfo():
-    roomID = request.json['roomID']
-    itemID = request.json['itemID']
-    date = request.json['date']
-    weather = request.json['weather']
-    message = request.json['message']
-    record = request.json['record']
-    image = request.json['image']
+    roomID = request.form.get('roomID')
+    itemID = request.form.get('itemID')
+    date = request.form.get('date')
+    weather = request.form.get('weather')
+    message = request.form.get('message')
+    recording = request.form.get('recording')
+    image = request.form.get('image')
     # 照片處理
-    imageName = secrets.token_hex()+".jpg"
+    # imageName = secrets.token_hex()+".jpg"
+    imageName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
     uploadFile(imageName,image,'image',"./static/blueprint/itemInfo/image")
     # 語音處理
-    # uploadFile
+    recordingName = b64encode(os.urandom(20)).decode('utf-8')+".mp3"
+    uploadFile(recordingName,recording,"recording","./static/blueprint/itemInfo/record")
     # 第一次寫入
     # if search
     # 後續修改
     # itemID = request.json['itemID']
     # userID = session.get("userID")
     # result = ItemInfo(itemID)
-    # return jsonify(result)
+    result = "上傳成功"
+    return jsonify(result)
 ############# 點擊 Item 取得內部資訊(照片、文字等) #############
 @app.route("/getItemInfo",methods=["POST"])
 def getItemInfo():
