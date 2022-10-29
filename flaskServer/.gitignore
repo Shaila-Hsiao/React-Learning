@@ -6,6 +6,7 @@ test.py
 # blueprint
 static/blueprint/node_modules
 static/blueprint/models
+static/blueprint/itemInfo
 static/blueprint/js/lib
 static/blueprint/js/src
 static/blueprint/package-lock.json

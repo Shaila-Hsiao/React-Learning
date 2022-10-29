@@ -1,3 +1,4 @@
+from re import I
 from flask import Flask, render_template, request, session, jsonify,redirect,url_for
 from datetime import timedelta
 import os
@@ -6,7 +7,7 @@ from base64 import b64encode
 # path : /flaskServer/myModule
 from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList,updatePasswd
 from myModule.model import modelInsert,getEntireItem
-from myModule.itemInfo import itemInformation
+from myModule.itemInfo import itemInformation,itemInfoInsert,itemInfoUpdate
 from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect
 from myModule.upload_save import uploadFile
 from flask_cors import CORS
@@ -328,28 +329,34 @@ def modifyHeadshot():
 # FIXME: 未完成
 @app.route("/saveItemInfo",methods=["POST"])
 def saveItemInfo():
-    roomID = request.form.get('roomID')
-    itemID = request.form.get('itemID')
+    itemInfoID = request.form.get('itemInfoID')
+    itemName = request.form.get('itemName')
     date = request.form.get('date')
     weather = request.form.get('weather')
     message = request.form.get('message')
-    recording = request.form.get('recording')
     image = request.form.get('image')
+    record = request.form.get('record')
+    recordName = request.form.get('recordName')
+    imagePath = ""
+    recordPath = ""
     # 照片處理
-    # imageName = secrets.token_hex()+".jpg"
-    imageName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
-    uploadFile(imageName,image,'image',"./static/blueprint/itemInfo/image")
+    if image:
+        imagePath = "./static/blueprint/itemInfo/image"
+        # imageName = secrets.token_hex()+".jpg"
+        imageName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
+        uploadFile(imageName,image,'image',imagePath)
     # 語音處理
-    recordingName = b64encode(os.urandom(20)).decode('utf-8')+".mp3"
-    uploadFile(recordingName,recording,"recording","./static/blueprint/itemInfo/record")
-    # 第一次寫入
-    # if search
-    # 後續修改
-    # itemID = request.json['itemID']
-    # userID = session.get("userID")
-    # result = ItemInfo(itemID)
-    result = "上傳成功"
-    return jsonify(result)
+    if record:
+        recordPath = "recording","./static/blueprint/itemInfo/record"
+        fileName = b64encode(os.urandom(20)).decode('utf-8')+".mp3"
+        uploadFile(fileName,record,recordPath)
+    # 第一次寫入訊息
+    if itemInfoID == 0:
+        itemInfoID = itemInfoInsert(itemName,date,weather,message,imagePath,recordPath,recordName)
+        result = "新增成功"
+    else:
+        result = itemInfoUpdate(itemInfoID,itemName,date,weather,message,imagePath,recordPath,recordName)
+    return {'result':result,'itemInfo':itemInfoID}
 ############# 點擊 Item 取得內部資訊(照片、文字等) #############
 @app.route("/getItemInfo",methods=["POST"])
 def getItemInfo():
