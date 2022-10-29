@@ -7,7 +7,7 @@ from base64 import b64encode
 # path : /flaskServer/myModule
 from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList,updatePasswd
 from myModule.model import modelInsert,getEntireItem
-from myModule.itemInfo import itemInformation,itemInfoInsert,itemInfoUpdate
+from myModule.itemInfo import itemSelect,itemInfoInsert,itemInfoUpdate
 from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect
 from myModule.upload_save import uploadFile
 from flask_cors import CORS
@@ -326,7 +326,6 @@ def modifyHeadshot():
     updateHeadshot(userID,path)
     return jsonify({'headshotName':headshotName})
 ############# 儲存 model 內部資訊(照片、文字等) #############
-# FIXME: 未完成
 @app.route("/saveItemInfo",methods=["POST"])
 def saveItemInfo():
     itemInfoID = request.form.get('itemInfoID')
@@ -360,12 +359,22 @@ def saveItemInfo():
 ############# 點擊 Item 取得內部資訊(照片、文字等) #############
 @app.route("/getItemInfo",methods=["POST"])
 def getItemInfo():
-    roomID = session.get("roomID")
-    print("roomID",roomID)
-    itemID = request.form.get('itemID')
-    # userID = session.get("userID")
-    result = itemInformation(roomID,itemID)
-    return {'result':result}
+    itemInfoID = request.form.get('itemInfoID')
+    # 此模型沒有訊息
+    if itemInfoID == 0:
+        result = {
+            'id': itemInfoID,
+            'itemName': "",
+            'date': "",
+            'weather': "",
+            'message': "",
+            'imagePath': "",
+            'recordPath': "",
+            'recordName': ""
+        }
+    else:
+        result = itemSelect(itemInfoID)
+    return result
 
 
 
