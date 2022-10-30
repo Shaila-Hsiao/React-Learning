@@ -363,7 +363,7 @@ def getItemInfo():
     # 此模型沒有訊息
     if itemInfoID == 0:
         result = {
-            'id': itemInfoID,
+            'itemInfoID': itemInfoID,
             'itemName': "",
             'date': "",
             'weather': "",

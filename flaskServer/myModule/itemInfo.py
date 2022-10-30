@@ -4,7 +4,7 @@ def itemSelect(itemInfoID):
     cursor.execute(command)
     result = cursor.fetchone()[0]
     data = {
-        'id': itemInfoID,
+        'itemInfoID': itemInfoID,
         'itemName': result[0],
         'date': result[1],
         'weather': result[2],
