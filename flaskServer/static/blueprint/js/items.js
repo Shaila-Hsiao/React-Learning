@@ -15,6 +15,7 @@ $(document).ready(function () {
       alert("您現在的身分為訪客");
     }
   });
+  // $('#deleteItemBtn').click(deleteItem(item.metadata.itemID));
   // items = [
   //     {
   //     "name": "Closed Door",
@@ -173,7 +174,7 @@ function initItemList(items) {
   var itemsDiv = $("#items-wrapper")
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
-    var html = '<div class="col-`sm-4">' +
+    var html = '<div class="col-sm-4">' +
       '<a class="thumbnail add-item" itemInfo-id="'+
       0+
       '"model-id ="'+
@@ -188,9 +189,23 @@ function initItemList(items) {
       item.image +
       '" alt="Add Item"> ' +
       item.name +
-      '</a></div>';
+      `</a><button onclick = "deleteItem(${item.id})">delete</button></div>`;
     itemsDiv.append(html);
     console.log(html);
   }
+}
+// 刪除模型
+function deleteItem(itemID){
+  $.ajax({
+    url: '/deleteItem',
+    type: "POST",
+    data: {
+        'itemID':itemID
+    },
+    /*result為后端函式回傳的json*/
+    success: function (resp) {
+      alert(resp.result)
+    }
+  });
 }
 

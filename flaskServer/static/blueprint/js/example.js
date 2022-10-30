@@ -136,7 +136,7 @@ var ContextMenu = function(blueprint3d) {
           $("#exampleModalLabel").text(resp.result.itemName)
 
         }
-      });
+    });
   }
   // 
  

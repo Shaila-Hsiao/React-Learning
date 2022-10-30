@@ -41,76 +41,30 @@ def modelInsert(thumbnailPath,texturePath,jsPath):
     except:
         return 0
 
+def itemDelete(userID,itemID):
+    # 預設模型不可以刪除
+    if int(itemID) < 100:
+        result = "預設的模型不可刪除"
+    else:
+        command = f"SELECT `itemList` FROM `account` WHERE userID = '{userID}'"
+        cursor.execute(command)
+        data = cursor.fetchone()[0]
+        data = list(data)
+        data.remove(itemID)
+        # 刪除 user 擁有的模型ID
+        command = f"UPDATE `account` SET `itemList`='{tuple(data)}' WHERE  userID = '{userID}'"
+        cursor.execute(command)
+        connection.commit()
+        # 刪除資料庫的模型
+        command = f"DELETE FROM `item` WHERE itemID = '{itemID}'"
+        cursor.execute(command)
+        connection.commit()
+        result = "刪除成功"
+    return result
 
 
 
 
 
 
-
-
-# =====================================================================
-# 取得 message 資訊(old version)
-# def modelInfo(itemID,userID,table):
-#     command = f"SELECT `{table}ID` from `item` WHERE id = '{itemID}'"
-#     cursor.execute(command)
-#     dataList = cursor.fetchone()[0]
-#     dataList = json.loads(dataList)
-#     if userID in dataList.keys():
-#         infoID = dataList[userID]
-#         command = f"SELECT * from {table} WHERE id = {infoID}"
-#         cursor.execute(command)
-#         data = cursor.fetchone()
-#         result = list(data)
-#     else:
-#         result = ""
-#     return result
-# 留言板
-# 點擊 model 填入資料(message, recording, image)，存到資料庫，如果是修改資料，依樣會將資料進行更新
-# def saveMessage(itemID,title,weather,content,color,userID):
-#     date = datetime.now()
-#     try:
-#         # # 檢查 userID 在物品上有沒有重複
-#         # command = f"SELECT `messageID` FROM `item` WHERE `id` = {itemID}"
-#         # cursor.execute(command)
-#         # data = cursor.fetchone() # FIXME: 不確定 fetchone 的格式
-#         # # item 已經有寫了
-#         # if userID in data:
-#         #     return False
-#         # 將 message information insert into DB
-#         command = f"INSERT INTO `message`(`title`, `date`, `weather`, `content`, `color`, `msgfrom`) VALUES ('{title}','{date}','{weather}','{content}', '{color}', '{userID}')"
-#         cursor.execute(command)
-#         connection.commit()
-#         # 將 message id 加入到 table item 的 messageID, 如果內容更新，也會一起更新
-#         command = "select max(`id`) from `message`"
-#         messageID = cursor.execute(command)
-#         command = f"UPDATE item SET item.messageID = JSON_SET( item.messageID, '$.{userID}', '{messageID}') WHERE id = '{itemID}'"
-#         cursor.execute(command)
-#         connection.commit()
-#         return True
-#     except:
-#         return False
-# def saveRecording(itemID,name,path,userID):
-#     try:
-#         command = f"INSERT INTO `recording`(`name`, `path`) VALUES ('{name}','{path}')"
-#         cursor.execute(command)
-#         connection.commit()
-#         command = "select max(`id`) from `recording`"
-#         recordID = cursor.execute(command)
-#         command = f"UPDATE item SET item.recordID = JSON_SET( item.recordID, '$.{userID}', '{recordID}') WHERE id = '{itemID}'"
-#         return True
-#     except:
-#         return False
-# def saveImage(itemID,name,path,userID):
-#     date = datetime.now()
-#     try:
-#         command = f"INSERT INTO `image`(`name`, `date`, `path`) VALUES ('{name}','{date}','{path}')"
-#         cursor.execute(command)
-#         connection.commit()
-#         command = "select max(`id`) from `image`"
-#         imageID = cursor.execute(command)
-#         command = f"UPDATE item SET item.imageID = JSON_SET( item.imageID, '$.{userID}', '{imageID}') WHERE id = '{itemID}'"
-#         return True
-#     except:
-#         return False
 
