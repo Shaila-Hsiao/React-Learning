@@ -17,6 +17,8 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import httpClient from '../../httpClient';
+import { Alert, AlertTitle } from '@mui/material';
+import Snackbar from '@mui/material/Snackbar';
 
 // password
 import IconButton from "@mui/material/IconButton";
@@ -108,7 +110,8 @@ export default function Login() {
       console.log(resp)
       // if Login fail
       if(resp.data === "LoginFail"){
-        alert("帳號或密碼錯誤! \n請重新輸入!");
+        // alert("帳號或密碼錯誤! \n請重新輸入!");
+        handleClick();
       }else{
         // if Login Success , navigate to home
         window.location.href = "/";
@@ -120,12 +123,38 @@ export default function Login() {
         
       // }
     }
+  };
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
 
+  const [open, setOpen] = React.useState(false);
 
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
   };
   
   return (
     <ThemeProvider theme={theme}>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center'}}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}>
+        <Alert variant="filled" onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          <AlertTitle>Error</AlertTitle>
+          <strong>帳號或密碼輸入錯誤</strong>，請重新輸入！
+        </Alert>
+      </Snackbar>
       <AppBar position="relative" bgcolor='#182e2e'>
         <Toolbar>
           <Button color="inherit" startIcon={<ArrowBackIcon />} size='large' onClick={() => navigate("/")}>Back</Button>
