@@ -137,28 +137,55 @@
         <!-- Right Column -->
         <div class="col-xs-9 main">
           <!-- ItemInfo -->
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel"></h5>
                  
                 </div>
-                <div class="modal-body">
+                <div class="modal-body row">
                   <form>
-                    <div class="mb-3">
-                      <label  for="recipient-name" class="col-form-label">日期</label>
-                      <div class="input-group date" id='date1'>
-                        <input type="date" id="date" name="trip-start" class="form-control"
-                        min="1000-01-01" max="2222-12-31">
+                    <div class="col">
+
+                        <label  for="recipient-name" class="col-form-label">日期</label>
+                        <div class="input-group date" id='date1'>
+                          <input type="date" id="date" name="trip-start" class="form-control"
+                          min="1000-01-01" max="2222-12-31">
+                        </div>
+
+                      <!-- 天氣 -->
+
+                        <label for="message-text" class="col-form-label">天氣</label>
+                        <text id="weather" for="recipient-name" class="col-form-label"></text>
+                        <!-- <textarea class="form-control" id="message-text"></textarea> -->
+
+
+                        <label for="message-text" class="col-form-label">文字</label>
+                        <text id="message" for="recipient-name" class="col-form-label"></text>
+                        <!-- <textarea class="form-control" id="message-text"></textarea> -->
+                        <!-- <label for="message-text" class="col-form-label">圖片</label> -->
+                        <!-- <img id="image" width="200px" src = "../static/blueprint/other/photo.png"></text> -->
+                        <!-- <textarea class="form-control" id="message-text"></textarea> -->
+                    </div>
+                    <div class="col">
+                      <div class="mb-3 panel panel-default">
+                        <div class="panel-heading">圖片</div>
+                        <div class="panel-body" style="color: #333333">
+                          <div class="col-sm-6" style="padding: 3px">
+                            <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/light_fine_wood.jpg" texture-stretch="false" texture-scale="300">
+                              <img id="image" style=" max-width: 200px;" alt="IMAGE" src="../static/blueprint/other/photo.png" />
+                            </a>
+                          </div>
+                        </div>
                       </div>
-                      
+                      <audio controls>
+                        <!-- <source src="horse.ogg" type="audio/ogg"> -->
+                        <source src="../static/blueprint/itemInfo/record/song.mp3" type="audio/mpeg" >
+                      </audio>
                     </div>
-                    <div class="mb-3">
-                      <label for="message-text" class="col-form-label">心情</label>
-                      <text id="message" for="recipient-name" class="col-form-label"></text>
-                      <textarea class="form-control" id="message-text"></textarea>
-                    </div>
+                
+                   
                   </form>
                 </div>
                 <div class="modal-footer">
@@ -260,7 +287,7 @@
             <!-- recording -->
             <audio controls>
               <!-- <source src="horse.ogg" type="audio/ogg"> -->
-              <source src="./static/blueprint/test/test.mp3" type="audio/mpeg">
+              <source src="../static/blueprint/itemInfo/record/song.mp3" type="audio/mpeg">
             </audio>
             <br/>
             <!-- 檔案顯示 -->

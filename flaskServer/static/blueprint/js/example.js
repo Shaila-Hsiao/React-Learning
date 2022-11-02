@@ -118,25 +118,32 @@ var ContextMenu = function(blueprint3d) {
 
 
   // 
-  function ModelInfo(itemID){
-    console.log("itemID: ",itemID);
-
-    $.ajax({
+  function ModelInfo(itemInfoID){
+    console.log("itemInfoID: ",itemInfoID);
+    if(itemInfoID == 0){
+      console.log("NOInfo");
+    }else{
+      $.ajax({
         url: '/getItemInfo',
         type: "POST",
         data: {
-            'itemID':itemID
+            'itemInfoID':itemInfoID
         },
         /*result為后端函式回傳的json*/
         success: function (resp) {
           // data = room.roomContent
-          console.log("success: ",resp.result);
-          $("#date").text(resp.result.date) 
-          $("#message").text(resp.result.message)
-          $("#exampleModalLabel").text(resp.result.itemName)
-
+          console.log("success: ",resp);
+          // var today = new Date();
+          // console.log(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()) 
+          // $('#date').val(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate())
+          $("#date").val(resp.date) 
+          $("#message").text(resp.message)
+          $("#image").attr("src",resp.imagePath)
+          $("#exampleModalLabel").text(resp.itemName)
+          $('#exampleModal').modal('show')
         }
-    });
+      });
+    }
   }
   // 
  
@@ -146,14 +153,12 @@ var ContextMenu = function(blueprint3d) {
     selectedItem = item;
     console.log("select!!!")
     console.log("log itemID in example.js line 147~~~~~",item.metadata.itemID);
+    console.log("log itemName in example.js line 147~~~~~",item.metadata.itemName);
     console.log("log itemInfoID in example.js line 148~~~~~",item.metadata.itemInfoID);
     $("#context-menu-name").text(item.metadata.itemName);
     // 當點選物品的時候
-    $("#exampleModal").on('click',ModelInfo(item.metadata.itemID));
-    var today = new Date();
-    console.log(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate())
-    $('#date').val(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate())
-    $('#exampleModal').modal('show')
+    $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
+    
     $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
     $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
     $("#item-depth").val(cmToIn(selectedItem.getDepth()).toFixed(0));
@@ -733,7 +738,7 @@ $(document).ready(function () {
       // 訪客只能瀏覽房間
       if (isEditor == false){
         data = data.replace(/false/gi, "true");
-        // $("#fixed").hide();
+        $("#fixed").hide();
         $("#fixed").hide();
         $("input").attr("readonly","readonly")
         $("#context-menu-delete").hide();

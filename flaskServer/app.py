@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from re import I
 from flask import Flask, render_template, request, session, jsonify,redirect,url_for
 from datetime import timedelta
@@ -201,19 +202,20 @@ def saveItemInfo():
 def getItemInfo():
     itemInfoID = request.form.get('itemInfoID')
     # 此模型沒有訊息
-    if itemInfoID == 0:
-        result = {
-            'itemInfoID': itemInfoID,
-            'itemName': "",
-            'date': "",
-            'weather': "",
-            'message': "",
-            'imagePath': "",
-            'recordPath': "",
-            'recordName': ""
-        }
-    else:
-        result = itemSelect(itemInfoID)
+    print(itemInfoID)
+    # if itemInfoID == NULL:
+    #     result = {
+    #         'itemInfoID': itemInfoID,
+    #         'itemName': "",
+    #         'date': "",
+    #         'weather': "",
+    #         'message': "",
+    #         'imagePath': "",
+    #         'recordPath': "",
+    #         'recordName': ""
+    #     }
+    # else:
+    result = itemSelect(itemInfoID)
     return result
 
 # 取得所有 model
