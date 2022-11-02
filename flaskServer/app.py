@@ -11,7 +11,7 @@ from myModule.itemInfo import itemSelect,itemInfoInsert,itemInfoUpdate
 from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect
 from myModule.upload_save import uploadFile
 
-
+# , static_folder='static/build', static_url_path='/'
 app = Flask(__name__)
 app.config['SESSION_USE_SIGNER'] = True
 app.config['SECRET_KEY'] = os.urandom(24)

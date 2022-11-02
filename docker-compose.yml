@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    build: ./hell
+    build: ./flaskServer
     ports:
       - 5000:5000
     links:

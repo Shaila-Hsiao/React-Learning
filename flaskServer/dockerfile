@@ -8,7 +8,7 @@ WORKDIR /home/admin
 
 # ADD：將檔案加到 images 內
 ADD flaskServer /admin/flaskServer
-ADD Front /admin/Front
+# ADD Front /admin/Front
 
 # ENV PYTHONUNBUFFERED 1
 
