@@ -739,8 +739,9 @@ $(document).ready(function () {
       // 訪客只能瀏覽房間
       if (isEditor == false){
         data = data.replace(/false/gi, "true");
+        $("#check").prop("checked",true);
         $("#fixed").hide();
-        $("#fixed").hide();
+        // $("#fixed").attr("input","checked");
         $("input").attr("readonly","readonly")
         $("#context-menu-delete").hide();
         $("#main-controls").hide();
