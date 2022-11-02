@@ -122,6 +122,7 @@ var ContextMenu = function(blueprint3d) {
     console.log("itemInfoID: ",itemInfoID);
     if(itemInfoID == 0){
       console.log("NOInfo");
+      alert("此物件尚未有資訊!!");
     }else{
       $.ajax({
         url: '/getItemInfo',
