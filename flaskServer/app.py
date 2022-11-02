@@ -186,9 +186,9 @@ def saveItemInfo():
         imagePath = imagePath+'/'+imageName # 完整相對路徑
     # 語音處理
     if record:
-        recordPath = "recording","./static/blueprint/itemInfo/record"
+        recordPath = "./static/blueprint/itemInfo/record"
         fileName = b64encode(os.urandom(20)).decode('utf-8')+".mp3"
-        uploadFile(fileName,record,recordPath)
+        uploadFile(fileName,record,"recording",recordPath)
         recordPath = recordPath+'/'+recordName # 完整相對路徑
     # 第一次寫入訊息
     if itemInfoID == 0:
