@@ -1,5 +1,5 @@
-import React ,{useEffect,useState} from 'react';
-import {  createTheme, ThemeProvider } from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 // import Toolbar from '@mui/material/Toolbar';
@@ -20,6 +20,7 @@ import room1 from '../../assets/images/room1.jpg'; // 圖片的位置
 import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
 import httpClient from '../../httpClient';
 var cards = [];
+var temp = "";
 
 const theme = createTheme({
   palette: {
@@ -88,16 +89,31 @@ function Album() {
       }
     }
   }
+  const handleChange = (event) => {
+    temp = event.target.value;
+  };
   const FindRoom = async (event) => {
     console.log("i want to find a room");
-    navigate("/Search/"); // ?searchName="+roomID
+    console.log(temp);
+    const resp = await httpClient.post("//localhost:5000/filterRoomName", {
+      temp,
+    });
+    console.log(resp.data.result);
+    setRoom(resp.data.result);
+    const needData = resp.data.result;
+    cards = [];
+    console.log("cards", cards);
+    for (let i = 0; i < needData.length; i++) {
+      cards.push(needData[i]);
+    }
+    console.log("cards", cards);
   }
   // 前往房間簡介設定
   function GoTORoomIntro(roomID) {
     try {
       console.log(roomID);
-      navigate("/RoomIntro/?roomID="+roomID);
-    }catch (error) {
+      navigate("/RoomIntro/?roomID=" + roomID);
+    } catch (error) {
       console.log("can't get room num");
     }
   };
@@ -113,7 +129,7 @@ function Album() {
         const temp = resp.data.result;
         cards = [];
         console.log("cards", cards);
-        for (let i = 0; i < temp.length; i ++) {
+        for (let i = 0; i < temp.length; i++) {
           cards.push(temp[i]);
         }
         console.log("cards", cards);
@@ -126,97 +142,97 @@ function Album() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {rooms && (
-        <NavbarDrawer/>
+        <NavbarDrawer />
       )}
-      
-    <main>
-      {/* Hero unit */}
-      <Box
-        sx={{
-          bgcolor: 'background.paper',
-          pt: 8,
-          pb: 3,
-        }}
-      >
-        <Container maxWidth="sm">
-          <Typography
-            component="h1"
-            variant="h2"
-            align="center"
-            color="text.primary"
-            gutterBottom
-          >
-            紀念館
-          </Typography>
-          <Typography variant="h5" align="center" color="text.secondary" paragraph>
-            歡迎來到紀念館，開始佈置你的回憶小屋～
-          </Typography>
-          <Stack
-            sx={{ pt: 4 }}
-            direction="row"
-            spacing={2}
-            justifyContent="center"
-          >
-            <Button variant="contained" size="large" onClick={CreateRoom}>新增房間</Button>
-            {/* <Button variant="outlined">Secondary action</Button>  */} {/* 第二種按鈕 */}
-            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-              <Button onClick={FindRoom}>
-                <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
-              </Button>
-                <TextField variant="standard" fullWidth label="Room Name" id="RoomName" />
+
+      <main>
+        {/* Hero unit */}
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            pt: 8,
+            pb: 3,
+          }}
+        >
+          <Container maxWidth="sm">
+            <Typography
+              component="h1"
+              variant="h2"
+              align="center"
+              color="text.primary"
+              gutterBottom
+            >
+              紀念館
+            </Typography>
+            <Typography variant="h5" align="center" color="text.secondary" paragraph>
+              歡迎來到紀念館，開始佈置你的回憶小屋～
+            </Typography>
+            <Stack
+              sx={{ pt: 4 }}
+              direction="row"
+              spacing={2}
+              justifyContent="center"
+            >
+              <Button variant="contained" size="large" onClick={CreateRoom}>新增房間</Button>
+              {/* <Button variant="outlined">Secondary action</Button>  */} {/* 第二種按鈕 */}
+              <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                <TextField onChange={handleChange} variant="standard" fullWidth label="Please enter Room Name" id="RoomName" />
+                <Button onClick={FindRoom}>
+                  <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
+                </Button>
               </Box>
-          </Stack>
-        </Container>
-      </Box>
-      {/* Card */}
-      {rooms && (
-      <Container sx={{ py: 8 }}>
-        {/* End hero unit  */}
-        <Grid container spacing={4}>
-          {cards.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={3}>
-              <Card
-                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-              >
-                <CardActionArea onClick={() => GoTORoomIntro(card[0])}>
-                  {/* <CardActionArea > */}
+            </Stack>
+          </Container>
+        </Box>
+        {/* Card */}
+        {rooms && (
+          <Container sx={{ py: 8 }}>
+            {/* End hero unit  */}
+            <Grid container spacing={4}>
+              {cards.map((card) => (
+                <Grid item key={card} xs={12} sm={6} md={3}>
+                  <Card
+                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  >
+                    <CardActionArea onClick={() => GoTORoomIntro(card[0])}>
+                      {/* <CardActionArea > */}
+                      <CardMedia
+                        component="img"
+                        image={card[1]}
+                        alt={card[0]}
+                      />
+                      {card[2]}
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        )}
+        <Box sx={{ bgcolor: 'background.paper', p: 3 }} />
+        <Container sx={{ py: 8 }}>
+          {/* End hero unit  */}
+          <Grid container spacing={4}>
+            {cards.map((card) => (
+              <Grid item key={card} xs={12} sm={6} md={3}>
+                <Card
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                >
+                  <CardActionArea onClick={() => navigate("/RoomIntro")}>
                     <CardMedia
                       component="img"
-                      image={card[1]}
-                      alt={card[0]}
+                      image={room1}
+                      alt={card}
                     />
-                    {card[2]}
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-      )}
-      <Box sx={{ bgcolor: 'background.paper', p: 3 }} />
-      <Container sx={{ py: 8 }}>
-        {/* End hero unit  */}
-        <Grid container spacing={4}>
-          {cards.map((card) => (
-            <Grid item key={card} xs={12} sm={6} md={3}>
-              <Card
-                sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-              >
-                <CardActionArea onClick={() => navigate("/RoomIntro")}>
-                  <CardMedia
-                    component="img"
-                    image={room1}
-                    alt={card}
-                  />
 
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-      <Box sx={{ bgcolor: 'background.paper', p: 3 }} />
-    </main>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+        <Box sx={{ bgcolor: 'background.paper', p: 3 }} />
+      </main>
       {/* Footer */}
       <Box sx={{ bgcolor: 'primary.main', p: 6 }} component="footer">
         <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>

@@ -322,9 +322,11 @@ def deleteRoom():
     return jsonify({'result':result})
 
 # 搜索房間 by roomName (首頁)
-@app.route("/filterRoomName",methods=["GET"])
+@app.route("/filterRoomName",methods=["POST"])
 def filterRoomName():
-    roomName = request.json['roomName']
+    print("get in filter Room Name")
+    roomName = request.json['temp']
+    print("roomName", roomName)
     private_public = "on"
     result = findRoomByRoomName(roomName,private_public)
     return jsonify({'result':result})

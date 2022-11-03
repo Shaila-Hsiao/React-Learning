@@ -74,10 +74,10 @@ def findRoomByRoomID(roomID):
     return dataList
 
 def findRoomByRoomName(roomName,private_public):
-    command = f"SELECT * FROM `room` WHERE `roomName` = {roomName} and `public_private` = {private_public}"
+    command = f"SELECT `id`, `roomImgPath`,`roomName` FROM `room` WHERE `roomName` LIKE '%{roomName}%' and `private_public` = '{private_public}'"
     cursor.execute(command)
     dataList = cursor.fetchall()
-    return dataDic(dataList)
+    return dataList
 # 留言板
 # JSON_CONTAINS(`userID`,'test');
 
