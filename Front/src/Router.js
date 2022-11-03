@@ -43,6 +43,7 @@ export const Router = () => {
             path="/blueprint"
             component={() => {
               window.location.replace('http://localhost:5000/blueprint');
+              // window.location.replace('http://163.22.17.192:5000/blueprint');
               return null;
             }}
           />

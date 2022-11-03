@@ -17,7 +17,8 @@ app.config['SESSION_USE_SIGNER'] = True
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1) # session 可以存活的時間
 app.config['SESSION_PERMANENT'] = False   # session 期限是否為永久
-# 設定 CORS
+
+# CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://163.22.17.192:3000"]}})
 CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://localhost:3000"]}})
 
 
@@ -385,3 +386,6 @@ def modifyHeadshot():
 if __name__ == "__main__":
     app.run(host="localhost",port=5000,debug=True)
     # app.run(host="0.0.0.0",port=5000,debug=True)
+    # from gevent import pywsgi
+    # server = pywsgi.WSGIServer(('0.0.0.0', 5000), app)
+    # server.serve_forever()
