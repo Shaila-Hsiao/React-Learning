@@ -32,11 +32,11 @@
     "start": "react-scripts start",
     "prebuild": "del ..\\flaskServer\\templates\\index.html && del ..\\flaskServer\\static\\build",
     "build": "react-scripts build",
-    "postbuild": "move build/index.html ..\\flaskServer\\templates\\ && move build ..\\flaskServer\\static\\",
+    "postbuild": "move build\\index.html ..\\flaskServer\\templates\\ && move build ..\\flaskServer\\static\\",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "homepage": "../static/build",
+  "homepage": "..\\static\\build",
   "eslintConfig": {
     "extends": [
       "react-app",
