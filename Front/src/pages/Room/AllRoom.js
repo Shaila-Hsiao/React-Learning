@@ -81,7 +81,8 @@ function AllRoom() {
   useEffect(() => {
     (async () => {
       try {
-        const resp = await httpClient.get("//localhost:5000/userAllRoom");
+        const resp = await httpClient.get("/http://localhost/:5000/userAllRoom");
+        // const resp = await httpClient.get("/http://163.22.17.192/:5000/userAllRoom");
         console.log(resp.data.result);
 
         setRoom(resp.data);
@@ -146,11 +147,14 @@ function AllRoom() {
               全部房間
             </Typography>
           </Container>
+          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+            <TextField variant="standard" label="Please enter Room Name" id="RoomName" />
+            <Button >
+              <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
+            </Button>
+          </Box>
         </Box>
-        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-          <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
-          <TextField variant="standard" fullWidth label="Room Name" id="RoomName" />
-        </Box>
+
         {/* Card */}
         {rooms != null ? (
           <Container sx={{ py: 8 }} maxWidth="md">

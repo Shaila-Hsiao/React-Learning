@@ -1,6 +1,5 @@
-from asyncio.windows_events import NULL
-from re import I
-from flask import Flask, render_template, request, session, jsonify,redirect,url_for
+from flask import Flask, render_template, request, session, jsonify
+from flask_cors import CORS
 from datetime import timedelta
 import os
 # import secrets
@@ -11,15 +10,15 @@ from myModule.model import modelInsert,getEntireItem,itemDelete
 from myModule.itemInfo import itemSelect,itemInfoInsert,itemInfoUpdate
 from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect
 from myModule.upload_save import uploadFile
-from flask_cors import CORS
 
-
+# , static_folder='static/build', static_url_path='/'
 app = Flask(__name__)
 app.config['SESSION_USE_SIGNER'] = True
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1) # session 可以存活的時間
 app.config['SESSION_PERMANENT'] = False   # session 期限是否為永久
-# 設定 CORS
+
+# CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://163.22.17.192:3000"]}})
 CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://localhost:3000"]}})
 
 
@@ -186,9 +185,9 @@ def saveItemInfo():
         imagePath = imagePath+'/'+imageName # 完整相對路徑
     # 語音處理
     if record:
-        recordPath = "recording","./static/blueprint/itemInfo/record"
+        recordPath = "./static/blueprint/itemInfo/record"
         fileName = b64encode(os.urandom(20)).decode('utf-8')+".mp3"
-        uploadFile(fileName,record,recordPath)
+        uploadFile(fileName,record,"recording",recordPath)
         recordPath = recordPath+'/'+recordName # 完整相對路徑
     # 第一次寫入訊息
     if itemInfoID == 0:
@@ -324,9 +323,11 @@ def deleteRoom():
     return jsonify({'result':result})
 
 # 搜索房間 by roomName (首頁)
-@app.route("/filterRoomName",methods=["GET"])
+@app.route("/filterRoomName",methods=["POST"])
 def filterRoomName():
-    roomName = request.json['roomName']
+    print("get in filter Room Name")
+    roomName = request.json['temp']
+    print("roomName", roomName)
     private_public = "on"
     result = findRoomByRoomName(roomName,private_public)
     return jsonify({'result':result})
@@ -385,3 +386,6 @@ def modifyHeadshot():
 if __name__ == "__main__":
     app.run(host="localhost",port=5000,debug=True)
     # app.run(host="0.0.0.0",port=5000,debug=True)
+    # from gevent import pywsgi
+    # server = pywsgi.WSGIServer(('0.0.0.0', 5000), app)
+    # server.serve_forever()

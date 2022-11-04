@@ -1,6 +1,6 @@
 from flask_bcrypt import Bcrypt
 # path: ./myModule
-from myModule.connectDB import connection,cursor
+from myModule.connectDB import connection, cursor
 # register
 def userRegister(name,userID,passwd,email):
     # 檢查帳號有沒有重複
