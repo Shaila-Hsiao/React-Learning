@@ -120,10 +120,7 @@ var ContextMenu = function(blueprint3d) {
   // 
   function ModelInfo(itemInfoID){
     console.log("itemInfoID: ",itemInfoID);
-    if(itemInfoID == 0){
-      console.log("NOInfo");
-      alert("此物件尚未有資訊!!");
-    }else{
+    
       $.ajax({
         url: '/getItemInfo',
         type: "POST",
@@ -144,7 +141,6 @@ var ContextMenu = function(blueprint3d) {
           $('#exampleModal').modal('show')
         }
       });
-    }
   }
   // 
  
@@ -158,7 +154,13 @@ var ContextMenu = function(blueprint3d) {
     console.log("log itemInfoID in example.js line 148~~~~~",item.metadata.itemInfoID);
     $("#context-menu-name").text(item.metadata.itemName);
     // 當點選物品的時候
-    $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
+    if(item.metadata.itemInfoID == 0){
+      console.log("NOInfo");
+      $("#viewer").mouseleave();
+      alert("此物件尚未有資訊!!");
+    }else{
+      $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
+    }
     
     $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
     $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
@@ -186,6 +188,8 @@ var ContextMenu = function(blueprint3d) {
   function itemUnselected() {
     selectedItem = null;
     $("#context-menu").hide();
+    $("#exampleModal").hide();
+
   }
 
   init();
@@ -739,12 +743,13 @@ $(document).ready(function () {
       // 訪客只能瀏覽房間
       if (isEditor == false){
         data = data.replace(/false/gi, "true");
-        $("#fixed").hide();
-        $("#fixed").hide();
+        // $("#fixed").hide();
+        // $("#fixed").hide();
         $("input").attr("readonly","readonly")
         $("#context-menu-delete").hide();
         $("#main-controls").hide();
         $("#add-items").hide();
+        $("#SaveBtn").hide();
         // ("#fixed").attr('style','display:none;'); 
       }
       
