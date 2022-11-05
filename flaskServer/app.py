@@ -54,6 +54,7 @@ def register():
 @app.route("/login",methods=["POST"])
 def login():
     userID = request.json['userID']
+    print(userID)
     passwd = request.json['passwd']
     name = userLogin(userID, passwd)
     # result: 回傳使用者的資料(name and userID)，如果沒有代表沒有找到相符的
@@ -346,6 +347,11 @@ def loadRoomInfo():
     roomID = request.json['roomID']
     result = findRoomByRoomID(roomID)
     return jsonify({'result':result})
+################### 留言板 #################
+# @app.route("/msgBoard",methods=["POST"])
+# def msgBoard():
+#     roomID = session.get('roomID')
+
 
 #################### 個人資訊 ####################
 # 修改個人資訊
