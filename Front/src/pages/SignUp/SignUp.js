@@ -125,7 +125,8 @@ export  default function SignUp() {
     });
     console.log(Nullitem)
     if(Nullitem !== ""){
-      alert("尚未填寫以下項目: \n"+Nullitem);
+      // alert("尚未填寫以下項目: \n"+Nullitem);
+      handleClick();
     }else{
       try{
         // const resp = await httpClient.post("//localhost:5000/register", {
@@ -142,24 +143,45 @@ export  default function SignUp() {
         });
         console.log(resp.data.result);
         if(resp.data.result != null){
-          alert(resp.data.result);
+          // alert(resp.data.result);
+          handleClick();
         }else{
           // if sign up success , navigate to home
           window.location.href = "/";
         }
       }catch (error) {
         if (error.response.status === 401) {
-          alert("Invalid credentials");
-          
+          // alert("Invalid credentials");
+          handleClick();
         }
+    }
+    }
+  };
+  const [open, setOpen] = React.useState(false);
 
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
     }
-    
-    }
+    setOpen(false);
   };
 
   return (
     <ThemeProvider theme={theme}>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center'}}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}>
+        <Alert variant="filled" onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+          <AlertTitle>錯誤</AlertTitle>
+          <strong>資料未填寫完整</strong>！
+        </Alert>
+      </Snackbar>
       <AppBar position="relative" bgcolor='#182e2e'>
         <Toolbar>
           <Button color="inherit" startIcon={<ArrowBackIcon />} size='large' onClick={() => navigate("/")}>Back</Button>

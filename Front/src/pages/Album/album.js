@@ -86,8 +86,8 @@ function Album() {
       // window.location.href = "//localhost:5000/createRoom";
     } catch (error) {
       if (error.response.status === 401) {
-        alert("請先登入!");
-
+        // alert("請先登入!");
+        handleClick();
       }
     }
   }
@@ -145,8 +145,30 @@ function Album() {
       }
     })();
   }, []);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
   return (
     <ThemeProvider theme={theme}>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center'}}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}>
+        <Alert variant="filled" onClose={handleClose} severity="info" sx={{ width: '100%' }}>
+          <AlertTitle>通知</AlertTitle>
+          請先<strong>登入</strong>！
+        </Alert>
+      </Snackbar>
       <CssBaseline />
       {rooms && (
         <NavbarDrawer />
