@@ -7,7 +7,8 @@ USER admin
 WORKDIR /home/admin
 
 # ADD：將檔案加到 images 內
-ADD flaskServer /admin/flaskServer
+ADD . /admin
+# ADD flaskServer /admin/flaskServer
 # ADD Front /admin/Front
 
 # ENV PYTHONUNBUFFERED 1
@@ -19,5 +20,5 @@ ENV PATH="/home/admin/.local/bin:${PATH}"
 # run container 時要執行的命令 COPY . /home/app
 COPY --chown=admin:admin . /home/admin
 
-WORKDIR /home/admin/flaskServer
+# WORKDIR /home/admin/flaskServer
 CMD python3 ./app.py

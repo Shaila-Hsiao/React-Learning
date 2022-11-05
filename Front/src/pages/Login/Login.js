@@ -103,7 +103,11 @@ export default function Login() {
     });
     // Post 給後端檢查
     try {
-      const resp = await httpClient.post("//localhost:5000/login", {
+      // const resp = await httpClient.post("//localhost:5000/login", {
+      //   userID,
+      //   passwd,
+      // });
+      const resp = await httpClient.post("//163.22.17.192:5000/login", {
         userID,
         passwd,
       });
@@ -114,6 +118,7 @@ export default function Login() {
         handleClick();
       }else{
         // if Login Success , navigate to home
+        console.log(userID, passwd);
         window.location.href = "/";
       }
     } catch (error) {

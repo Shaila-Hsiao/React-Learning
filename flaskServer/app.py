@@ -17,6 +17,7 @@ app.config['SESSION_USE_SIGNER'] = True
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1) # session 可以存活的時間
 app.config['SESSION_PERMANENT'] = False   # session 期限是否為永久
+# app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:root@localhost:3306/blueprint"
 
 # CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://163.22.17.192:3000"]}})
 CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://localhost:3000"]}})
@@ -25,6 +26,7 @@ CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://loca
 
 @app.route("/")
 def root():
+    print("網站")
     return render_template("index.html")
     # return render_template("blueprint.html")
     # return render_template("verification.html")
@@ -74,6 +76,7 @@ def logout_user():
 ############# 取得使用者資料 #############
 @app.route("/@me",methods = ["GET"])
 def get_current_user():
+    print("current_user")
     userID = session.get("userID")
     print("userID",userID)
     # if don't have user session
@@ -390,8 +393,8 @@ def modifyHeadshot():
 
 
 if __name__ == "__main__":
-    app.run(host="localhost",port=5000,debug=True)
-    # app.run(host="0.0.0.0",port=5000,debug=True)
+    # app.run(host="localhost",port=5000,debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True) #127.0.0.1:5000
     # from gevent import pywsgi
     # server = pywsgi.WSGIServer(('0.0.0.0', 5000), app)
     # server.serve_forever()

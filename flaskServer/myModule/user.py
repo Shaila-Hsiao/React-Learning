@@ -1,8 +1,11 @@
 from flask_bcrypt import Bcrypt
 # path: ./myModule
 from myModule.connectDB import connection, cursor
+# import myModule.connectDB
 # register
-def userRegister(name,userID,passwd,email):
+def userRegister(name, userID, passwd, email):
+    # connection = connectDB.setting()
+    # cursor = connection.cursor(dictionary = True)
     # 檢查帳號有沒有重複
     sql = f"SELECT * FROM `account`  WHERE userID = '{userID}'"
     # 此帳號已經註冊過
@@ -22,17 +25,23 @@ def userRegister(name,userID,passwd,email):
         sql = f"INSERT INTO `account`(`name`,`userID`, `passwd`, `email`, `itemList`) VALUES ('{name}','{userID}','{passwd}','{email}','{itemList}')"
         cursor.execute(sql)
         connection.commit()
+        # cursor.close()
+        # connection.close()
         return "success"
     except:
         return "Chinese can't appear in userID"
     # 更新到 DB
 # login
-def userLogin(userID,passwd):
+def userLogin(userID, passwd):
+    # connection = connectDB.setting()
+    # cursor = connection.cursor(dictionary = True)
     # 回傳使用者的 name and userID
     result = ""
     sql = f"SELECT name,passwd FROM `account` WHERE userID = '{userID}'"
     cursor.execute(sql) # 執行 sql 指令
     dataList = cursor.fetchall()
+    # cursor.close()
+    # connection.close()
     if len(dataList) == 0:
         return result
     # userID is promary key. 符合 userID 的資料應該只有一個  (('name','userID','passwd',),)
@@ -46,32 +55,48 @@ def userLogin(userID,passwd):
     return result
 # model 上傳成功要新增到資料庫的 itemList
 def updateItemList(modelID,userID):
+    # connection = connectDB.setting()
+    # cursor = connection.cursor(dictionary = True)
     # update user's itemList
     command = f"UPDATE `account` SET `itemList`=CONCAT(`itemList`,',{modelID}') WHERE userID = '{userID}'"
     cursor.execute(command)
     connection.commit()
+    # cursor.close()
+    # connection.close()
+
 def getUserId(userID):
+    # connection = connectDB.setting()
+    # cursor = connection.cursor(dictionary = True)
     # 回傳使用者的 name and userID
     result = ""
     # 搜尋資料庫
-    sql = f"SELECT userID,name,email,headshotPath,introduction FROM `account` WHERE userID = '{userID}'"
+    sql = f"SELECT `userID`, `name`, `email`,`headshotPath`, `introduction` FROM `account` WHERE `userID` = '{userID}'"
     cursor.execute(sql) # 執行 sql 指令
     dataList = cursor.fetchall()
+    # print("getUserid"+dataList)
+    # cursor.close()
+    # connection.close()
     if len(dataList) == 0:
         return result
     result = dataList[0]
     return result
 # 更新個人資料
 def updatePersonal(userID,name,email,introduction):
+    # connection = connectDB.setting()
+    # cursor = connection.cursor(dictionary = True)
     try:
         command = f"UPDATE `account` SET name = '{name}', email = '{email}', introduction = '{introduction}' WHERE userID = '{userID}'"
         cursor.execute(command)
         connection.commit()
+        # cursor.close()
+        # connection.close()
         return True
     except:
         return False
 # 更新個人密碼
 def updatePasswd(userID,oldPasswd,newPasswd):
+    # connection = connectDB.setting()
+    # cursor = connection.cursor(dictionary = True)
     # 檢查密碼是否正確
     command = f"SELECT `passwd` FROM `account` WHERE userID = '{userID}'"
     cursor.execute(command)
@@ -84,6 +109,8 @@ def updatePasswd(userID,oldPasswd,newPasswd):
         command = f"UPDATE `account` SET passwd = '{newPasswd}' WHERE userID = '{userID}'"
         cursor.execute(command)
         connection.commit()
+        # cursor.close()
+        # connection.close()
         return True
         
     else:
@@ -91,15 +118,23 @@ def updatePasswd(userID,oldPasswd,newPasswd):
 
 # 大頭貼更換
 def updateHeadshot(userID,headshotPath):
+    # connection = connectDB.setting()
+    # cursor = connection.cursor(dictionary = True)
     command = f"UPDATE `account` SET headshotPath = '{headshotPath}' WHERE userID = '{userID}'"
     cursor.execute(command)
     connection.commit()
+    # cursor.close()
+    # connection.close()
 # 取得使用者所有 model 清單
 def userAllModel(userID):
+    # connection = connectDB.setting()
+    # cursor = connection.cursor(dictionary = True)
     if userID:
         sql = f"SELECT itemList FROM `account` WHERE userID = '{userID}'"
         cursor.execute(sql) # 執行 sql 指令
         dataList = cursor.fetchone()
+        # cursor.close()
+        # connection.close()
         dataList = dataList[0].split(",")
         return dataList
     return list()

@@ -128,7 +128,13 @@ export  default function SignUp() {
       alert("尚未填寫以下項目: \n"+Nullitem);
     }else{
       try{
-        const resp = await httpClient.post("//localhost:5000/register", {
+        // const resp = await httpClient.post("//localhost:5000/register", {
+        //   userID,
+        //   name,
+        //   email,
+        //   passwd,
+        // });
+        const resp = await httpClient.post("//163.22.17.192:5000/register", {
           userID,
           name,
           email,

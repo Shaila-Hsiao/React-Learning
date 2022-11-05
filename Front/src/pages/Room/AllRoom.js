@@ -81,8 +81,8 @@ function AllRoom() {
   useEffect(() => {
     (async () => {
       try {
-        const resp = await httpClient.get("/http://localhost/:5000/userAllRoom");
-        // const resp = await httpClient.get("/http://163.22.17.192/:5000/userAllRoom");
+        // const resp = await httpClient.get("//localhost:5000/userAllRoom");
+        const resp = await httpClient.get("//163.22.17.192:5000/userAllRoom");
         console.log(resp.data.result);
 
         setRoom(resp.data);
