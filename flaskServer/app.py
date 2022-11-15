@@ -9,6 +9,7 @@ from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePe
 from myModule.model import modelInsert,getEntireItem,itemDelete
 from myModule.itemInfo import itemSelect,itemInfoInsert,itemInfoUpdate
 from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect
+from myModule.boardMsg import  allBoardMsg,boardMsgInsert
 from myModule.upload_save import uploadFile
 
 # , static_folder='static/build', static_url_path='/'
@@ -351,10 +352,24 @@ def loadRoomInfo():
     result = findRoomByRoomID(roomID)
     return jsonify({'result':result})
 ################### 留言板 #################
-# @app.route("/msgBoard",methods=["POST"])
-# def msgBoard():
-#     roomID = session.get('roomID')
-
+# 獲取留言板所有訊息
+@app.route("/getMsgBoard",methods=["POST"])
+def getMsgBoard():
+    roomID = session.get('roomID')
+    # roomID = request.form.get('roomID')
+    result = allBoardMsg(roomID)
+    return {"result":result}
+# 訪客寫紙條
+@app.route("/writeMsgBoard",methods=["POST"])
+def writeMsgBoard():
+    roomID = session.get('roomID')
+    # roomID = request.form.get('roomID')
+    weather = request.form.get('weather')
+    content = request.form.get('content')
+    color = request.form.get('color')
+    msgFrom = session.get('userID')
+    result = boardMsgInsert(weather,content,color,msgFrom,roomID)
+    return {"result":result}
 
 #################### 個人資訊 ####################
 # 修改個人資訊
