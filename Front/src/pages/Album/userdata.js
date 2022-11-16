@@ -82,7 +82,7 @@ function UserData() {
     console.log("update user pwd");
     if (passwd == CheckNewPass) {
       try {
-        const resp = await httpClient.post("//localhost:5000/modifyPasswd", {
+        const resp = await httpClient.post("./modifyPasswd", {
           oldPasswd,
           passwd,
         });
@@ -100,7 +100,7 @@ function UserData() {
   const UpdateUser = async (event) => {
     console.log("update user intro");
     console.log(name, email, introduction);
-    const resp = await httpClient.post("//localhost:5000/modifyPersonal", {
+    const resp = await httpClient.post("./modifyPersonal", {
       name,
       email,
       introduction,
@@ -123,10 +123,11 @@ function UserData() {
         console.log(reader.result); //base64encoded string
         headshot = reader.result;
         console.log("headshot data ", headshot);
-        var resp = httpClient.post("//localhost:5000/modifyHeadshot", {
+        var resp = httpClient.post("./modifyHeadshot", {
           headshot,
         });
-        console.log(resp);
+        console.log("headshot",resp);
+        // setHeadShotPath(resp);
       };
     }
     // navigate("/userdata");

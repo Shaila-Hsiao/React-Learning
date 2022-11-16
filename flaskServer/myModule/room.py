@@ -108,3 +108,9 @@ def roomSelect(roomID):
     cursor.execute(command)
     roomContent = cursor.fetchone()[0]
     return roomContent
+
+# 房間圖片更換
+def updateRoomPic(roomID,roomPicPath):
+    command = f"UPDATE `room` SET roomImgPath = '{roomPicPath}' WHERE id = '{roomID}'"
+    cursor.execute(command)
+    connection.commit()

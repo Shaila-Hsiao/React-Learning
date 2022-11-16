@@ -137,7 +137,7 @@ export  default function SignUp() {
         //   email,
         //   passwd,
         // });
-        const resp = await httpClient.post("//163.22.17.192:5000/register", {
+        const resp = await httpClient.post("./register", {
           userID,
           name,
           email,

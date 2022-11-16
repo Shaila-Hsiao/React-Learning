@@ -139,7 +139,7 @@ export default function CreateRoom() {
     }
       
     try {
-      const resp = await httpClient.post("//localhost:5000/createRoom", {
+      const resp = await httpClient.post("./createRoom", {
         roomName,
         introduction,
         roomContent,

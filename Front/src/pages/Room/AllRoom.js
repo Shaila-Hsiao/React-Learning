@@ -87,7 +87,7 @@ function AllRoom() {
   const deleteRoom = async (event) => {
     console.log("delete RoomID:", roomID);
     try {
-      const resp = await httpClient.post("//localhost:5000/deleteRoom", {
+      const resp = await httpClient.post("./deleteRoom", {
         roomID
       });
       console.log(resp);
@@ -108,7 +108,7 @@ function AllRoom() {
     var RoomInfo = roomID;
     // 前端 取得roomID，
     try {
-      const resp = await httpClient.post("//localhost:5000/userClickRoom", {
+      const resp = await httpClient.post("./userClickRoom", {
         RoomInfo
       });
       const oauthpage = window.open("/blueprint", "_self", "height=1000,width=500")
@@ -149,7 +149,7 @@ function AllRoom() {
   useEffect(() => {
     (async () => {
       try {
-        const resp = await httpClient.get("//localhost:5000/userAllRoom");
+        const resp = await httpClient.get("./userAllRoom");
         // const resp = await httpClient.get("//163.22.17.192:5000/userAllRoom");
         console.log(resp.data.result);
         var newcards = [];

@@ -25,6 +25,7 @@ var roomImgPath = '';
 var private_public = '';
 var introduction = '';
 var editRoomID = '';
+var roomID = '';
 
 const theme = createTheme({
     palette: {
@@ -103,7 +104,7 @@ export default function RoomEdit() {
             private_public = "None";
         }
         console.log(roomName, private_public, introduction, editRoomID);
-        const resp = await httpClient.post("//localhost:5000/editRoom", {
+        const resp = await httpClient.post("../editRoom", {
             editRoomID,
             roomName,
             private_public,
@@ -113,15 +114,38 @@ export default function RoomEdit() {
         navigate("/allRoom");
     }
 
+    const convert = async (event) => {
+        console.log("in convert")
+        var file = document.querySelector('input[type=file]').files[0];
+        var reader = new FileReader();
+
+        if (file) {
+            var roomPic = '';
+            console.log("in ,", file)
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                console.log(reader.result); //base64encoded string
+                roomPic = reader.result;
+                var resp = httpClient.post("../modifyRoomPic", {
+                    roomID,
+                    roomPic,
+                });
+                console.log("roomPic", resp);
+                // setHeadShotPath(resp);
+            };
+        }
+        // navigate("/userdata");
+    }
+
     // 抓 room 簡介和作者資訊
     useEffect(() => {
         (async () => {
             try {
                 var getUrlString = window.location.href;
                 var url = new URL(getUrlString);
-                var roomID = url.searchParams.get('roomID');
+                roomID = url.searchParams.get('roomID');
                 console.log(roomID);
-                const resp = await httpClient.post("//localhost:5000/getRoomIntro", {
+                const resp = await httpClient.post("../getRoomIntro", {
                     roomID,
                 });
                 console.log(resp.data.roomName);
@@ -201,7 +225,15 @@ export default function RoomEdit() {
                                                         <CardActions>
                                                             <Button variant="contained" component="label">
                                                                 上傳房間照片
-                                                                <input hidden accept="image/*" multiple type="file" />
+                                                                <input
+                                                                    accept="image/*"
+                                                                    style={{
+                                                                        display: "none"
+                                                                    }}
+                                                                    id="button-file"
+                                                                    type="file"
+                                                                    onChange={convert}
+                                                                />
                                                             </Button>
                                                         </CardActions>
                                                     </Card>

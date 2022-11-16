@@ -78,7 +78,7 @@ function Album() {
   const CreateRoom = async (event) => {
     // event.preventDefault();
     try {
-      const resp = await httpClient.get("//localhost:5000/@me", {
+      const resp = await httpClient.get("./@me", {
       });
       // const resp = await httpClient.get("//163.22.17.192:5000/@me", {
       // });
@@ -99,12 +99,9 @@ function Album() {
   const FindRoom = async (event) => {
     console.log("i want to find a room");
     console.log(temp);
-    const resp = await httpClient.post("//localhost:5000/filterRoomName", {
+    const resp = await httpClient.post("./filterRoomName", {
       temp,
     });
-    // const resp = await httpClient.post("//163.22.17.192:5000/filterRoomName", {
-    //   temp,
-    // });
     console.log(resp.data.result);
     setRoom(resp.data.result);
     const needData = resp.data.result;
@@ -129,7 +126,7 @@ function Album() {
     (async () => {
       try {
         // 163.22.17.192
-        const resp = await httpClient.get("//localhost:5000/allRoom");
+        const resp = await httpClient.get("./allRoom");
         // const resp = await httpClient.get("//163.22.17.192:5000/allRoom");
         // 資料的內容會是一個 json 裡面是一個 list 中有房間資料的 json
         // { [ {room 1 infor }, {room 2 infor }, {room 3 infor }... ] }
