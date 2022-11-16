@@ -6,9 +6,10 @@ def setting():
     db_settings = {
         "host": "localhost",
         "port": 3306,
-        "user": "lab103",
+        "user": "root",
+        # "user": "lab103",
         # "password": "",
-        "password": "Lab103%",
+        # "password": "Lab103%",
         "database": "blueprint"
         # 'auth_plugin': 'mysql_native_password'
         # "charset": "utf8"
@@ -18,8 +19,8 @@ def setting():
         "host": "localhost",
         # "host": "mysql",
         "port": 3306,
-        "user": "lab103",
-        "password": "Lab103%",
+        "user": "root",
+        # "password": "Lab103%",
         "database": "blueprint"
         # 'auth_plugin': 'mysql_native_password'
         # "charset": "utf8"

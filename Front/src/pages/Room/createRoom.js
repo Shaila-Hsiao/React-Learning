@@ -138,18 +138,18 @@ export default function CreateRoom() {
     }
       
     try {
-      // const resp = await httpClient.post("//localhost:5000/createRoom", {
-      //   roomName,
-      //   introduction,
-      //   roomContent,
-      //   private_public,
-      // });
-      const resp = await httpClient.post("//163.22.17.192:5000/createRoom", {
+      const resp = await httpClient.post("//localhost:5000/createRoom", {
         roomName,
         introduction,
         roomContent,
         private_public,
       });
+      // const resp = await httpClient.post("//163.22.17.192:5000/createRoom", {
+      //   roomName,
+      //   introduction,
+      //   roomContent,
+      //   private_public,
+      // });
       console.log(resp.data)
       // if login success
       if(resp.data === "name of room is repeat"){

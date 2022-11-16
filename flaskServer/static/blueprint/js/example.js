@@ -16,6 +16,8 @@ var CameraButtons = function(blueprint3d) {
   }
 
   function init() {
+    
+
     // Camera controls
     $("#zoom-in").click(zoomIn);
     $("#zoom-out").click(zoomOut);  
@@ -115,7 +117,12 @@ var ContextMenu = function(blueprint3d) {
     return inches * 2.54;
   }
   // 
-  
+  // $("").click(CloseAudio());
+  $( "#CloseBtn" ).click(function() {
+    console.log("Audio")
+    var oAudio = document.getElementById('ItemInfoAudio');
+    oAudio.pause();
+  });
 
 
   // 
@@ -132,10 +139,17 @@ var ContextMenu = function(blueprint3d) {
       success: function (resp) {
         // data = room.roomContent
         console.log("success: ",resp);
+        const IsoDate = new Date(resp.date)
+        const DateStr = IsoDate.getFullYear()+"-"+(IsoDate.getMonth()+1)+"-"+IsoDate.getDate()
+        console.log("data: ",IsoDate)
+
+        console.log("date type :",typeof(IsoDate))
+        console.log("date type :",IsoDate.getFullYear())
+        console.log("DataStr  :",DateStr)
         // var today = new Date();
         // console.log(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()) 
         // $('#date').val(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate())
-        $("#date").val(resp.date) 
+        $("#date").val(DateStr) 
         $("#message").text(resp.message)
         $("#image").attr("src",resp.imagePath)
         $("#exampleModalLabel").text(resp.itemName)
@@ -145,8 +159,7 @@ var ContextMenu = function(blueprint3d) {
     
     
   }
-  // 
- 
+  
   // 選擇物件時
   function itemSelected(item) {
     console.log("============item==========",item);
@@ -756,6 +769,7 @@ $(document).ready(function () {
         $("#itemVolume").hide();
         $("#main-controls").hide();
         $("#add-items").hide();
+        // ItemInfo物件資訊的儲存按鈕
         $("#SaveBtn").hide();
         // ("#fixed").attr('style','display:none;'); 
       }

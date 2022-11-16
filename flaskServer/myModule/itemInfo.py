@@ -15,6 +15,7 @@ def itemSelect(itemInfoID):
         'recordPath': result[5],
         'recordName': result[6]
     }
+    print("Data date: ",data['date'])
     return data
 # 插入 item 資訊
 def itemInfoInsert(itemName,date,weather,message,imagePath,recordPath,recordName):

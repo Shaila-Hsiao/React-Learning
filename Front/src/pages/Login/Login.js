@@ -30,6 +30,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 // function Copyright(props) {
 //   return (
 //     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -103,14 +104,14 @@ export default function Login() {
     });
     // Post 給後端檢查
     try {
-      // const resp = await httpClient.post("//localhost:5000/login", {
-      //   userID,
-      //   passwd,
-      // });
-      const resp = await httpClient.post("//163.22.17.192:5000/login", {
+      const resp = await httpClient.post("//localhost:5000/login", {
         userID,
         passwd,
       });
+      // const resp = await httpClient.post("//163.22.17.192:5000/login", {
+      //   userID,
+      //   passwd,
+      // });
       console.log(resp)
       // if Login fail
       if(resp.data === "LoginFail"){

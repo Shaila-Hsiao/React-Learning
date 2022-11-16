@@ -408,8 +408,8 @@ def modifyHeadshot():
 
 
 if __name__ == "__main__":
-    # app.run(host="localhost",port=5000,debug=True)
-    app.run(host="0.0.0.0", port=5000, debug=True) #127.0.0.1:5000
+    app.run(host="localhost",port=5000,debug=True)
+    # app.run(host="0.0.0.0", port=5000, debug=True) #127.0.0.1:5000
     # from gevent import pywsgi
     # server = pywsgi.WSGIServer(('0.0.0.0', 5000), app)
     # server.serve_forever()

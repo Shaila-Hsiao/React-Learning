@@ -28,6 +28,8 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import Snackbar from '@mui/material/Snackbar';
+import { Alert, AlertTitle } from '@mui/material';
 // function Copyright(props) {
 //   return (
 //     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -129,18 +131,18 @@ export  default function SignUp() {
       handleClick();
     }else{
       try{
-        // const resp = await httpClient.post("//localhost:5000/register", {
-        //   userID,
-        //   name,
-        //   email,
-        //   passwd,
-        // });
-        const resp = await httpClient.post("//163.22.17.192:5000/register", {
+        const resp = await httpClient.post("//localhost:5000/register", {
           userID,
           name,
           email,
           passwd,
         });
+        // const resp = await httpClient.post("//163.22.17.192:5000/register", {
+        //   userID,
+        //   name,
+        //   email,
+        //   passwd,
+        // });
         console.log(resp.data.result);
         if(resp.data.result != null){
           // alert(resp.data.result);
