@@ -751,8 +751,9 @@ $(document).ready(function () {
         $("#check").prop("checked",true);
         $("#fixed").hide();
         // $("#fixed").attr("input","checked");
-        $("input").attr("readonly","readonly")
+        // $("input").attr("readonly","readonly")
         $("#context-menu-delete").hide();
+        $("#itemVolume").hide();
         $("#main-controls").hide();
         $("#add-items").hide();
         $("#SaveBtn").hide();

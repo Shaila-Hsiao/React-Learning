@@ -5,7 +5,7 @@ services:
     build: ./flaskServer
     ports:
       - 5000:5000
-    links:
+    depends_on:
       - mysql
 
   mysql:
@@ -14,8 +14,8 @@ services:
       - 3316:3306
     volumes:
       - ./db:/docker-entrypoint-initdb.d/:ro
-    cap_add:
-      - SYS_NICE
+    # cap_add:
+    #   - SYS_NICE
     environment:
       MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: root

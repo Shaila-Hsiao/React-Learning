@@ -110,15 +110,17 @@ export const NavbarDrawer = () => {
 
 
     const logoutUser = async () => {
-      await httpClient.post("//localhost:5000/logout");
+      // await httpClient.post("//localhost:5000/logout");
+      await httpClient.post("//163.22.17.192:5000/logout");
       window.location.href = "/";
     };
     // user 狀態確認
     useEffect(() => {
       (async () => {
         try {
-          const resp = await httpClient.get("//localhost:5000/@me");
-          
+          // 163.22.17.192
+          // const resp = await httpClient.get("//localhost:5000/@me");
+          const resp = await httpClient.get("//163.22.17.192:5000/@me");
           // console.log(resp.data.userID)
           // console.log(resp.data.name)
           // console.log(resp.data.email)

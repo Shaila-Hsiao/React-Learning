@@ -9,6 +9,7 @@ from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePe
 from myModule.model import modelInsert,getEntireItem,itemDelete
 from myModule.itemInfo import itemSelect,itemInfoInsert,itemInfoUpdate
 from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect
+from myModule.boardMsg import  allBoardMsg,boardMsgInsert
 from myModule.upload_save import uploadFile
 
 # , static_folder='static/build', static_url_path='/'
@@ -17,6 +18,7 @@ app.config['SESSION_USE_SIGNER'] = True
 app.config['SECRET_KEY'] = os.urandom(24)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=1) # session 可以存活的時間
 app.config['SESSION_PERMANENT'] = False   # session 期限是否為永久
+# app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:root@localhost:3306/blueprint"
 
 # CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://163.22.17.192:3000"]}})
 CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://localhost:3000"]}})
@@ -25,6 +27,7 @@ CORS(app,supports_credentials=True, resources={r"/.*": {"origins": ["http://loca
 
 @app.route("/")
 def root():
+    print("網站")
     return render_template("index.html")
     # return render_template("blueprint.html")
     # return render_template("verification.html")
@@ -54,6 +57,7 @@ def register():
 @app.route("/login",methods=["POST"])
 def login():
     userID = request.json['userID']
+    print(userID)
     passwd = request.json['passwd']
     name = userLogin(userID, passwd)
     # result: 回傳使用者的資料(name and userID)，如果沒有代表沒有找到相符的
@@ -73,6 +77,7 @@ def logout_user():
 ############# 取得使用者資料 #############
 @app.route("/@me",methods = ["GET"])
 def get_current_user():
+    print("current_user")
     userID = session.get("userID")
     print("userID",userID)
     # if don't have user session
@@ -346,6 +351,25 @@ def loadRoomInfo():
     roomID = request.json['roomID']
     result = findRoomByRoomID(roomID)
     return jsonify({'result':result})
+################### 留言板 #################
+# 獲取留言板所有訊息
+@app.route("/getMsgBoard",methods=["POST"])
+def getMsgBoard():
+    roomID = session.get('roomID')
+    # roomID = request.form.get('roomID')
+    result = allBoardMsg(roomID)
+    return {"result":result}
+# 訪客寫紙條
+@app.route("/writeMsgBoard",methods=["POST"])
+def writeMsgBoard():
+    roomID = session.get('roomID')
+    # roomID = request.form.get('roomID')
+    weather = request.form.get('weather')
+    content = request.form.get('content')
+    color = request.form.get('color')
+    msgFrom = session.get('userID')
+    result = boardMsgInsert(weather,content,color,msgFrom,roomID)
+    return {"result":result}
 
 #################### 個人資訊 ####################
 # 修改個人資訊
@@ -384,8 +408,8 @@ def modifyHeadshot():
 
 
 if __name__ == "__main__":
-    app.run(host="localhost",port=5000,debug=True)
-    # app.run(host="0.0.0.0",port=5000,debug=True)
+    # app.run(host="localhost",port=5000,debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True) #127.0.0.1:5000
     # from gevent import pywsgi
     # server = pywsgi.WSGIServer(('0.0.0.0', 5000), app)
     # server.serve_forever()

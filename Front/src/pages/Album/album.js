@@ -76,7 +76,9 @@ function Album() {
   const CreateRoom = async (event) => {
     // event.preventDefault();
     try {
-      const resp = await httpClient.get("//localhost:5000/@me", {
+      // const resp = await httpClient.get("//localhost:5000/@me", {
+      // });
+      const resp = await httpClient.get("//163.22.17.192:5000/@me", {
       });
       console.log(resp)
       // if login success
@@ -84,8 +86,8 @@ function Album() {
       // window.location.href = "//localhost:5000/createRoom";
     } catch (error) {
       if (error.response.status === 401) {
-        alert("請先登入!");
-
+        // alert("請先登入!");
+        handleClick();
       }
     }
   }
@@ -95,7 +97,10 @@ function Album() {
   const FindRoom = async (event) => {
     console.log("i want to find a room");
     console.log(temp);
-    const resp = await httpClient.post("//localhost:5000/filterRoomName", {
+    // const resp = await httpClient.post("//localhost:5000/filterRoomName", {
+    //   temp,
+    // });
+    const resp = await httpClient.post("//163.22.17.192:5000/filterRoomName", {
       temp,
     });
     console.log(resp.data.result);
@@ -121,7 +126,9 @@ function Album() {
   useEffect(() => {
     (async () => {
       try {
-        const resp = await httpClient.get("//localhost:5000/allRoom");
+        // 163.22.17.192
+        // const resp = await httpClient.get("//localhost:5000/allRoom");
+        const resp = await httpClient.get("//163.22.17.192:5000/allRoom");
         // 資料的內容會是一個 json 裡面是一個 list 中有房間資料的 json
         // { [ {room 1 infor }, {room 2 infor }, {room 3 infor }... ] }
         console.log(resp.data.result);
@@ -138,8 +145,30 @@ function Album() {
       }
     })();
   }, []);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
   return (
     <ThemeProvider theme={theme}>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center'}}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}>
+        <Alert variant="filled" onClose={handleClose} severity="info" sx={{ width: '100%' }}>
+          <AlertTitle>通知</AlertTitle>
+          請先<strong>登入</strong>！
+        </Alert>
+      </Snackbar>
       <CssBaseline />
       {rooms && (
         <NavbarDrawer />

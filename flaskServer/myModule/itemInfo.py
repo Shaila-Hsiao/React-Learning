@@ -1,6 +1,7 @@
-from myModule.connectDB import connection,cursor
+from myModule.connectDB import connection, cursor
+
 def itemSelect(itemInfoID):
-    command = f"SELECT `itemName`, `date`, `weather`, `message`, `imagePath`, `recordPath`, `recordName` FROM itemInfo WHERE id = '{itemInfoID}'"
+    command = f"SELECT `itemName`, `date`, `weather`, `message`, `imagePath`, `recordPath`, `recordName` FROM `itemInfo` WHERE id = '{itemInfoID}'"
     cursor.execute(command)
     result = cursor.fetchone()
     # print("result:",result)
@@ -20,7 +21,7 @@ def itemInfoInsert(itemName,date,weather,message,imagePath,recordPath,recordName
     command = f"INSERT INTO `iteminfo`(`itemName`, `date`, `weather`, `message`, `imagePath`, `recordPath`, `recordName`) VALUES ('{itemName}','{date}','{weather}','{message}','{imagePath}','{recordPath}','{recordName}')"
     cursor.execute(command)
     connection.commit()
-    command = "select max(`id`) from item"
+    command = "select max(`id`) from `item`"
     itemInfoID = cursor.execute(command)
     return itemInfoID
 def itemInfoUpdate(itemInfoID,itemName,date,weather,message,imagePath,recordPath,recordName):
