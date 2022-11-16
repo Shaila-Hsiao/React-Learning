@@ -16,16 +16,38 @@ def updateRoom(roomID,roomName,roomImgPath,introduction,roomContent,private_publ
     cursor.execute(command)
     connection.commit()
 
+# 更新房間簡介
+def RoomIntroEdit(roomID,roomName,introduction,private_public) :
+    command = f"UPDATE `room` SET `roomName` = '{roomName}',`introduction` = '{introduction}', `private_public` = '{private_public}' WHERE id = '{roomID}'"
+    cursor.execute(command)
+    connection.commit()
+
+def RoomIntro(roomID) :
+    result = ""
+    command = f"SELECT * FROM `room` WHERE id = '{roomID}'"
+    cursor.execute(command) # 執行 sql 指令
+    dataList = cursor.fetchall()
+    result = dataList[0]
+    return result
+
 # insert into DB
 def roomInsert(roomName,introduction,roomContent,userID,private_public):
     command = f"INSERT INTO `room`(`roomName`, `introduction`, `roomContent`, `userID`, `private_public`) VALUES ('{roomName}','{introduction}','{roomContent}','{userID}','{private_public}')"
     # 新增至itemInfo
     cursor.execute(command)
-    connection.commit()
+    data = getroomInsertID(roomName,userID)
+    return data[0][0]
+
+def getroomInsertID (roomName,userID) :
+    print("getroomInsertID")
+    command = f"SELECT id FROM `room` WHERE `roomName` = '{roomName}' and `userID`= '{userID}'"
+    cursor.execute(command)
+    return cursor.fetchall()
+
 
 # delete room
 def roomDelete(roomID):
-    command = f"DELETE FROM `room` WHERE roomID = '{roomID}'"
+    command = f"DELETE FROM `room` WHERE id = '{roomID}'"
     cursor.execute(command)
     connection.commit()
 

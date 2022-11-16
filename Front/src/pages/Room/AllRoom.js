@@ -18,7 +18,11 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import httpClient from '../../httpClient';
 import Button from '@mui/material/Button';
-var cards = [];
+// var cards = [];
+var originalCards = [];
+var roomID = '';
+var lowerCase = '';
+var inputText = '';
 
 const theme = createTheme({
   palette: {
@@ -69,8 +73,10 @@ function AllRoom() {
 
   const [RoomEl, setRoomEl] = React.useState(null);
   const openRoom = Boolean(RoomEl);
-  const handleRoomClick = (event) => {
+  function handleRoomClick(event) {
+    console.log('click', event.currentTarget);
     setRoomEl(event.currentTarget);
+    // ItemSelected(i);
   };
   const handleRoomClose = () => {
     setRoomEl(null);
@@ -78,46 +84,88 @@ function AllRoom() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const deleteRoom = async (event) => {
+    console.log("delete RoomID:", roomID);
+    try {
+      const resp = await httpClient.post("//localhost:5000/deleteRoom", {
+        roomID
+      });
+      console.log(resp);
+    } catch (error) {
+      console.log("delete error");
+    }
+  }
+  const roomIntroEdit = async (event) => {
+    try {
+      navigate("/RoomEdit/?roomID=" + roomID);
+    } catch (error) {
+      console.log("error enter roomEdit");
+    }
+  }
+
+  const roomEdit = async (event) => {
+    console.log("RoomID:", roomID);
+    var RoomInfo = roomID;
+    // 前端 取得roomID，
+    try {
+      const resp = await httpClient.post("//localhost:5000/userClickRoom", {
+        RoomInfo
+      });
+      const oauthpage = window.open("/blueprint", "_self", "height=1000,width=500")
+      console.log(resp)
+    } catch (error) {
+      console.log("Not authenticated");
+    }
+
+  }
+
+  function setInputText(data) {
+    inputText = data;
+  }
+  const [cards, SetCards] = useState();
+  let inputHandler = async (event) => {
+    //convert input text to lower case
+    lowerCase = event.target.value.toLowerCase();
+    setInputText(lowerCase);
+    var newcards = [];
+    if (inputText === '') {
+      SetCards(originalCards);
+    }
+    else {
+      for (var i = 0; i < originalCards.length; i++) {
+        if (originalCards[i][1].toLowerCase().includes(inputText)) {
+          newcards.push(originalCards[i]);
+        }
+      }
+      console.log("search newcards", newcards);
+      SetCards(newcards);
+    }
+  };
+  function ItemSelected(i) {
+    console.log(cards[i]);
+    roomID = cards[i][0];
+  }
+
   useEffect(() => {
     (async () => {
       try {
-        // const resp = await httpClient.get("//localhost:5000/userAllRoom");
-        const resp = await httpClient.get("//163.22.17.192:5000/userAllRoom");
+        const resp = await httpClient.get("//localhost:5000/userAllRoom");
+        // const resp = await httpClient.get("//163.22.17.192:5000/userAllRoom");
         console.log(resp.data.result);
-
+        var newcards = [];
         setRoom(resp.data);
         const temp = resp.data.result;
-        cards = [];
-        console.log("cards", cards);
         for (let i = 0; i < temp.length; i++) {
-          cards.push(temp[i]);
+          newcards.push(temp[i]);
         }
-        console.log("cards", cards);
+        console.log("cards", newcards);
+        originalCards = newcards;
+        SetCards(newcards);
       } catch (error) {
         console.log("Not authenticated");
       }
     })();
   }, []);
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const resp = await httpClient.get("//localhost:5000/userAllRoom");
-  //       // 資料的內容會是一個 json 裡面是一個 list 中有房間資料的 json
-  //       // { [ {room 1 infor }, {room 2 infor }, {room 3 infor }... ] }
-  //       console.log(resp.data.result);
-  //       setRoom(resp.data.result);
-  //       const temp = resp.data.result;
-  //       cards = [];
-  //       console.log("cards", cards);
-  //       for (let i = 0; i < temp.length; i ++) {
-  //         cards.push(temp[i]);
-  //       }
-  //       console.log("cards", cards);
-  //     }catch(error) {
-  //       console.log("No room data");
-  //     }
-  //   })();
-  // }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -148,7 +196,7 @@ function AllRoom() {
             </Typography>
           </Container>
           <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-            <TextField variant="standard" label="Please enter Room Name" id="RoomName" />
+            <TextField onChange={inputHandler} variant="standard" label="Please enter Room Name" id="RoomName" />
             <Button >
               <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
             </Button>
@@ -160,7 +208,7 @@ function AllRoom() {
           <Container sx={{ py: 8 }} maxWidth="md">
             {/* End hero unit  */}
             <Grid container spacing={4}>
-              {cards.map((card) => (
+              {cards.map((card, i) => (
                 <Grid item key={card} xs={12} sm={6} md={4}>
                   <Card
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
@@ -169,7 +217,7 @@ function AllRoom() {
                       aria-controls={openRoom ? 'basic-menu' : undefined}
                       aria-haspopup="true"
                       aria-expanded={openRoom ? 'true' : undefined}
-                      onClick={handleRoomClick}
+                      onClick={(event) => { handleRoomClick(event); ItemSelected(i); }}
                     >
                       <CardMedia
                         component="img"
@@ -194,9 +242,9 @@ function AllRoom() {
                         'aria-labelledby': 'basic-button',
                       }}
                     >
-                      <MenuItem onClick={() => navigate("/RoomEdit")}>編輯房間簡介</MenuItem>
-                      <MenuItem onClick={() => navigate("/RoomEdit")}>編輯房間</MenuItem>
-                      <MenuItem onClick={handleClose}>刪除房間</MenuItem>
+                      <MenuItem onClick={roomIntroEdit}>編輯房間簡介</MenuItem>
+                      <MenuItem onClick={roomEdit}>編輯房間</MenuItem>
+                      <MenuItem onClick={deleteRoom}>刪除房間</MenuItem>
                     </Menu>
                   </Card>
                 </Grid>

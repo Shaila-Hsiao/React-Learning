@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Alert, AlertTitle } from '@mui/material';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 // import Toolbar from '@mui/material/Toolbar';
@@ -13,6 +14,7 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
+import Snackbar from '@mui/material/Snackbar';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { CardActionArea } from '@mui/material';
@@ -76,10 +78,10 @@ function Album() {
   const CreateRoom = async (event) => {
     // event.preventDefault();
     try {
-      // const resp = await httpClient.get("//localhost:5000/@me", {
-      // });
-      const resp = await httpClient.get("//163.22.17.192:5000/@me", {
+      const resp = await httpClient.get("//localhost:5000/@me", {
       });
+      // const resp = await httpClient.get("//163.22.17.192:5000/@me", {
+      // });
       console.log(resp)
       // if login success
       navigate("/createRoom");
@@ -97,12 +99,12 @@ function Album() {
   const FindRoom = async (event) => {
     console.log("i want to find a room");
     console.log(temp);
-    // const resp = await httpClient.post("//localhost:5000/filterRoomName", {
-    //   temp,
-    // });
-    const resp = await httpClient.post("//163.22.17.192:5000/filterRoomName", {
+    const resp = await httpClient.post("//localhost:5000/filterRoomName", {
       temp,
     });
+    // const resp = await httpClient.post("//163.22.17.192:5000/filterRoomName", {
+    //   temp,
+    // });
     console.log(resp.data.result);
     setRoom(resp.data.result);
     const needData = resp.data.result;
@@ -127,8 +129,8 @@ function Album() {
     (async () => {
       try {
         // 163.22.17.192
-        // const resp = await httpClient.get("//localhost:5000/allRoom");
-        const resp = await httpClient.get("//163.22.17.192:5000/allRoom");
+        const resp = await httpClient.get("//localhost:5000/allRoom");
+        // const resp = await httpClient.get("//163.22.17.192:5000/allRoom");
         // 資料的內容會是一個 json 裡面是一個 list 中有房間資料的 json
         // { [ {room 1 infor }, {room 2 infor }, {room 3 infor }... ] }
         console.log(resp.data.result);
@@ -238,28 +240,6 @@ function Album() {
             </Grid>
           </Container>
         )}
-        <Box sx={{ bgcolor: 'background.paper', p: 3 }} />
-        <Container sx={{ py: 8 }}>
-          {/* End hero unit  */}
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={3}>
-                <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardActionArea onClick={() => navigate("/RoomIntro")}>
-                    <CardMedia
-                      component="img"
-                      image={room1}
-                      alt={card}
-                    />
-
-                  </CardActionArea>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
         <Box sx={{ bgcolor: 'background.paper', p: 3 }} />
       </main>
       {/* Footer */}

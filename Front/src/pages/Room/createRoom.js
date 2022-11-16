@@ -20,14 +20,12 @@ import FormHelperText from '@mui/material/FormHelperText';
 import Switch from '@mui/material/Switch';
 import httpClient from '../../httpClient';
 import bedroom from '../../assets/images/2.png';
-import classroom from '../../assets/images/3.png';
+import studyroom from '../../assets/images/3.png';
+import bandroom from '../../assets/images/3.png';
 import nullroom from '../../assets/images/1.png';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
-
-// const drawerWidth = 240;
-// const cards = [1, 2, 3, 4];
 
 const theme = createTheme({
   palette: {
@@ -48,6 +46,8 @@ const theme = createTheme({
 export default function CreateRoom() {
   const navigate = useNavigate();
   const RoomModel= require('../../assets/RoomModel/RoomModel.json'); 
+  const StudyRoomModel = require('../../assets/RoomModel/StudyRoomModel.json');
+  const BandRoomModel = require('../../assets/RoomModel/BandRoomModel.json');
   // console.log("RoomModel: ",RoomModel)
   // const [anchorElNav, setAnchorElNav] = React.useState(null);
   // const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -77,8 +77,6 @@ export default function CreateRoom() {
 
   const [state, setState] = React.useState({
     gilad: true,
-    jason: false,
-    antoine: true,
   });
 
   const handleChange = (event) => {
@@ -90,19 +88,12 @@ export default function CreateRoom() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // model room json
-    
-
     const data = new FormData(event.currentTarget);
     const roomName = data.get('roomName');
     const introduction = data.get('roomIntro');
     const private_public = data.get('gilad');
     const RM_Radio= data.get('RM_Radio');
 
-    // const email =  data.get('email');
-    // const passwd =  data.get('passwd');
-    // roomIntro
-    // gilad
-    // Post 給後端檢查
     console.log({
       roomName: data.get('roomName'),
       introduction: data.get('roomIntro'),
@@ -128,8 +119,18 @@ export default function CreateRoom() {
         console.log("roomContent_Switch: ",roomContent );
         break;
       }
-      case '2':{
-        // 教室
+      case '2': {
+        // 書房
+        roomContent = JSON.stringify(StudyRoomModel)
+        console.log("roomContent_Type: ", typeof (roomContent));
+        console.log("roomContent_Switch: ", roomContent);
+        break;
+      }
+      case '3': {
+        // 練團室
+        roomContent = JSON.stringify(BandRoomModel)
+        console.log("roomContent_Type: ", typeof (roomContent));
+        console.log("roomContent_Switch: ", roomContent);
         break;
       }
       default:{
@@ -138,26 +139,30 @@ export default function CreateRoom() {
     }
       
     try {
-      // const resp = await httpClient.post("//localhost:5000/createRoom", {
-      //   roomName,
-      //   introduction,
-      //   roomContent,
-      //   private_public,
-      // });
-      const resp = await httpClient.post("//163.22.17.192:5000/createRoom", {
+      const resp = await httpClient.post("//localhost:5000/createRoom", {
         roomName,
         introduction,
         roomContent,
         private_public,
       });
+      // const resp = await httpClient.post("//163.22.17.192:5000/createRoom", {
+      //   roomName,
+      //   introduction,
+      //   roomContent,
+      //   private_public,
+      // });
       console.log(resp.data)
       // if login success
       if(resp.data === "name of room is repeat"){
-        alert("已經有重複的房間名字了!");}
-      // }else{
-      //   navigate("/");
-      // }
-      // window.location.href = "//localhost:5000/createRoom";
+        alert("已經有重複的房間名字了!");
+      }
+      var RoomInfo = resp.data.roomID;
+      const resp_two = await httpClient.post("./userClickRoom", {
+        RoomInfo
+      });
+      const oauthpage = window.open("/blueprint", "_self", "height=1000,width=500")
+      console.log(resp_two)
+
     } catch (error) {
       if (error.response.status === 401) {
         alert("Invalid credentials");
@@ -262,13 +267,6 @@ export default function CreateRoom() {
                         />
                       </Box>
                       <Box sx={{ p: 2 }} />
-                      {/* <Button
-                        variant="contained"
-                        size="large"
-                        type="submit"
-                        // onClick={() => navigate("/selectRoom")}
-                        sx={{ bgcolor: '#7f0808', color: '#fff' }}
-                      >創建</Button> */}
                     </Box>
                   </Grid>
                 </Grid>
@@ -309,7 +307,8 @@ export default function CreateRoom() {
                 >
                   <FormControlLabel value="0" control={<Radio />} label="空白房間" />
                   <FormControlLabel value= "1" control={<Radio />} label="簡易房間" />
-                  <FormControlLabel value="2" control={<Radio />} label="教室" />
+                  <FormControlLabel value="2" control={<Radio />} label="書房" />
+                  <FormControlLabel value="3" control={<Radio />} label="練團室" />
                 </RadioGroup>
               </FormControl>
             </Box>
@@ -318,7 +317,6 @@ export default function CreateRoom() {
                   variant="contained"
                   // size="large"
                   type= "submit"
-                  // onClick={() => navigate("/test")}
                   sx={{ bgcolor: '#7f0808', color: '#fff' }}
                 >開始編輯</Button>
               </Box>
@@ -365,12 +363,28 @@ export default function CreateRoom() {
                 >
                   <CardMedia
                     component="img"
-                    image={classroom}
+                    image={studyroom}
                     alt="random"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      教室
+                      書房
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              <Grid item xs>
+                <Card
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                >
+                  <CardMedia
+                    component="img"
+                    image={bandroom}
+                    alt="random"
+                  />
+                  <CardContent sx={{ flexGrow: 1 }}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      練團室
                     </Typography>
                   </CardContent>
                 </Card>

@@ -1,0 +1,400 @@
+{
+    "floorplan": {
+        "corners": {
+            "56d9ebd1-91b2-875c-799d-54b3785fca1f": {
+                "x": 630.555,
+                "y": -227.58400000000006
+            },
+            "8f4a050d-e102-3c3f-5af9-3d9133555d76": {
+                "x": 294.64,
+                "y": -227.58400000000006
+            },
+            "4e312eca-6c4f-30d1-3d9a-a19a9d1ee359": {
+                "x": 294.64,
+                "y": 232.664
+            },
+            "254656bf-8a53-3987-c810-66b349f49b19": {
+                "x": 745.7439999999998,
+                "y": 232.664
+            },
+            "11d25193-4411-fbbf-78cb-ae7c0283164b": {
+                "x": 1044.7019999999998,
+                "y": 232.664
+            },
+            "edf0de13-df9f-cd6a-7d11-9bd13c36ce12": {
+                "x": 1044.7019999999998,
+                "y": -105.66399999999999
+            },
+            "e7db8654-efe1-bda2-099a-70585874d8c0": {
+                "x": 745.7439999999998,
+                "y": -105.66399999999999
+            }
+        },
+        "walls": [
+            {
+                "corner1": "4e312eca-6c4f-30d1-3d9a-a19a9d1ee359",
+                "corner2": "254656bf-8a53-3987-c810-66b349f49b19",
+                "frontTexture": {
+                    "url": "./static/blueprint/rooms/textures/wallmap.png",
+                    "stretch": true,
+                    "scale": 0
+                },
+                "backTexture": {
+                    "url": "./static/blueprint/rooms/textures/light_brick.jpg",
+                    "stretch": false,
+                    "scale": 100
+                }
+            },
+            {
+                "corner1": "254656bf-8a53-3987-c810-66b349f49b19",
+                "corner2": "e7db8654-efe1-bda2-099a-70585874d8c0",
+                "frontTexture": {
+                    "url": "./static/blueprint/rooms/textures/marbletiles.jpg",
+                    "stretch": false,
+                    "scale": 300
+                },
+                "backTexture": {
+                    "url": "./static/blueprint/rooms/textures/light_brick.jpg",
+                    "stretch": false,
+                    "scale": 100
+                }
+            },
+            {
+                "corner1": "56d9ebd1-91b2-875c-799d-54b3785fca1f",
+                "corner2": "8f4a050d-e102-3c3f-5af9-3d9133555d76",
+                "frontTexture": {
+                    "url": "./static/blueprint/rooms/textures/wallmap.png",
+                    "stretch": true,
+                    "scale": 0
+                },
+                "backTexture": {
+                    "url": "./static/blueprint/rooms/textures/light_brick.jpg",
+                    "stretch": false,
+                    "scale": 100
+                }
+            },
+            {
+                "corner1": "8f4a050d-e102-3c3f-5af9-3d9133555d76",
+                "corner2": "4e312eca-6c4f-30d1-3d9a-a19a9d1ee359",
+                "frontTexture": {
+                    "url": "./static/blueprint/rooms/textures/wallmap.png",
+                    "stretch": true,
+                    "scale": 0
+                },
+                "backTexture": {
+                    "url": "./static/blueprint/rooms/textures/light_brick.jpg",
+                    "stretch": false,
+                    "scale": 100
+                }
+            },
+            {
+                "corner1": "254656bf-8a53-3987-c810-66b349f49b19",
+                "corner2": "11d25193-4411-fbbf-78cb-ae7c0283164b",
+                "frontTexture": {
+                    "url": "./static/blueprint/rooms/textures/wallmap.png",
+                    "stretch": true,
+                    "scale": 0
+                },
+                "backTexture": {
+                    "url": "./static/blueprint/rooms/textures/marbletiles.jpg",
+                    "stretch": false,
+                    "scale": 300
+                }
+            },
+            {
+                "corner1": "11d25193-4411-fbbf-78cb-ae7c0283164b",
+                "corner2": "edf0de13-df9f-cd6a-7d11-9bd13c36ce12",
+                "frontTexture": {
+                    "url": "./static/blueprint/rooms/textures/wallmap.png",
+                    "stretch": true,
+                    "scale": 0
+                },
+                "backTexture": {
+                    "url": "./static/blueprint/rooms/textures/marbletiles.jpg",
+                    "stretch": false,
+                    "scale": 300
+                }
+            },
+            {
+                "corner1": "edf0de13-df9f-cd6a-7d11-9bd13c36ce12",
+                "corner2": "e7db8654-efe1-bda2-099a-70585874d8c0",
+                "frontTexture": {
+                    "url": "./static/blueprint/rooms/textures/wallmap.png",
+                    "stretch": true,
+                    "scale": 0
+                },
+                "backTexture": {
+                    "url": "./static/blueprint/rooms/textures/marbletiles.jpg",
+                    "stretch": false,
+                    "scale": 300
+                }
+            },
+            {
+                "corner1": "e7db8654-efe1-bda2-099a-70585874d8c0",
+                "corner2": "56d9ebd1-91b2-875c-799d-54b3785fca1f",
+                "frontTexture": {
+                    "url": "./static/blueprint/rooms/textures/wallmap.png",
+                    "stretch": true,
+                    "scale": 0
+                },
+                "backTexture": {
+                    "url": "./static/blueprint/rooms/textures/light_brick.jpg",
+                    "stretch": false,
+                    "scale": 100
+                }
+            }
+        ],
+        "wallTextures": [],
+        "floorTextures": {},
+        "newFloorTextures": {
+            "11d25193-4411-fbbf-78cb-ae7c0283164b,254656bf-8a53-3987-c810-66b349f49b19,e7db8654-efe1-bda2-099a-70585874d8c0,edf0de13-df9f-cd6a-7d11-9bd13c36ce12": {
+                "url": "./static/blueprint/rooms/textures/light_fine_wood.jpg",
+                "scale": 300
+            },
+            "254656bf-8a53-3987-c810-66b349f49b19,4e312eca-6c4f-30d1-3d9a-a19a9d1ee359,56d9ebd1-91b2-875c-799d-54b3785fca1f,8f4a050d-e102-3c3f-5af9-3d9133555d76,e7db8654-efe1-bda2-099a-70585874d8c0": {
+                "url": "./static/blueprint/rooms/textures/light_fine_wood.jpg",
+                "scale": 300
+            }
+        }
+    },
+    "items": [
+        {
+            "item_id": 2,
+            "item_name": "Open Door",
+            "item_type": 7,
+            "model_url": "./static/blueprint/models/js/open_door.js",
+            "xpos": 745.2440185546875,
+            "ypos": 110.5,
+            "zpos": 64.8291839065202,
+            "rotation": -1.5707963267948966,
+            "scale_x": 1.7003089598352215,
+            "scale_y": 0.997292171703541,
+            "scale_z": 0.999415040540576,
+            "fixed": false
+        },
+        {
+            "item_id": 3,
+            "item_name": "Window",
+            "item_type": 3,
+            "model_url": "./static/blueprint/models/js/whitewindow.js",
+            "xpos": 886.8841174461031,
+            "ypos": 139.1510114697785,
+            "zpos": -105.16400146484375,
+            "rotation": 0,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false
+        },
+        {
+            "item_id": 8,
+            "item_name": "Dresser - White",
+            "item_type": 1,
+            "model_url": "./static/blueprint/models/js/we-narrow6white_baked.js",
+            "xpos": 898.0548281668393,
+            "ypos": 35.611997646165,
+            "zpos": 201.10860458067486,
+            "rotation": -3.141592653589793,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false
+        },
+        {
+            "item_id": 17,
+            "item_name": "Sofa - Grey",
+            "item_type": 1,
+            "model_url": "./static/blueprint/models/js/cb-rochelle-gray_baked.js",
+            "xpos": 356.92671999154373,
+            "ypos": 42.54509923821,
+            "zpos": -21.686174295784554,
+            "rotation": 1.5707963267948966,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false
+        },
+        {
+            "item_id": 5,
+            "item_name": "Red Chair",
+            "item_type": 1,
+            "model_url": "./static/blueprint/models/js/ik-ekero-orange_baked.js",
+            "xpos": 397.676038151142,
+            "ypos": 37.50235073007,
+            "zpos": 156.31701312594373,
+            "rotation": 2.4062972386507093,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false
+        },
+        {
+            "item_id": 1,
+            "item_name": "Closed Door",
+            "item_type": 7,
+            "model_url": "./static/blueprint/models/js/closed-door28x80_baked.js",
+            "xpos": 637.2176377788675,
+            "ypos": 110.80000022010701,
+            "zpos": 232.16400146484375,
+            "rotation": 3.141592653589793,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false
+        },
+        {
+            "item_id": 13,
+            "item_name": "Bookshelf",
+            "item_type": 1,
+            "model_url": "./static/blueprint/models/js/cb-kendallbookcasewalnut_baked.js",
+            "xpos": 533.1460416453955,
+            "ypos": 92.17650034119151,
+            "zpos": 207.7644213268835,
+            "rotation": 3.141592653589793,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false
+        },
+        {
+            "item_id": 3,
+            "item_name": "Window",
+            "item_type": 3,
+            "model_url": "./static/blueprint/models/js/whitewindow.js",
+            "xpos": 534.9620937975317,
+            "ypos": 137.60931398864443,
+            "zpos": -227.08399963378906,
+            "rotation": 0,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false
+        },
+        {
+            "item_id": 3,
+            "item_name": "Window",
+            "item_type": 3,
+            "model_url": "./static/blueprint/models/js/whitewindow.js",
+            "xpos": 295.1400146484375,
+            "ypos": 141.43383044055196,
+            "zpos": 123.2280598724867,
+            "rotation": 1.5707963267948966,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false
+        },
+        {
+            "item_id": 3,
+            "item_name": "Window",
+            "item_type": 3,
+            "model_url": "./static/blueprint/models/js/whitewindow.js",
+            "xpos": 374.7738207971076,
+            "ypos": 138.62749831597068,
+            "zpos": -227.08399963378906,
+            "rotation": 0,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false
+        },
+        {
+            "item_id": 89,
+            "item_name": "Piano",
+            "item_type": 1,
+            "model_url": "./static/blueprint/models/js/Piano.js",
+            "xpos": 617.0424415328249,
+            "ypos": 76.2,
+            "zpos": -74.89382121852611,
+            "rotation": -2.381109500415725,
+            "scale_x": 1.7248984381157826,
+            "scale_y": 1.4557760455528754,
+            "scale_z": 1.465961165023248,
+            "fixed": false
+        },
+        {
+            "item_id": 82,
+            "item_name": "drumer_black_jack",
+            "item_type": 1,
+            "model_url": "./static/blueprint/models/js/drumer_black_jack.js",
+            "xpos": 913.1710137772617,
+            "ypos": 76.2,
+            "zpos": 43.254500842696416,
+            "rotation": -1.5707963267948966,
+            "scale_x": 20.653912631672757,
+            "scale_y": 25.888542689085735,
+            "scale_z": 20.483904006296786,
+            "fixed": false
+        },
+        {
+            "item_id": 73,
+            "item_name": "gibson",
+            "item_type": 1,
+            "model_url": "./static/blueprint/models/js/gibson.js",
+            "xpos": 714.3948013200891,
+            "ypos": 69.85,
+            "zpos": 192.1803377482259,
+            "rotation": -1.5707963267948966,
+            "scale_x": 0.1548003814647069,
+            "scale_y": 0.14327535348991105,
+            "scale_z": 0.1730356036865971,
+            "fixed": false
+        },
+        {
+            "item_id": 72,
+            "item_name": "Guitar_02",
+            "item_type": 1,
+            "model_url": "./static/blueprint/models/js/Guitar_02.js",
+            "xpos": 408.07066460571895,
+            "ypos": 69.85,
+            "zpos": -203.8978995267151,
+            "rotation": 0,
+            "scale_x": 179.95231972001113,
+            "scale_y": 168.71206393909458,
+            "scale_z": 179.43175235592477,
+            "fixed": false
+        },
+        {
+            "item_id": 67,
+            "item_name": "PRSModel",
+            "item_type": 1,
+            "model_url": "./static/blueprint/models/js/PRSModel.js",
+            "xpos": 358.1518413668447,
+            "ypos": 69.85,
+            "zpos": -204.79322957960733,
+            "rotation": 0,
+            "scale_x": 31.23293869982441,
+            "scale_y": 28.32808341150424,
+            "scale_z": 29.265370080191722,
+            "fixed": false
+        },
+        {
+            "item_id": 66,
+            "item_name": "Guitar_01",
+            "item_type": 1,
+            "model_url": "./static/blueprint/models/js/Guitar_01.js",
+            "xpos": 457.738406744485,
+            "ypos": 69.85,
+            "zpos": -203.38654336077286,
+            "rotation": 0,
+            "scale_x": 137.43398839927278,
+            "scale_y": 138.0097940522422,
+            "scale_z": 150.2679129832153,
+            "fixed": false
+        },
+        {
+            "item_id": 25,
+            "item_name": "NYC Poster",
+            "item_type": 2,
+            "model_url": "./static/blueprint/models/js/nyc-poster2.js",
+            "xpos": 739.4902682371869,
+            "ypos": 149.07054130112783,
+            "zpos": -61.017885288410426,
+            "rotation": -1.5707963267948966,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false
+        }
+    ]
+}

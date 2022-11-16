@@ -77,12 +77,12 @@ export default function RoomIntro() {
     console.log("RoomID:",RoomInfo);
     // 前端 取得roomID，
     try {
-      // const resp = await httpClient.post("//localhost:5000/userClickRoom",{
-      //   RoomInfo
-      // });
-      const resp = await httpClient.post("//163.22.17.192:5000/userClickRoom",{
+      const resp = await httpClient.post("//localhost:5000/userClickRoom",{
         RoomInfo
       });
+      // const resp = await httpClient.post("//163.22.17.192:5000/userClickRoom",{
+      //   RoomInfo
+      // });
       const oauthpage = window.open("/blueprint", "_self", "height=1000,width=500")
       
       // navigate("/blueprint");
@@ -108,12 +108,12 @@ export default function RoomIntro() {
         var url = new URL(getUrlString);
         var roomID = url.searchParams.get('roomID');
         console.log(roomID);
-        // const resp = await httpClient.post("//localhost:5000/RoomIntro", {
-        //     roomID,
-        // });
-        const resp = await httpClient.post("//163.22.17.192:5000/RoomIntro", {
+        const resp = await httpClient.post("//localhost:5000/RoomIntro", {
             roomID,
         });
+        // const resp = await httpClient.post("//163.22.17.192:5000/RoomIntro", {
+        //     roomID,
+        // });
         console.log(resp.data.result);
         setRoomInfo(roomID);
         const temp = resp.data.result;

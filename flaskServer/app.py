@@ -8,7 +8,7 @@ from base64 import b64encode
 from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList,updatePasswd
 from myModule.model import modelInsert,getEntireItem,itemDelete
 from myModule.itemInfo import itemSelect,itemInfoInsert,itemInfoUpdate
-from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect
+from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect,RoomIntroEdit,RoomIntro
 from myModule.boardMsg import  allBoardMsg,boardMsgInsert
 from myModule.upload_save import uploadFile
 
@@ -290,6 +290,17 @@ def createRoom():
     session['roomContent'] = roomContent
     return jsonify({'roomID':roomID})
 
+# 編輯房間簡介
+@app.route("/editRoom",methods=["POST"])
+def editRoom():
+    roomID = request.json['editRoomID']
+    roomName = request.json['roomName']
+    introduction = request.json['introduction']
+    private_public = request.json['private_public']
+    userID = session.get("userID")
+    result = RoomIntroEdit(roomID,roomName,introduction,private_public)
+    return jsonify({'result':result})
+
 # 儲存房間
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():
@@ -319,6 +330,20 @@ def saveRoom():
         updateRoom(roomID,roomName,path,introduction,roomContent,private_public)
         result = "房間存取成功"
     return jsonify({'result':result})
+
+# 獲取房間簡介
+@app.route("/getRoomIntro",methods=["POST"])
+def getRoomIntro():
+    roomID = request.json['roomID']
+    room = RoomIntro(roomID)
+    print("room" , room)
+    return jsonify({
+        "id":room[0],
+        "roomName":room[1],
+        "introduction":room[2],
+        "roomImgPath":room[3],
+        "private_public":room[6]
+    })
 
 # 刪除房間
 @app.route("/deleteRoom",methods=["POST"])
@@ -376,9 +401,10 @@ def writeMsgBoard():
 @app.route("/modifyPersonal",methods=["POST"])
 def modifyPersonal():
     userID = session.get('userID')
-    name = request.form.get('name')
-    email = request.form.get('email')
-    introduction = request.form.get('introduction')
+    name = request.json['name']
+    email = request.json['email']
+    introduction = request.json['introduction']
+    print("all data", userID,name,email,introduction)
     result = updatePersonal(userID,name,email,introduction)
     return jsonify({'result':result})
 # 修改個人密碼
@@ -386,8 +412,8 @@ def modifyPersonal():
 def modifyPasswd():
     userID = session.get('userID')
     print(userID)
-    oldPasswd = request.form.get('oldPasswd')
-    passwd = request.form.get('passwd')
+    oldPasswd = request.json['oldPasswd']
+    passwd = request.json['passwd']
     result = updatePasswd(userID,oldPasswd,passwd)
     return {'result':result}
 
