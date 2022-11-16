@@ -7,16 +7,20 @@ def uploadFile(fileName,content,fileType,path):
         writeInFile(f"{path}/{fileName}",content,"w")
     # 圖片
     elif fileType == 'image':
+        print("upload_save => uploadFile => image")
         content = content.split(",")[1]
         content = base64.b64decode(content)
-        writeInFile(f"{path}/{fileName}",content,"wb")
+        writeInFile(f"{path}",content,"wb")
     # 音檔
     elif fileType == 'recording':
         content = content.split(",")[1]
         content = base64.b64decode(content)
-        writeInFile(f"{path}/{fileName}",content,"wb")
+        writeInFile(f"{path}",content,"wb")
 
 def writeInFile(path,text,mode):
-    f = open(path, mode)
-    f.write(text)
+    # f = open(path, mode)
+    # f = open(path)
+    print(path)
+    with open(path, mode) as f:
+        f.write(text)
     f.close()

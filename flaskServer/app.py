@@ -8,7 +8,7 @@ from base64 import b64encode
 from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList,updatePasswd
 from myModule.model import modelInsert,getEntireItem,itemDelete
 from myModule.itemInfo import itemSelect,itemInfoInsert,itemInfoUpdate
-from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect
+from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect,RoomIntroEdit,RoomIntro,updateRoomPic
 from myModule.boardMsg import  allBoardMsg,boardMsgInsert
 from myModule.upload_save import uploadFile
 
@@ -290,6 +290,32 @@ def createRoom():
     session['roomContent'] = roomContent
     return jsonify({'roomID':roomID})
 
+# 編輯房間簡介
+@app.route("/editRoom",methods=["POST"])
+def editRoom():
+    roomID = request.json['editRoomID']
+    roomName = request.json['roomName']
+    introduction = request.json['introduction']
+    private_public = request.json['private_public']
+    userID = session.get("userID")
+    result = RoomIntroEdit(roomID,roomName,introduction,private_public)
+    return jsonify({'result':result})
+
+# 更新大頭貼
+@app.route("/modifyRoomPic",methods=["POST"])
+def modifyRoomPic():
+    roomID = request.json['roomID']
+    roomPic = request.json['roomPic']
+    # 隨機命名
+    roomPicName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
+    print("roomPicName in modifyHeadshot", roomPicName)
+    # 將照片存到 server
+    uploadFile(roomPicName, roomPic,'image',f'./static/roomPic/{roomPicName}')
+    roomPicPath = f'/static/roomPic/{roomPicName}'
+    # 更新大頭照路徑
+    updateRoomPic(roomID, roomPicPath)
+    return jsonify({'roomPicName':roomPicName})
+
 # 儲存房間
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():
@@ -319,6 +345,20 @@ def saveRoom():
         updateRoom(roomID,roomName,path,introduction,roomContent,private_public)
         result = "房間存取成功"
     return jsonify({'result':result})
+
+# 獲取房間簡介
+@app.route("/getRoomIntro",methods=["POST"])
+def getRoomIntro():
+    roomID = request.json['roomID']
+    room = RoomIntro(roomID)
+    print("room" , room)
+    return jsonify({
+        "id":room[0],
+        "roomName":room[1],
+        "introduction":room[2],
+        "roomImgPath":room[3],
+        "private_public":room[6]
+    })
 
 # 刪除房間
 @app.route("/deleteRoom",methods=["POST"])
@@ -376,9 +416,10 @@ def writeMsgBoard():
 @app.route("/modifyPersonal",methods=["POST"])
 def modifyPersonal():
     userID = session.get('userID')
-    name = request.form.get('name')
-    email = request.form.get('email')
-    introduction = request.form.get('introduction')
+    name = request.json['name']
+    email = request.json['email']
+    introduction = request.json['introduction']
+    print("all data", userID,name,email,introduction)
     result = updatePersonal(userID,name,email,introduction)
     return jsonify({'result':result})
 # 修改個人密碼
@@ -386,8 +427,8 @@ def modifyPersonal():
 def modifyPasswd():
     userID = session.get('userID')
     print(userID)
-    oldPasswd = request.form.get('oldPasswd')
-    passwd = request.form.get('passwd')
+    oldPasswd = request.json['oldPasswd']
+    passwd = request.json['passwd']
     result = updatePasswd(userID,oldPasswd,passwd)
     return {'result':result}
 
@@ -396,16 +437,15 @@ def modifyPasswd():
 def modifyHeadshot():
     userID = session.get('userID')
     headshot = request.json['headshot']
-    path = request.json['path']
-    # headshotName = secrets.token_hex()+".jpg"
+    # 隨機命名
     headshotName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
+    print("headshotName in modifyHeadshot", headshotName)
     # 將照片存到 server
-    uploadFile(headshotName,headshot,'image',f'{path}/{headshotName}')
+    uploadFile(headshotName, headshot,'image',f'./static/headShots/{headshotName}')
+    headshotPath = f'/static/headShots/{headshotName}'
     # 更新大頭照路徑
-    updateHeadshot(userID,path)
+    updateHeadshot(userID, headshotPath)
     return jsonify({'headshotName':headshotName})
-
-
 
 if __name__ == "__main__":
     app.run(host="localhost",port=5000,debug=True)

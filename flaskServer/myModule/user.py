@@ -82,21 +82,15 @@ def getUserId(userID):
     return result
 # 更新個人資料
 def updatePersonal(userID,name,email,introduction):
-    # connection = connectDB.setting()
-    # cursor = connection.cursor(dictionary = True)
     try:
         command = f"UPDATE `account` SET name = '{name}', email = '{email}', introduction = '{introduction}' WHERE userID = '{userID}'"
         cursor.execute(command)
         connection.commit()
-        # cursor.close()
-        # connection.close()
         return True
     except:
         return False
 # 更新個人密碼
 def updatePasswd(userID,oldPasswd,newPasswd):
-    # connection = connectDB.setting()
-    # cursor = connection.cursor(dictionary = True)
     # 檢查密碼是否正確
     command = f"SELECT `passwd` FROM `account` WHERE userID = '{userID}'"
     cursor.execute(command)
@@ -109,10 +103,7 @@ def updatePasswd(userID,oldPasswd,newPasswd):
         command = f"UPDATE `account` SET passwd = '{newPasswd}' WHERE userID = '{userID}'"
         cursor.execute(command)
         connection.commit()
-        # cursor.close()
-        # connection.close()
         return True
-        
     else:
         return False
 
