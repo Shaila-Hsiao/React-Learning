@@ -45,6 +45,7 @@ var CameraButtons = function(blueprint3d) {
 
   function preventDefault(e) {
     e.preventDefault();
+    // 停止傳播
     e.stopPropagation();
   }
 
@@ -121,26 +122,28 @@ var ContextMenu = function(blueprint3d) {
   function ModelInfo(itemInfoID){
     console.log("itemInfoID: ",itemInfoID);
     
-      $.ajax({
-        url: '/getItemInfo',
-        type: "POST",
-        data: {
-            'itemInfoID':itemInfoID
-        },
-        /*result為后端函式回傳的json*/
-        success: function (resp) {
-          // data = room.roomContent
-          console.log("success: ",resp);
-          // var today = new Date();
-          // console.log(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()) 
-          // $('#date').val(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate())
-          $("#date").val(resp.date) 
-          $("#message").text(resp.message)
-          $("#image").attr("src",resp.imagePath)
-          $("#exampleModalLabel").text(resp.itemName)
-          $('#exampleModal').modal('show')
-        }
-      });
+    $.ajax({
+      url: '/getItemInfo',
+      type: "POST",
+      data: {
+          'itemInfoID':itemInfoID
+      },
+      /*result為后端函式回傳的json*/
+      success: function (resp) {
+        // data = room.roomContent
+        console.log("success: ",resp);
+        // var today = new Date();
+        // console.log(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()) 
+        // $('#date').val(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate())
+        $("#date").val(resp.date) 
+        $("#message").text(resp.message)
+        $("#image").attr("src",resp.imagePath)
+        $("#exampleModalLabel").text(resp.itemName)
+        $('#exampleModal').modal('show')
+      }
+    });
+    
+    
   }
   // 
  
@@ -152,23 +155,22 @@ var ContextMenu = function(blueprint3d) {
     console.log("log itemID in example.js line 147~~~~~",item.metadata.itemID);
     console.log("log itemName in example.js line 147~~~~~",item.metadata.itemName);
     console.log("log itemInfoID in example.js line 148~~~~~",item.metadata.itemInfoID);
-    $("#context-menu-name").text(item.metadata.itemName);
+    // $("#context-menu-name").text(item.metadata.itemName);
     // 當點選物品的時候
     if(item.metadata.itemInfoID == 0){
-      console.log("NOInfo");
-      $("#viewer").mouseleave();
-      alert("此物件尚未有資訊!!");
+      $("#NullItemInfo").show();
+      $("#NullItemInfo").hide();
+      console.log("No ItemInfo!")
     }else{
-      $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
+    $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
     }
     
-    $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
-    $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
-    $("#item-depth").val(cmToIn(selectedItem.getDepth()).toFixed(0));
+    // $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
+    // $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
+    // $("#item-depth").val(cmToIn(selectedItem.getDepth()).toFixed(0));
 
-    $("#context-menu").show();
-
-    $("#fixed").prop('checked', item.fixed);
+    // $("#context-menu").show();
+    // $("#fixed").prop('checked', item.fixed);
   }
 
   function resize() {
@@ -189,6 +191,7 @@ var ContextMenu = function(blueprint3d) {
     selectedItem = null;
     $("#context-menu").hide();
     $("#exampleModal").hide();
+    // $("#NullItemInfo").hide();
 
   }
 
@@ -368,6 +371,7 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
   // TODO: this doesn't really belong here
   function initItems() {
     $("#add-items").find(".add-item").mousedown(function(e) {
+    
       var itemID = $(this).attr("model-id");
       var itemName = $(this).attr("model-name")
       var modelUrl = $(this).attr("model-url");
@@ -382,6 +386,7 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
         itemInfoID: itemInfoID
       }
       console.log("log itemInfoID in example.js line 374",metadata);
+      console.log("【ClickTest】",metadata);
       blueprint3d.model.scene.addItem(itemType, modelUrl, metadata);
       setCurrentState(scope.states.DEFAULT);
     });
