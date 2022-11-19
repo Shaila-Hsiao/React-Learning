@@ -82,7 +82,7 @@ function UserData() {
     console.log("update user pwd");
     if (passwd == CheckNewPass) {
       try {
-        const resp = await httpClient.post("./modifyPasswd", {
+        const resp = await httpClient.post("../modifyPasswd", {
           oldPasswd,
           passwd,
         });
@@ -100,7 +100,7 @@ function UserData() {
   const UpdateUser = async (event) => {
     console.log("update user intro");
     console.log(name, email, introduction);
-    const resp = await httpClient.post("./modifyPersonal", {
+    const resp = await httpClient.post("../modifyPersonal", {
       name,
       email,
       introduction,
@@ -123,7 +123,7 @@ function UserData() {
         console.log(reader.result); //base64encoded string
         headshot = reader.result;
         console.log("headshot data ", headshot);
-        var resp = httpClient.post("./modifyHeadshot", {
+        var resp = httpClient.post("../modifyHeadshot", {
           headshot,
         });
         console.log("headshot",resp);
@@ -136,7 +136,7 @@ function UserData() {
   useEffect(() => {
     (async () => {
       try {
-        const resp = await httpClient.get("//localhost:5000/@me");
+        const resp = await httpClient.get("../@me");
         // const resp = await httpClient.get("//163.22.17.192:5000/@me");
         console.log(resp.data.userID)
         console.log(resp.data.name)

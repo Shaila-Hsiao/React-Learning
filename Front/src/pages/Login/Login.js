@@ -104,7 +104,7 @@ export default function Login() {
     });
     // Post 給後端檢查
     try {
-      const resp = await httpClient.post("//localhost:5000/login", {
+      const resp = await httpClient.post("../login", {
         userID,
         passwd,
       });

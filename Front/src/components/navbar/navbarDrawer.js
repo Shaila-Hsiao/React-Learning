@@ -119,7 +119,7 @@ export const NavbarDrawer = () => {
       (async () => {
         try {
           // 163.22.17.192
-          const resp = await httpClient.get("./@me");
+          const resp = await httpClient.get("../@me");
           // const resp = await httpClient.get("//163.22.17.192:5000/@me");
           // console.log(resp.data.userID)
           // console.log(resp.data.name)

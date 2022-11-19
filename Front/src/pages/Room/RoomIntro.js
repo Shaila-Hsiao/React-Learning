@@ -77,7 +77,7 @@ export default function RoomIntro() {
     console.log("RoomID:",RoomInfo);
     // 前端 取得roomID，
     try {
-      const resp = await httpClient.post("//localhost:5000/userClickRoom",{
+      const resp = await httpClient.post("../userClickRoom",{
         RoomInfo
       });
       // const resp = await httpClient.post("//163.22.17.192:5000/userClickRoom",{
@@ -108,7 +108,7 @@ export default function RoomIntro() {
         var url = new URL(getUrlString);
         var roomID = url.searchParams.get('roomID');
         console.log(roomID);
-        const resp = await httpClient.post("//localhost:5000/RoomIntro", {
+        const resp = await httpClient.post("../RoomIntro", {
             roomID,
         });
         // const resp = await httpClient.post("//163.22.17.192:5000/RoomIntro", {
