@@ -194,7 +194,15 @@ export default function RoomIntro() {
                           src={cards[6]}
                           ></Avatar>
                         <Box sx={{ p:3}} />
-                        <Typography variant='h4'>About Author : {cards[3]}</Typography>
+                        <Stack
+                          sx={{ pt: 4 }}
+                          direction="row"
+                          spacing={2}
+                          justifyContent="center"
+                        >
+                          <Typography variant='h4'>About Author : {cards[3]}</Typography>
+                          <Button variant="contained" size="large" >About</Button>
+                        </Stack>
                         <Box sx={{ p:3}} />
                         <Box
                             sx={{
