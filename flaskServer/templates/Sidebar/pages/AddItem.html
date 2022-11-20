@@ -1,0 +1,28 @@
+<!-- Add Items -->
+<div id="add-items">
+            
+  <input type="file" id="recording" accept="mp3/*" />
+  <!-- recording -->
+  <audio controls>
+    <!-- <source src="horse.ogg" type="audio/ogg"> -->
+    <source src="../static/blueprint/itemInfo/record/song.mp3" type="audio/mpeg">
+  </audio>
+  <br/>
+  <!-- 檔案顯示 -->
+  <label class="text-center mb-5 image-preview-wrapper" for="texture">
+    <img src="../static/blueprint/other/photo.png" id="canvas" alt="image-placehoder">
+  </label>
+  <input type="file" id="texture" accept="image/*" />
+  <input type="file" id="mtl" accept=".mtl"/>
+  <input type="file" id="obj" accept=".obj"/>
+  <label class="text-center mb-5 image-preview-wrapper" for="thumbnail">
+    <img src="../static/blueprint/other/photo.png" id="canvas_1" alt="image-placehoder">
+  </label>
+  <input type="file" id="thumbnail" accept="image/*"/>
+  <button id="uploadBtn" >upload model</button>
+  <div class="row" id="items-wrapper">
+
+    <!-- Items added here by items.js -->
+  </div>
+  <!-- upload 3D model -->
+</div>

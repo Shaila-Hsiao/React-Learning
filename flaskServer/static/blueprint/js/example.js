@@ -125,7 +125,7 @@ var ContextMenu = function(blueprint3d) {
   });
 
 
-  // 
+  // 點選Item 跳出 Info
   function ModelInfo(itemInfoID){
     console.log("itemInfoID: ",itemInfoID);
     
@@ -139,10 +139,10 @@ var ContextMenu = function(blueprint3d) {
       success: function (resp) {
         // data = room.roomContent
         console.log("success: ",resp);
+        // date -------------
         const IsoDate = new Date(resp.date)
         const DateStr = IsoDate.getFullYear()+"-"+(IsoDate.getMonth()+1)+"-"+IsoDate.getDate()
         console.log("data: ",IsoDate)
-
         console.log("date type :",typeof(IsoDate))
         console.log("date type :",IsoDate.getFullYear())
         console.log("DataStr  :",DateStr)
@@ -150,17 +150,27 @@ var ContextMenu = function(blueprint3d) {
         // console.log(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()) 
         // $('#date').val(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate())
         $("#date").val(DateStr) 
+        $("#weather").text(resp.weather)
         $("#message").text(resp.message)
+        $("#message-text").val(resp.message)
         $("#image").attr("src",resp.imagePath)
+        $("#image").attr("alt",resp.itemName)
         $("#exampleModalLabel").text(resp.itemName)
         $('#exampleModal').modal('show')
+
+        // record Path
+        console.log("resp.recordPath: ",resp.recordPath)
+        $('#AudioSource').attr("src",resp.recordPath);
+        var audio = $("#ItemInfoAudio"); 
+        audio[0].pause();
+        audio[0].load();//suspends and restores all audio element
       }
     });
     
     
   }
   
-  // 選擇物件時
+  // 選擇物件時 
   function itemSelected(item) {
     console.log("============item==========",item);
     selectedItem = item;
@@ -175,7 +185,7 @@ var ContextMenu = function(blueprint3d) {
       $("#NullItemInfo").hide();
       console.log("No ItemInfo!")
     }else{
-    $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
+      $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
     }
     
     // $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));

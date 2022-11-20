@@ -36,6 +36,13 @@ def blueprint():
     return render_template("blueprint.html")
     # return render_template("blueprint.html")
     # return render_template("verification.html")
+@app.route("/new")
+def new():
+    # return render_template("blueprint.html")
+    # return render_template("blueprint.html")
+    return render_template("content.html")
+
+
 ############# 註冊 #############
 @app.route("/register",methods=["POST"])
 def register():

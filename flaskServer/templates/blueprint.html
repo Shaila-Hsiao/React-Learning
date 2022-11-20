@@ -23,178 +23,16 @@
   </head>
 
   <body>
-
-    <div class="container-fluid">
-      <div class="row main-row">
+    {% include './Navbar/navbar.html' %}
+    {% include './Sidebar/Cosidebar.html'%}
+    <div  id="main">
+        <div class="container-fluid">
         <!-- Left Column -->
-        <div class="col-xs-3 sidebar">
-          <!-- Main Navigation -->
-          <ul class="nav nav-sidebar">
-            <li id="floorplan_tab"><a href="#">
-              Edit Floorplan
-              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
-            </a></li>
-            <li id="design_tab"><a href="#">
-              Design
-              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
-            </a></li>
-            <li id="items_tab"><a href="#">
-              Add Items
-              <span class="glyphicon glyphicon-chevron-right pull-right"></span>
-            </a></li>
-          </ul>
-          <hr />
-
-          <!-- Context Menu -->
-          <div id="context-menu">
-            <div style="margin: 0 20px">
-              <span id="context-menu-name" class="lead"></span>
-              <br /><br />
-              <button class="btn btn-block btn-danger" id="context-menu-delete">
-                <span class="glyphicon glyphicon-trash"></span> 
-                Delete Item
-              </button>
-            <br />
-            <div class="panel panel-default" id = "itemVolume">
-              <div class="panel-heading">Adjust Size</div>
-              <div class="panel-body" style="color: #333333">
-
-                <div class="form form-horizontal" class="lead">
-                  <div class="form-group">
-                    <label class="col-sm-5 control-label">
-                       Width
-                    </label>
-                    <div class="col-sm-6">
-                      <input type="number" class="form-control" id="item-width">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-5 control-label">
-                      Depth 
-                    </label>
-                    <div class="col-sm-6">
-                      <input type="number" class="form-control" id="item-depth">
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-5 control-label">
-                      Height
-                    </label>
-                    <div class="col-sm-6">
-                      <input type="number" class="form-control" id="item-height">
-                    </div>
-                  </div>
-                </div>
-                <small><span class="text-muted">Measurements in inches.</span></small>
-              </div>
-            </div>
-            <label><input type="checkbox" id="fixed" /> Lock in place</label>
-            
-            <br /><br />
-          </div>
-        </div>
-
-          <!-- Floor textures -->
-          <div id="floorTexturesDiv" style="display:none; padding: 0 20px">
-            <div class="panel panel-default">
-              <div class="panel-heading">Adjust Floor</div>
-              <div class="panel-body" style="color: #333333">
-
-                <div class="col-sm-6" style="padding: 3px">
-                  <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/light_fine_wood.jpg" texture-stretch="false" texture-scale="300">
-                    <img alt="Thumbnail light fine wood" src="./static/blueprint/rooms/thumbnails/thumbnail_light_fine_wood.jpg" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Wall Textures -->
-          <div id="wallTextures" style="display:none; padding: 0 20px">
-            <div class="panel panel-default">
-              <div class="panel-heading">Adjust Wall</div>
-              <div class="panel-body" style="color: #333333">
-                <div class="col-sm-6" style="padding: 3px">
-                  <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/marbletiles.jpg" texture-stretch="false" texture-scale="300">
-                    <img alt="Thumbnail marbletiles" src="./static/blueprint/rooms/thumbnails/thumbnail_marbletiles.jpg" />
-                  </a>
-                </div>
-                <div class="col-sm-6" style="padding: 3px">
-                  <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/wallmap_yellow.png" texture-stretch="true" texture-scale="">
-                    <img alt="Thumbnail wallmap yellow" src="./static/blueprint/rooms/thumbnails/thumbnail_wallmap_yellow.png" />
-                  </a>
-                </div>
-                <div class="col-sm-6" style="padding: 3px">
-                  <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/light_brick.jpg" texture-stretch="false" texture-scale="100">
-                    <img alt="Thumbnail light brick" src="./static/blueprint/rooms/thumbnails/thumbnail_light_brick.jpg" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <!-- Right Column -->
-        <div class="col-xs-9 main">
+        <div id = "main" class=" main">
           <!-- ItemInfo -->
-          <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"></h5>
-                 
-                </div>
-                <div class="modal-body row">
-                  <form>
-                    <div class="col">
-
-                        <label  for="recipient-name" class="col-form-label">日期</label>
-                        <div class="input-group date" id='date1'>
-                          <input type="date" id="date" name="trip-start" class="form-control"
-                          min="1000-01-01" max="2222-12-31">
-                        </div>
-
-                      <!-- 天氣 -->
-
-                        <label for="message-text" class="col-form-label">天氣</label>
-                        <text id="weather" for="recipient-name" class="col-form-label"></text>
-                        <!-- <textarea class="form-control" id="message-text"></textarea> -->
-
-
-                        <label for="message-text" class="col-form-label">文字</label>
-                        <text id="message" for="recipient-name" class="col-form-label"></text>
-                        <!-- <textarea class="form-control" id="message-text"></textarea> -->
-                        <!-- <label for="message-text" class="col-form-label">圖片</label> -->
-                        <!-- <img id="image" width="200px" src = "../static/blueprint/other/photo.png"></text> -->
-                        <!-- <textarea class="form-control" id="message-text"></textarea> -->
-                    </div>
-                    <div class="col">
-                      <div class="mb-3 panel panel-default">
-                        <div class="panel-heading">圖片</div>
-                        <div class="panel-body" style="color: #333333">
-                          <div class="col-sm-6" style="padding: 3px">
-                            <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/light_fine_wood.jpg" texture-stretch="false" texture-scale="300">
-                              <img id="image" style=" max-width: 200px;" alt="IMAGE" src="../static/blueprint/other/photo.png" />
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <audio id= "ItemInfoAudio" controls >
-                        <!-- <source src="horse.ogg" type="audio/ogg"> -->
-                        <source  src="../static/blueprint/itemInfo/record/song.mp3" type="audio/mpeg" >
-                      </audio>
-                    </div>
-                
-                   
-                  </form>
-                </div>
-                <div class="modal-footer">
-                  <button id="CloseBtn" type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                  <button id = "SaveBtn" type="button" class="btn btn-primary">儲存</button>
-                </div>
-              </div>
-            </div>
-          </div>
+          
           <!-- ItemInfo -->
           <!-- 3D Viewer -->
           <div id="viewer">
@@ -313,8 +151,5 @@
         <!-- End Right Column -->
       </div>
     </div>
-    
-
   </body>
-
 </html>

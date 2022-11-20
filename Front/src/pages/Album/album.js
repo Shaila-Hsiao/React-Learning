@@ -21,8 +21,7 @@ import { CardActionArea } from '@mui/material';
 import room1 from '../../assets/images/room1.jpg'; // 圖片的位置
 import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
 import httpClient from '../../httpClient';
-import Snackbar from '@mui/material/Snackbar';
-import { Alert, AlertTitle } from '@mui/material';
+
 var cards = [];
 var temp = "";
 
@@ -101,7 +100,7 @@ function Album() {
   const FindRoom = async (event) => {
     console.log("i want to find a room");
     console.log(temp);
-    const resp = await httpClient.post("./filterRoomName", {
+    const resp = await httpClient.post("../filterRoomName", {
       temp,
     });
     // const resp = await httpClient.post("//163.22.17.192:5000/filterRoomName", {
@@ -131,7 +130,7 @@ function Album() {
     (async () => {
       try {
         // 163.22.17.192
-        const resp = await httpClient.get("./allRoom");
+        const resp = await httpClient.get("../allRoom");
         // const resp = await httpClient.get("//163.22.17.192:5000/allRoom");
         // 資料的內容會是一個 json 裡面是一個 list 中有房間資料的 json
         // { [ {room 1 infor }, {room 2 infor }, {room 3 infor }... ] }

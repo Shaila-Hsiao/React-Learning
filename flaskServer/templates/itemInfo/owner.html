@@ -1,0 +1,178 @@
+<style>
+/* Style the Image Used to Trigger the Modal */
+#image {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#image:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+#myModal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (Image) */
+#myModal >.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+#myModal > .modal-content, #caption {
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)}
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  #myModal .modal-content {
+    width: 100%;
+  }
+}
+</style>
+
+<!-- ItemInfo -->
+<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+      </div>
+      <div class="modal-body row justify-content-md-center">
+        <form>
+          <!-- <div class="col-md-5">
+            <div class="panel panel-primary">
+              <div class="panel-heading">Panel with panel-primary class</div>
+              <div class="panel-body">Panel Content</div>
+            </div>
+          </div> -->
+          <div class="col-md-5">
+              <label  for="recipient-name" class="col-form-label">日期</label>
+              <div class="input-group date" id='date1'>
+                <input type="date" id="date" name="trip-start" class="form-control"
+                min="1000-01-01" max="2222-12-31">
+              </div>
+            <!-- 天氣 -->
+            <div class="col-md">
+              <label for="message-text" class="col-form-label">天氣</label>
+              <text id="weather" for="recipient-name" class="col-form-label"></text>
+              <!-- <textarea class="form-control" id="message-text"></textarea> -->
+            </div>
+            <!-- 天氣 -->
+            
+            <!-- 心情描述 -->
+            <div class="col-md">
+            <label for="message-text" class="col-form-label">心情描述</label>
+            <!-- <text id="message" for="recipient-name" class="col-form-label"></text> -->
+            <textarea class="form-control" id="message-text"></textarea>
+            <!-- <label for="message-text" class="col-form-label">圖片</label> -->
+            <!-- <img id="image" width="200px" src = "../static/blueprint/other/photo.png"></text> -->
+            <!-- <textarea class="form-control" id="message-text"></textarea> -->
+            </div>
+            <!-- 心情描述 -->
+          </div>
+          <div class="col-md-5">
+            <!-- audio -->
+            <audio id= "ItemInfoAudio" controls >
+              <source   id="AudioSource" src="" type="audio/mpeg" >
+            </audio>
+            <!-- audio -->
+            </div>
+          <div class="col-md-7">
+            <!-- image -->
+            <!-- <img id="image" style=" max-width: 200px;" alt="IMAGE" src="../static/blueprint/other/photo.png" /> -->
+            <img id="image" src="" alt="" style="width:100%;max-width:200px">
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+              <span class="close">X</span>
+              <img class="modal-content" id="img01" style="max-width:500px;max-height:500px">
+              <div id="caption"></div>
+            </div>
+          </div>
+            <!-- image -->
+          
+        </form>
+      </div>
+      <!-- FOOTER -->
+      <div class="modal-footer">
+        <button id="CloseBtn" type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+        <button id = "SaveBtn" type="button" class="btn btn-primary">儲存</button>
+      </div>
+      <!-- FOOTER -->
+    </div>
+  </div>
+</div>
+<!-- ItemInfo -->
+
+<script>
+  // Get the modal
+  var modal = document.getElementById("myModal");
+  
+  // Get the image and insert it inside the modal - use its "alt" text as a caption
+  var img = document.getElementById("image");
+  var modalImg = document.getElementById("img01");
+  var captionText = document.getElementById("caption");
+  img.onclick = function(){
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+    console.log("image click")
+  }
+  
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+  
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() { 
+    modal.style.display = "none";
+  }
+</script>
