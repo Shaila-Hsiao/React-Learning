@@ -20,6 +20,8 @@ import AllRoom from './pages/Room/AllRoom';
 import UserData from './pages/Album/userdata';
 import RoomEdit from './pages/Room/RoomEdit';
 import Search from './pages/Album/search';
+import ServiceData from './pages/Album/service';
+import Profile from "./pages/Album/profile";
 
 export const Router = () => {
   return (
@@ -39,6 +41,8 @@ export const Router = () => {
           <Route path="/userdata" element={<UserData />} /> {/* 用戶資料修改 */}
           <Route path="/roomedit" element={<RoomEdit />} /> {/* 房間資料修改 */}
           <Route path="/search" element={<Search />} /> {/* 搜尋房間 */}
+          <Route path="/servicedata" element={<ServiceData />} /> {/* 服務支援 */}
+          <Route path="/profile" element={<Profile />} /> {/* 服務支援 */}
           <Route
             path="/blueprint"
             component={() => {

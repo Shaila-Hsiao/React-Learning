@@ -21,7 +21,11 @@ import { CardActionArea } from '@mui/material';
 import room1 from '../../assets/images/room1.jpg'; // 圖片的位置
 import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
 import httpClient from '../../httpClient';
+<<<<<<< HEAD
 
+=======
+import CardContent from '@mui/material/CardContent';
+>>>>>>> 57438c08c572fbd1f694869e82c57e7ed4dda2d2
 var cards = [];
 var temp = "";
 
@@ -35,7 +39,7 @@ const theme = createTheme({
       main: '#f50057',
     },
     background: {
-      default: '#7f0808',
+      default: '#92bfc0',
       paper: '#efd9a7',
     },
   },
@@ -50,31 +54,51 @@ function Album() {
   const navigate = useNavigate();
   // 更新 room 
   const [rooms, setRoom] = useState();
-  // const [anchorElNav, setAnchorElNav] = React.useState(null);
-  // const [anchorElUser, setAnchorElUser] = React.useState(null);
-  // const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
+  
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
 
-  // const handleOpenNavMenu = (event) => {
-  //   setAnchorElNav(event.currentTarget);
-  // };
-  // const handleOpenUserMenu = (event) => {
-  //   setAnchorElUser(event.currentTarget);
-  // };
-  // const handleOpenNotifications = (event) => {
-  //   setAnchorElNotifications(event.currentTarget);
-  // };
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+  const handleOpenNotifications = (event) => {
+    setAnchorElNotifications(event.currentTarget);
+  };
 
-  // const handleCloseNavMenu = () => {
-  //   setAnchorElNav(null);
-  // };
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
-  // const handleCloseUserMenu = () => {
-  //   setAnchorElUser(null);
-  // };
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
 
-  // const handleCloseNotifications = () => {
-  //   setAnchorElNotifications(null);
-  // };
+  const handleCloseNotifications = () => {
+    setAnchorElNotifications(null);
+  };
+
+  const [state, setState] = React.useState({
+    open: false,
+    vertical: 'top',
+    horizontal: 'center',
+  });
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpen(false);
+  };
 
   const CreateRoom = async (event) => {
     // event.preventDefault();
@@ -148,18 +172,7 @@ function Album() {
       }
     })();
   }, []);
-  const [open, setOpen] = React.useState(false);
-
-  const handleClick = () => {
-    setOpen(true);
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpen(false);
-  };
+  
   return (
     <ThemeProvider theme={theme}>
       <Snackbar
@@ -181,7 +194,7 @@ function Album() {
         {/* Hero unit */}
         <Box
           sx={{
-            bgcolor: 'background.paper',
+            bgcolor: '#efd9a7',
             pt: 8,
             pb: 3,
           }}
@@ -208,7 +221,7 @@ function Album() {
               <Button variant="contained" size="large" onClick={CreateRoom}>新增房間</Button>
               {/* <Button variant="outlined">Secondary action</Button>  */} {/* 第二種按鈕 */}
               <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                <TextField onChange={handleChange} variant="standard" fullWidth label="Please enter Room Name" id="RoomName" />
+                <TextField onChange={handleChange} variant="standard" fullWidth label="輸入要搜尋的房間名稱" id="RoomName" />
                 <Button onClick={FindRoom}>
                   <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
                 </Button>
@@ -233,7 +246,11 @@ function Album() {
                         image={card[1]}
                         alt={card[0]}
                       />
-                      {card[2]}
+                      <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {card[2]}
+                      </Typography>
+                    </CardContent>
                     </CardActionArea>
                   </Card>
                 </Grid>
@@ -241,7 +258,7 @@ function Album() {
             </Grid>
           </Container>
         )}
-        <Box sx={{ bgcolor: 'background.paper', p: 3 }} />
+        <Box sx={{ bgcolor: '#efd9a7', p: 3 }} />
       </main>
       {/* Footer */}
       <Box sx={{ bgcolor: 'primary.main', p: 6 }} component="footer">

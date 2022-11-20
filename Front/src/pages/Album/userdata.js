@@ -1,4 +1,4 @@
-import React , { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,6 +10,8 @@ import Button from '@mui/material/Button';
 import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
 // import user from '../../assets/images/user.jpg';
 import httpClient from "../../httpClient";
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 var name = '';
 var email = '';
@@ -38,7 +40,7 @@ const theme = createTheme({
 
 function UserData() {
   const navigate = useNavigate();
-   // user 更新
+  // user 更新
   const [user, setUser] = useState();
   const [oldPasswd, setOldPass] = useState('');
   const [passwd, setNewPass] = useState('');
@@ -82,7 +84,7 @@ function UserData() {
     console.log("update user pwd");
     if (passwd == CheckNewPass) {
       try {
-        const resp = await httpClient.post("./modifyPasswd", {
+        const resp = await httpClient.post("../modifyPasswd", {
           oldPasswd,
           passwd,
         });
@@ -100,7 +102,7 @@ function UserData() {
   const UpdateUser = async (event) => {
     console.log("update user intro");
     console.log(name, email, introduction);
-    const resp = await httpClient.post("./modifyPersonal", {
+    const resp = await httpClient.post("../modifyPersonal", {
       name,
       email,
       introduction,
@@ -123,10 +125,10 @@ function UserData() {
         console.log(reader.result); //base64encoded string
         headshot = reader.result;
         console.log("headshot data ", headshot);
-        var resp = httpClient.post("./modifyHeadshot", {
+        var resp = httpClient.post("../modifyHeadshot", {
           headshot,
         });
-        console.log("headshot",resp);
+        console.log("headshot", resp);
         // setHeadShotPath(resp);
       };
     }
@@ -136,7 +138,7 @@ function UserData() {
   useEffect(() => {
     (async () => {
       try {
-        const resp = await httpClient.get("//localhost:5000/@me");
+        const resp = await httpClient.get("../@me");
         // const resp = await httpClient.get("//163.22.17.192:5000/@me");
         console.log(resp.data.userID)
         console.log(resp.data.name)
@@ -159,45 +161,45 @@ function UserData() {
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
       </Box>
-    {user && (
-      <Box
-        sx={{
-          padding: 2
-        }}
-      >
+      {user && (
         <Box
           sx={{
-            bgcolor: '#4c364d',
             padding: 2
           }}
         >
           <Box
             sx={{
-              bgcolor: '#fff',
-              padding: 1
+              bgcolor: '#4c364d',
+              padding: 2
             }}
           >
             <Box
               sx={{
-                bgcolor: '#617f7f',
+                bgcolor: '#fff',
                 padding: 1
               }}
             >
-              <Grid container>
-                <Grid item xs={12} sm={6}>
-                  <Box
-                    sx={{
-                      bgcolor: '#617f7f',
-                      padding: 2,
-                      height: '100%',
-                    }}
-                  >
-                    <Avatar
-                      alt="UserName"
-                      sx={{ mx:'auto', width: 120, height: 120 }}
-                      src={user.headshotPath} />
-                    <Box sx={{ textAlign: 'right' }}>
-                    <Button variant="contained" component="label">
+              <Box
+                sx={{
+                  bgcolor: '#617f7f',
+                  padding: 1
+                }}
+              >
+                <Grid container>
+                  <Grid item xs={12} sm={6}>
+                    <Box
+                      sx={{
+                        bgcolor: '#617f7f',
+                        padding: 2,
+                        height: '100%',
+                      }}
+                    >
+                      <Avatar
+                        alt="UserName"
+                        sx={{ mx: 'auto', width: 120, height: 120 }}
+                        src={user.headshotPath} />
+                      <Box sx={{ textAlign: 'right' }}>
+                        <Button variant="contained" component="label">
                           編輯頭貼
                           <input
                             accept="image/*"
@@ -208,17 +210,24 @@ function UserData() {
                             type="file"
                             onChange={convert}
                           />
-                      </Button>
-                    </Box>
-                    <Box sx={{ p: 2 }} />
-                    <Box bgcolor='#f6ecd3' borderRadius='4px' padding={1}>
-                        更改密碼
-                        <Button
-                          variant="contained"
-                          size="large"
-                          onClick={UpdatePwd}
-                          sx={{ bgcolor: '#794549', color: '#fff', mr: 4 }}
-                        >更改密碼</Button>
+                        </Button>
+                      </Box>
+                      <Box sx={{ p: 2 }} />
+                      <Box bgcolor='#f6ecd3' borderRadius='4px' padding={1}>
+                        <Stack
+                          direction="row"
+                          spacing={2}
+                          justifyContent="space-between"
+                        >
+                          <Typography variant="h6"> 更改密碼 </Typography>
+                          <Box sx={{ display: 'flex', textAlign: 'right' }}>
+                            <Button
+                              variant="contained"
+                              size="large"
+                              sx={{ bgcolor: '#7f0808', color: '#fff', mr: 4, flexGrow: 0 }}
+                            >更改密碼</Button>
+                          </Box>
+                        </Stack>
                         <TextField
                           onChange={event => setOldPass(event.target.value)}
                           margin="normal"
@@ -250,78 +259,78 @@ function UserData() {
                           id="password"
                         />
                       </Box>
-                    <Box sx={{ p: 1.5 }} />
-                    <Button
-                      variant="contained"
-                      size="large"
-                      onClick={() => navigate("/")}
-                      sx={{ bgcolor: '#7f0808', color: '#fff', mr:4 }}
-                    >取消</Button>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Box
-                    sx={{
-                      textAlign: "right",
-                      bgcolor: '#617f7f',
-                      padding: 2,
-                      height: '100%',
-                    }}
-                  >
-                    <Box bgcolor='#fff' borderRadius='4px' padding={1}>
-                      <TextField
-                        required
-                        fullWidth
-                        id="roomName"
-                        label="個人名稱"
-                        bgcolor='#fff'
-                        defaultValue= {user.name}
-                        onChange={event => setName(event.target.value)}
-                      />
+                      <Box sx={{ p: 1.5 }} />
+                      <Button
+                        variant="contained"
+                        size="large"
+                        onClick={() => navigate("/")}
+                        sx={{ bgcolor: '#7f0808', color: '#fff', mr: 4 }}
+                      >取消</Button>
                     </Box>
-                    <Box sx={{ p: 1.5 }} />
-                    <Box bgcolor='#fff' borderRadius='4px' padding={1}>
-                      <TextField
-                        required
-                        fullWidth
-                        id="roomName"
-                        label="電子郵件"
-                        bgcolor='#fff'
-                        defaultValue={user.email}
-                        onChange={event => setEmail(event.target.value)}
-                      />
-                    </Box>
-                    <Box sx={{ p: 1.5 }} />
-                    <Box bgcolor='#fff' borderRadius='4px' padding={2}>
-                     
-                      <TextField
-                        required
-                        fullWidth
-                        id="roomIntro"
-                        label="個人簡介"
-                        multiline
-                        rows={9}
-                        bgcolor='#fff'
-                        defaultValue={user.introduction}
-                        onChange={event => setUserIntro(event.target.value)}
-                      />
-                      {/* {user.name} */}
-                    </Box>
-                    <Box sx={{ p: 1.5 }} />
-                    <Button
-                      variant="contained"
-                      size="large"
-                      onClick={UpdateUser}
-                      sx={{ bgcolor: '#7f0808', color: '#fff', flexGrow: 0 }}
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Box
+                      sx={{
+                        textAlign: "right",
+                        bgcolor: '#617f7f',
+                        padding: 2,
+                        height: '100%',
+                      }}
+                    >
+                      <Box bgcolor='#fff' borderRadius='4px' padding={1}>
+                        <TextField
+                          required
+                          fullWidth
+                          id="roomName"
+                          label="個人名稱"
+                          bgcolor='#fff'
+                          defaultValue={user.name}
+                          onChange={event => setName(event.target.value)}
+                        />
+                      </Box>
+                      <Box sx={{ p: 1.5 }} />
+                      <Box bgcolor='#fff' borderRadius='4px' padding={1}>
+                        <TextField
+                          required
+                          fullWidth
+                          id="roomName"
+                          label="電子郵件"
+                          bgcolor='#fff'
+                          defaultValue={user.email}
+                          onChange={event => setEmail(event.target.value)}
+                        />
+                      </Box>
+                      <Box sx={{ p: 1.5 }} />
+                      <Box bgcolor='#fff' borderRadius='4px' padding={2}>
+
+                        <TextField
+                          required
+                          fullWidth
+                          id="roomIntro"
+                          label="個人簡介"
+                          multiline
+                          rows={9}
+                          bgcolor='#fff'
+                          defaultValue={user.introduction}
+                          onChange={event => setUserIntro(event.target.value)}
+                        />
+                        {/* {user.name} */}
+                      </Box>
+                      <Box sx={{ p: 1.5 }} />
+                      <Button
+                        variant="contained"
+                        size="large"
+                        onClick={UpdateUser}
+                        sx={{ bgcolor: '#7f0808', color: '#fff', flexGrow: 0 }}
                       >更新</Button>
-                  </Box>
+                    </Box>
+                  </Grid>
                 </Grid>
-              </Grid>
+              </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
-    )}
+      )}
     </ThemeProvider>
   );
 }

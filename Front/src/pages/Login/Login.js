@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import CardContent from '@mui/material/CardContent';
 // import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -176,7 +177,6 @@ export default function Login() {
             alignItems: 'center',
             bgcolor: '#efd9a7',
             padding: '50px',
-            color: '#fff',
             
           }}
         >

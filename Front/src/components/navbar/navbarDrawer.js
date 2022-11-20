@@ -27,6 +27,7 @@ import httpClient from "../../httpClient";
 import Button from '@mui/material/Button';
 // import user from '../../assets/images/user.jpg';
 import Badge from '@mui/material/Badge';
+import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
@@ -69,7 +70,7 @@ const theme = createTheme({
       },
       background: {
         default: '#7f0808',
-        paper: '#efd9a7',
+        paper: '#94bfbf',
       },
     },
   });
@@ -137,12 +138,12 @@ export const NavbarDrawer = () => {
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <PermContactCalendarIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <PermContactCalendarIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
             <Typography
               variant="h6"
               noWrap
               component="a"
-              onClick={() => navigate("/")}
+              href="/"
               sx={{
                 mr: 2,
                 display: { xs: 'none', md: 'flex' },
@@ -155,9 +156,9 @@ export const NavbarDrawer = () => {
             >
               首頁
             </Typography>
-            
-            {/* <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}> */}
-              {/* <IconButton
+
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <IconButton
                 size="large"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -166,8 +167,8 @@ export const NavbarDrawer = () => {
                 color="inherit"
               >
                 <MenuIcon />
-              </IconButton> */}
-              {/* <Menu
+              </IconButton>
+              <Menu
                 id="menu-appbar"
                 anchorEl={anchorElNav}
                 anchorOrigin={{
@@ -185,31 +186,45 @@ export const NavbarDrawer = () => {
                   display: { xs: 'block', md: 'none' },
                 }}
               >
-                <MenuItem onClick={() => navigate("/")}>
-                  會員中心
-                </MenuItem>
-                <MenuItem onClick={() => navigate("/")}>
+                <MenuItem onClick={() => navigate("/servicedata")}>
                   服務支援
                 </MenuItem>
                 <MenuItem onClick={() => navigate("/")}>
                   聯絡我們
                 </MenuItem>
-              </Menu> */}
-            {/* </Box> */}
+              </Menu>
+            </Box>
 
             
             
+            <PermContactCalendarIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              首頁
+            </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }}}>
-              <MenuItem onClick={() => navigate("/")}>
-                會員中心
-              </MenuItem>
-              <MenuItem onClick={() => navigate("/")}>
+              <MenuItem onClick={() => navigate("/servicedata")}>
                 服務支援
               </MenuItem>
               <MenuItem onClick={() => navigate("/")}>
                 聯絡我們
               </MenuItem>
             </Box>
+
             {user && (
             <Box sx={{ mr:2 }}>
               <Tooltip title="Open Notifications">
@@ -266,6 +281,12 @@ export const NavbarDrawer = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
+                <MenuItem onClick={() => navigate("/profile")}>
+                  <ListItemIcon>
+                    <Settings fontSize="small" />
+                  </ListItemIcon>
+                  我的主頁
+                </MenuItem>
                 <MenuItem onClick={() => navigate("/allroom")}>
                   <ListItemIcon>
                     <BedroomChildIcon fontSize="small" />
