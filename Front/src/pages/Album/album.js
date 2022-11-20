@@ -21,11 +21,7 @@ import { CardActionArea } from '@mui/material';
 import room1 from '../../assets/images/room1.jpg'; // 圖片的位置
 import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
 import httpClient from '../../httpClient';
-<<<<<<< HEAD
-
-=======
 import CardContent from '@mui/material/CardContent';
->>>>>>> 57438c08c572fbd1f694869e82c57e7ed4dda2d2
 var cards = [];
 var temp = "";
 
