@@ -34,7 +34,7 @@ const theme = createTheme({
       main: '#f50057',
     },
     background: {
-      default: '#92bfc0',
+      default: '#efd9a7',
       paper: '#efd9a7',
     },
   },
@@ -42,34 +42,10 @@ const theme = createTheme({
 
 function AllRoom() {
   const navigate = useNavigate();
-  // const [anchorElNav, setAnchorElNav] = React.useState(null);
-  // const [anchorElUser, setAnchorElUser] = React.useState(null);
-  // const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
   // 更新 room 
   const [rooms, setRoom] = useState();
 
-  // const handleOpenNavMenu = (event) => {
-  //   setAnchorElNav(event.currentTarget);
-  // };
-  // const handleOpenUserMenu = (event) => {
-  //   setAnchorElUser(event.currentTarget);
-  // };
-  // const handleOpenNotifications = (event) => {
-  //   setAnchorElNotifications(event.currentTarget);
-  // };
-
-  // const handleCloseNavMenu = () => {
-  //   setAnchorElNav(null);
-  // };
-
-  // const handleCloseUserMenu = () => {
-  //   setAnchorElUser(null);
-  // };
-
-  // const handleCloseNotifications = () => {
-  //   setAnchorElNotifications(null);
-  // };
 
   const [RoomEl, setRoomEl] = React.useState(null);
   const openRoom = Boolean(RoomEl);
@@ -194,13 +170,13 @@ function AllRoom() {
             >
               全部房間
             </Typography>
+            <Box sx={{ textAlign: 'center' }}>
+              <TextField onChange={inputHandler} variant="standard" label="輸入要搜尋的房間名稱" id="RoomName" />
+              <Button >
+                <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
+              </Button>
+            </Box>
           </Container>
-          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-            <TextField onChange={inputHandler} variant="standard" label="Please enter Room Name" id="RoomName" />
-            <Button >
-              <SearchIcon sx={{ color: 'action.active', mr: 2, my: 0.5 }} />
-            </Button>
-          </Box>
         </Box>
 
         {/* Card */}

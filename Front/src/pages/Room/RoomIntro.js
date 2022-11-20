@@ -137,6 +137,8 @@ export default function RoomIntro() {
       </Box>
         <main>
         {/* Hero unit */}
+        <Box sx={{ bgcolor: '#efd9a7', p: 1 }} ></Box>
+        <Box sx={{ bgcolor: '#efd9a7', p: 2 }} >
         <Box
             sx={{
                 bgcolor: '#617f7f'
@@ -211,6 +213,7 @@ export default function RoomIntro() {
                     </Box>
                 </Grid>
             </Grid>
+        </Box>
         </Box>
         </main>
     </ThemeProvider>
