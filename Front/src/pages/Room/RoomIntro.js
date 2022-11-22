@@ -35,41 +35,7 @@ const theme = createTheme({
 export default function RoomIntro() {
   const navigate = useNavigate();
   const [RoomInfo, setRoomInfo] = useState();
-  // const [anchorElNav, setAnchorElNav] = React.useState(null);
-  // const [anchorElUser, setAnchorElUser] = React.useState(null);
-  // const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
 
-  // const handleOpenNavMenu = (event) => {
-  //   setAnchorElNav(event.currentTarget);
-  // };
-  // const handleOpenUserMenu = (event) => {
-  //   setAnchorElUser(event.currentTarget);
-  // };
-  // const handleOpenNotifications = (event) => {
-  //   setAnchorElNotifications(event.currentTarget);
-  // };
-
-  // const handleCloseNavMenu = () => {
-  //   setAnchorElNav(null);
-  // };
-
-  // const handleCloseUserMenu = () => {
-  //   setAnchorElUser(null);
-  // };
-
-  // const handleCloseNotifications = () => {
-  //   setAnchorElNotifications(null);
-  // };
-  // const openRoom = Boolean(RoomEl);
-  // const handleRoomClick = (event) => {
-  //   setRoomEl(event.currentTarget);
-  // };
-  // const handleRoomClose = () => {
-  //   setRoomEl(null);
-  // };
-  // const handleClose = () => {
-  //   setAnchorEl(null);
-  // };
   const redirectToGoogle = () => {
     // window.location.href = location.href+"/blueprint";
   };
