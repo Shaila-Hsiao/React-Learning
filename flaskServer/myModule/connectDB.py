@@ -8,7 +8,7 @@ def setting():
         "port": 3306,
         "user": "root",
         # "user": "lab103",
-        "password": "",
+        "password": "root",
         # "password": "Lab103%",
         "database": "blueprint"
         # 'auth_plugin': 'mysql_native_password'

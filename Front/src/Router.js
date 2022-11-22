@@ -3,20 +3,13 @@ import { BrowserRouter,Routes, Route,Link } from "react-router-dom";
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 
-// import Album from "./pages/Album/album"
-// import Home from "./pages/Home/index";
-// import SecondPage from "./pages/SecondPage";
-// import LogIn from './pages/Album/album_login';
 import SignUp from './pages/SignUp/SignUp';
 import Login from './pages/Login/Login';
-// import LandingPage from './pages/Home';
 import Album from './pages/Album/album';
-// import DrawerItem from './pages/Album/drawerItem';
 import Room from './pages/Room/room';
 import RoomIntro from './pages/Room/RoomIntro';
 import CreateRoom from './pages/Room/createRoom';
 import AllRoom from './pages/Room/AllRoom';
-// import SelectRoom from './pages/Room/selectRoom';
 import UserData from './pages/Album/userdata';
 import RoomEdit from './pages/Room/RoomEdit';
 import Search from './pages/Album/search';
