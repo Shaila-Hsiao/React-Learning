@@ -132,9 +132,9 @@ def upload():
     # textureName = secrets.token_hex()+".jpg"
     thumbnailName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
     textureName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
-    # userID = session.get("userID")
-    # if not userID :
-    #     return {"result":"未登入，無法上傳 model"} 
+    userID = session.get("userID")
+    if not userID :
+        return {"result":"未登入，無法上傳 model"} 
     thumbnailPath = "./static/blueprint/models/thumbnails"
     texturePath = "./static/blueprint/models/js"
     # modify name of texture in mtl
@@ -143,8 +143,10 @@ def upload():
     # 上傳檔案到本機
     uploadFile(objName,obj,'file',sourcePath)
     uploadFile(mtlName,mtl,'file',sourcePath)
-    uploadFile(thumbnailName,thumbnail,'image',thumbnailPath)
-    uploadFile(textureName,texture,'image',texturePath)
+    uploadFile(thumbnailName,thumbnail,'image',f"{thumbnailPath}/{thumbnailName}")
+    uploadFile(textureName,texture,'image',f"{texturePath}/{textureName}")
+    # itemID: 模型的 ID，如果上船錯誤就會回傳 itemID = 0
+    itemID = 0
     # 確認有沒有 JS 重複的檔案
     if os.path.exists(outputPath) == True:
         result = "model 已存在"
@@ -170,10 +172,10 @@ def upload():
             os.remove(thumbnailPath)
             os.remove(texturePath)
     # FIXME:更新 table aacount 的 itemList
-    # if result == "上傳成功":
-    #     updateItemList(itemID,userID) 
+    if result == "上傳成功":
+        updateItemList(itemID,userID) 
     # user 上傳的 model 做處理: obj to file and insert into database
-    return {'result':result,'name':modelName,'model':outputPath,'type':1,'image':thumbnailPath}
+    return {'result':result,'id':itemID,'name':modelName,'model':outputPath,'type':1,'image':thumbnailPath}
 
 # 儲存模型內部資訊(照片、文字等)
 @app.route("/saveItemInfo",methods=["POST"])

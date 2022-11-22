@@ -31,10 +31,16 @@
   },
   "scripts": {
     "start": "react-scripts start",
+<<<<<<< HEAD
 
     "build": "react-scripts build",
     "prebuild":"del …\\flaskServer\\templates\\index.html",
     "postbuild" : "move build\\index.html …\\flaskServer\\templates\\ && move build\\static …\\flaskServer",
+=======
+    "prebuild": "rm -rf ../flaskServer/templates/index.html && rm -rf ../flaskServer/static/build",
+    "build": "react-scripts build",
+    "postbuild": "cp -R build/index.html ../flaskServer/templates/ && cp -R build ../flaskServer/static/",
+>>>>>>> 3dffb11bc881c5acb9389adfff2d813a8a4cd0da
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -1,20 +1,10 @@
 import React ,{useEffect,useState} from 'react';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
-// import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
-// import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import Divider from '@mui/material/Divider';
-// import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-// import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-// import ListItemText from '@mui/material/ListItemText';
 import BedroomChildIcon from '@mui/icons-material/BedroomChild';
-// import ListSubheader from '@mui/material/ListSubheader';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
@@ -22,10 +12,8 @@ import { useNavigate } from "react-router-dom";
 import Menu from '@mui/material/Menu';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-// import MuiAppBar from '@mui/material/AppBar';
 import httpClient from "../../httpClient";
 import Button from '@mui/material/Button';
-// import user from '../../assets/images/user.jpg';
 import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
@@ -34,31 +22,7 @@ import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
-// const drawerWidth = 240;
-// const AppBar = styled(MuiAppBar, {
-//     shouldForwardProp: (prop) => prop !== 'open',
-//   })(({ theme, open }) => ({
-//     transition: theme.transitions.create(['margin', 'width'], {
-//       easing: theme.transitions.easing.sharp,
-//       duration: theme.transitions.duration.leavingScreen,
-//     }),
-//     ...(open && {
-//       width: `calc(100% - ${drawerWidth}px)`,
-//       marginLeft: `${drawerWidth}px`,
-//       transition: theme.transitions.create(['margin', 'width'], {
-//         easing: theme.transitions.easing.easeOut,
-//         duration: theme.transitions.duration.enteringScreen,
-//       }),
-//     }),
-//   }));
-// const DrawerHeader = styled('div')(({ theme }) => ({
-//     display: 'flex',
-//     alignItems: 'center',
-//     padding: theme.spacing(0, 1),
-//     // necessary for content to be below app bar
-//     ...theme.mixins.toolbar,
-//     justifyContent: 'flex-end',
-// }));
+
 const theme = createTheme({
     palette: {
       type: 'light',
@@ -75,7 +39,6 @@ const theme = createTheme({
     },
   });
 export const NavbarDrawer = () => {
-    // const [anchorEl, setAnchorEl] = React.useState(null);
     const navigate = useNavigate();
     // user 更新
     const [user, setUser] = useState();

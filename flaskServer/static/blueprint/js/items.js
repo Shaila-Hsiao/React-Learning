@@ -174,7 +174,7 @@ function initItemList(items) {
   var itemsDiv = $("#items-wrapper")
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
-    var html = '<div class="col-sm-4">' +
+    var html = '<div class="col-sm-4" style="height:500px">' +
       '<a class="thumbnail add-item" itemInfo-id="'+
       0+
       '"model-id ="'+

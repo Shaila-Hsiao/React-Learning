@@ -394,7 +394,7 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
   // TODO: this doesn't really belong here
   function initItems() {
     $("#add-items").find(".add-item").mousedown(function(e) {
-    
+      alert($(this).attr("model-id"));
       var itemID = $(this).attr("model-id");
       var itemName = $(this).attr("model-name")
       var modelUrl = $(this).attr("model-url");
@@ -408,6 +408,7 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
         itemType: itemType,
         itemInfoID: itemInfoID
       }
+      console.log("modelID", $(this).attr("model-id"));
       console.log("log itemInfoID in example.js line 374",metadata);
       console.log("【ClickTest】",metadata);
       blueprint3d.model.scene.addItem(itemType, modelUrl, metadata);
@@ -669,19 +670,22 @@ var uploadInit = function(){
       success: function (item) {
         alert(item.result);
         if (item.result == "上傳成功"){
-          var html = '<div class="col-`sm-4">' +
-            '<a class="thumbnail add-item" model-name="' +
-            item.name +
-            '" model-url="' +
-            // item.model +
-            item.model +
-            '" model-type="' +
-            item.type +
-            '"><img src="' +
-            item.image +
-            '" alt="Add Item"> ' +
-            item.name +
-            '</a></div>';
+          var html = '<div class="col-sm-4" style="height:500px">' +
+                      '<a class="thumbnail add-item" itemInfo-id="'+
+                      0+
+                      '"model-id ="'+
+                      item.id+
+                      '"model-name="' +
+                      item.name +
+                      '" model-url="' +
+                      item.model +
+                      '" model-type="' +
+                      item.type +
+                      '"><img src="' +
+                      item.image +
+                      '" alt="Add Item"> ' +
+                      item.name +
+                      `</a><button onclick = "deleteItem(${item.id})">delete</button></div>`;
             $("#items-wrapper").append(html);
             // sideMenu = new SideMenu(blueprint3d, viewerFloorplanner, modalEffects);
             // SideMenu(blueprint3d, viewerFloorplanner, modalEffects);

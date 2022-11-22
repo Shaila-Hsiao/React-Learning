@@ -36,7 +36,9 @@ def modelInsert(thumbnailPath,texturePath,jsPath):
         cursor.execute(command)
         connection.commit()
         command = "select max(`id`) from item"
-        itemID = cursor.execute(command)
+        cursor.execute(command)
+        itemID = cursor.fetchone()[0]
+        print("itemID ============================>",itemID)
         return itemID
     except:
         return 0
@@ -49,14 +51,19 @@ def itemDelete(userID,itemID):
         command = f"SELECT `itemList` FROM `account` WHERE userID = '{userID}'"
         cursor.execute(command)
         data = cursor.fetchone()[0]
-        data = list(data)
-        data.remove(itemID)
+        # data 去掉頭尾括弧 -> ()
+        # data = data[1:len(data)-1].split(",")
+        # string to list
+        data = list(eval(data))
+        data.remove(int(itemID))
+        # list to string for saving DB
+        data = ",".join([str(i) for i in data])
         # 刪除 user 擁有的模型ID
-        command = f"UPDATE `account` SET `itemList`='{tuple(data)}' WHERE  userID = '{userID}'"
+        command = f"UPDATE `account` SET `itemList`='{data}' WHERE  userID = '{userID}'"
         cursor.execute(command)
         connection.commit()
         # 刪除資料庫的模型
-        command = f"DELETE FROM `item` WHERE itemID = '{itemID}'"
+        command = f"DELETE FROM `item` WHERE id = '{itemID}'"
         cursor.execute(command)
         connection.commit()
         result = "刪除成功"

@@ -48,32 +48,7 @@ export default function CreateRoom() {
   const RoomModel= require('../../assets/RoomModel/RoomModel.json'); 
   const StudyRoomModel = require('../../assets/RoomModel/StudyRoomModel.json');
   const BandRoomModel = require('../../assets/RoomModel/BandRoomModel.json');
-  // console.log("RoomModel: ",RoomModel)
-  // const [anchorElNav, setAnchorElNav] = React.useState(null);
-  // const [anchorElUser, setAnchorElUser] = React.useState(null);
-  // const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
 
-  // const handleOpenNavMenu = (event) => {
-  //   setAnchorElNav(event.currentTarget);
-  // };
-  // const handleOpenUserMenu = (event) => {
-  //   setAnchorElUser(event.currentTarget);
-  // };
-  // const handleOpenNotifications = (event) => {
-  //   setAnchorElNotifications(event.currentTarget);
-  // };
-
-  // const handleCloseNavMenu = () => {
-  //   setAnchorElNav(null);
-  // };
-
-  // const handleCloseUserMenu = () => {
-  //   setAnchorElUser(null);
-  // };
-
-  // const handleCloseNotifications = () => {
-  //   setAnchorElNotifications(null);
-  // };
 
   const [state, setState] = React.useState({
     gilad: true,
