@@ -170,7 +170,8 @@
             "scale_x": 1.7003089598352215,
             "scale_y": 0.997292171703541,
             "scale_z": 0.999415040540576,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 3,
@@ -184,7 +185,8 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 8,
@@ -198,7 +200,8 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 17,
@@ -212,7 +215,8 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 5,
@@ -226,7 +230,8 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 1,
@@ -240,7 +245,8 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 13,
@@ -254,7 +260,8 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 3,
@@ -268,7 +275,8 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 3,
@@ -282,7 +290,8 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 3,
@@ -296,7 +305,8 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 89,
@@ -310,7 +320,8 @@
             "scale_x": 1.7248984381157826,
             "scale_y": 1.4557760455528754,
             "scale_z": 1.465961165023248,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 82,
@@ -324,7 +335,8 @@
             "scale_x": 20.653912631672757,
             "scale_y": 25.888542689085735,
             "scale_z": 20.483904006296786,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 73,
@@ -338,7 +350,8 @@
             "scale_x": 0.1548003814647069,
             "scale_y": 0.14327535348991105,
             "scale_z": 0.1730356036865971,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 72,
@@ -352,7 +365,8 @@
             "scale_x": 179.95231972001113,
             "scale_y": 168.71206393909458,
             "scale_z": 179.43175235592477,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 67,
@@ -366,7 +380,8 @@
             "scale_x": 31.23293869982441,
             "scale_y": 28.32808341150424,
             "scale_z": 29.265370080191722,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 66,
@@ -380,7 +395,8 @@
             "scale_x": 137.43398839927278,
             "scale_y": 138.0097940522422,
             "scale_z": 150.2679129832153,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 25,
@@ -394,7 +410,8 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         }
     ]
 }

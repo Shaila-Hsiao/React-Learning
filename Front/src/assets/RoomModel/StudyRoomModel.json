@@ -105,7 +105,8 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 3,
@@ -119,7 +120,8 @@
             "scale_x": 2.063749999998877,
             "scale_y": 0.998281508009098,
             "scale_z": 1.0332383005354289,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 1,
@@ -133,7 +135,8 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 104,
@@ -147,7 +150,8 @@
             "scale_x": 38.161602366620315,
             "scale_y": null,
             "scale_z": 25.656798900192022,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 104,
@@ -161,7 +165,8 @@
             "scale_x": 114.48480709986094,
             "scale_y": 119.31044201230681,
             "scale_z": 96.21299587572008,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 103,
@@ -175,7 +180,8 @@
             "scale_x": 21.768663506904755,
             "scale_y": 26.16530912664525,
             "scale_z": 26.084743743607184,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 102,
@@ -189,7 +195,8 @@
             "scale_x": 4.106364408930392,
             "scale_y": 1.6187795078064788,
             "scale_z": 2.380491168846364,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 99,
@@ -203,7 +210,8 @@
             "scale_x": 0.05644102035587619,
             "scale_y": 0.12956101090913913,
             "scale_z": 0.05415478033200718,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 97,
@@ -217,7 +225,8 @@
             "scale_x": 158.7208067087661,
             "scale_y": 89.92105356321025,
             "scale_z": 168.54051873321228,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 91,
@@ -231,7 +240,8 @@
             "scale_x": 129.95890433387362,
             "scale_y": 91.95398137660358,
             "scale_z": 123.71475468922756,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 91,
@@ -245,7 +255,8 @@
             "scale_x": 129.95890433387365,
             "scale_y": 91.9539813766036,
             "scale_z": 123.71475468922755,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 91,
@@ -259,7 +270,8 @@
             "scale_x": 129.95890433387365,
             "scale_y": 91.95398137660358,
             "scale_z": 123.71475468922755,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         },
         {
             "item_id": 90,
@@ -273,7 +285,8 @@
             "scale_x": 100.02260353323942,
             "scale_y": 111.11135413682005,
             "scale_z": 88.83883446247258,
-            "fixed": false
+            "fixed": false,
+            "itemInfoID": 0
         }
     ]
 }

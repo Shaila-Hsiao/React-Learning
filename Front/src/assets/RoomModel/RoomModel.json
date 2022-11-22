@@ -155,45 +155,7 @@
     },
     "items": [
         {
-            "item_name": "Full Bed",
-            "item_type": 1,
-            "model_url": "./static/blueprint/models/js/ik_nordli_full.js",
-            "xpos": 939.5525544513545,
-            "ypos": 50,
-            "zpos": -15.988409993966997,
-            "rotation": -1.5707963267948966,
-            "scale_x": 1,
-            "scale_y": 1,
-            "scale_z": 1,
-            "fixed": false
-        },
-        {
-            "item_name": "Bedside table - White",
-            "item_type": 1,
-            "model_url": "./static/blueprint/models/js/cb-archnight-white_baked.js",
-            "xpos": 1001.0862865204286,
-            "ypos": 31.15939942141,
-            "zpos": 86.4297300551338,
-            "rotation": -0.7872847644705953,
-            "scale_x": 1,
-            "scale_y": 1,
-            "scale_z": 1,
-            "fixed": false
-        },
-        {
-            "item_name": "Open Door",
-            "item_type": 7,
-            "model_url": "./static/blueprint/models/js/open_door.js",
-            "xpos": 745.2440185546875,
-            "ypos": 110.5,
-            "zpos": 64.8291839065202,
-            "rotation": -1.5707963267948966,
-            "scale_x": 1.7003089598352215,
-            "scale_y": 0.997292171703541,
-            "scale_z": 0.999415040540576,
-            "fixed": false
-        },
-        {
+            "item_id": 3,
             "item_name": "Window",
             "item_type": 3,
             "model_url": "./static/blueprint/models/js/whitewindow.js",
@@ -204,9 +166,26 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfo_id": 0
         },
         {
+            "item_id": 10,
+            "item_name": "Bedside table - White",
+            "item_type": 1,
+            "model_url": "./static/blueprint/models/js/cb-archnight-white_baked.js",
+            "xpos": 1001.0862865204286,
+            "ypos": 31.15939942141,
+            "zpos": 86.4297300551338,
+            "rotation": -0.7872847644705953,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false,
+            "itemInfo_id": 0
+        },
+        {
+            "item_id": 8,
             "item_name": "Dresser - White",
             "item_type": 1,
             "model_url": "./static/blueprint/models/js/we-narrow6white_baked.js",
@@ -217,35 +196,41 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfo_id": 0
         },
         {
-            "item_name": "Window",
-            "item_type": 3,
-            "model_url": "./static/blueprint/models/js/whitewindow.js",
-            "xpos": 534.9620937975317,
-            "ypos": 137.60931398864443,
-            "zpos": -227.08399963378906,
-            "rotation": 0,
+            "item_id": 2,
+            "item_name": "Open Door",
+            "item_type": 7,
+            "model_url": "./static/blueprint/models/js/open_door.js",
+            "xpos": 745.2440185546875,
+            "ypos": 110.5,
+            "zpos": 64.8291839065202,
+            "rotation": -1.5707963267948966,
+            "scale_x": 1.7003089598352215,
+            "scale_y": 0.997292171703541,
+            "scale_z": 0.999415040540576,
+            "fixed": false,
+            "itemInfo_id": 0
+        },
+        {
+            "item_id": 12,
+            "item_name": "Full Bed",
+            "item_type": 1,
+            "model_url": "./static/blueprint/models/js/ik_nordli_full.js",
+            "xpos": 939.5525544513545,
+            "ypos": 50,
+            "zpos": -15.988409993966997,
+            "rotation": -1.5707963267948966,
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfo_id": 0
         },
         {
-            "item_name": "Window",
-            "item_type": 3,
-            "model_url": "./static/blueprint/models/js/whitewindow.js",
-            "xpos": 295.1400146484375,
-            "ypos": 141.43383044055196,
-            "zpos": 123.2280598724867,
-            "rotation": 1.5707963267948966,
-            "scale_x": 1,
-            "scale_y": 1,
-            "scale_z": 1,
-            "fixed": false
-        },
-        {
+            "item_id": 14,
             "item_name": "Media Console - White",
             "item_type": 1,
             "model_url": "./static/blueprint/models/js/cb-clapboard_baked.js",
@@ -256,22 +241,26 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfo_id": 0
         },
         {
+            "item_id": 24,
             "item_name": "Blue Rug",
             "item_type": 8,
             "model_url": "./static/blueprint/models/js/cb-blue-block-60x96.js",
             "xpos": 905.8690190229256,
-            "ypos": 0.250005,
+            "ypos": 0.25000500000000003,
             "zpos": 44.59927303228528,
             "rotation": -1.5707963267948966,
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfo_id": 0
         },
         {
+            "item_id": 17,
             "item_name": "Sofa - Grey",
             "item_type": 1,
             "model_url": "./static/blueprint/models/js/cb-rochelle-gray_baked.js",
@@ -282,9 +271,11 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfo_id": 0
         },
         {
+            "item_id": 19,
             "item_name": "Floor Lamp",
             "item_type": 1,
             "model_url": "./static/blueprint/models/js/ore-3legged-white_baked.js",
@@ -295,35 +286,11 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfo_id": 0
         },
         {
-            "item_name": "Red Chair",
-            "item_type": 1,
-            "model_url": "./static/blueprint/models/js/ik-ekero-orange_baked.js",
-            "xpos": 397.676038151142,
-            "ypos": 37.50235073007,
-            "zpos": 156.31701312594373,
-            "rotation": 2.4062972386507093,
-            "scale_x": 1,
-            "scale_y": 1,
-            "scale_z": 1,
-            "fixed": false
-        },
-        {
-            "item_name": "Window",
-            "item_type": 3,
-            "model_url": "./static/blueprint/models/js/whitewindow.js",
-            "xpos": 374.7738207971076,
-            "ypos": 138.62749831597068,
-            "zpos": -227.08399963378906,
-            "rotation": 0,
-            "scale_x": 1,
-            "scale_y": 1,
-            "scale_z": 1,
-            "fixed": false
-        },
-        {
+            "item_id": 1,
             "item_name": "Closed Door",
             "item_type": 7,
             "model_url": "./static/blueprint/models/js/closed-door28x80_baked.js",
@@ -334,9 +301,41 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfo_id": 0
         },
         {
+            "item_id": 5,
+            "item_name": "Red Chair",
+            "item_type": 1,
+            "model_url": "./static/blueprint/models/js/ik-ekero-orange_baked.js",
+            "xpos": 397.676038151142,
+            "ypos": 37.50235073007,
+            "zpos": 156.31701312594373,
+            "rotation": 2.4062972386507093,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false,
+            "itemInfo_id": 0
+        },
+        {
+            "item_id": 3,
+            "item_name": "Window",
+            "item_type": 3,
+            "model_url": "./static/blueprint/models/js/whitewindow.js",
+            "xpos": 534.9620937975317,
+            "ypos": 137.60931398864443,
+            "zpos": -227.08399963378906,
+            "rotation": 0,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false,
+            "itemInfo_id": 0
+        },
+        {
+            "item_id": 13,
             "item_name": "Bookshelf",
             "item_type": 1,
             "model_url": "./static/blueprint/models/js/cb-kendallbookcasewalnut_baked.js",
@@ -347,7 +346,38 @@
             "scale_x": 1,
             "scale_y": 1,
             "scale_z": 1,
-            "fixed": false
+            "fixed": false,
+            "itemInfo_id": 0
+        },
+        {
+            "item_id": 3,
+            "item_name": "Window",
+            "item_type": 3,
+            "model_url": "./static/blueprint/models/js/whitewindow.js",
+            "xpos": 295.1400146484375,
+            "ypos": 141.43383044055196,
+            "zpos": 123.2280598724867,
+            "rotation": 1.5707963267948966,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false,
+            "itemInfo_id": 0
+        },
+        {
+            "item_id": 3,
+            "item_name": "Window",
+            "item_type": 3,
+            "model_url": "./static/blueprint/models/js/whitewindow.js",
+            "xpos": 374.7738207971076,
+            "ypos": 138.62749831597068,
+            "zpos": -227.08399963378906,
+            "rotation": 0,
+            "scale_x": 1,
+            "scale_y": 1,
+            "scale_z": 1,
+            "fixed": false,
+            "itemInfo_id": 0
         }
     ]
 }
