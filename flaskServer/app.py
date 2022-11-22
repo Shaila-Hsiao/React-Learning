@@ -145,6 +145,8 @@ def upload():
     uploadFile(mtlName,mtl,'file',sourcePath)
     uploadFile(thumbnailName,thumbnail,'image',f"{thumbnailPath}/{thumbnailName}")
     uploadFile(textureName,texture,'image',f"{texturePath}/{textureName}")
+    # itemID: 模型的 ID，如果上船錯誤就會回傳 itemID = 0
+    itemID = 0
     # 確認有沒有 JS 重複的檔案
     if os.path.exists(outputPath) == True:
         result = "model 已存在"

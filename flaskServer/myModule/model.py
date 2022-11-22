@@ -53,15 +53,13 @@ def itemDelete(userID,itemID):
         data = cursor.fetchone()[0]
         # data 去掉頭尾括弧 -> ()
         # data = data[1:len(data)-1].split(",")
-        # string to tuple
+        # string to list
         data = list(eval(data))
-        print("data ==>",data)
-        print(type(data[0]))
-        print("itemID ==>",type(itemID))
         data.remove(int(itemID))
-        print("tuple(data) ==>",tuple(data))
+        # list to string for saving DB
+        data = ",".join([str(i) for i in data])
         # 刪除 user 擁有的模型ID
-        command = f'UPDATE `account` SET `itemList`="{tuple(data)}" WHERE  userID = "{userID}"'
+        command = f"UPDATE `account` SET `itemList`='{data}' WHERE  userID = '{userID}'"
         cursor.execute(command)
         connection.commit()
         # 刪除資料庫的模型

@@ -394,7 +394,7 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
   // TODO: this doesn't really belong here
   function initItems() {
     $("#add-items").find(".add-item").mousedown(function(e) {
-    
+      alert($(this).attr("model-id"));
       var itemID = $(this).attr("model-id");
       var itemName = $(this).attr("model-name")
       var modelUrl = $(this).attr("model-url");
@@ -408,7 +408,7 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
         itemType: itemType,
         itemInfoID: itemInfoID
       }
-      alert("click");
+      console.log("modelID", $(this).attr("model-id"));
       console.log("log itemInfoID in example.js line 374",metadata);
       console.log("【ClickTest】",metadata);
       blueprint3d.model.scene.addItem(itemType, modelUrl, metadata);
