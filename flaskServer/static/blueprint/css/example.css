@@ -175,3 +175,7 @@ img{
   cursor: inherit;
   display: block;
 }
+
+#context-menu{
+  position: absolute;
+}

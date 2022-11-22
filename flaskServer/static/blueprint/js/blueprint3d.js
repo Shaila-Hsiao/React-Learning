@@ -509,7 +509,7 @@ var BP3D;
                 }
             }
             ;
-            /** */
+            /**Item 綁定屬性 */
             Item.prototype.remove = function () {
                 this.scene.removeItem(this);
             };
@@ -2379,6 +2379,7 @@ var BP3D;
 /// <reference path="wall_floor_item.ts" />
 /// <reference path="wall_item.ts" />
 var BP3D;
+// item 種類
 (function (BP3D) {
     var Items;
     (function (Items) {
@@ -2408,6 +2409,7 @@ var BP3D;
 /// <reference path="../../lib/jQuery.d.ts" />
 /// <reference path="../core/utils.ts" />
 /// <reference path="../items/factory.ts" />
+
 var BP3D;
 (function (BP3D) {
     var Model;
@@ -2924,6 +2926,7 @@ var BP3D;
                 var scope = this;
                 this.canvasElement.mousedown(function () {
                     scope.mousedown();
+                    console.log("【mousedown】")
                 });
                 this.canvasElement.mousemove(function (event) {
                     scope.mousemove(event);
@@ -3131,9 +3134,13 @@ var BP3D;
             var mouseMoved = false; // has mouse moved since down click
             var rotateMouseOver = false;
             var states = {
+                // 沒有被點選的物件
                 UNSELECTED: 0,
+                // 被點選的物件
                 SELECTED: 1,
+                // 滑鼠按著拖移
                 DRAGGING: 2,
+                // 滑鼠按著旋轉
                 ROTATING: 3,
                 ROTATING_FREE: 4,
                 PANNING: 5
@@ -3224,14 +3231,17 @@ var BP3D;
                     mouseMoved = true;
                     mouse.x = event.clientX;
                     mouse.y = event.clientY;
+                    console.log("【mouseMoved line 3234】");
                     if (!mouseDown) {
                         updateIntersections();
                     }
                     switch (state) {
                         case states.UNSELECTED:
+                            console.log("mouseMoved line 3240: UNSELECTED");
                             updateMouseover();
                             break;
                         case states.SELECTED:
+                            console.log("mouseMoved line 3243: SELECTED");
                             updateMouseover();
                             break;
                         case states.DRAGGING:
@@ -3255,10 +3265,12 @@ var BP3D;
                     switch (state) {
                         case states.SELECTED:
                             if (rotateMouseOver) {
+                                console.log("rotateMouseOver")
                                 switchState(states.ROTATING);
                             }
                             else if (intersectedObject != null) {
                                 scope.setSelectedObject(intersectedObject);
+                                // 
                                 if (!intersectedObject.fixed) {
                                     switchState(states.DRAGGING);
                                 }
@@ -3303,10 +3315,14 @@ var BP3D;
                             }
                             break;
                         case states.SELECTED:
+                            console.log("【mouseUpEvent】: states.SELECTED");
                             if (intersectedObject == null && !mouseMoved) {
                                 switchState(states.UNSELECTED);
                                 checkWallsAndFloors();
+                                console.log("【mouseUpEvent】: intersectedObject == null && !mouseMoved");
+                                
                             }
+                            switchState(states.UNSELECTED);
                             break;
                         case states.ROTATING_FREE:
                             break;
@@ -4186,6 +4202,7 @@ var BP3D;
                 return Math.pow(0.95, scope.zoomSpeed);
             }
             function onMouseDown(event) {
+                console.log("onMouseDown")
                 if (scope.enabled === false) {
                     return;
                 }
@@ -4255,6 +4272,7 @@ var BP3D;
                 // Greggman fix: https://github.com/greggman/three.js/commit/fde9f9917d6d8381f06bf22cdff766029d1761be
                 scope.update();
             }
+            
             function onMouseUp() {
                 if (scope.enabled === false)
                     return;
@@ -4455,6 +4473,8 @@ var BP3D;
                 }
             }
             function itemSelected(item) {
+                console.log("itemSelected 4462")
+                resetSelectedItem();
                 if (selectedItem != item) {
                     resetSelectedItem();
                     if (item.allowRotate && !item.fixed) {
@@ -4553,6 +4573,7 @@ var BP3D;
 /// <reference path="skybox.ts" />
 /// <reference path="controls.ts" />
 /// <reference path="hud.ts" />
+// Three
 var BP3D;
 (function (BP3D) {
     var Three;
@@ -4587,7 +4608,9 @@ var BP3D;
             //var canvasElement = canvasElement;
             var needsUpdate = false;
             var lastRender = Date.now();
+            // 滑鼠是否有進入物件範圍
             var mouseOver = false;
+            // 滑鼠是否有點擊過
             var hasClicked = false;
             var hud;
             this.heightMargin;
@@ -4781,6 +4804,7 @@ var BP3D;
     })();
     BP3D.Blueprint3d = Blueprint3d;
 })(BP3D || (BP3D = {}));
+// Core
 var BP3D;
 (function (BP3D) {
     var Core;
@@ -4861,6 +4885,7 @@ var BP3D;
         Core.log = log;
     })(Core = BP3D.Core || (BP3D.Core = {}));
 })(BP3D || (BP3D = {}));
+// Core
 var BP3D;
 (function (BP3D) {
     var Core;

@@ -178,7 +178,7 @@ var ContextMenu = function(blueprint3d) {
     console.log("log itemID in example.js line 147~~~~~",item.metadata.itemID);
     console.log("log itemName in example.js line 147~~~~~",item.metadata.itemName);
     console.log("log itemInfoID in example.js line 148~~~~~",item.metadata.itemInfoID);
-    // $("#context-menu-name").text(item.metadata.itemName);
+    $("#context-menu-name").text(item.metadata.itemName);
     // 當點選物品的時候
     if(item.metadata.itemInfoID == 0){
       $("#NullItemInfo").show();
@@ -188,12 +188,12 @@ var ContextMenu = function(blueprint3d) {
       $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
     }
     
-    // $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
-    // $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
-    // $("#item-depth").val(cmToIn(selectedItem.getDepth()).toFixed(0));
+    $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
+    $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
+    $("#item-depth").val(cmToIn(selectedItem.getDepth()).toFixed(0));
 
-    // $("#context-menu").show();
-    // $("#fixed").prop('checked', item.fixed);
+    $("#context-menu").show();
+    $("#fixed").prop('checked', item.fixed);
   }
 
   function resize() {
