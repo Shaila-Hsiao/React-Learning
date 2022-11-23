@@ -19,7 +19,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { CardActionArea } from '@mui/material';
 import room1 from '../../assets/images/room1.jpg'; // 圖片的位置
-import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
+import { NavbarDrawer } from '../../components/navbarDrawer';
 import httpClient from '../../httpClient';
 import CardContent from '@mui/material/CardContent';
 var cards = [];

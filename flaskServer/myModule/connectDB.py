@@ -8,9 +8,20 @@ def setting():
         # "host": "mysql",
         "port": 3306,
         "user": "root",
+        # "user": "lab103",
         "password": "",
-        # "password": "root",
-        "db": "blueprint",
+        # "password": "Lab103%",
+        "database": "blueprint"
+        # 'auth_plugin': 'mysql_native_password'
+        # "charset": "utf8"
+        
+    }
+    config = {
+        "host": "mysql",
+        "port": 3306,
+        "user": "root",
+        "password": "root",
+        "database": "blueprint"
         # 'auth_plugin': 'mysql_native_password'
         # "charset": "utf8"
     }

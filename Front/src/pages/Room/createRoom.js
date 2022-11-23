@@ -25,7 +25,7 @@ import bandroom from '../../assets/images/3.png';
 import nullroom from '../../assets/images/1.png';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
-import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
+import { NavbarDrawer } from '../../components/navbarDrawer';
 
 const theme = createTheme({
   palette: {

@@ -10,7 +10,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { CardActionArea } from '@mui/material';
-import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
+import { NavbarDrawer } from '../../components/navbarDrawer';
 // import MuiAppBar from '@mui/material/AppBar';
 // import Toolbar from '@mui/material/Toolbar';
 // import IconButton from '@mui/material/IconButton';
