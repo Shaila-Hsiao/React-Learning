@@ -50,7 +50,8 @@ def register():
     name = request.json['name']
     passwd = request.json['passwd']
     email = request.json['email']
-    result = userRegister(name,userID,passwd,email)
+    headshotPath = "./static/headShots/myHeadshot.jpg"
+    result = userRegister(name,userID,passwd,email,headshotPath)
     session['userID'] = userID
     if result == "success":
         return jsonify({
@@ -288,13 +289,14 @@ def userAllRoom():
 def createRoom():
     roomName = request.json['roomName']
     introduction = request.json['introduction']
+    roomImgPath = "./static/roomPic/DLNJYRU24pM24N07ImaS2zz+Uig=.jpg" # 預設圖片
     roomContent = request.json['roomContent']
     private_public = request.json['private_public']
     userID = session.get("userID")
     # 使用者所擁有的房間中已經有相同的名字
     if repeatRoomName(roomName,userID) == True:
         return "name of room is repeat"
-    roomID = roomInsert(roomName,introduction,roomContent,userID,private_public)
+    roomID = roomInsert(roomName,introduction,roomImgPath,roomContent,userID,private_public)
     # 儲存房間json 的session
     session['roomContent'] = roomContent
     return jsonify({'roomID':roomID})

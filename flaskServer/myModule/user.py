@@ -3,7 +3,7 @@ from flask_bcrypt import Bcrypt
 from myModule.connectDB import connection, cursor
 # import myModule.connectDB
 # register
-def userRegister(name, userID, passwd, email):
+def userRegister(name, userID, passwd, email, headshotPath):
     # connection = connectDB.setting()
     # cursor = connection.cursor(dictionary = True)
     # 檢查帳號有沒有重複
@@ -22,7 +22,7 @@ def userRegister(name, userID, passwd, email):
         itemList = "1"
         for i in range(2,26):
             itemList += f",{i}"
-        sql = f"INSERT INTO `account`(`name`,`userID`, `passwd`, `email`, `itemList`) VALUES ('{name}','{userID}','{passwd}','{email}','{itemList}')"
+        sql = f"INSERT INTO `account`(`name`,`userID`, `passwd`, `email`, `headshotPath`, `itemList`) VALUES ('{name}','{userID}','{passwd}','{email}','{headshotPath}','{itemList}')"
         cursor.execute(sql)
         connection.commit()
         # cursor.close()
