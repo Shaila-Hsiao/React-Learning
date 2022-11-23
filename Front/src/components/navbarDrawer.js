@@ -85,7 +85,7 @@ export const NavbarDrawer = () => {
           // 163.22.17.192
           const resp = await httpClient.get("../@me");
           // const resp = await httpClient.get("//163.22.17.192:5000/@me");
-          // console.log(resp.data.userID)
+          // console.log(resp.data)
           // console.log(resp.data.name)
           // console.log(resp.data.email)
           setUser(resp.data);
@@ -224,7 +224,7 @@ export const NavbarDrawer = () => {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar />
+                  <Avatar src = {user.headshotPath}/>
                 </IconButton>
               </Tooltip>
               <Menu
