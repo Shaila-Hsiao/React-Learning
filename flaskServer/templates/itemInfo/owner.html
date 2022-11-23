@@ -93,14 +93,24 @@
 }
 </style>
 
+<!-- buttonInfo -->
+<div id="IntroOrMove">
+  <span id="context-menu-name" class="lead"></span>
+  <button class="btn btn-block btn-danger" id="context-menu-delete">
+    <span class="glyphicon glyphicon-trash"></span> 
+    簡介
+  </button>
+</div>
+<!-- buttonInfo -->
+
 <!-- ItemInfo -->
-<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
+<div  id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div >
+    <div >
+      <div >
+        <h5  id="exampleModalLabel"></h5>
       </div>
-      <div class="modal-body row justify-content-md-center">
+      <div>
         <form>
           <!-- <div class="col-md-5">
             <div class="panel panel-primary">
@@ -145,9 +155,9 @@
             <!-- <img id="image" style=" max-width: 200px;" alt="IMAGE" src="../static/blueprint/other/photo.png" /> -->
             <img id="image" src="" alt="" style="width:100%;max-width:200px">
             <!-- The Modal -->
-            <div id="myModal" class="modal">
+            <div id="myModal" >
               <span class="close">X</span>
-              <img class="modal-content" id="img01" style="max-width:300px;max-height:300px">
+              <img  id="img01" style="max-width:300px;max-height:300px">
               <div id="caption"></div>
             </div>
           </div>
@@ -156,7 +166,7 @@
         </form>
       </div>
       <!-- FOOTER -->
-      <div class="modal-footer">
+      <div >
         <button id="CloseBtn" type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
         <button id = "SaveBtn" type="button" class="btn btn-primary">儲存</button>
       </div>

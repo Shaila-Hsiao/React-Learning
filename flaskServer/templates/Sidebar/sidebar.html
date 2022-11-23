@@ -1,4 +1,104 @@
+<style>
+  #exampleIntro >.panel-default>.panel-heading{
+    background-color: #93BFBF;
+    color: #333333;
+
+    /* font-weight: bolder; */
+    font-size: 25px;
+  }
+  #exampleIntro >.panel-default>.panel-body{
+    background-color:#EFD9A7;
+    color: #333333;
+    font-weight: bolder;
+    font-size: 18px;
+  }
+  #exampleIntro >.panel-default>.panel-footer button{
+    background-color:#71050F;
+    color: #ffff;
+    font-weight: bolder;
+    font-size: 18px;
+  }
+</style>
 <!-- <span style="font-size:30px;cursor:pointer" >&#9776; open</span> -->
+<div  id="exampleIntro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="panel panel-default">
+    <!-- <div class=""> -->
+      <div class="panel-heading">
+        <h2 id="exampleModalLabel"></h2>
+      </div>
+      <div class="panel-body" style="background-color: #EFD9A7">
+        <form>
+          <!-- <div class="col-md-5">
+              <div class="panel panel-primary">
+                <div class="panel-heading">Panel with panel-primary class</div>
+                <div class="panel-body">Panel Content</div>
+              </div>
+            </div> -->
+          <div class="col-md-5">
+            <label for="recipient-name" class="col-form-label">日期</label>
+            <div  id='date1'>
+              <input type="date" id="date" name="trip-start" class="form-control" min="1000-01-01" max="2222-12-31">
+            </div>
+            <!-- 天氣 -->
+            <div class="col-md">
+              <label for="message-text" class="col-form-label">天氣</label>
+              <text id="weather" for="recipient-name" class="col-form-label"></text>
+              <!-- <textarea class="form-control" id="message-text"></textarea> -->
+            </div>
+            <!-- 天氣 -->
+
+            <!-- 心情描述 -->
+            <div class="col-md">
+              <label for="message-text" class="col-form-label">心情描述</label>
+              <text id="message" for="recipient-name" class="col-form-label"></text>
+              <!-- <textarea class="form-control" id="message-text"></textarea> -->
+              <!-- <label for="message-text" class="col-form-label">圖片</label> -->
+              <!-- <img id="image" width="200px" src = "../static/blueprint/other/photo.png"></text> -->
+              <!-- <textarea class="form-control" id="message-text"></textarea> -->
+            </div>
+            <!-- 心情描述 -->
+          </div>
+          <div class="col-md-5">
+            <!-- audio -->
+            <audio id="ItemInfoAudio" controls>
+              <source id="AudioSource" src="" type="audio/mpeg">
+            </audio>
+            <!-- audio -->
+          </div>
+          <div class="col-md-7">
+            <!-- image -->
+            <!-- <img id="image" style=" max-width: 200px;" alt="IMAGE" src="../static/blueprint/other/photo.png" /> -->
+            <img id="image" src="" alt="" style="width:100%;max-width:200px">
+            <!-- The Modal -->
+            <div id="myModal" >
+              <span class="close">X</span>
+              <img  id="img01" style="max-width:500px;max-height:500px">
+              <div id="caption"></div>
+            </div>
+          </div>
+          <!-- image -->
+
+        </form>
+      </div>
+      <!-- FOOTER -->
+      <div class="panel-footer">
+        <button id="CloseBtn" type="button" class="btn btn-secondary" >關閉</button>
+        <button id="SaveBtn" type="button" class="btn btn-primary">儲存</button>
+      </div>
+      <!-- FOOTER -->
+    <!-- </div> -->
+  </div>
+</div>
+<!-- ItemInfo -->
+
+<!-- buttonInfo -->
+<div id="IntroOrMove">
+  <button class="btn btn-block btn-danger">
+    簡介
+  </button>
+</div>
+<!-- buttonInfo -->
+
 <!-- Context Menu -->
 <div id="context-menu">
   <div style="margin: 0">

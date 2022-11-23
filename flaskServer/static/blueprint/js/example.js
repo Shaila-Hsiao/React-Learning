@@ -2,7 +2,7 @@
 /*
  * Camera Buttons
  */
-var CameraButtons = function(blueprint3d) {
+var CameraButtons = function (blueprint3d) {
 
   var orbitControls = blueprint3d.three.controls;
   var three = blueprint3d.three;
@@ -16,26 +16,26 @@ var CameraButtons = function(blueprint3d) {
   }
 
   function init() {
-    
+
 
     // Camera controls
     $("#zoom-in").click(zoomIn);
-    $("#zoom-out").click(zoomOut);  
+    $("#zoom-out").click(zoomOut);
     $("#zoom-in").dblclick(preventDefault);
     $("#zoom-out").dblclick(preventDefault);
 
     $("#reset-view").click(three.centerCamera)
 
-    $("#move-left").click(function(){
+    $("#move-left").click(function () {
       pan(directions.LEFT)
     })
-    $("#move-right").click(function(){
+    $("#move-right").click(function () {
       pan(directions.RIGHT)
     })
-    $("#move-up").click(function(){
+    $("#move-up").click(function () {
       pan(directions.UP)
     })
-    $("#move-down").click(function(){
+    $("#move-down").click(function () {
       pan(directions.DOWN)
     })
 
@@ -87,15 +87,15 @@ var CameraButtons = function(blueprint3d) {
  * Context menu for selected item
  */
 
-var ContextMenu = function(blueprint3d) {
+var ContextMenu = function (blueprint3d) {
 
   var scope = this;
   var selectedItem;
   var three = blueprint3d.three;
 
   function init() {
-    $("#context-menu-delete").click(function(event) {
-        selectedItem.remove();
+    $("#context-menu-delete").click(function (event) {
+      selectedItem.remove();
     });
 
     three.itemSelectedCallbacks.add(itemSelected);
@@ -103,9 +103,9 @@ var ContextMenu = function(blueprint3d) {
 
     initResize();
 
-    $("#fixed").click(function() {
-        var checked = $(this).prop('checked');
-        selectedItem.setFixed(checked);
+    $("#fixed").click(function () {
+      var checked = $(this).prop('checked');
+      selectedItem.setFixed(checked);
     });
   }
 
@@ -118,76 +118,103 @@ var ContextMenu = function(blueprint3d) {
   }
   // 
   // $("").click(CloseAudio());
-  $( "#CloseBtn" ).click(function() {
+  $("#CloseBtn").click(function () {
     console.log("Audio")
     var oAudio = document.getElementById('ItemInfoAudio');
     oAudio.pause();
+    $("#exampleIntro").hide();
   });
 
 
   // 點選Item 跳出 Info
-  function ModelInfo(itemInfoID){
-    console.log("itemInfoID: ",itemInfoID);
-    
+  function ModelInfo(itemInfoID) {
+    console.log("itemInfoID: ", itemInfoID);
+
     $.ajax({
       url: '/getItemInfo',
       type: "POST",
       data: {
-          'itemInfoID':itemInfoID
+        'itemInfoID': itemInfoID
       },
       /*result為后端函式回傳的json*/
       success: function (resp) {
         // data = room.roomContent
-        console.log("success: ",resp);
+        console.log("success: ", resp);
         // date -------------
         const IsoDate = new Date(resp.date)
-        const DateStr = IsoDate.getFullYear()+"-"+(IsoDate.getMonth()+1)+"-"+IsoDate.getDate()
-        console.log("data: ",IsoDate)
-        console.log("date type :",typeof(IsoDate))
-        console.log("date type :",IsoDate.getFullYear())
-        console.log("DataStr  :",DateStr)
+        const DateStr = IsoDate.getFullYear() + "-" + (IsoDate.getMonth() + 1) + "-" + IsoDate.getDate()
+        console.log("data: ", IsoDate)
+        console.log("date type :", typeof (IsoDate))
+        console.log("date type :", IsoDate.getFullYear())
+        console.log("DataStr  :", DateStr)
         // var today = new Date();
         // console.log(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()) 
         // $('#date').val(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate())
-        $("#date").val(DateStr) 
+        $("#date").val(DateStr)
         $("#weather").text(resp.weather)
         $("#message").text(resp.message)
         $("#message-text").val(resp.message)
-        $("#image").attr("src",resp.imagePath)
-        $("#image").attr("alt",resp.itemName)
+        $("#image").attr("src", resp.imagePath)
+        $("#image").attr("alt", resp.itemName)
         $("#exampleModalLabel").text(resp.itemName)
-        $('#exampleModal').modal('show')
+        // $('#exampleModal').modal('show')
 
         // record Path
-        console.log("resp.recordPath: ",resp.recordPath)
-        $('#AudioSource').attr("src",resp.recordPath);
-        var audio = $("#ItemInfoAudio"); 
+        console.log("resp.recordPath: ", resp.recordPath)
+        $('#AudioSource').attr("src", resp.recordPath);
+        var audio = $("#ItemInfoAudio");
         audio[0].pause();
         audio[0].load();//suspends and restores all audio element
       }
     });
-    
-    
+
+
   }
-  
+
+  function Intro(item) {
+    console.log("Intro 7897897987987")
+    if(item == 0){
+        $("#NullItemInfo").show();
+        $("#NullItemInfo").hide();
+        console.log("No ItemInfo!")
+      }else{
+        ModelInfo(item)
+        $("#exampleIntro").show();
+        // ('click',ModelInfo(item.metadata.itemInfoID));
+        // $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
+      }
+  }
+
   // 選擇物件時 
   function itemSelected(item) {
-    console.log("============item==========",item);
+    console.log("============item==========", item);
     selectedItem = item;
     console.log("select!!!")
-    console.log("log itemID in example.js line 147~~~~~",item.metadata.itemID);
-    console.log("log itemName in example.js line 147~~~~~",item.metadata.itemName);
-    console.log("log itemInfoID in example.js line 148~~~~~",item.metadata.itemInfoID);
+    console.log("log itemID in example.js line 147~~~~~", item.metadata.itemID);
+    console.log("log itemName in example.js line 147~~~~~", item.metadata.itemName);
+    console.log("log itemInfoID in example.js line 148~~~~~", item.metadata.itemInfoID);
     $("#context-menu-name").text(item.metadata.itemName);
-    // 當點選物品的時候
-    if(item.metadata.itemInfoID == 0){
-      $("#NullItemInfo").show();
-      $("#NullItemInfo").hide();
+    // // 當點選物品的時候
+    // if(item.metadata.itemInfoID == 0){
+    //   $("#NullItemInfo").show();
+    //   $("#NullItemInfo").hide();
+    //   console.log("No ItemInfo!")
+    // }else{
+    //   $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
+    // }
+    if (item.metadata.itemInfoID == 0) {
+      // $("#NullItemInfo").show();
+      // $("#NullItemInfo").hide();
       console.log("No ItemInfo!")
-    }else{
-      $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
+    } else {
+      console.log("info has data");
+      document.addEventListener('click', logKey);
+      $("#IntroOrMove").show();
+      $("#IntroOrMove").click(function() {Intro(item.metadata.itemInfoID)});
+      // document.addEventListener('click', logKey);
+      // $("#exampleModal").on('click', ModelInfo(item.metadata.itemInfoID));
     }
-    
+
     $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
     $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
     $("#item-depth").val(cmToIn(selectedItem.getDepth()).toFixed(0));
@@ -213,9 +240,19 @@ var ContextMenu = function(blueprint3d) {
   function itemUnselected() {
     selectedItem = null;
     $("#context-menu").hide();
-    $("#exampleModal").hide();
+    $("#exampleIntro").hide();
+    $("#IntroOrMove").hide();
     // $("#NullItemInfo").hide();
 
+  }
+
+  function logKey(element) {
+    var x = element.screenX;
+    var y = element.screenY;
+    // // 這邊有個重點，當父元素被下了 position 屬性之後他就會變成 offsetParent，所以這邊我們用迴圈不斷往上累加。
+    // element = element.offsetParent;
+    document.getElementById("IntroOrMove").style.left = x+"px";
+    document.getElementById("IntroOrMove").style.top = y+"px";
   }
 
   init();
@@ -225,13 +262,13 @@ var ContextMenu = function(blueprint3d) {
  * Loading modal for items
  */
 
-var ModalEffects = function(blueprint3d) {
+var ModalEffects = function (blueprint3d) {
 
   var scope = this;
   var blueprint3d = blueprint3d;
   var itemsLoading = 0;
 
-  this.setActiveItem = function(active) {
+  this.setActiveItem = function (active) {
     itemSelected = active;
     update();
   }
@@ -245,15 +282,15 @@ var ModalEffects = function(blueprint3d) {
   }
 
   function init() {
-    blueprint3d.model.scene.itemLoadingCallbacks.add(function() {
+    blueprint3d.model.scene.itemLoadingCallbacks.add(function () {
       itemsLoading += 1;
       update();
     });
 
-     blueprint3d.model.scene.itemLoadedCallbacks.add(function() {
+    blueprint3d.model.scene.itemLoadedCallbacks.add(function () {
       itemsLoading -= 1;
       update();
-    });   
+    });
 
     update();
   }
@@ -264,7 +301,7 @@ var ModalEffects = function(blueprint3d) {
 /*
  * Side menu
  */
-var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
+var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
   var blueprint3d = blueprint3d;
   var floorplanControls = floorplanControls;
   var modalEffects = modalEffects;
@@ -272,26 +309,26 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
   var ACTIVE_CLASS = "active";
 
   var tabs = {
-    "FLOORPLAN" : $("#floorplan_tab"),
-    "SHOP" : $("#items_tab"),
-    "DESIGN" : $("#design_tab")
+    "FLOORPLAN": $("#floorplan_tab"),
+    "SHOP": $("#items_tab"),
+    "DESIGN": $("#design_tab")
   }
 
   var scope = this;
   this.stateChangeCallbacks = $.Callbacks();
 
   this.states = {
-    "DEFAULT" : {
-      "div" : $("#viewer"),
-      "tab" : tabs.DESIGN
+    "DEFAULT": {
+      "div": $("#viewer"),
+      "tab": tabs.DESIGN
     },
-    "FLOORPLAN" : {
-      "div" : $("#floorplanner"),
-      "tab" : tabs.FLOORPLAN
+    "FLOORPLAN": {
+      "div": $("#floorplanner"),
+      "tab": tabs.FLOORPLAN
     },
-    "SHOP" : {
-      "div" : $("#add-items"),
-      "tab" : tabs.SHOP
+    "SHOP": {
+      "div": $("#add-items"),
+      "tab": tabs.SHOP
     }
   }
 
@@ -321,7 +358,7 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
   }
 
   function tabClicked(tab) {
-    return function() {
+    return function () {
       // Stop three from spinning
       blueprint3d.three.stopSpin();
 
@@ -335,7 +372,7 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
       }
     }
   }
-  
+
   function setCurrentState(newState) {
 
     if (currentState == newState) {
@@ -345,7 +382,7 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
     // show the right tab as active
     if (currentState.tab !== newState.tab) {
       if (currentState.tab != null) {
-        currentState.tab.removeClass(ACTIVE_CLASS);          
+        currentState.tab.removeClass(ACTIVE_CLASS);
       }
       if (newState.tab != null) {
         newState.tab.addClass(ACTIVE_CLASS);
@@ -363,7 +400,7 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
     if (newState == scope.states.FLOORPLAN) {
       floorplanControls.updateFloorplanView();
       floorplanControls.handleWindowResize();
-    } 
+    }
 
     if (currentState == scope.states.FLOORPLAN) {
       blueprint3d.model.floorplan.update();
@@ -372,16 +409,16 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
     if (newState == scope.states.DEFAULT) {
       blueprint3d.three.updateWindowSize();
     }
- 
+
     // set new state
-    handleWindowResize();    
+    handleWindowResize();
     currentState = newState;
 
     scope.stateChangeCallbacks.fire(newState);
   }
 
   function initLeftMenu() {
-    $( window ).resize( handleWindowResize );
+    $(window).resize(handleWindowResize);
     handleWindowResize();
   }
 
@@ -393,7 +430,7 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
 
   // TODO: this doesn't really belong here
   function initItems() {
-    $("#add-items").find(".add-item").mousedown(function(e) {
+    $("#add-items").find(".add-item").mousedown(function (e) {
       alert($(this).attr("model-id"));
       var itemID = $(this).attr("model-id");
       var itemName = $(this).attr("model-name")
@@ -409,8 +446,8 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
         itemInfoID: itemInfoID
       }
       console.log("modelID", $(this).attr("model-id"));
-      console.log("log itemInfoID in example.js line 374",metadata);
-      console.log("【ClickTest】",metadata);
+      console.log("log itemInfoID in example.js line 374", metadata);
+      console.log("【ClickTest】", metadata);
       blueprint3d.model.scene.addItem(itemType, modelUrl, metadata);
       setCurrentState(scope.states.DEFAULT);
     });
@@ -433,7 +470,7 @@ var TextureSelector = function (blueprint3d, sideMenu) {
   var currentTarget = null;
 
   function initTextureSelectors() {
-    $(".texture-select-thumbnail").click(function(e) {
+    $(".texture-select-thumbnail").click(function (e) {
       var textureUrl = $(this).attr("texture-url");
       var textureStretch = ($(this).attr("texture-stretch") == "true");
       var textureScale = parseInt($(this).attr("texture-scale"));
@@ -454,19 +491,19 @@ var TextureSelector = function (blueprint3d, sideMenu) {
 
   function wallClicked(halfEdge) {
     currentTarget = halfEdge;
-    $("#floorTexturesDiv").hide();  
-    $("#wallTextures").show();  
+    $("#floorTexturesDiv").hide();
+    $("#wallTextures").show();
   }
 
   function floorClicked(room) {
     currentTarget = room;
-    $("#wallTextures").hide();  
-    $("#floorTexturesDiv").show();  
+    $("#wallTextures").hide();
+    $("#floorTexturesDiv").show();
   }
 
   function reset() {
-    $("#wallTextures").hide();  
-    $("#floorTexturesDiv").hide();  
+    $("#wallTextures").hide();
+    $("#floorTexturesDiv").hide();
   }
 
   init();
@@ -476,7 +513,7 @@ var TextureSelector = function (blueprint3d, sideMenu) {
  * Floorplanner controls
  */
 
-var ViewerFloorplanner = function(blueprint3d) {
+var ViewerFloorplanner = function (blueprint3d) {
 
   var canvasWrapper = '#floorplanner';
 
@@ -493,20 +530,20 @@ var ViewerFloorplanner = function(blueprint3d) {
 
   function init() {
 
-    $( window ).resize( scope.handleWindowResize );
+    $(window).resize(scope.handleWindowResize);
     scope.handleWindowResize();
 
     // mode buttons
-    scope.floorplanner.modeResetCallbacks.add(function(mode) {
+    scope.floorplanner.modeResetCallbacks.add(function (mode) {
       $(draw).removeClass(activeStlye);
       $(remove).removeClass(activeStlye);
       $(move).removeClass(activeStlye);
       if (mode == BP3D.Floorplanner.floorplannerModes.MOVE) {
-          $(move).addClass(activeStlye);
+        $(move).addClass(activeStlye);
       } else if (mode == BP3D.Floorplanner.floorplannerModes.DRAW) {
-          $(draw).addClass(activeStlye);
+        $(draw).addClass(activeStlye);
       } else if (mode == BP3D.Floorplanner.floorplannerModes.DELETE) {
-          $(remove).addClass(activeStlye);
+        $(remove).addClass(activeStlye);
       }
 
       if (mode == BP3D.Floorplanner.floorplannerModes.DRAW) {
@@ -517,24 +554,24 @@ var ViewerFloorplanner = function(blueprint3d) {
       }
     });
 
-    $(move).click(function(){
+    $(move).click(function () {
       scope.floorplanner.setMode(BP3D.Floorplanner.floorplannerModes.MOVE);
     });
 
-    $(draw).click(function(){
+    $(draw).click(function () {
       scope.floorplanner.setMode(BP3D.Floorplanner.floorplannerModes.DRAW);
     });
 
-    $(remove).click(function(){
+    $(remove).click(function () {
       scope.floorplanner.setMode(BP3D.Floorplanner.floorplannerModes.DELETE);
     });
   }
 
-  this.updateFloorplanView = function() {
+  this.updateFloorplanView = function () {
     scope.floorplanner.reset();
   }
 
-  this.handleWindowResize = function() {
+  this.handleWindowResize = function () {
     $(canvasWrapper).height(window.innerHeight - $(canvasWrapper).offset().top);
     scope.floorplanner.resizeView();
   };
@@ -581,12 +618,12 @@ var mainControls = function (blueprint3d) {
       type: "POST",
       // FIXME: 以下資訊要從哪裡來
       data: {
-              // 'roomName':$('#roomName').value,
-              'roomName':"testToSave",
-              'roomContent':roomContent,
-              // 'private_public':$('private_public').value
-              'private_public':"on"
-            },
+        // 'roomName':$('#roomName').value,
+        'roomName': "testToSave",
+        'roomContent': roomContent,
+        // 'private_public':$('private_public').value
+        'private_public': "on"
+      },
       async: true, // 異步
       /*result為后端函式回傳的json*/
       success: function (result) {
@@ -606,7 +643,7 @@ var mainControls = function (blueprint3d) {
 // =====================
 // upload model
 // =====================
-var uploadInit = function(){
+var uploadInit = function () {
   async function handleTexture() {
     const reader = new FileReader();//建立FileReader物件
     // 使用 readAsDataURL 將圖片轉成 Base64
@@ -616,17 +653,17 @@ var uploadInit = function(){
       $('#canvas').attr('src', textureContent);//放入讀取到的圖片
     };
   }
-  async function handleObj(){
+  async function handleObj() {
     var reader = new FileReader();
     reader.readAsText($('#obj')[0].files[0]);
-    reader.onload = function() {
+    reader.onload = function () {
       objContent = reader.result;
     };
   }
-  async function handleMtl(){
+  async function handleMtl() {
     var reader = new FileReader();
     reader.readAsText($('#mtl')[0].files[0]);
-    reader.onload = function() {
+    reader.onload = function () {
       mtlContent = reader.result;
     };
   }
@@ -639,14 +676,14 @@ var uploadInit = function(){
       $('#canvas_1').attr('src', thumbnailContent);//放入讀取到的圖片
     };
   }
-  
-  function uploadModel(){
+
+  function uploadModel() {
     let thumbnail = $("#thumbnail")[0];
     let obj = $("#obj")[0];
     let mtl = $("#mtl")[0];
     let texture = $("#texture")[0];
     // 缺一個檔案
-    if (texture.files.length == 0 || mtl.files.length == 0 || obj.files.length == 0 || thumbnail.files.length == 0){
+    if (texture.files.length == 0 || mtl.files.length == 0 || obj.files.length == 0 || thumbnail.files.length == 0) {
       alert("Please check all the files is upload.");
       return;
     }
@@ -657,43 +694,43 @@ var uploadInit = function(){
       url: '/upload',
       type: "POST",
       data: {//'textureName':texture.files[0].name,
-             'objName':obj.files[0].name,
-             'mtlName':mtl.files[0].name,
-             //'thumbnailName':thumbnail.files[0].name,
-             'thumbnail':thumbnailContent,
-             'obj':objContent,
-             'mtl':mtlContent,
-             'texture':textureContent
-            },
+        'objName': obj.files[0].name,
+        'mtlName': mtl.files[0].name,
+        //'thumbnailName':thumbnail.files[0].name,
+        'thumbnail': thumbnailContent,
+        'obj': objContent,
+        'mtl': mtlContent,
+        'texture': textureContent
+      },
       async: true, // 異步
       /*result為后端函式回傳的json*/
       success: function (item) {
         alert(item.result);
-        if (item.result == "上傳成功"){
+        if (item.result == "上傳成功") {
           var html = '<div class="col-sm-4" style="height:500px">' +
-                      '<a class="thumbnail add-item" itemInfo-id="'+
-                      0+
-                      '"model-id ="'+
-                      item.id+
-                      '"model-name="' +
-                      item.name +
-                      '" model-url="' +
-                      item.model +
-                      '" model-type="' +
-                      item.type +
-                      '"><img src="' +
-                      item.image +
-                      '" alt="Add Item"> ' +
-                      item.name +
-                      `</a><button onclick = "deleteItem(${item.id})">delete</button></div>`;
-            $("#items-wrapper").append(html);
-            // sideMenu = new SideMenu(blueprint3d, viewerFloorplanner, modalEffects);
-            // SideMenu(blueprint3d, viewerFloorplanner, modalEffects);
+            '<a class="thumbnail add-item" itemInfo-id="' +
+            0 +
+            '"model-id ="' +
+            item.id +
+            '"model-name="' +
+            item.name +
+            '" model-url="' +
+            item.model +
+            '" model-type="' +
+            item.type +
+            '"><img src="' +
+            item.image +
+            '" alt="Add Item"> ' +
+            item.name +
+            `</a><button onclick = "deleteItem(${item.id})">delete</button></div>`;
+          $("#items-wrapper").append(html);
+          // sideMenu = new SideMenu(blueprint3d, viewerFloorplanner, modalEffects);
+          // SideMenu(blueprint3d, viewerFloorplanner, modalEffects);
         }
       }
     });
   }
-  function init(){
+  function init() {
     $('#obj').change(handleObj);
     $('#thumbnail').change(handleThumbnail);
     $('#mtl').change(handleMtl);
@@ -705,7 +742,7 @@ var uploadInit = function(){
 // =====================
 // upload recoding test
 // =====================
-var uploadRecordingInit = function(){
+var uploadRecordingInit = function () {
   async function handleRecording() {
     const reader = new FileReader();//建立FileReader物件
     // 使用 readAsDataURL 將圖片轉成 Base64
@@ -716,25 +753,25 @@ var uploadRecordingInit = function(){
       uploadRecording();
     };
   }
-  function uploadRecording(){
+  function uploadRecording() {
     // obj and mtl 檔案移動並合併成 json
     $.ajax({
       url: '/saveItemInfo',
       type: "POST",
       data: {
-             'recording':recordingContent,
-            },
+        'recording': recordingContent,
+      },
       async: true, // 異步
       /*result為后端函式回傳的json*/
       success: function (item) {
         alert(item.result);
-        if (item.result == "上傳成功"){
+        if (item.result == "上傳成功") {
 
         }
       }
     });
   }
-  function init(){
+  function init() {
     $('#recording').change(handleRecording);
   }
   init();
@@ -760,6 +797,7 @@ $(document).ready(function () {
   var sideMenu = new SideMenu(blueprint3d, viewerFloorplanner, modalEffects);
   var textureSelector = new TextureSelector(blueprint3d, sideMenu);
   var cameraButtons = new CameraButtons(blueprint3d);
+  var isEditor = false;
   mainControls(blueprint3d);
   uploadInit();
   uploadRecordingInit();
@@ -771,11 +809,11 @@ $(document).ready(function () {
     /*result為后端函式回傳的json*/
     success: function (room) {
       let data = room.roomContent  // 房間內容的 json
-      let isEditor = room.isEditor // 是否為房間編輯者
+      isEditor = room.isEditor // 是否為房間編輯者
       // 訪客只能瀏覽房間
-      if (isEditor == false){
+      if (isEditor == false) {
         data = data.replace(/false/gi, "true");
-        $("#check").prop("checked",true);
+        $("#check").prop("checked", true);
         $("#fixed").hide();
         // $("#fixed").attr("input","checked");
         // $("input").attr("readonly","readonly")
@@ -785,9 +823,10 @@ $(document).ready(function () {
         $("#add-items").hide();
         // ItemInfo物件資訊的儲存按鈕
         $("#SaveBtn").hide();
+        // $("#SaveBtn").hide();
         // ("#fixed").attr('style','display:none;'); 
       }
-      
+
       // data = '{"floorplan": {"corners": {"56d9ebd1-91b2-875c-799d-54b3785fca1f": {"x": 630.555,"y": -227.58400000000006},"8f4a050d-e102-3c3f-5af9-3d9133555d76": {"x": 294.64,"y": -227.58400000000006},"4e312eca-6c4f-30d1-3d9a-a19a9d1ee359": {"x": 294.64,"y": 232.664},"254656bf-8a53-3987-c810-66b349f49b19": {"x": 745.7439999999998,"y": 232.664},"11d25193-4411-fbbf-78cb-ae7c0283164b": {"x": 1044.7019999999998,"y": 232.664},"edf0de13-df9f-cd6a-7d11-9bd13c36ce12": {"x": 1044.7019999999998,"y": -105.66399999999999},"e7db8654-efe1-bda2-099a-70585874d8c0": {"x": 745.7439999999998,"y": -105.66399999999999}},"walls": [{"corner1": "4e312eca-6c4f-30d1-3d9a-a19a9d1ee359","corner2": "254656bf-8a53-3987-c810-66b349f49b19","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap_yellow.png","stretch": true,"scale": null}},{"corner1": "254656bf-8a53-3987-c810-66b349f49b19","corner2": "e7db8654-efe1-bda2-099a-70585874d8c0","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap_yellow.png","stretch": true,"scale": null}},{"corner1": "56d9ebd1-91b2-875c-799d-54b3785fca1f","corner2": "8f4a050d-e102-3c3f-5af9-3d9133555d76","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap_yellow.png","stretch": true,"scale": null}},{"corner1": "8f4a050d-e102-3c3f-5af9-3d9133555d76","corner2": "4e312eca-6c4f-30d1-3d9a-a19a9d1ee359","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap_yellow.png","stretch": true,"scale": null}},{"corner1": "254656bf-8a53-3987-c810-66b349f49b19","corner2": "11d25193-4411-fbbf-78cb-ae7c0283164b","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0}},{"corner1": "11d25193-4411-fbbf-78cb-ae7c0283164b","corner2": "edf0de13-df9f-cd6a-7d11-9bd13c36ce12","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/light_brick.jpg","stretch": false,"scale": 100}},{"corner1": "edf0de13-df9f-cd6a-7d11-9bd13c36ce12","corner2": "e7db8654-efe1-bda2-099a-70585874d8c0","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0}},{"corner1": "e7db8654-efe1-bda2-099a-70585874d8c0","corner2": "56d9ebd1-91b2-875c-799d-54b3785fca1f","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap_yellow.png","stretch": true,"scale": null}}],"wallTextures": [],"floorTextures": {},"newFloorTextures": {"11d25193-4411-fbbf-78cb-ae7c0283164b,254656bf-8a53-3987-c810-66b349f49b19,e7db8654-efe1-bda2-099a-70585874d8c0,edf0de13-df9f-cd6a-7d11-9bd13c36ce12": {"url": "./static/blueprint/rooms/textures/light_fine_wood.jpg","scale": 300}}},"items": [{"item_name": "Full Bed","item_type": 1,"model_url": "./static/blueprint/models/js/ik_nordli_full.js","xpos": 939.5525544513545,"ypos": 50,"zpos": -15.988409993966997,"rotation": -1.5707963267948966,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false},{"item_name": "Bedside table - White","item_type": 1,"model_url": "./static/blueprint/models/js/cb-archnight-white_baked.js","xpos": 1001.0862865204286,"ypos": 31.15939942141,"zpos": 86.4297300551338,"rotation": -0.7872847644705953,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false},{"item_name": "Open Door","item_type": 7,"model_url": "./static/blueprint/models/js/open_door.js","xpos": 745.2440185546875,"ypos": 110.5,"zpos": 64.8291839065202,"rotation": -1.5707963267948966,"scale_x": 1.7003089598352215,"scale_y": 0.997292171703541,"scale_z": 0.999415040540576,"fixed": false},{"item_name": "Window","item_type": 3,"model_url": "./static/blueprint/models/js/whitewindow.js","xpos": 886.8841174461031,"ypos": 139.1510114697785,"zpos": -105.16400146484375,"rotation": 0,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false},{"item_name": "Dresser - White","item_type": 1,"model_url": "./static/blueprint/models/js/we-narrow6white_baked.js","xpos": 898.0548281668393,"ypos": 35.611997646165,"zpos": 201.10860458067486,"rotation": -3.141592653589793,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false},{"item_name": "Window","item_type": 3,"model_url": "./static/blueprint/models/js/whitewindow.js","xpos": 534.9620937975317,"ypos": 137.60931398864443,"zpos": -227.08399963378906,"rotation": 0,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false},{"item_name": "Window","item_type": 3,"model_url": "./static/blueprint/models/js/whitewindow.js","xpos": 295.1400146484375,"ypos": 141.43383044055196,"zpos": 123.2280598724867,"rotation": 1.5707963267948966,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false},{"item_name": "Media Console - White","item_type": 1,"model_url": "./static/blueprint/models/js/cb-clapboard_baked.js","xpos": 658.6568227980731,"ypos": 67.88999754395999,"zpos": -141.50237235990153,"rotation": -0.8154064090423808,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false},{"item_name": "Blue Rug","item_type": 8,"model_url": "./static/blueprint/models/js/cb-blue-block-60x96.js","xpos": 905.8690190229256,"ypos": 0.250005,"zpos": 44.59927303228528,"rotation": -1.5707963267948966,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false},{"item_name": "Sofa - Grey","item_type": 1,"model_url": "./static/blueprint/models/js/cb-rochelle-gray_baked.js","xpos": 356.92671999154373,"ypos": 42.54509923821,"zpos": -21.686174295784554,"rotation": 1.5707963267948966,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false},{"item_name": "Floor Lamp","item_type": 1,"model_url": "./static/blueprint/models/js/ore-3legged-white_baked.js","xpos": 346.697102333121,"ypos": 72.163997943445,"zpos": -175.19915302127583,"rotation": 0,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false},{"item_name": "Red Chair","item_type": 1,"model_url": "./static/blueprint/models/js/ik-ekero-orange_baked.js","xpos": 397.676038151142,"ypos": 37.50235073007,"zpos": 156.31701312594373,"rotation": 2.4062972386507093,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false},{"item_name": "Window","item_type": 3,"model_url": "./static/blueprint/models/js/whitewindow.js","xpos": 374.7738207971076,"ypos": 138.62749831597068,"zpos": -227.08399963378906,"rotation": 0,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false},{"item_name": "Closed Door","item_type": 7,"model_url": "./static/blueprint/models/js/closed-door28x80_baked.js","xpos": 637.2176377788675,"ypos": 110.80000022010701,"zpos": 232.16400146484375,"rotation": 3.141592653589793,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false},{"item_name": "Bookshelf","item_type": 1,"model_url": "./static/blueprint/models/js/cb-kendallbookcasewalnut_baked.js","xpos": 533.1460416453955,"ypos": 92.17650034119151,"zpos": 207.7644213268835,"rotation": 3.141592653589793,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false}]}'
       // data = '{"floorplan": {"corners": {"56d9ebd1-91b2-875c-799d-54b3785fca1f": {"x": 630.555,"y": -227.58400000000006},"8f4a050d-e102-3c3f-5af9-3d9133555d76": {"x": 294.64,"y": -227.58400000000006},"4e312eca-6c4f-30d1-3d9a-a19a9d1ee359": {"x": 294.64,"y": 232.664},"254656bf-8a53-3987-c810-66b349f49b19": {"x": 745.7439999999998,"y": 232.664},"11d25193-4411-fbbf-78cb-ae7c0283164b": {"x": 1044.7019999999998,"y": 232.664},"edf0de13-df9f-cd6a-7d11-9bd13c36ce12": {"x": 1044.7019999999998,"y": -105.66399999999999},"e7db8654-efe1-bda2-099a-70585874d8c0": {"x": 745.7439999999998,"y": -105.66399999999999}},"walls": [{"corner1": "4e312eca-6c4f-30d1-3d9a-a19a9d1ee359","corner2": "254656bf-8a53-3987-c810-66b349f49b19","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap_yellow.png","stretch": true,"scale": null}},{"corner1": "254656bf-8a53-3987-c810-66b349f49b19","corner2": "e7db8654-efe1-bda2-099a-70585874d8c0","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap_yellow.png","stretch": true,"scale": null}},{"corner1": "56d9ebd1-91b2-875c-799d-54b3785fca1f","corner2": "8f4a050d-e102-3c3f-5af9-3d9133555d76","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap_yellow.png","stretch": true,"scale": null}},{"corner1": "8f4a050d-e102-3c3f-5af9-3d9133555d76","corner2": "4e312eca-6c4f-30d1-3d9a-a19a9d1ee359","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap_yellow.png","stretch": true,"scale": null}},{"corner1": "254656bf-8a53-3987-c810-66b349f49b19","corner2": "11d25193-4411-fbbf-78cb-ae7c0283164b","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0}},{"corner1": "11d25193-4411-fbbf-78cb-ae7c0283164b","corner2": "edf0de13-df9f-cd6a-7d11-9bd13c36ce12","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/light_brick.jpg","stretch": false,"scale": 100}},{"corner1": "edf0de13-df9f-cd6a-7d11-9bd13c36ce12","corner2": "e7db8654-efe1-bda2-099a-70585874d8c0","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0}},{"corner1": "e7db8654-efe1-bda2-099a-70585874d8c0","corner2": "56d9ebd1-91b2-875c-799d-54b3785fca1f","frontTexture": {"url": "./static/blueprint/rooms/textures/wallmap.png","stretch": true,"scale": 0},"backTexture": {"url": "./static/blueprint/rooms/textures/wallmap_yellow.png","stretch": true,"scale": null}}],"wallTextures": [],"floorTextures": {},"newFloorTextures": {"11d25193-4411-fbbf-78cb-ae7c0283164b,254656bf-8a53-3987-c810-66b349f49b19,e7db8654-efe1-bda2-099a-70585874d8c0,edf0de13-df9f-cd6a-7d11-9bd13c36ce12": {"url": "./static/blueprint/rooms/textures/light_fine_wood.jpg","scale": 300}}},"items": [{"item_id":10,"item_name": "Bedside table - White","item_type": 1,"model_url": "./static/blueprint/models/js/cb-archnight-white_baked.js","xpos": 1001.0862865204286,"ypos": 31.15939942141,"zpos": 86.4297300551338,"rotation": -0.7872847644705953,"scale_x": 1,"scale_y": 1,"scale_z": 1,"fixed": false}]}'
       // This serialization format needs work
