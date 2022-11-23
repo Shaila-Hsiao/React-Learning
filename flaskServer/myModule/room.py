@@ -35,6 +35,7 @@ def roomInsert(roomName,introduction,roomImgPath,roomContent,userID,private_publ
     command = f"INSERT INTO `room`(`roomName`, `introduction`, `roomImgPath`, `roomContent`, `userID`, `private_public`) VALUES ('{roomName}','{introduction}','{roomImgPath}','{roomContent}','{userID}','{private_public}')"
     # 新增至itemInfo
     cursor.execute(command)
+    connection.commit()
     data = getroomInsertID(roomName,userID)
     return data[0][0]
 
