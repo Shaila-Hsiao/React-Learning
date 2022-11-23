@@ -38,7 +38,7 @@ import Snackbar from '@mui/material/Snackbar';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
-import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
+import { NavbarDrawer } from '../../components/navbarDrawer';
 
 
 const cards = [1, 2, 3, 4];

@@ -12,7 +12,7 @@ import Container from '@mui/material/Container';
 import SearchIcon from '@mui/icons-material/Search';
 import TextField from '@mui/material/TextField';
 import { CardActionArea } from '@mui/material';
-import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
+import { NavbarDrawer } from '../../components/navbarDrawer';
 
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';

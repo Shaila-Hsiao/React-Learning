@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
+import { NavbarDrawer } from '../../components/navbarDrawer';
 // import user from '../../assets/images/user.jpg';
 import httpClient from "../../httpClient";
 import Stack from '@mui/material/Stack';
