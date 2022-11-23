@@ -172,7 +172,7 @@ var ContextMenu = function (blueprint3d) {
   }
 
   function Intro(item) {
-    console.log("Intro 7897897987987")
+    console.log("Intro 7897897987987");
     if(item == 0){
         $("#NullItemInfo").show();
         $("#NullItemInfo").hide();
@@ -219,8 +219,8 @@ var ContextMenu = function (blueprint3d) {
     $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
     $("#item-depth").val(cmToIn(selectedItem.getDepth()).toFixed(0));
 
-    // $("#context-menu").show();
-    // $("#fixed").prop('checked', item.fixed);
+    $("#context-menu").show();
+    $("#fixed").prop('checked', item.fixed);
   }
 
   function resize() {
