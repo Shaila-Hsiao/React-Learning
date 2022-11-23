@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, session, jsonify
 from flask_cors import CORS
 from datetime import timedelta
 import os
-# import secrets
+import secrets
 from base64 import b64encode
 # path : /flaskServer/myModule
 from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList,updatePasswd
@@ -128,10 +128,10 @@ def upload():
     # images
     thumbnail = request.form.get('thumbnail')
     texture = request.form.get('texture')
-    # thumbnailName = secrets.token_hex()+".jpg"
-    # textureName = secrets.token_hex()+".jpg"
-    thumbnailName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
-    textureName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
+    thumbnailName = secrets.token_hex()+".jpg"
+    textureName = secrets.token_hex()+".jpg"
+    # thumbnailName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
+    # textureName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
     userID = session.get("userID")
     if not userID :
         return {"result":"未登入，無法上傳 model"} 
@@ -193,8 +193,8 @@ def saveItemInfo():
     # 照片處理
     if image:
         imagePath = "./static/blueprint/itemInfo/image"
-        # imageName = secrets.token_hex()+".jpg"
-        imageName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
+        imageName = secrets.token_hex()+".jpg"
+        # imageName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
         uploadFile(imageName,image,'image',imagePath)
         imagePath = imagePath+'/'+imageName # 完整相對路徑
     # 語音處理
@@ -347,8 +347,8 @@ def saveRoom():
         path = ""
         # 有房間截圖
         if roomImg:
-            # roomImgName = secrets.token_hex()+".jpg"
-            roomImgName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
+            roomImgName = secrets.token_hex()+".jpg"
+            # roomImgName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
             path = f'{roomImgPath}/{roomImgName}'
             uploadFile(roomImgName,roomImg,'image',path) # 將房間圖片儲存到房間
         updateRoom(roomID,roomName,path,introduction,roomContent,private_public)

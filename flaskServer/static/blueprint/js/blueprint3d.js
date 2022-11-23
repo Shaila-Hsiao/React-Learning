@@ -3231,17 +3231,17 @@ var BP3D;
                     mouseMoved = true;
                     mouse.x = event.clientX;
                     mouse.y = event.clientY;
-                    console.log("【mouseMoved line 3234】");
+                    // console.log("【mouseMoved line 3234】");
                     if (!mouseDown) {
                         updateIntersections();
                     }
                     switch (state) {
                         case states.UNSELECTED:
-                            console.log("mouseMoved line 3240: UNSELECTED");
+                            // console.log("mouseMoved line 3240: UNSELECTED");
                             updateMouseover();
                             break;
                         case states.SELECTED:
-                            console.log("mouseMoved line 3243: SELECTED");
+                            // console.log("mouseMoved line 3243: SELECTED");
                             updateMouseover();
                             break;
                         case states.DRAGGING:

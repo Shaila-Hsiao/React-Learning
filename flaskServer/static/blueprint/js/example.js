@@ -188,12 +188,12 @@ var ContextMenu = function(blueprint3d) {
       $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
     }
     
-    $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
-    $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
-    $("#item-depth").val(cmToIn(selectedItem.getDepth()).toFixed(0));
+    // $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
+    // $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
+    // $("#item-depth").val(cmToIn(selectedItem.getDepth()).toFixed(0));
 
-    $("#context-menu").show();
-    $("#fixed").prop('checked', item.fixed);
+    // $("#context-menu").show();
+    // $("#fixed").prop('checked', item.fixed);
   }
 
   function resize() {
@@ -394,7 +394,7 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
   // TODO: this doesn't really belong here
   function initItems() {
     $("#add-items").find(".add-item").mousedown(function(e) {
-      alert($(this).attr("model-id"));
+    
       var itemID = $(this).attr("model-id");
       var itemName = $(this).attr("model-name")
       var modelUrl = $(this).attr("model-url");
@@ -408,7 +408,7 @@ var SideMenu = function(blueprint3d, floorplanControls, modalEffects) {
         itemType: itemType,
         itemInfoID: itemInfoID
       }
-      console.log("modelID", $(this).attr("model-id"));
+      alert("click");
       console.log("log itemInfoID in example.js line 374",metadata);
       console.log("【ClickTest】",metadata);
       blueprint3d.model.scene.addItem(itemType, modelUrl, metadata);
@@ -546,9 +546,9 @@ var ViewerFloorplanner = function(blueprint3d) {
 var mainControls = function (blueprint3d) {
   var blueprint3d = blueprint3d;
   console.log(blueprint3d);
-  function newDesign() {
-    blueprint3d.model.loadSerialized('{"floorplan":{"corners":{"f90da5e3-9e0e-eba7-173d-eb0b071e838e":{"x":204.85099999999989,"y":289.052},"da026c08-d76a-a944-8e7b-096b752da9ed":{"x":672.2109999999999,"y":289.052},"4e3d65cb-54c0-0681-28bf-bddcc7bdb571":{"x":672.2109999999999,"y":-178.308},"71d4f128-ae80-3d58-9bd2-711c6ce6cdf2":{"x":204.85099999999989,"y":-178.308}},"walls":[{"corner1":"71d4f128-ae80-3d58-9bd2-711c6ce6cdf2","corner2":"f90da5e3-9e0e-eba7-173d-eb0b071e838e","frontTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"f90da5e3-9e0e-eba7-173d-eb0b071e838e","corner2":"da026c08-d76a-a944-8e7b-096b752da9ed","frontTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"da026c08-d76a-a944-8e7b-096b752da9ed","corner2":"4e3d65cb-54c0-0681-28bf-bddcc7bdb571","frontTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"4e3d65cb-54c0-0681-28bf-bddcc7bdb571","corner2":"71d4f128-ae80-3d58-9bd2-711c6ce6cdf2","frontTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0}}],"wallTextures":[],"floorTextures":{},"newFloorTextures":{}},"items":[]}');
-  }
+  // function newDesign() {
+  //   blueprint3d.model.loadSerialized('{"floorplan":{"corners":{"f90da5e3-9e0e-eba7-173d-eb0b071e838e":{"x":204.85099999999989,"y":289.052},"da026c08-d76a-a944-8e7b-096b752da9ed":{"x":672.2109999999999,"y":289.052},"4e3d65cb-54c0-0681-28bf-bddcc7bdb571":{"x":672.2109999999999,"y":-178.308},"71d4f128-ae80-3d58-9bd2-711c6ce6cdf2":{"x":204.85099999999989,"y":-178.308}},"walls":[{"corner1":"71d4f128-ae80-3d58-9bd2-711c6ce6cdf2","corner2":"f90da5e3-9e0e-eba7-173d-eb0b071e838e","frontTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"f90da5e3-9e0e-eba7-173d-eb0b071e838e","corner2":"da026c08-d76a-a944-8e7b-096b752da9ed","frontTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"da026c08-d76a-a944-8e7b-096b752da9ed","corner2":"4e3d65cb-54c0-0681-28bf-bddcc7bdb571","frontTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0}},{"corner1":"4e3d65cb-54c0-0681-28bf-bddcc7bdb571","corner2":"71d4f128-ae80-3d58-9bd2-711c6ce6cdf2","frontTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0},"backTexture":{"url":"./static/blueprint/rooms/textures/wallmap.png","stretch":true,"scale":0}}],"wallTextures":[],"floorTextures":{},"newFloorTextures":{}},"items":[]}');
+  // }
 
   function loadDesign() {
     files = $("#loadFile").get(0).files;
@@ -595,7 +595,7 @@ var mainControls = function (blueprint3d) {
     });
   }
   function init() {
-    $("#new").click(newDesign);
+    // $("#new").click(newDesign);
     $("#loadFile").change(loadDesign);
     $("#download").click(download);
     $("#saveRoom").click(saveRoomInDB);
