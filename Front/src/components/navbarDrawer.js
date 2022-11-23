@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import Menu from '@mui/material/Menu';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-import httpClient from "../../httpClient";
+import httpClient from "../httpClient";
 import Button from '@mui/material/Button';
 import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';

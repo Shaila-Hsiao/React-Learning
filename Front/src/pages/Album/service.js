@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
-import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
+import { NavbarDrawer } from '../../components/navbarDrawer';
 import httpClient from '../../httpClient';
 var temp = "";
 

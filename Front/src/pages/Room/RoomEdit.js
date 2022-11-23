@@ -18,7 +18,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormHelperText from '@mui/material/FormHelperText';
 import Switch from '@mui/material/Switch';
 import httpClient from '../../httpClient';
-import { NavbarDrawer } from '../../components/navbar/navbarDrawer';
+import { NavbarDrawer } from '../../components/navbarDrawer';
 
 var roomName = '';
 var roomImgPath = '';

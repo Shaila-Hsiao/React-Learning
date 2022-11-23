@@ -131,24 +131,12 @@ export  default function SignUp() {
       handleClick();
     }else{
       try{
-        // const resp = await httpClient.post("//localhost:5000/register", {
-        //   userID,
-        //   name,
-        //   email,
-        //   passwd,
-        // });
         const resp = await httpClient.post("./register", {
           userID,
           name,
           email,
           passwd,
         });
-        // const resp = await httpClient.post("//163.22.17.192:5000/register", {
-        //   userID,
-        //   name,
-        //   email,
-        //   passwd,
-        // });
         console.log(resp.data.result);
         if(resp.data.result != null){
           // alert(resp.data.result);
@@ -284,7 +272,7 @@ export  default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  // name="PwdVerify"
+                  name="PwdVerify"
                   label="密碼驗證"
                   type={values.showPassword ? "text" : "password"}
                   id="password"
