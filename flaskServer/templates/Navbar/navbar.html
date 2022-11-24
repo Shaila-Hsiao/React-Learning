@@ -95,8 +95,16 @@
           // const str = "";
           // $("#NavbarAuth").innerHTML = str;
           // alert(result.result);
-          console.log("doInit: ",result.result)
-        }
+          // $("#NavbarUnAuth").hide();
+          // $("#NavbarAuth").show();
+          console.log("doInit: ",result);
+        },
+        // error:function(){
+        //   // $("#NavbarAuth").hide();
+        //   // $("#NavbarUnAuth").show();
+
+        // }
+        
       });
   }
 </script>
@@ -117,11 +125,13 @@
       <li><a href="#">服務支援</a></li>
       <li><a href="#">聯絡我們 </a></li>
     </ul>
-    <ul id="NavbarAuth" class="nav navbar-nav navbar-right">
+    <ul id="NavbarUnAuth" class="nav navbar-nav navbar-right">
       <li><a href="/Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
       <li><a href="/SignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      <li><a href="/SignUp"><img src="../../static/headShots/user.a00227ea.jpg" alt="Avatar" class="avatar"></a></li>
-
+      
+    </ul>
+    <ul id="NavbarAuth" class="nav navbar-nav navbar-right">
+      <a href="/SignUp"><img src="../../static/headShots/user.a00227ea.jpg" alt="Avatar" class="avatar"></a></li>
     </ul>
   <!-- </div> -->
 </nav>

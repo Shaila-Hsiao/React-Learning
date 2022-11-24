@@ -154,6 +154,7 @@ var ContextMenu = function (blueprint3d) {
         $("#weather").text(resp.weather)
         $("#message").text(resp.message)
         $("#message-text").val(resp.message)
+        $("#weather-text").val(resp.weather)
         $("#image").attr("src", resp.imagePath)
         $("#image").attr("alt", resp.itemName)
         $("#exampleModalLabel").text(resp.itemName)
@@ -173,16 +174,30 @@ var ContextMenu = function (blueprint3d) {
 
   function Intro(item) {
     console.log("Intro 7897897987987");
-    if(item == 0){
-        $("#NullItemInfo").show();
-        $("#NullItemInfo").hide();
-        console.log("No ItemInfo!")
-      }else{
-        ModelInfo(item)
-        $("#exampleIntro").show();
-        // ('click',ModelInfo(item.metadata.itemInfoID));
-        // $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
-      }
+    // if(item == 0){
+    //     $("#NullItemInfo").show();
+    //     $("#NullItemInfo").hide();
+    //     console.log("No ItemInfo!")
+    // }else{
+      
+    // }
+    console.log("【Intro】");
+    
+    if(isEditor == true){
+      // 房主
+      ModelInfo(item)
+      $("#exampleIntro").show();
+      console.log("IntroAuth");
+    }else{
+      // 訪客
+      ModelInfo(item)
+      $("#exampleIntroUnAuth").show();
+      console.log("IntroUnAuth");
+      
+    }
+    // ('click',ModelInfo(item.metadata.itemInfoID));
+    // $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
+    
   }
 
   // 選擇物件時 
@@ -193,6 +208,7 @@ var ContextMenu = function (blueprint3d) {
     console.log("log itemID in example.js line 147~~~~~", item.metadata.itemID);
     console.log("log itemName in example.js line 147~~~~~", item.metadata.itemName);
     console.log("log itemInfoID in example.js line 148~~~~~", item.metadata.itemInfoID);
+    console.log("IsEditor: ",isEditor);
     $("#context-menu-name").text(item.metadata.itemName);
     // // 當點選物品的時候
     // if(item.metadata.itemInfoID == 0){
@@ -209,8 +225,10 @@ var ContextMenu = function (blueprint3d) {
     } else {
       console.log("info has data");
       document.addEventListener('click', logKey);
+      // 檢查使用者身分: 房主or 訪客
       $("#IntroOrMove").show();
       $("#IntroOrMove").click(function() {Intro(item.metadata.itemInfoID)});
+      
       // document.addEventListener('click', logKey);
       // $("#exampleModal").on('click', ModelInfo(item.metadata.itemInfoID));
     }
@@ -239,8 +257,9 @@ var ContextMenu = function (blueprint3d) {
 
   function itemUnselected() {
     selectedItem = null;
-    $("#context-menu").hide();
-    $("#exampleIntro").hide();
+    // $("#context-menu").hide();
+    // $("#exampleIntro").hide();
+    // $("#exampleIntroUnAuth").hide();
     $("#IntroOrMove").hide();
     // $("#NullItemInfo").hide();
 
@@ -779,7 +798,8 @@ var uploadRecordingInit = function () {
 /*
  * Initialize!
  */
-
+//全域變數: 是不是房主
+var isEditor;
 $(document).ready(function () {
 
   // main setup
@@ -797,7 +817,7 @@ $(document).ready(function () {
   var sideMenu = new SideMenu(blueprint3d, viewerFloorplanner, modalEffects);
   var textureSelector = new TextureSelector(blueprint3d, sideMenu);
   var cameraButtons = new CameraButtons(blueprint3d);
-  var isEditor = false;
+  
   mainControls(blueprint3d);
   uploadInit();
   uploadRecordingInit();
@@ -810,6 +830,7 @@ $(document).ready(function () {
     success: function (room) {
       let data = room.roomContent  // 房間內容的 json
       isEditor = room.isEditor // 是否為房間編輯者
+      console.log("isEditor_success",isEditor)
       // 訪客只能瀏覽房間
       if (isEditor == false) {
         data = data.replace(/false/gi, "true");

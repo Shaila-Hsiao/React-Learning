@@ -191,7 +191,7 @@ function initItemList(items) {
       item.name +
       `</a><button onclick = "deleteItem(${item.id})">delete</button></div>`;
     itemsDiv.append(html);
-    console.log(html);
+    // console.log(html);
   }
 }
 // 刪除模型

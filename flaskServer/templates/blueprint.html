@@ -21,8 +21,8 @@
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
   </head>
-
-  <body>
+<!-- doInit() at navbar.html-->
+  <body onload="doInit()">
     {% include './Navbar/navbar.html' %}
     {% include './Sidebar/Cosidebar.html'%}
     <div id="main">
@@ -36,7 +36,8 @@
       {% include './Sidebar/pages/AddItem.html'%}
       <!-- 上傳模型 -->
       <!-- itemInfo -->
-      {% include './itemInfo/owner.html'%}
+      <!-- {% include './itemInfo/owner.html'%} -->
+      <!-- {% include './itemInfo/visitors.html'%} -->
       <!-- flaskServer\templates\itemInfo\owner.html -->
       <!-- itemInfo -->
       
