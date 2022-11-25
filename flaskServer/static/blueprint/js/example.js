@@ -260,7 +260,7 @@ var ContextMenu = function (blueprint3d) {
     // $("#context-menu").hide();
     // $("#exampleIntro").hide();
     // $("#exampleIntroUnAuth").hide();
-    $("#IntroOrMove").hide();
+    // $("#IntroOrMove").hide();
     // $("#NullItemInfo").hide();
 
   }
@@ -831,15 +831,14 @@ $(document).ready(function () {
       let data = room.roomContent  // 房間內容的 json
       isEditor = room.isEditor // 是否為房間編輯者
       console.log("isEditor_success",isEditor)
-      // 訪客只能瀏覽房間
+      // 訪客只能瀏覽房間，不可寫也不可移動家具
       if (isEditor == false) {
         data = data.replace(/false/gi, "true");
         $("#check").prop("checked", true);
         $("#fixed").hide();
-        // $("#fixed").attr("input","checked");
-        // $("input").attr("readonly","readonly")
+        $("input").attr("readonly","readonly")
+        $("textarea").attr("readonly","readonly")
         $("#context-menu-delete").hide();
-        $("#itemVolume").hide();
         $("#main-controls").hide();
         $("#add-items").hide();
         // ItemInfo物件資訊的儲存按鈕

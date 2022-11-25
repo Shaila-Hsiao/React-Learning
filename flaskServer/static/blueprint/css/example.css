@@ -98,6 +98,17 @@ img{
 #floorplanner {
   display: none;
 }
+/* itemInfo */
+#exampleIntro{
+  display: none;
+}
+/* 簡介 */
+#IntroOrMove{
+  display: none;
+}
+#itemVolume{
+  margin: 20px;
+}
 
 #add-items {
   display: none;
@@ -110,7 +121,6 @@ img{
   /* top: 20px; */
   /* left: 20px; */
   padding: 10px; 
-  
 }
 #main-controls > a{
   background-color: #182e2e;
@@ -178,4 +188,5 @@ img{
 
 #context-menu{
   position: absolute;
+  display: none;
 }

@@ -24,23 +24,22 @@
 <!-- doInit() at navbar.html-->
   <body onload="doInit()">
     {% include './Navbar/navbar.html' %}
-    {% include './Sidebar/Cosidebar.html'%}
-    <div id="main">
-      <!-- 展示房間 -->
-      {% include './Sidebar/pages/viewer.html'%}
-      <!-- 展示房間 -->
-      <!-- 編輯地面 -->
-      {% include './Sidebar/pages/Footplan.html'%}
-      <!-- 編輯地面 -->
-      <!-- 上傳模型 -->
-      {% include './Sidebar/pages/AddItem.html'%}
-      <!-- 上傳模型 -->
-      <!-- itemInfo -->
-      <!-- {% include './itemInfo/owner.html'%} -->
-      <!-- {% include './itemInfo/visitors.html'%} -->
-      <!-- flaskServer\templates\itemInfo\owner.html -->
-      <!-- itemInfo -->
-      
+    <div class="row main-row">
+      <!-- left -->
+      <div class="col-xs-3">
+        <!-- Adjusting the model size & wall and floor select texture -->
+        {% include './Sidebar/Cosidebar.html'%}
+        {% include './Sidebar/sidebar.html'%}
+      </div>
+      <!-- right -->
+      <div id="main" class="col-xs-9">
+        <!-- 展示房間 -->
+        {% include './Sidebar/pages/viewer.html'%}
+        <!-- 編輯地面 -->
+        {% include './Sidebar/pages/Footplan.html'%}
+        <!-- 上傳模型 -->
+        {% include './Sidebar/pages/AddItem.html'%}
+      </div>
     </div>
   </body>
 </html>
