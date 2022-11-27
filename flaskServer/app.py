@@ -189,6 +189,7 @@ def saveItemInfo():
     image = request.form.get('image')
     record = request.form.get('record')
     recordName = request.form.get('recordName')
+    print("Form get Data :",itemInfoID,itemName,date,weather,message,image,record,recordName)
     imagePath = ""
     recordPath = ""
     # 照片處理
