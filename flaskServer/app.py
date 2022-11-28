@@ -124,8 +124,9 @@ def upload():
     mtl = request.form.get('mtl')
     thumbnail = request.form.get('thumbnail')
     texture = request.form.get('texture')
-    modelType = request.form.get('modelType')
-    print("obj content=========>",obj[:30])
+    modelType = request.form.get('type')
+    print("obj content=========>",obj[:100])
+    print("modelType",modelType)
     modelName = objName.split(".obj")[0]
     sourcePath = "./static/blueprint/models/source"
     inputPath = f"{sourcePath}/{objName}"

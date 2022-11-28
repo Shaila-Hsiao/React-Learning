@@ -124,6 +124,7 @@ var ContextMenu = function (blueprint3d) {
     oAudio.pause();
     $("#exampleIntro").hide();
   });
+  // 儲存模型資訊
   function SaveItemInfo(itemInfoID){
 
     console.log("Save");
@@ -210,33 +211,9 @@ var ContextMenu = function (blueprint3d) {
 
 
   }
-
-  function Intro(item) {
-    console.log("Intro 7897897987987");
-    // if(item == 0){
-    //     $("#NullItemInfo").show();
-    //     $("#NullItemInfo").hide();
-    //     console.log("No ItemInfo!")
-    // }else{
-      
-    // }
-    $("#SaveBtn").click(function(){SaveItemInfo(item)});
-    console.log("【Intro】");
-    
-    if(isEditor == true){
-      // 房主
-      ModelInfo(item)
-      $("#exampleIntro").show();
-      console.log("IntroAuth");
-    }else{
-      // 訪客
-      ModelInfo(item)
-      $("#exampleIntroUnAuth").show();
-      console.log("IntroUnAuth");
-      
-    }
-    // ('click',ModelInfo(item.metadata.itemInfoID));
-    // $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
+  // 顯示訊息
+  function Intro(itemID) {
+    $("#SaveBtn").click(function(){SaveItemInfo(itemID)});
     
   }
 
@@ -250,26 +227,18 @@ var ContextMenu = function (blueprint3d) {
     console.log("log itemInfoID in example.js line 148~~~~~", item.metadata.itemInfoID);
     console.log("IsEditor: ",isEditor);
     $("#context-menu-name").text(item.metadata.itemName);
-    // // 當點選物品的時候
-    // if(item.metadata.itemInfoID == 0){
-    //   $("#NullItemInfo").show();
-    //   $("#NullItemInfo").hide();
-    //   console.log("No ItemInfo!")
-    // }else{
-    //   $("#exampleModal").on('click',ModelInfo(item.metadata.itemInfoID));
-    // }
+    // 模型沒有資訊
     if (item.metadata.itemInfoID == 0) {
-      // $("#NullItemInfo").show();
-      // $("#NullItemInfo").hide();
-      console.log("No ItemInfo!")
-    } else {
+      // alert("no message in model.");
+      $("#exampleIntro").hide();
+      console.log("No ItemInfo!");
+    }
+    // 模型有資訊
+    else {
       console.log("info has data");
-      // document.addEventListener('click', logKey);
       // 檢查使用者身分: 房主or 訪客
       $("#IntroOrMove").show();
       $("#IntroOrMove").click(function() {Intro(item.metadata.itemInfoID)});
-      
-      
       // document.addEventListener('click', logKey);
       // $("#exampleModal").on('click', ModelInfo(item.metadata.itemInfoID));
     }
@@ -551,6 +520,7 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
     reader.readAsText($('#obj')[0].files[0]);
     reader.onload = function () {
       objContent = reader.result;
+      // 框內
     };
   }
   async function handleMtl() {

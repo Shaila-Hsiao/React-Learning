@@ -32,7 +32,10 @@ def modelInsert(thumbnailPath,texturePath,jsPath,modelType):
     print("JSName:",jsName)
     # insert into DB
     try:
-        command = f"INSERT INTO `item`(`name`, `thumbnailPath`, `texturePath`, `jsPath`) VALUES ('{jsName}','{thumbnailPath}','{texturePath}','{jsPath}','{modelType}')"
+        print("==============")
+        print(f"'{jsName}','{thumbnailPath}','{texturePath}','{jsPath}','{modelType}'")
+        print("==============")
+        command = f"INSERT INTO `item`(`name`, `thumbnailPath`, `texturePath`, `jsPath`, `type`) VALUES ('{jsName}','{thumbnailPath}','{texturePath}','{jsPath}','{modelType}')"
         cursor.execute(command)
         connection.commit()
         command = "select max(`id`) from item"
