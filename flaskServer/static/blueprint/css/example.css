@@ -190,3 +190,7 @@ img{
   position: absolute;
   display: none;
 }
+/* upload model */
+.hide{
+  display: none;
+}

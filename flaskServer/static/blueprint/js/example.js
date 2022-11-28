@@ -368,11 +368,14 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
     handleWindowResize();
 
     initItems();
-
+    
     setCurrentState(scope.states.DEFAULT);
+    // upload model init
+    initUploadModel();
   }
 
   function floorplanUpdate() {
+    itemInfoShow();
     setCurrentState(scope.states.DEFAULT);
   }
 
@@ -385,13 +388,29 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
       for (var key in scope.states) {
         var state = scope.states[key];
         if (state.tab == tab) {
+          // 點擊新增模型就把左欄模型資訊隱藏起來
+          if (tab[0] == $("#items_tab")[0]){
+            itemInfoHide();
+          }
           setCurrentState(state);
+
           break;
         }
       }
     }
   }
-
+  // 模型資訊顯現
+  function itemInfoShow(){
+    $("#itemInfo").addClass("col-xs-2");
+    $("#main").removeClass("col-xs-12").addClass("col-xs-10");
+    $("#itemInfo").show();
+  }
+  // 模型資訊隱藏
+  function itemInfoHide(){
+    $("#itemInfo").hide();
+    $("#itemInfo").removeClass("col-xs-2");
+    $("#main").removeClass("col-xs-9").addClass("col-xs-12");
+  }
   function setCurrentState(newState) {
 
     if (currentState == newState) {
@@ -417,16 +436,21 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
 
     // custom actions
     if (newState == scope.states.FLOORPLAN) {
+      itemInfoHide();
+      console.log("new state ==>",newState);
       floorplanControls.updateFloorplanView();
       floorplanControls.handleWindowResize();
     }
-
+    
     if (currentState == scope.states.FLOORPLAN) {
+      itemInfoHide();
+      console.log("current State ==>",currentState);
       blueprint3d.model.floorplan.update();
     }
 
     if (newState == scope.states.DEFAULT) {
       blueprint3d.three.updateWindowSize();
+      itemInfoShow();
     }
 
     // set new state
@@ -471,7 +495,98 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
       setCurrentState(scope.states.DEFAULT);
     });
   }
-
+  /* =======  upload model ======= */
+  async function handleTexture() {
+    const reader = new FileReader();//建立FileReader物件
+    // 使用 readAsDataURL 將圖片轉成 Base64
+    reader.readAsDataURL($('#texture')[0].files[0]);
+    reader.onload = function (e) {
+      textureContent = e.target.result
+      $('#canvas').attr('src', textureContent);//放入讀取到的圖片
+    };
+  }
+  async function handleObj() {
+    var reader = new FileReader();
+    reader.readAsText($('#obj')[0].files[0]);
+    reader.onload = function () {
+      objContent = reader.result;
+    };
+  }
+  async function handleMtl() {
+    var reader = new FileReader();
+    reader.readAsText($('#mtl')[0].files[0]);
+    reader.onload = function () {
+      mtlContent = reader.result;
+    };
+  }
+  async function handleThumbnail() {
+    const reader = new FileReader();//建立FileReader物件
+    // 使用 readAsDataURL 將圖片轉成 Base64
+    reader.readAsDataURL($('#thumbnail')[0].files[0]);
+    reader.onload = function (e) {
+      thumbnailContent = e.target.result
+      $('#canvas_1').attr('src', thumbnailContent);//放入讀取到的圖片
+    };
+  }
+  function uploadModel() {
+    let thumbnail = $("#thumbnail")[0];
+    let obj = $("#obj")[0];
+    let mtl = $("#mtl")[0];
+    let texture = $("#texture")[0];
+    // 缺一個檔案
+    if (texture.files.length == 0 || mtl.files.length == 0 || obj.files.length == 0 || thumbnail.files.length == 0) {
+      alert("Please check all the files is upload.");
+      return;
+    }
+    // 圖片處理
+    alert("upload model");
+    // obj and mtl 檔案移動並合併成 json
+    $.ajax({
+      url: '/upload',
+      type: "POST",
+      data: {
+        'objName': obj.files[0].name,
+        'mtlName': mtl.files[0].name,
+        'thumbnail': thumbnailContent,
+        'obj': objContent,
+        'mtl': mtlContent,
+        'texture': textureContent,
+        'type': $("input[class=modelType-radio]:checked").val()
+      },
+      async: true, // 異步
+      /*result為后端函式回傳的json*/
+      success: function (item) {
+        alert(item.result);
+        if (item.result == "上傳成功") {
+          var html = '<div class="col-sm-4" style="height:500px">' +
+            '<a class="thumbnail add-item" itemInfo-id="' +
+            0 +
+            '"model-id ="' +
+            item.id +
+            '"model-name="' +
+            item.name +
+            '" model-url="' +
+            item.model +
+            '" model-type="' +
+            item.type +
+            '"><img src="' +
+            item.image +
+            '" alt="Add Item"> ' +
+            item.name +
+            `</a><button onclick = "deleteItem(${item.id})">delete</button></div>`;
+          $("#items-wrapper").append(html);
+          initItems();
+        }
+      }
+    });
+  }
+  function initUploadModel(){
+    $('#obj').change(handleObj);
+    $('#thumbnail').change(handleThumbnail);
+    $('#mtl').change(handleMtl);
+    $('#texture').change(handleTexture);
+    $("#uploadBtn").click(uploadModel);
+  }
   init();
 
 }
@@ -659,105 +774,7 @@ var mainControls = function (blueprint3d) {
 
   init();
 }
-// =====================
-// upload model
-// =====================
-var uploadInit = function () {
-  async function handleTexture() {
-    const reader = new FileReader();//建立FileReader物件
-    // 使用 readAsDataURL 將圖片轉成 Base64
-    reader.readAsDataURL($('#texture')[0].files[0]);
-    reader.onload = function (e) {
-      textureContent = e.target.result
-      $('#canvas').attr('src', textureContent);//放入讀取到的圖片
-    };
-  }
-  async function handleObj() {
-    var reader = new FileReader();
-    reader.readAsText($('#obj')[0].files[0]);
-    reader.onload = function () {
-      objContent = reader.result;
-    };
-  }
-  async function handleMtl() {
-    var reader = new FileReader();
-    reader.readAsText($('#mtl')[0].files[0]);
-    reader.onload = function () {
-      mtlContent = reader.result;
-    };
-  }
-  async function handleThumbnail() {
-    const reader = new FileReader();//建立FileReader物件
-    // 使用 readAsDataURL 將圖片轉成 Base64
-    reader.readAsDataURL($('#thumbnail')[0].files[0]);
-    reader.onload = function (e) {
-      thumbnailContent = e.target.result
-      $('#canvas_1').attr('src', thumbnailContent);//放入讀取到的圖片
-    };
-  }
 
-  function uploadModel() {
-    let thumbnail = $("#thumbnail")[0];
-    let obj = $("#obj")[0];
-    let mtl = $("#mtl")[0];
-    let texture = $("#texture")[0];
-    // 缺一個檔案
-    if (texture.files.length == 0 || mtl.files.length == 0 || obj.files.length == 0 || thumbnail.files.length == 0) {
-      alert("Please check all the files is upload.");
-      return;
-    }
-    // 圖片處理
-    alert("upload model");
-    // obj and mtl 檔案移動並合併成 json
-    $.ajax({
-      url: '/upload',
-      type: "POST",
-      data: {//'textureName':texture.files[0].name,
-        'objName': obj.files[0].name,
-        'mtlName': mtl.files[0].name,
-        //'thumbnailName':thumbnail.files[0].name,
-        'thumbnail': thumbnailContent,
-        'obj': objContent,
-        'mtl': mtlContent,
-        'texture': textureContent
-      },
-      async: true, // 異步
-      /*result為后端函式回傳的json*/
-      success: function (item) {
-        alert(item.result);
-        if (item.result == "上傳成功") {
-          var html = '<div class="col-sm-4" style="height:500px">' +
-            '<a class="thumbnail add-item" itemInfo-id="' +
-            0 +
-            '"model-id ="' +
-            item.id +
-            '"model-name="' +
-            item.name +
-            '" model-url="' +
-            item.model +
-            '" model-type="' +
-            item.type +
-            '"><img src="' +
-            item.image +
-            '" alt="Add Item"> ' +
-            item.name +
-            `</a><button onclick = "deleteItem(${item.id})">delete</button></div>`;
-          $("#items-wrapper").append(html);
-          // sideMenu = new SideMenu(blueprint3d, viewerFloorplanner, modalEffects);
-          // SideMenu(blueprint3d, viewerFloorplanner, modalEffects);
-        }
-      }
-    });
-  }
-  function init() {
-    $('#obj').change(handleObj);
-    $('#thumbnail').change(handleThumbnail);
-    $('#mtl').change(handleMtl);
-    $('#texture').change(handleTexture);
-    $("#uploadBtn").click(uploadModel);
-  }
-  init();
-}
 // =====================
 // upload recoding test
 // =====================
@@ -819,7 +836,6 @@ $(document).ready(function () {
   var cameraButtons = new CameraButtons(blueprint3d);
   
   mainControls(blueprint3d);
-  uploadInit();
   uploadRecordingInit();
   // 依據使用者的選擇的房間載入
   $.ajax({
@@ -843,6 +859,8 @@ $(document).ready(function () {
         $("#add-items").hide();
         // ItemInfo物件資訊的儲存按鈕
         $("#SaveBtn").hide();
+        // sidebar 新增模型連結
+        $("#items_tab").hide();
         // $("#SaveBtn").hide();
         // ("#fixed").attr('style','display:none;'); 
       }

@@ -122,13 +122,15 @@ def upload():
     mtlName = request.form.get('mtlName')
     obj = request.form.get('obj')
     mtl = request.form.get('mtl')
+    thumbnail = request.form.get('thumbnail')
+    texture = request.form.get('texture')
+    modelType = request.form.get('modelType')
+    print("obj content=========>",obj[:30])
     modelName = objName.split(".obj")[0]
     sourcePath = "./static/blueprint/models/source"
     inputPath = f"{sourcePath}/{objName}"
     outputPath = f"./static/blueprint/models/js/{modelName}.js"
     # images
-    thumbnail = request.form.get('thumbnail')
-    texture = request.form.get('texture')
     thumbnailName = secrets.token_hex()+".jpg"
     textureName = secrets.token_hex()+".jpg"
     # thumbnailName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
@@ -163,7 +165,7 @@ def upload():
         thumbnailPath = f"{thumbnailPath}/{thumbnailName}"
         texturePath = f"{texturePath}/{textureName}"
         # 成功插入資料庫
-        itemID = modelInsert(thumbnailPath,texturePath,outputPath)
+        itemID = modelInsert(thumbnailPath,texturePath,outputPath,modelType)
         if  itemID > 0:
             result = "上傳成功"
         else:

@@ -24,12 +24,12 @@
 <!-- doInit() at navbar.html-->
   <body onload="doInit()">
     {% include './Navbar/navbar.html' %}
+    {% include './Sidebar/Cosidebar.html'%}
     <div class="row main-row">
       <!-- left -->
-      <div class="col-xs-3">
+      <div id = "itemInfo" class="col-xs-2">
         <!-- Adjusting the model size & wall and floor select texture -->
-        {% include './Sidebar/Cosidebar.html'%}
-        {% include './Sidebar/sidebar.html'%}
+        {% include './Sidebar/itemInfo.html'%}
       </div>
       <!-- right -->
       <div id="main" class="col-xs-9">
