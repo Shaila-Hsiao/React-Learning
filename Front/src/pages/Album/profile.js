@@ -39,6 +39,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { NavbarDrawer } from '../../components/navbarDrawer';
+import { Footer } from '../../components/footer';
 
 
 const cards = [1, 2, 3, 4];
@@ -159,12 +160,7 @@ function Profile() {
                 </Container>
                 <Box sx={{ bgcolor: '#efd9a7', p: 3 }} />
             </main>
-            {/* Footer */}
-            <Box sx={{ bgcolor: 'primary.main', p: 6 }} component="footer">
-                <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
-                    Footer
-                </Typography>
-            </Box>
+            <Footer />
         </ThemeProvider>
     );
 }

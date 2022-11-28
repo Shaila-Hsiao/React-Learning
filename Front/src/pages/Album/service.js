@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
 import { NavbarDrawer } from '../../components/navbarDrawer';
 import httpClient from '../../httpClient';
+import { Footer } from '../../components/footer';
 var temp = "";
 
 const theme = createTheme({
@@ -103,12 +104,7 @@ function ServiceData() {
                     </Box>
                 </Box>
             </main>
-            {/* Footer */}
-            <Box sx={{ bgcolor: 'primary.main', p: 6 }} component="footer">
-                <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
-                    Footer
-                </Typography>
-            </Box>
+            <Footer />
         </ThemeProvider>
     );
 }

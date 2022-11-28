@@ -234,7 +234,7 @@ export  default function SignUp() {
                   autoComplete="email"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 {/* <TextField
                   required
                   fullWidth
@@ -268,7 +268,7 @@ export  default function SignUp() {
                   />
                 </FormControl>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
@@ -277,7 +277,7 @@ export  default function SignUp() {
                   type={values.showPassword ? "text" : "password"}
                   id="password"
                 />
-              </Grid>
+              </Grid> */}
               {/* <Grid item xs={12} sm={6}>
                 <TextField
                   required

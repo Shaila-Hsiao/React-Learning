@@ -22,6 +22,7 @@ import room1 from '../../assets/images/room1.jpg'; // 圖片的位置
 import { NavbarDrawer } from '../../components/navbarDrawer';
 import httpClient from '../../httpClient';
 import CardContent from '@mui/material/CardContent';
+import { Footer } from '../../components/footer';
 var cards = [];
 var temp = "";
 
@@ -232,11 +233,7 @@ function Album() {
         <Box sx={{ bgcolor: '#efd9a7', p: 3 }} />
       </main>
       {/* Footer */}
-      <Box sx={{ bgcolor: 'primary.main', p: 6 }} component="footer">
-        <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
-          Footer
-        </Typography>
-      </Box>
+      <Footer />
     </ThemeProvider>
   );
 }
