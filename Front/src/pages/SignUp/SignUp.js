@@ -278,7 +278,7 @@ export  default function SignUp() {
                   id="password"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
@@ -293,7 +293,7 @@ export  default function SignUp() {
                   fullWidth
                   label="放驗證碼的區域"
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"

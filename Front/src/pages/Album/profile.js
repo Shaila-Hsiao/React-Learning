@@ -111,7 +111,7 @@ function Profile() {
                         <Grid item xs={12} sm={4}>
                             <Box sx={{}}>
                                 <Typography variant="h3" gutterBottom>Lin</Typography>
-                                <Typography variant="h5" gutterBottom>10000位訂閱者</Typography>
+                                {/* <Typography variant="h5" gutterBottom>10000位訂閱者</Typography> */}
                                 <Typography variant="body1" gutterBottom>
                                     大家好，我是 ......
                                 </Typography>
@@ -132,7 +132,7 @@ function Profile() {
                 </Box>
                 {/* Card */}
                 <Container sx={{ py: 5 }}>
-                <Typography variant="h5" color= '#fff' gutterBottom>最新動態、熱門房間 (最多人留言、按讚)</Typography>
+                <Typography variant="h5" color= '#fff' gutterBottom>所有房間</Typography>
                     {/* End hero unit  */}
                     <Grid container spacing={4}>
                         {cards.map((card) => (

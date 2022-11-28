@@ -124,7 +124,46 @@ var ContextMenu = function (blueprint3d) {
     oAudio.pause();
     $("#exampleIntro").hide();
   });
+  function SaveItemInfo(itemInfoID){
 
+    console.log("Save");
+    var itemName = $('#exampleModalLabel').val(); 
+    var date = $('#date').val(); 
+    var weather = $('#weather').val(); 
+    var message = $('#message').val(); 
+    var image = $('#image').attr("src"); 
+    var AudioSource = $('#AudioSource').attr("src"); 
+    var recordName = "blueprint";
+    console.log(itemInfoID);
+    console.log(itemName);
+    console.log(date);
+    console.log(weather);
+    console.log(image);
+    console.log(AudioSource);
+    $.ajax({
+      url: '/saveItemInfo',
+      type: "POST",
+      data: {
+        'itemInfoID': itemInfoID,
+        'itemName': itemName,
+        'date':date,
+        'weather': weather,
+        'message':message,
+        // 'image':image,
+        // 'record':AudioSource,
+        'recordName':recordName,
+      },
+  
+      /*result為后端函式回傳的json*/
+      success: function (resp) {
+        console.log("success: ", resp);
+      }
+      ,error:function(resp){
+        console.log("error:",resp);
+      }
+    });
+  }
+  
 
   // 點選Item 跳出 Info
   function ModelInfo(itemInfoID) {
@@ -151,10 +190,10 @@ var ContextMenu = function (blueprint3d) {
         // console.log(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()) 
         // $('#date').val(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate())
         $("#date").val(DateStr)
-        $("#weather").text(resp.weather)
-        $("#message").text(resp.message)
-        $("#message-text").val(resp.message)
-        $("#weather-text").val(resp.weather)
+        // $("#weather").text(resp.weather)
+        // $("#message").text(resp.message)
+        $("#message").val(resp.message)
+        $("#weather").val(resp.weather)
         $("#image").attr("src", resp.imagePath)
         $("#image").attr("alt", resp.itemName)
         $("#exampleModalLabel").text(resp.itemName)
@@ -181,6 +220,7 @@ var ContextMenu = function (blueprint3d) {
     // }else{
       
     // }
+    $("#SaveBtn").click(function(){SaveItemInfo(item)});
     console.log("【Intro】");
     
     if(isEditor == true){
@@ -224,10 +264,11 @@ var ContextMenu = function (blueprint3d) {
       console.log("No ItemInfo!")
     } else {
       console.log("info has data");
-      document.addEventListener('click', logKey);
+      // document.addEventListener('click', logKey);
       // 檢查使用者身分: 房主or 訪客
       $("#IntroOrMove").show();
       $("#IntroOrMove").click(function() {Intro(item.metadata.itemInfoID)});
+      
       
       // document.addEventListener('click', logKey);
       // $("#exampleModal").on('click', ModelInfo(item.metadata.itemInfoID));

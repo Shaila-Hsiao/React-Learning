@@ -36,3 +36,8 @@ services:
     links:
       - mysql
     restart: always
+
+# networks:
+#   default:
+#     # Use a custom driver
+#     driver: react-learning_default
