@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React, { useState } from 'react';
+import validator from "validator";
+import PasswordChecklist from "react-password-checklist";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import { Alert, AlertTitle } from '@mui/material';
@@ -6,9 +8,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
-// import Link from '@mui/material/Link';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -30,18 +31,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
+
 
 const theme = createTheme({
     palette: {
@@ -62,36 +52,30 @@ const theme = createTheme({
 
 export  default function SignUp() {
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+  const validateEmail = (e) => {
+    var email = e.target.value;
 
-  // 密碼欄位設定
-  const [values, setValues] = React.useState({
-    // userID: "",
-    // name:"",
-    // email:"",
-    password: "",
-    // pwdVerify:"",
-    showPassword: false
-  });
-  // 密碼輸入更改
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+    if (validator.isEmail(email)) {
+      setMessage("電子郵件驗證成功！");
+    } else {
+      setMessage("請輸入有效的電子郵件！");
+    }
   };
+
+  // 密碼確認
+  const [password, setPassword] = useState("");
+	const [passwordAgain, setPasswordAgain] = useState("");
+
   // 密碼顯示
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword
-    });
-  };
-  // 滑鼠移置密碼欄位時
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
+  const [passwordShown, setPasswordShown] = useState(false);
+
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
   };
 
-
-
-
-
+  const [alert, setAlert] = useState(false);
+  const [alertContent, setAlertContent] = useState('');
   // ==================================
 
   const handleSubmit = async (event) => {
@@ -122,12 +106,14 @@ export  default function SignUp() {
     }
     let Nullitem="";
     NullData.forEach(element => {
-      Nullitem += element+",\n"
+      Nullitem += element+".\n"
       console.log("未填寫項:",element)
     });
     console.log(Nullitem)
     if(Nullitem !== ""){
       // alert("尚未填寫以下項目: \n"+Nullitem);
+      setAlertContent("尚未填寫以下項目: \n"+Nullitem);
+      setAlert(true);
       handleClick();
     }else{
       try{
@@ -140,6 +126,8 @@ export  default function SignUp() {
         console.log(resp.data.result);
         if(resp.data.result != null){
           // alert(resp.data.result);
+          setAlertContent(resp.data.result);
+          setAlert(true);
           handleClick();
         }else{
           // if sign up success , navigate to home
@@ -147,8 +135,8 @@ export  default function SignUp() {
         }
       }catch (error) {
         if (error.response.status === 401) {
-          // alert("Invalid credentials");
-          handleClick();
+          alert("Invalid credentials");
+          // handleClick();
         }
     }
     }
@@ -175,7 +163,7 @@ export  default function SignUp() {
         onClose={handleClose}>
         <Alert variant="filled" onClose={handleClose} severity="error" sx={{ width: '100%' }}>
           <AlertTitle>錯誤</AlertTitle>
-          <strong>資料未填寫完整</strong>！
+          {alertContent}
         </Alert>
       </Snackbar>
       <AppBar position="relative" bgcolor='#182e2e'>
@@ -232,52 +220,56 @@ export  default function SignUp() {
                   label="電子信箱"
                   name="email"
                   autoComplete="email"
+                  onChange={(e) => validateEmail(e)}
                 />
+                <span
+                  style={{
+                    fontWeight: "bold",
+                    color: "red"
+                  }}
+                >
+                  {message}
+                </span>
               </Grid>
-              <Grid item xs={12}>
-                {/* <TextField
-                  required
-                  fullWidth
-                  name="passwd"
-                  label="密碼"
-                  type="password"
-                  id="passwd"
-                /> */}
-                <FormControl fullWidth required >
-                  <InputLabel htmlFor="outlined-adornment-password">密碼</InputLabel>
-                  <OutlinedInput
-                    id="passwd"
+              <Grid item xs={12} sm={5}>
+              <TextField
+                    required
+                    fullWidth
                     name="passwd"
-                    type={values.showPassword ? 'text' : 'password'}
-                    value={values.password}
-                    onChange={handleChange('password')}
-                    endAdornment={
-                      <InputAdornment position="end" >
-                        
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
                     label="密碼"
+                    // type="password"
+                    type={passwordShown ? "text" : "password"}
+                    id="passwd"
+                    onChange={e => setPassword(e.target.value)}
+                    InputProps={{endAdornment: 
+                    <IconButton aria-label="showpasswd" onClick={togglePassword}>
+                      {passwordShown ? <VisibilityOffIcon /> : <VisibilityIcon />}
+                    </IconButton>}}
                   />
-                </FormControl>
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={5}>
                 <TextField
                   required
                   fullWidth
-                  name="PwdVerify"
+                  name="password"
                   label="密碼驗證"
-                  type={values.showPassword ? "text" : "password"}
+                  type="password"
                   id="password"
+                  onChange={e => setPasswordAgain(e.target.value)}
                 />
-              </Grid> */}
+              </Grid>
+              <Grid item xs={12} sm={2}>
+                <PasswordChecklist
+                  rules={["minLength","match"]}
+                  minLength={8}
+                  value={password}
+                  valueAgain={passwordAgain}
+                  messages={{
+                    minLength: "至少輸入 8 個字元",
+                    match: "密碼輸入一致",
+                  }}
+                />
+              </Grid>
               {/* <Grid item xs={12} sm={6}>
                 <TextField
                   required
