@@ -21,6 +21,7 @@ import Snackbar from '@mui/material/Snackbar';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
 import httpClient from '../../httpClient';
+import VCode from '../../components/Vcode';
 
 import IconButton from "@mui/material/IconButton";
 // import FilledInput from "@mui/material/FilledInput";
@@ -270,7 +271,7 @@ export  default function SignUp() {
                   }}
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={10}>
                 <TextField
                   required
                   fullWidth
@@ -279,13 +280,16 @@ export  default function SignUp() {
                   id="verification"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
+              <Grid item xs={12} sm={2}>
+              <Box bgcolor="white" alignItems='center'>
+                  <VCode />
+                </Box>
+                {/* <TextField
                   required
                   fullWidth
                   label="放驗證碼的區域"
-                />
-              </Grid> */}
+                /> */}
+              </Grid>
             </Grid>
             <Button
               type="submit"
