@@ -217,6 +217,8 @@ var ContextMenu = function (blueprint3d) {
     // 模型沒有資訊
     if (item.metadata.itemInfoID == 0) {
       $("#exampleIntro").hide();
+      $("#IntroOrMove").hide();
+
     }
     // 模型有資訊
     else {

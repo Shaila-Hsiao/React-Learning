@@ -181,8 +181,17 @@ img{
 }
 
 #context-menu{
+  position: relative;
+  margin: auto;
+}
+#floorTexturesDiv{
+  position:absolute;
+  margin:10px 20px;
+  /* padding: 10px 20; */
+}
+#wallTextures{
   position: absolute;
-  display: none;
+  margin:10px 20px;
 }
 /* upload model */
 .hide{
