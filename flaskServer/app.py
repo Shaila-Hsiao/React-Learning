@@ -164,13 +164,16 @@ def upload():
     mtlName = request.form.get('mtlName')
     obj = request.form.get('obj')
     mtl = request.form.get('mtl')
+    thumbnail = request.form.get('thumbnail')
+    texture = request.form.get('texture')
+    modelType = request.form.get('type')
+    print("obj content=========>",obj[:100])
+    print("modelType",modelType)
     modelName = objName.split(".obj")[0]
     sourcePath = "./static/blueprint/models/source"
     inputPath = f"{sourcePath}/{objName}"
     outputPath = f"./static/blueprint/models/js/{modelName}.js"
     # images
-    thumbnail = request.form.get('thumbnail')
-    texture = request.form.get('texture')
     thumbnailName = secrets.token_hex()+".jpg"
     textureName = secrets.token_hex()+".jpg"
     # thumbnailName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
@@ -205,7 +208,7 @@ def upload():
         thumbnailPath = f"{thumbnailPath}/{thumbnailName}"
         texturePath = f"{texturePath}/{textureName}"
         # 成功插入資料庫
-        itemID = modelInsert(thumbnailPath,texturePath,outputPath)
+        itemID = modelInsert(thumbnailPath,texturePath,outputPath,modelType)
         if  itemID > 0:
             result = "上傳成功"
         else:
@@ -231,6 +234,7 @@ def saveItemInfo():
     image = request.form.get('image')
     record = request.form.get('record')
     recordName = request.form.get('recordName')
+    print("Form get Data :",itemInfoID,itemName,date,weather,message,image,record,recordName)
     imagePath = ""
     recordPath = ""
     # 照片處理

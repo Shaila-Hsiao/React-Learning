@@ -28,7 +28,7 @@ def setting():
     try:
         # 建立Connection物件
         connection = pymysql.connect(**db_settings)
-        # connection = mysql.connector.connect(**db_settings)
+        # connection = mysql.connector.connect(**config)
         print("==========success to connect DB=============")
         return connection
     except Exception as ex:

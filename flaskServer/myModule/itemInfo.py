@@ -1,7 +1,7 @@
 from myModule.connectDB import connection, cursor
 
 def itemSelect(itemInfoID):
-    command = f"SELECT `itemName`, `date`, `weather`, `message`, `imagePath`, `recordPath`, `recordName` FROM `itemInfo` WHERE id = '{itemInfoID}'"
+    command = f"SELECT `itemName`, `date`, `weather`, `message`, `imagePath`, `recordPath`, `recordName` FROM `iteminfo` WHERE id = '{itemInfoID}'"
     cursor.execute(command)
     result = cursor.fetchone()
     # print("result:",result)
@@ -32,9 +32,10 @@ def itemInfoUpdate(itemInfoID,itemName,date,weather,message,imagePath,recordPath
         command = f"UPDATE `iteminfo` SET `itemName`='{itemName}',`date`='{date}',`weather`='{weather}',`message`='{message}',`imagePath`='{imagePath}' WHERE id='{itemInfoID}'"
     elif recordPath:
         command = f"UPDATE `iteminfo` SET `itemName`='{itemName}',`date`='{date}',`weather`='{weather}',`message`='{message}',`recordPath`='{recordPath}',`recordName`='{recordName}' WHERE id='{itemInfoID}'"
+    else:
+        command = f"UPDATE `iteminfo` SET `itemName`='{itemName}',`date`='{date}',`weather`='{weather}',`message`='{message}' WHERE id='{itemInfoID}'"
     try:
         cursor.execute(command)
         connection.commit()
-        return "修改成功"
     except:
         return "修改失敗"

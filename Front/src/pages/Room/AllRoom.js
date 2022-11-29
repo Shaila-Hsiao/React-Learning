@@ -241,12 +241,6 @@ function AllRoom() {
           </Container>
         )}
       </main>
-      {/* Footer */}
-      <Box sx={{ bgcolor: 'primary.main', p: 6 }} component="footer">
-        <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
-          Footer
-        </Typography>
-      </Box>
     </ThemeProvider>
   );
 }

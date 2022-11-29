@@ -94,6 +94,28 @@ export const NavbarDrawer = () => {
         }
       })();
     }, []);
+    const [visible, setVisible] = useState(true) 
+    
+  const toggleVisible = () => { 
+    const scrolled = document.documentElement.scrollTop; 
+    if (scrolled > 0){ 
+      setVisible(false) 
+    }  
+    else if (scrolled <= 0){ 
+      setVisible(true) 
+    } 
+  }; 
+    
+  const scrollToBottom = () =>{ 
+    window.scrollTo({ 
+      top: document.documentElement.scrollHeight, 
+      behavior: 'auto'
+      /* you can also use 'auto' behaviour 
+         in place of 'smooth' */
+    }); 
+  }; 
+    
+  window.addEventListener('scroll', toggleVisible); 
   return (
     <ThemeProvider theme={theme}>
     <Box sx={{ display: 'flex' }}>
@@ -152,7 +174,7 @@ export const NavbarDrawer = () => {
                 <MenuItem onClick={() => navigate("/servicedata")}>
                   服務支援
                 </MenuItem>
-                <MenuItem onClick={() => navigate("/")}>
+                <MenuItem onClick={scrollToBottom}>
                   聯絡我們
                 </MenuItem>
               </Menu>
@@ -183,7 +205,7 @@ export const NavbarDrawer = () => {
               <MenuItem onClick={() => navigate("/servicedata")}>
                 服務支援
               </MenuItem>
-              <MenuItem onClick={() => navigate("/")}>
+              <MenuItem onClick={scrollToBottom}>
                 聯絡我們
               </MenuItem>
             </Box>

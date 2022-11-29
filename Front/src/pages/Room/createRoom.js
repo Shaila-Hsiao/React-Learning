@@ -185,7 +185,7 @@ export default function CreateRoom() {
                         height: '100%',
                       }}
                     >
-                      <Box bgcolor='#fff' borderRadius='4px'>
+                      <Box bgcolor='#fff' borderRadius='4px' padding={2}>
                         <TextField
                           required
                           fullWidth
@@ -230,7 +230,7 @@ export default function CreateRoom() {
                         height: '100%',
                       }}
                     >
-                      <Box bgcolor='#fff' borderRadius='4px'>
+                      <Box bgcolor='#fff' borderRadius='4px' padding={2}>
                         <TextField
                           required
                           fullWidth
