@@ -9,8 +9,6 @@
   }
 
   #uploadModel{
-    vertical-align: middle;
-    text-align: center;
     border-radius: 5px;
   }
   #uploadFileAppearance {
@@ -41,6 +39,10 @@
     font-size: large;
     color: #eee;
   }
+  .wordCenter{
+    text-align: center;
+    /* vertical-align: middle; */
+  }
 </style>
 <!-- Add Items -->
 <div id="add-items">
@@ -53,20 +55,20 @@
   </audio> -->
   <br/>
   <!-- 上傳 model -->
-  <div id = "uploadModel">
+  <div id = "uploadModel" align="center">
     <!-- 用 table 排版 -->
-    <table id = "uploadModelTable">
+    <table id = "uploadModelTable" >
       <!-- 單純上傳文件 -->
       <tr>
+        <!-- mtl -->
         <td>
-            <!-- mtl -->
             <div class="col-6 col-md-3" id = "uploadFileAppearance">
               <input type="file" class="hide" id="mtl" accept=".mtl">
               <label for="mtl">upload mtl file</label>
             </div>
         </td>
+        <!-- obj -->
         <td>
-          <!-- obj -->
           <div class="col-6 col-md-3" id = "uploadFileAppearance">
             <input type="file" class="hide" id="obj" accept=".obj">
             <label for="obj">upload obj file</label>
@@ -75,15 +77,15 @@
       </tr>
       <!-- 可顯示圖片的欄位 -->
       <tr>
+        <!-- texture -->
         <td>
-            <!-- texture -->
             <label class="text-center mb-5 image-preview-wrapper" for="texture">
               <img src="../static/blueprint/other/uploadTexture.png" id="canvas" alt="image-placehoder">
             </label>
             <input type="file" id="texture" class = "hide" accept="image/*" />
         </td>
+        <!-- model appearance -->
         <td>
-            <!-- model appearance -->
             <label class="text-center mb-5 image-preview-wrapper" for="thumbnail">
               <img src="../static/blueprint/other/uploadAppearance.png" id="canvas_1" alt="image-placehoder">
             </label>
@@ -94,13 +96,13 @@
     <!-- 選擇類型 -->
     <h3>選擇模型放置類型</h3>
     <div>
-      <input class="modelType-radio" type="radio" id="inlineRadio1" value="1">
+      <input type="radio"  id="inlineRadio1" name="modelType-radio" value="1">
       <label for="inlineRadio1">放在地板上的立體物</label>
-      <input class="modelType-radio" type="radio" id="inlineRadio2" value="2">
+      <input type="radio"  id="inlineRadio2" name="modelType-radio" value="2">
       <label for="inlineRadio2">貼在牆上(海報、壁畫類)</label> <!-- 不會穿透牆 -->
-      <input class="modelType-radio" type="radio" id="inlineRadio3" value="3">
+      <input type="radio"  id="inlineRadio3" name="modelType-radio" value="3">
       <label for="inlineRadio3">窗戶</label>  <!-- 會穿透牆 -->
-      <input class="modelType-radio" type="radio" id="inlineRadio7" value="7">
+      <input type="radio"  id="inlineRadio7" name="modelType-radio" value="7">
       <label for="inlineRadio7">門</label>
       <!-- <input class="form-check-input" type="radio" id="inlineRadio8" value="8">
       <label class="form-check-label" for="inlineRadio8">地毯類</label> -->
@@ -108,6 +110,8 @@
     <!-- 上傳檔案按鈕 -->
     <button id="uploadBtn" >upload model</button>
   </div>
+  <hr>
+  <h2 class="wordCenter">模型總覽</h2>
   <div class="row" id="items-wrapper">
 
     <!-- Items added here by items.js -->

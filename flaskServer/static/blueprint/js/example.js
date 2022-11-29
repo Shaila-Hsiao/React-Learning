@@ -194,13 +194,7 @@ var ContextMenu = function (blueprint3d) {
         audio[0].load();//suspends and restores all audio element
       }
     });
-  // 模型資訊 modal 點選關閉 => 音樂停止
-  $("#CloseBtn").click(function () {
-    console.log("Audio")
-    var oAudio = document.getElementById('ItemInfoAudio');
-    oAudio.pause();
-    $("#exampleIntro").hide();
-  });
+
 
 
   }
@@ -218,8 +212,6 @@ var ContextMenu = function (blueprint3d) {
     // 模型沒有資訊
     if (item.metadata.itemInfoID == 0) {
       $("#exampleIntro").hide();
-      $("#IntroOrMove").hide();
-
     }
     // 模型有資訊
     else {
@@ -379,7 +371,8 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
     return function () {
       // Stop three from spinning
       blueprint3d.three.stopSpin();
-
+      // 關閉 sidebar
+      closeNav();
       // Selected a new tab
       for (var key in scope.states) {
         var state = scope.states[key];
@@ -394,18 +387,6 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
         }
       }
     }
-  }
-  // 模型資訊顯現
-  function itemInfoShow(){
-    $("#itemInfo").addClass("col-xs-2");
-    $("#main").removeClass("col-xs-12").addClass("col-xs-10");
-    $("#itemInfo").show();
-  }
-  // 模型資訊隱藏
-  function itemInfoHide(){
-    $("#itemInfo").hide();
-    $("#itemInfo").removeClass("col-xs-2");
-    $("#main").removeClass("col-xs-9").addClass("col-xs-12");
   }
   function setCurrentState(newState) {
 
@@ -548,7 +529,7 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
         'obj': objContent,
         'mtl': mtlContent,
         'texture': textureContent,
-        'type': $("input[class=modelType-radio]:checked").val()
+        'type': $("input[name=modelType-radio]:checked").val()
       },
       async: true, // 異步
       /*result為后端函式回傳的json*/

@@ -185,4 +185,17 @@
     oAudio.pause();
     $("#exampleIntro").hide();
   });
+  // 模型資訊顯現
+  function itemInfoShow(){
+    $("#itemInfo").addClass("col-xs-2");
+    $("#main").removeClass("col-xs-12").addClass("col-xs-10");
+    $("#itemInfo").show();
+  }
+  // 模型資訊隱藏
+  function itemInfoHide(){
+    $("#itemInfo").hide();
+    $("#itemInfo").removeClass("col-xs-2");
+    $("#main").removeClass("col-xs-10").addClass("col-xs-12");
+  }
 </script>
+

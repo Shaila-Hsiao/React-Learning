@@ -261,11 +261,11 @@ export  default function SignUp() {
               <Grid item xs={12} sm={2}>
                 <PasswordChecklist
                   rules={["minLength","match"]}
-                  minLength={8}
+                  minLength={5}
                   value={password}
                   valueAgain={passwordAgain}
                   messages={{
-                    minLength: "至少輸入 8 個字元",
+                    minLength: "至少輸入 5 個字元",
                     match: "密碼輸入一致",
                   }}
                 />
