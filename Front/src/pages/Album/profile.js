@@ -150,13 +150,8 @@ function Profile() {
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <Box sx={{}}>
-<<<<<<< HEAD
                                 <Typography variant="h3" gutterBottom>{user.name}</Typography>
                                 <Typography variant="h5" gutterBottom>10000位訂閱者</Typography>
-=======
-                                <Typography variant="h3" gutterBottom>Lin</Typography>
-                                {/* <Typography variant="h5" gutterBottom>10000位訂閱者</Typography> */}
->>>>>>> bd08fe049bb1e52736b11470b8e7affc728444fc
                                 <Typography variant="body1" gutterBottom>
                                     {user.introduction}
                                 </Typography>
@@ -178,12 +173,7 @@ function Profile() {
             )}
             {rooms && (
                 <Container sx={{ py: 5 }}>
-<<<<<<< HEAD
                     <Typography variant="h5" color='#fff' gutterBottom></Typography>
-=======
-                <Typography variant="h5" color= '#fff' gutterBottom>所有房間</Typography>
-                    {/* End hero unit  */}
->>>>>>> bd08fe049bb1e52736b11470b8e7affc728444fc
                     <Grid container spacing={4}>
                         {cards.map((card) => (
                             <Grid item key={card} xs={12} sm={6} md={3}>
@@ -208,7 +198,6 @@ function Profile() {
                         ))}
                     </Grid>
                 </Container>
-<<<<<<< HEAD
             )}
             <Box sx={{ bgcolor: '#efd9a7', p: 3 }} />
             <Box sx={{ bgcolor: 'primary.main', p: 6 }} component="footer">
@@ -216,11 +205,6 @@ function Profile() {
                     Footer
                 </Typography>
             </Box>
-=======
-                <Box sx={{ bgcolor: '#efd9a7', p: 3 }} />
-            </main>
-            <Footer />
->>>>>>> bd08fe049bb1e52736b11470b8e7affc728444fc
         </ThemeProvider>
     );
 }
