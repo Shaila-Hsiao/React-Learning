@@ -110,12 +110,6 @@ img{
   margin: 20px;
 }
 
-#add-items {
-  display: none;
-  padding: 20px;
-  overflow-y: auto; 
-}
-
 #main-controls {
   position: absolute;
   /* top: 20px; */

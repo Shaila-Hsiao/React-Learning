@@ -116,17 +116,8 @@ var ContextMenu = function (blueprint3d) {
   function inToCm(inches) {
     return inches * 2.54;
   }
-  // 
-  // $("").click(CloseAudio());
-  $("#CloseBtn").click(function () {
-    console.log("Audio")
-    var oAudio = document.getElementById('ItemInfoAudio');
-    oAudio.pause();
-    $("#exampleIntro").hide();
-  });
   // 儲存模型資訊
   function SaveItemInfo(itemInfoID){
-
     console.log("Save");
     var itemName = $('#exampleModalLabel').val(); 
     var date = $('#date').val(); 
@@ -165,11 +156,11 @@ var ContextMenu = function (blueprint3d) {
     });
   }
   
-
   // 點選Item 跳出 Info
-  function ModelInfo(itemInfoID) {
+  function modelInfo(itemInfoID) {
     console.log("itemInfoID: ", itemInfoID);
-
+    // 按下儲存即可儲存嵌入模型的資訊
+    $("#SaveBtn").click(function(){SaveItemInfo(itemID)});
     $.ajax({
       url: '/getItemInfo',
       type: "POST",
@@ -187,18 +178,12 @@ var ContextMenu = function (blueprint3d) {
         console.log("date type :", typeof (IsoDate))
         console.log("date type :", IsoDate.getFullYear())
         console.log("DataStr  :", DateStr)
-        // var today = new Date();
-        // console.log(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()) 
-        // $('#date').val(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate())
         $("#date").val(DateStr)
-        // $("#weather").text(resp.weather)
-        // $("#message").text(resp.message)
         $("#message").val(resp.message)
         $("#weather").val(resp.weather)
         $("#image").attr("src", resp.imagePath)
         $("#image").attr("alt", resp.itemName)
         $("#exampleModalLabel").text(resp.itemName)
-        // $('#exampleModal').modal('show')
 
         // record Path
         console.log("resp.recordPath: ", resp.recordPath)
@@ -208,13 +193,15 @@ var ContextMenu = function (blueprint3d) {
         audio[0].load();//suspends and restores all audio element
       }
     });
+  // 模型資訊 modal 點選關閉 => 音樂停止
+  $("#CloseBtn").click(function () {
+    console.log("Audio")
+    var oAudio = document.getElementById('ItemInfoAudio');
+    oAudio.pause();
+    $("#exampleIntro").hide();
+  });
 
 
-  }
-  // 顯示訊息
-  function Intro(itemID) {
-    $("#SaveBtn").click(function(){SaveItemInfo(itemID)});
-    
   }
 
   // 選擇物件時 
@@ -229,16 +216,14 @@ var ContextMenu = function (blueprint3d) {
     $("#context-menu-name").text(item.metadata.itemName);
     // 模型沒有資訊
     if (item.metadata.itemInfoID == 0) {
-      // alert("no message in model.");
       $("#exampleIntro").hide();
-      console.log("No ItemInfo!");
     }
     // 模型有資訊
     else {
       console.log("info has data");
       // 檢查使用者身分: 房主or 訪客
       $("#IntroOrMove").show();
-      $("#IntroOrMove").click(function() {Intro(item.metadata.itemInfoID)});
+      $("#IntroOrMove").click(function() {modelInfo(item.metadata.itemInfoID)});
       // document.addEventListener('click', logKey);
       // $("#exampleModal").on('click', ModelInfo(item.metadata.itemInfoID));
     }
@@ -267,12 +252,10 @@ var ContextMenu = function (blueprint3d) {
 
   function itemUnselected() {
     selectedItem = null;
-    // $("#context-menu").hide();
     // $("#exampleIntro").hide();
-    // $("#exampleIntroUnAuth").hide();
     // $("#IntroOrMove").hide();
-    // $("#NullItemInfo").hide();
-
+    // $("#context-menu").hide();
+    // $("#exampleIntroUnAuth").hide();
   }
 
   function logKey(element) {

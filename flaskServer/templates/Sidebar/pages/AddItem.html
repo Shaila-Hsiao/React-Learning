@@ -1,15 +1,27 @@
 <style>
-  #uploadModel{
-    border-radius: 5px;
+  #add-items {
+    display: none;
+    padding: 20px;
+    overflow-y: auto;
     font-family: "Lato", sans-serif;
+    font-size: large;
+
+  }
+  #uploadModelTable{
+    border: 10px solid #f00;
+    width:100%;
+  }
+  #uploadModel{
+    vertical-align: middle;
+    text-align: center;
+    border-radius: 5px;
   }
   #uploadFileAppearance {
-      border: 1px solid;
-      border-color: #495057;
-      font-size: large;
-      padding: 0.4rem 0.75rem 0.4rem;
-      line-height: 1.5;
-      border-radius: 3px;
+    border: 1px solid;
+    border-color: #495057;
+    padding: 0.4rem 0.75rem 0.4rem;
+    line-height: 1.5;
+    border-radius: 5px;
   }
   /* upload model 的 input 顯示*/
   #uploadFileAppearance::after {
@@ -35,26 +47,69 @@
   <br/>
   <!-- 上傳 model -->
   <div id = "uploadModel">
-    <!-- texture --> 
-    <label class="text-center mb-5 image-preview-wrapper" for="texture">
-      <img src="../static/blueprint/other/uploadTexture.png" id="canvas" alt="image-placehoder">
-    </label>
-    <input type="file" id="texture" class = "hide" accept="image/*" />
-    <!-- mtl -->
-    <div class="col-6 col-md-3 mx-auto" id = "uploadFileAppearance">
-      <input type="file" class="hide" id="mtl" accept=".mtl">
-      <label for="mtl">upload mtl file</label>
+    <div class="row justify-content-md-center">
+        <!-- mtl -->
+        <div class="col-6 col-md-3 mx-auto" id = "uploadFileAppearance">
+          <input type="file" class="hide" id="mtl" accept=".mtl">
+          <label for="mtl">upload mtl file</label>
+        </div>
+        <!-- obj -->
+        <div class="col-6 col-md-3 mx-auto" id = "uploadFileAppearance">
+          <input type="file" class="hide" id="obj" accept=".obj">
+          <label for="obj">upload obj file</label>
+        </div>
     </div>
-    <!-- obj -->
-    <div class="col-6 col-md-3 mx-auto" id = "uploadFileAppearance">
-      <input type="file" class="hide" id="obj" accept=".obj">
-      <label for="obj">upload obj file</label>
+    <div class="row">
+      <!-- texture -->
+      <label class="text-center mb-5 image-preview-wrapper" for="texture">
+        <img src="../static/blueprint/other/uploadTexture.png" id="canvas" alt="image-placehoder">
+      </label>
+      <input type="file" id="texture" class = "hide" accept="image/*" />
+      <!-- model appearance -->
+      <label class="text-center mb-5 image-preview-wrapper" for="thumbnail">
+        <img src="../static/blueprint/other/uploadAppearance.png" id="canvas_1" alt="image-placehoder">
+      </label>
+      <input type="file" id="thumbnail" class = "hide" accept="image/*"/>
+
     </div>
-    <!-- model appearance -->
-    <label class="text-center mb-5 image-preview-wrapper" for="thumbnail">
-      <img src="../static/blueprint/other/uploadAppearance.png" id="canvas_1" alt="image-placehoder">
-    </label>
-    <input type="file" id="thumbnail" class = "hide" accept="image/*"/>
+    <!-- ============================= -->
+    <!-- 用 table 排版 -->
+    <table id = "uploadModelTable">
+      <!-- 單純上傳文件 -->
+      <tr>
+        <td>
+            <!-- mtl -->
+            <div class="col-6 col-md-3 mx-auto" id = "uploadFileAppearance">
+              <input type="file" class="hide" id="mtl" accept=".mtl">
+              <label for="mtl">upload mtl file</label>
+            </div>
+        </td>
+        <td>
+          <!-- obj -->
+          <div class="col-6 col-md-3 mx-auto" id = "uploadFileAppearance">
+            <input type="file" class="hide" id="obj" accept=".obj">
+            <label for="obj">upload obj file</label>
+          </div>
+        </td>
+      </tr>
+      <!-- 可顯示圖片的欄位 -->
+      <tr>
+        <td>
+            <!-- texture -->
+            <label class="text-center mb-5 image-preview-wrapper" for="texture">
+              <img src="../static/blueprint/other/uploadTexture.png" id="canvas" alt="image-placehoder">
+            </label>
+            <input type="file" id="texture" class = "hide" accept="image/*" />
+        </td>
+        <td>
+            <!-- model appearance -->
+            <label class="text-center mb-5 image-preview-wrapper" for="thumbnail">
+              <img src="../static/blueprint/other/uploadAppearance.png" id="canvas_1" alt="image-placehoder">
+            </label>
+            <input type="file" id="thumbnail" class = "hide" accept="image/*"/>
+        </td>
+      </tr>
+    </table>
     <!-- 選擇類型 -->
     <h3>選擇模型放置類型</h3>
     <div>
