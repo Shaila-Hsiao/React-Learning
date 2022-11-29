@@ -1,149 +1,152 @@
 <!-- model 資ㄉ資 -->
 <style>
-  #exampleIntro >.panel-default>.panel-heading{
+  #exampleIntro>.panel-default>.panel-heading {
     background-color: #93BFBF;
     color: #333333;
 
     /* font-weight: bolder; */
     font-size: 25px;
   }
-  #exampleIntro >.panel-default>.panel-body{
-    background-color:#EFD9A7;
+
+  #exampleIntro>.panel-default>.panel-body {
+    background-color: #EFD9A7;
     color: #333333;
     font-weight: bolder;
     font-size: 18px;
   }
-  #exampleIntro >.panel-default>.panel-footer button{
-    background-color:#71050F;
+
+  #exampleIntro>.panel-default>.panel-footer button {
+    background-color: #71050F;
     color: #ffff;
     font-weight: bolder;
     font-size: 18px;
   }
-  #IntroOrMove{
+
+  #IntroOrMove {
     margin: 10px;
 
   }
-  #ItemInfoAudio{
+
+  #ItemInfoAudio {
     width: 70%;
     margin: 10px;
   }
+
 </style>
 
 <!-- itemInfo button -->
-<div id="IntroOrMove">
+<div id="IntroOrMove" >
   <button class="btn btn-block btn-danger">
     簡介
   </button>
 </div>
 <!-- ItemInfo -->
-<div  id="exampleIntro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div id="exampleIntro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="panel panel-default">
-      <div class="panel-heading">
-        <h2 >
-          <textarea class="form-control" id="exampleModalLabel"></textarea>
-        </h2>
-      </div>
-      <div class="panel-body" style="background-color: #EFD9A7">
-        <form>
-          <div class="col-md-5">
-            <label for="recipient-name" class="col-form-label">日期</label>
-            <div  id='date1'>
-              <input type="date" id="date" name="trip-start" class="form-control" min="1000-01-01" max="2222-12-31">
-            </div>
-            <!-- 天氣 -->
-            <div class="col-md">
-              <label for="message-text" class="col-form-label">天氣</label>
-              <!-- <text id="weather" for="recipient-name" class="col-form-label"></text> -->
-              <textarea class="form-control" id="weather"></textarea>
-            </div>
-            <!-- 天氣 -->
+    <div class="panel-heading">
+      <h2>
+        <textarea class="form-control" id="exampleModalLabel" style="resize:none;"></textarea>
+      </h2>
+    </div>
+    <div class="panel-body" style="background-color: #EFD9A7">
+      <form>
+        <div class="col-md-10">
+          <label for="recipient-name" class="col-form-label">日期</label>
+          <div id='date1'>
+            <input type="date" id="date" name="trip-start" class="form-control" min="1000-01-01" max="2222-12-31">
+          </div>
+          <!-- 天氣 -->
+          <div class="col-md">
+            <label for="message-text" class="col-form-label">天氣</label>
+            <!-- <text id="weather" for="recipient-name" class="col-form-label"></text> -->
+            <textarea class="form-control" id="weather" style="resize:none;"></textarea>
+          </div>
+          <!-- 天氣 -->
 
-            <!-- 心情描述 -->
-            <div class="col-md">
-              <label for="message-text" class="col-form-label">心情描述</label>
-              <!-- <text id="message" for="recipient-name" class="col-form-label"></text> -->
-              <textarea class="form-control" id="message"></textarea>
-              <!-- <label for="message-text" class="col-form-label">圖片</label> -->
-              <!-- <img id="image" width="200px" src = "../static/blueprint/other/photo.png"></text> -->
-              <!-- <textarea class="form-control" id="message-text"></textarea>-->
-            </div>
-            <!-- 心情描述 -->
+          <!-- 心情描述 -->
+          <div class="col-md">
+            <label for="message-text" class="col-form-label">心情描述</label>
+            <!-- <text id="message" for="recipient-name" class="col-form-label"></text> -->
+            <textarea class="form-control" id="message" style="resize:none;"></textarea>
+            <!-- <label for="message-text" class="col-form-label">圖片</label> -->
+            <!-- <img id="image" width="200px" src = "../static/blueprint/other/photo.png"></text> -->
+            <!-- <textarea class="form-control" id="message-text"></textarea>-->
           </div>
-          <div class="col-md-5">
-            <!-- image -->
-            <!-- <img id="image" style=" max-width: 200px;" alt="IMAGE" src="../static/blueprint/other/photo.png" /> -->
-            <img id="image" src="" alt="" style="width:100%;max-width:200px">
-            <!-- The Modal -->
-            <div id="myModal" >
-              <span class="close">X</span>
-              <img  id="img01" style="max-width:500px;max-height:500px">
-              <div id="caption"></div>
-            </div>
+          <!-- 心情描述 -->
+        </div>
+        <div class="col-md-12" style="margin-top: 10px;">
+          <!-- image -->
+          <!-- <img id="image" style=" max-width: 200px;" alt="IMAGE" src="../static/blueprint/other/photo.png" /> -->
+          <img id="image" src="" alt="" style="width:100%;max-width:150px">
+          <!-- The Modal -->
+          <div id="myModal">
+            <span class="close">X</span>
+            <img id="img01" style="max-width:500px;max-height:500px">
+            <div id="caption"></div>
           </div>
-          <br/>
-          <div class="col-md-12">
-            <!-- audio -->
-            <audio id="ItemInfoAudio" controls>
-              <source id="AudioSource" src="" type="audio/mpeg">
-            </audio>
-          </div>
+        </div>
+        <br />
+        <div class="col-md-12">
+          <!-- audio -->
+          <audio id="ItemInfoAudio" controls>
+            <source id="AudioSource" src="" type="audio/mpeg">
+          </audio>
+        </div>
 
-        </form>
-      </div>
-      <!-- FOOTER -->
-      <div class="panel-footer">
-        <button id="CloseBtn" type="button" class="btn btn-secondary" >關閉</button>
-        <button id="SaveBtn" type="button" class="btn btn-primary">儲存</button>
-      </div>
-      <!-- FOOTER -->
+      </form>
+    </div>
+    <!-- FOOTER -->
+    <div class="panel-footer">
+      <button id="CloseBtn" type="button" class="btn btn-secondary">關閉</button>
+      <button id="SaveBtn" type="button" class="btn btn-primary">儲存</button>
+    </div>
+    <!-- FOOTER -->
   </div>
 </div>
 <!-- Context Menu -->
 <div id="context-menu">
   <div>
-    <span id="context-menu-name" class="lead"></span>
-    <br /><br />
-    <button class="btn btn-block btn-danger" id="context-menu-delete">
-      <span class="glyphicon glyphicon-trash"></span> 
-      Delete Item
-    </button>
-  <br />
-  <div class="panel panel-default" id = "itemVolume">
-    <div class="panel-heading">Adjust Size</div>
-    <div class="panel-body" style="color: #333333">
+    <h2 id="context-menu-name" class="lead"></h2>
+    <div class="panel panel-default" id="itemVolume">
+      <div class="panel-heading">Adjust Size</div>
+      <div class="panel-body" style="color: #333333">
 
-      <div class="form form-horizontal" class="lead">
-        <div class="form-group">
-          <label class="col-sm-5 control-label">
+        <div class="form form-horizontal" class="lead">
+          <div class="form-group">
+            <label class="col-sm-5 control-label">
               Width
-          </label>
-          <div class="col-sm-6">
-            <input type="number" class="form-control" id="item-width">
+            </label>
+            <div class="col-sm-6">
+              <input type="number" class="form-control" id="item-width">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-5 control-label">
+              Depth
+            </label>
+            <div class="col-sm-6">
+              <input type="number" class="form-control" id="item-depth">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-5 control-label">
+              Height
+            </label>
+            <div class="col-sm-6">
+              <input type="number" class="form-control" id="item-height">
+            </div>
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-5 control-label">
-            Depth 
-          </label>
-          <div class="col-sm-6">
-            <input type="number" class="form-control" id="item-depth">
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-5 control-label">
-            Height
-          </label>
-          <div class="col-sm-6">
-            <input type="number" class="form-control" id="item-height">
-          </div>
-        </div>
+        <small><span class="text-muted">Measurements in inches.</span></small>
       </div>
-      <small><span class="text-muted">Measurements in inches.</span></small>
+      <button class="btn btn-block btn-danger" id="context-menu-delete">
+        <span class="glyphicon glyphicon-trash"></span>
+        Delete Item
+      </button>
     </div>
-  </div>
-  <label><input type="checkbox" id="fixed" /> Lock in place</label>
-  
-  <br /><br />
+    <label><input type="checkbox" id="fixed" /> Lock in place</label>
+
+    <br /><br />
   </div>
 </div>
 
@@ -151,28 +154,28 @@
 <script>
   // Get the modal
   var modal = document.getElementById("myModal");
-  
+
   // Get the image and insert it inside the modal - use its "alt" text as a caption
   var img = document.getElementById("image");
   var modalImg = document.getElementById("img01");
   var captionText = document.getElementById("caption");
-  img.onclick = function(){
+  img.onclick = function () {
     modal.style.display = "block";
     modalImg.src = this.src;
     captionText.innerHTML = this.alt;
     console.log("image click")
   }
-  
+
   // Get the <span> element that closes the modal
   var span = document.getElementsByClassName("close")[0];
-  
+
   // When the user clicks on <span> (x), close the modal
-    span.onclick = function() { 
-      modal.style.display = "none";
-    }
-    
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+
   // user clicks the item and show the information of item
-  $("#IntroOrMove").click(function(){
+  $("#IntroOrMove").click(function () {
     $("#exampleIntro").show();
   });
   // 模型資訊 modal 點選關閉 => 音樂停止並隱藏模型資訊
@@ -183,4 +186,3 @@
     $("#exampleIntro").hide();
   });
 </script>
-

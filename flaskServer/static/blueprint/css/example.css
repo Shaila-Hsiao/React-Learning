@@ -197,3 +197,8 @@ img{
 .hide{
   display: none;
 }
+#context-menu-name{
+  margin: 10px;
+  font-weight: bolder;
+  text-align: center;
+}

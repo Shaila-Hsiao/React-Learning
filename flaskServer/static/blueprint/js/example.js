@@ -149,6 +149,7 @@ var ContextMenu = function (blueprint3d) {
       /*result為后端函式回傳的json*/
       success: function (resp) {
         console.log("success: ", resp);
+        alert("更新成功");
       }
       ,error:function(resp){
         console.log("error:",resp);
@@ -160,7 +161,7 @@ var ContextMenu = function (blueprint3d) {
   function modelInfo(itemInfoID) {
     console.log("itemInfoID: ", itemInfoID);
     // 按下儲存即可儲存嵌入模型的資訊
-    $("#SaveBtn").click(function(){SaveItemInfo(itemID)});
+    $("#SaveBtn").click(function(){SaveItemInfo(itemInfoID)});
     $.ajax({
       url: '/getItemInfo',
       type: "POST",
