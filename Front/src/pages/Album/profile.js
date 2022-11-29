@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, AlertTitle } from '@mui/material';
 import { styled, useTheme, createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -39,9 +39,10 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import { NavbarDrawer } from '../../components/navbarDrawer';
+import httpClient from "../../httpClient";
+import '../../index.css';
 
-
-const cards = [1, 2, 3, 4];
+var cards = [];
 
 const theme = createTheme({
     palette: {
@@ -66,6 +67,8 @@ const theme = createTheme({
 
 function Profile() {
     const navigate = useNavigate();
+    const [user, setUser] = useState();
+    const [rooms, setRoom] = useState();
 
     const [state, setState] = React.useState({
         open: false,
@@ -85,15 +88,51 @@ function Profile() {
         }
         setOpen(false);
     };
+    // 前往房間簡介設定
+    function GoTORoomIntro(roomID) {
+        try {
+            console.log(roomID);
+            navigate("/RoomIntro/?roomID=" + roomID);
+        } catch (error) {
+            console.log("can't get room num");
+        }
+    };
+    useEffect(() => {
+        (async () => {
+            try {
+                const resp = await httpClient.get("../@me");
+                // const resp = await httpClient.get("//163.22.17.192:5000/@me");
+                console.log(resp.data.userID)
+                console.log(resp.data.name)
+                console.log(resp.data.email)
+                console.log(resp.data.headshotPath)
+                setUser(resp.data);
+                console.log(user);
+                // 房間部分
+                var getUrlString = window.location.href;
+                var url = new URL(getUrlString);
+                var number = url.searchParams.get('number');
+                const resp2 = await httpClient.post("../userAllPubRoom", {
+                    number,
+                });
+                cards = [];
+                const temp = resp2.data.result;
+                setRoom(resp2.data.result);
+                for (let i = 0; i < temp.length; i++) {
+                    cards.push(temp[i]);
+                }
+                console.log("cards", cards);
+            } catch (error) {
+                console.log("Not authenticated");
+            }
+        })();
+    }, []);
 
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <NavbarDrawer />
-
-
-            <main>
-                {/* Hero unit */}
+            {user && (
                 <Box
                     sx={{
                         bgcolor: '#efd9a7',
@@ -106,49 +145,50 @@ function Profile() {
                             <Avatar
                                 alt="UserName"
                                 sx={{ mx: 'auto', width: 200, height: 200 }}
-                                src={user} />
+                                src={user.headshotPath} />
                         </Grid>
                         <Grid item xs={12} sm={4}>
                             <Box sx={{}}>
-                                <Typography variant="h3" gutterBottom>Lin</Typography>
+                                <Typography variant="h3" gutterBottom>{user.name}</Typography>
                                 <Typography variant="h5" gutterBottom>10000位訂閱者</Typography>
                                 <Typography variant="body1" gutterBottom>
-                                    大家好，我是 ......
+                                    {user.introduction}
                                 </Typography>
                             </Box>
                         </Grid>
                         <Grid item xs={12} sm={3}>
-                            <FacebookIcon fontSize="large"  />
+                            <FacebookIcon fontSize="large" />
                             <InstagramIcon fontSize="large" />
                             <TwitterIcon fontSize="large" />
-                            <Box sx={{ p: 3 }}/>
-                            <Button
+                            <Box sx={{ p: 3 }} />
+                            {/* <Button
                                 variant="contained"
                                 size="large"
                                 sx={{ bgcolor: '#7f0808', color: '#fff', flexGrow: 0 }}
-                            >追蹤</Button>
+                            >追蹤</Button> */}
                         </Grid>
                     </Grid>
                 </Box>
-                {/* Card */}
+            )}
+            {rooms && (
                 <Container sx={{ py: 5 }}>
-                <Typography variant="h5" color= '#fff' gutterBottom>最新動態、熱門房間 (最多人留言、按讚)</Typography>
-                    {/* End hero unit  */}
+                    <Typography variant="h5" color='#fff' gutterBottom></Typography>
                     <Grid container spacing={4}>
                         {cards.map((card) => (
                             <Grid item key={card} xs={12} sm={6} md={3}>
                                 <Card
                                     sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                                 >
-                                    <CardActionArea onClick={() => navigate("/intro")}>
+                                    <CardActionArea onClick={() => GoTORoomIntro(card[0])}>
                                         <CardMedia
                                             component="img"
-                                            image={room1}
-                                            alt="random"
+                                            image={card[3]}
+                                            alt={card[0]}
+                                            className="BeerListItem-img"
                                         />
                                         <CardContent sx={{ flexGrow: 1 }}>
                                             <Typography gutterBottom variant="h5" component="h2">
-                                                房間名稱
+                                                {card[2]}
                                             </Typography>
                                         </CardContent>
                                     </CardActionArea>
@@ -157,9 +197,8 @@ function Profile() {
                         ))}
                     </Grid>
                 </Container>
-                <Box sx={{ bgcolor: '#efd9a7', p: 3 }} />
-            </main>
-            {/* Footer */}
+            )}
+            <Box sx={{ bgcolor: '#efd9a7', p: 3 }} />
             <Box sx={{ bgcolor: 'primary.main', p: 6 }} component="footer">
                 <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
                     Footer

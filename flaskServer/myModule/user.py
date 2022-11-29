@@ -64,6 +64,16 @@ def updateItemList(modelID,userID):
     # cursor.close()
     # connection.close()
 
+def getUserNum(number):
+    result = ""
+    sql = f"SELECT `userID`, `name`, `email`,`headshotPath`, `introduction` FROM `account` WHERE `number` = '{number}'"
+    cursor.execute(sql) # 執行 sql 指令
+    dataList = cursor.fetchall()
+    if len(dataList) == 0:
+        return result
+    result = dataList[0]
+    return result
+
 def getUserId(userID):
     # connection = connectDB.setting()
     # cursor = connection.cursor(dictionary = True)

@@ -18,6 +18,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import httpClient from '../../httpClient';
 import Button from '@mui/material/Button';
+import '../../index.css';
+
 // var cards = [];
 var originalCards = [];
 var roomID = '';
@@ -199,6 +201,7 @@ function AllRoom() {
                         component="img"
                         image={card[3]}
                         alt={card[0]}
+                        className="BeerListItem-img"
                       />
                       <CardContent sx={{ flexGrow: 1 }}>
                         <Typography gutterBottom variant="h5" component="h2">

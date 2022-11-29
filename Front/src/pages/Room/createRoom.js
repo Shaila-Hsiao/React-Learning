@@ -26,6 +26,7 @@ import nullroom from '../../assets/images/1.png';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import { NavbarDrawer } from '../../components/navbarDrawer';
+import '../../index.css';
 
 const theme = createTheme({
   palette: {
@@ -308,6 +309,7 @@ export default function CreateRoom() {
                     component="img"
                     image={nullroom}
                     alt="random"
+                    className="BeerListItem-img"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
@@ -324,6 +326,7 @@ export default function CreateRoom() {
                     component="img"
                     image={bedroom}
                     alt="random"
+                    className="BeerListItem-img"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
@@ -340,6 +343,7 @@ export default function CreateRoom() {
                     component="img"
                     image={studyroom}
                     alt="random"
+                    className="BeerListItem-img"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
@@ -356,6 +360,7 @@ export default function CreateRoom() {
                     component="img"
                     image={bandroom}
                     alt="random"
+                    className="BeerListItem-img"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">

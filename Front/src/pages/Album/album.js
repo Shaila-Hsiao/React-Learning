@@ -22,6 +22,7 @@ import room1 from '../../assets/images/room1.jpg'; // 圖片的位置
 import { NavbarDrawer } from '../../components/navbarDrawer';
 import httpClient from '../../httpClient';
 import CardContent from '@mui/material/CardContent';
+import '../../index.css';
 var cards = [];
 var temp = "";
 
@@ -209,6 +210,7 @@ function Album() {
                 <Grid item key={card} xs={12} sm={6} md={3}>
                   <Card
                     sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                    className="BeerListItem-main-card"
                   >
                     <CardActionArea onClick={() => GoTORoomIntro(card[0])}>
                       {/* <CardActionArea > */}
@@ -216,6 +218,7 @@ function Album() {
                         component="img"
                         image={card[1]}
                         alt={card[0]}
+                        className="BeerListItem-img"
                       />
                       <CardContent sx={{ flexGrow: 1 }}>
                       <Typography gutterBottom variant="h5" component="h2">
