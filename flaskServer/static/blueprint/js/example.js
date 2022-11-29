@@ -43,6 +43,8 @@ var CameraButtons = function (blueprint3d) {
     $("#move-right").dblclick(preventDefault);
     $("#move-up").dblclick(preventDefault);
     $("#move-down").dblclick(preventDefault);
+    $("#IntroOrMove").dblclick(preventDefault);
+    $("#SaveBtn").dblclick(preventDefault);
   }
 
   function preventDefault(e) {
@@ -107,6 +109,7 @@ var ContextMenu = function (blueprint3d) {
       var checked = $(this).prop('checked');
       selectedItem.setFixed(checked);
     });
+    
   }
 
   function cmToIn(cm) {
@@ -116,6 +119,7 @@ var ContextMenu = function (blueprint3d) {
   function inToCm(inches) {
     return inches * 2.54;
   }
+  
   // 儲存模型資訊
   function SaveItemInfo(itemInfoID){
     console.log("Save");
@@ -160,8 +164,12 @@ var ContextMenu = function (blueprint3d) {
   // 點選Item 跳出 Info
   function modelInfo(itemInfoID) {
     console.log("itemInfoID: ", itemInfoID);
+    
     // 按下儲存即可儲存嵌入模型的資訊
-    $("#SaveBtn").click(function(){SaveItemInfo(itemInfoID)});
+    $("#SaveBtn").click(function(e){
+      e.preventDefault();
+      SaveItemInfo(itemInfoID)
+    });
     $.ajax({
       url: '/getItemInfo',
       type: "POST",
@@ -209,19 +217,28 @@ var ContextMenu = function (blueprint3d) {
     console.log("log itemInfoID in example.js line 148~~~~~", item.metadata.itemInfoID);
     console.log("IsEditor: ",isEditor);
     $("#context-menu-name").text(item.metadata.itemName);
+    $("#IntroOrMove").click(function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+
+      console.log("e:",e.isDefaultPrevented());
+      modelInfo(item.metadata.itemInfoID)
+    });
     // 模型沒有資訊
     if (item.metadata.itemInfoID == 0) {
       $("#exampleIntro").hide();
+      $("#IntroOrMove").hide();
+      console.log("no data");
     }
     // 模型有資訊
     else {
       console.log("info has data");
       // 檢查使用者身分: 房主or 訪客
       $("#IntroOrMove").show();
-      $("#IntroOrMove").click(function() {modelInfo(item.metadata.itemInfoID)});
-      // document.addEventListener('click', logKey);
-      // $("#exampleModal").on('click', ModelInfo(item.metadata.itemInfoID));
-    }
+    }  
+    //   // document.addEventListener('click', logKey);
+    //   // $("#exampleModal").on('click', ModelInfo(item.metadata.itemInfoID));
+    // }
 
     $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
     $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
@@ -247,10 +264,9 @@ var ContextMenu = function (blueprint3d) {
 
   function itemUnselected() {
     selectedItem = null;
-    // $("#exampleIntro").hide();
-    // $("#IntroOrMove").hide();
-    // $("#context-menu").hide();
-    // $("#exampleIntroUnAuth").hide();
+    $("#exampleIntro").hide();
+    $("#IntroOrMove").hide();
+    $("#context-menu").hide();
   }
 
   function logKey(element) {
