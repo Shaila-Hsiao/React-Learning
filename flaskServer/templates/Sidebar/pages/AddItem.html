@@ -7,10 +7,7 @@
     font-size: large;
 
   }
-  #uploadModelTable{
-    border: 10px solid #f00;
-    width:100%;
-  }
+
   #uploadModel{
     vertical-align: middle;
     text-align: center;
@@ -22,6 +19,8 @@
     padding: 0.4rem 0.75rem 0.4rem;
     line-height: 1.5;
     border-radius: 5px;
+    /* width: fit-content; */
+    width:100%;
   }
   /* upload model 的 input 顯示*/
   #uploadFileAppearance::after {
@@ -33,6 +32,14 @@
     padding: 0.4rem 0.75rem;
     content: "Browse";
     background-color: #e9ecef;
+  }
+  .image-preview-wrapper{
+    padding: 10px;
+  }
+  #uploadBtn{
+    background-color: #182e2e;
+    font-size: large;
+    color: #eee;
   }
 </style>
 <!-- Add Items -->
@@ -47,46 +54,20 @@
   <br/>
   <!-- 上傳 model -->
   <div id = "uploadModel">
-    <div class="row justify-content-md-center">
-        <!-- mtl -->
-        <div class="col-6 col-md-3 mx-auto" id = "uploadFileAppearance">
-          <input type="file" class="hide" id="mtl" accept=".mtl">
-          <label for="mtl">upload mtl file</label>
-        </div>
-        <!-- obj -->
-        <div class="col-6 col-md-3 mx-auto" id = "uploadFileAppearance">
-          <input type="file" class="hide" id="obj" accept=".obj">
-          <label for="obj">upload obj file</label>
-        </div>
-    </div>
-    <div class="row">
-      <!-- texture -->
-      <label class="text-center mb-5 image-preview-wrapper" for="texture">
-        <img src="../static/blueprint/other/uploadTexture.png" id="canvas" alt="image-placehoder">
-      </label>
-      <input type="file" id="texture" class = "hide" accept="image/*" />
-      <!-- model appearance -->
-      <label class="text-center mb-5 image-preview-wrapper" for="thumbnail">
-        <img src="../static/blueprint/other/uploadAppearance.png" id="canvas_1" alt="image-placehoder">
-      </label>
-      <input type="file" id="thumbnail" class = "hide" accept="image/*"/>
-
-    </div>
-    <!-- ============================= -->
     <!-- 用 table 排版 -->
     <table id = "uploadModelTable">
       <!-- 單純上傳文件 -->
       <tr>
         <td>
             <!-- mtl -->
-            <div class="col-6 col-md-3 mx-auto" id = "uploadFileAppearance">
+            <div class="col-6 col-md-3" id = "uploadFileAppearance">
               <input type="file" class="hide" id="mtl" accept=".mtl">
               <label for="mtl">upload mtl file</label>
             </div>
         </td>
         <td>
           <!-- obj -->
-          <div class="col-6 col-md-3 mx-auto" id = "uploadFileAppearance">
+          <div class="col-6 col-md-3" id = "uploadFileAppearance">
             <input type="file" class="hide" id="obj" accept=".obj">
             <label for="obj">upload obj file</label>
           </div>
