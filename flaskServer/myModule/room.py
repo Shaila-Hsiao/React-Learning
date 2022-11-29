@@ -89,9 +89,29 @@ def findRoomByUserID(userID):
     dataList = cursor.fetchall()
     return dataList
 
+def findPubRoomByUserID(userID):
+    command = f"SELECT * FROM `room` WHERE Find_in_set('{userID}',room.userID) AND private_public = 'on'"
+    cursor.execute(command)
+    dataList = cursor.fetchall()
+    return dataList
+
+def findUserIdByNum(number) :
+    print("one two three one two three swing user number", number)
+    command = f"SELECT userID FROM `account` WHERE number = {number}"
+    cursor.execute(command)
+    dataList = cursor.fetchall()
+    return dataList[0][0]
+
+def findPubRoomByUserNum(number):
+    userid = findUserIdByNum(number)
+    command = f"SELECT * FROM `room` WHERE Find_in_set('{userid}',room.userID) AND private_public = 'on'"
+    cursor.execute(command)
+    dataList = cursor.fetchall()
+    return dataList
+
 # find room by roomID
 def findRoomByRoomID(roomID):
-    command = f"SELECT `roomName`,room.introduction,`roomImgPath`, `name`, `email`,account.introduction, `headshotPath` FROM `room`,`account`WHERE room.id = '{roomID}' && account.userID = (SELECT `userID` FROM `room`WHERE room.id = '{roomID}')"
+    command = f"SELECT `roomName`,room.introduction,`roomImgPath`, `name`, `email`,account.introduction, `headshotPath`,`number` FROM `room`,`account`WHERE room.id = '{roomID}' && account.userID = (SELECT `userID` FROM `room`WHERE room.id = '{roomID}')"
     cursor.execute(command)
     dataList = cursor.fetchall()
     return dataList

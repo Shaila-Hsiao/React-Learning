@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
 import { NavbarDrawer } from '../../components/navbarDrawer';
 import httpClient from '../../httpClient';
+import { Footer } from '../../components/footer';
 var temp = "";
 
 const theme = createTheme({
@@ -93,22 +94,17 @@ function ServiceData() {
                                 </Typography>
                                 <Box sx={{ bgcolor: '#efd9a7', p: 2 }} />
                                 <Typography variant="h6" gutterBottom>如何創建房間？</Typography>
-                                <Typography variant="body1" gutterBottom>您可以在......</Typography>
+                                <Typography variant="body1" gutterBottom>創建房間需要您先登入，登入後就可以在首頁點擊「創建房間」來佈置房間了。</Typography>
                                 <Typography variant="h6" gutterBottom>如何在他人房間留言？</Typography>
-                                <Typography variant="body1" gutterBottom>您可以在......</Typography>
+                                <Typography variant="body1" gutterBottom>每個房間都會有留言板，您在瀏覽完他人房間時就可以點擊留言板進行留言。</Typography>
                                 <Typography variant="h6" gutterBottom>如何編輯個人房間？</Typography>
-                                <Typography variant="body1" gutterBottom>您可以在......</Typography>
+                                <Typography variant="body1" gutterBottom>您可以在屬於自己的房間頁面中，點擊您想要編輯的房面圖片，便會顯示編輯房間的選項。</Typography>
                             </Box>
                         </Box>
                     </Box>
                 </Box>
             </main>
-            {/* Footer */}
-            <Box sx={{ bgcolor: 'primary.main', p: 6 }} component="footer">
-                <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
-                    Footer
-                </Typography>
-            </Box>
+            <Footer />
         </ThemeProvider>
     );
 }

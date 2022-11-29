@@ -1,7 +1,7 @@
 from myModule.connectDB import connection, cursor
 
 def itemSelect(itemInfoID):
-    command = f"SELECT `itemName`, `date`, `weather`, `message`, `imagePath`, `recordPath`, `recordName` FROM `itemInfo` WHERE id = '{itemInfoID}'"
+    command = f"SELECT `itemName`, `date`, `weather`, `message`, `imagePath`, `recordPath`, `recordName` FROM `iteminfo` WHERE id = '{itemInfoID}'"
     cursor.execute(command)
     result = cursor.fetchone()
     # print("result:",result)

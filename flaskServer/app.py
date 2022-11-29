@@ -5,10 +5,10 @@ import os
 import secrets
 from base64 import b64encode
 # path : /flaskServer/myModule
-from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList,updatePasswd
+from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList,updatePasswd,getUserNum
 from myModule.model import modelInsert,getEntireItem,itemDelete
 from myModule.itemInfo import itemSelect,itemInfoInsert,itemInfoUpdate
-from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect,RoomIntroEdit,RoomIntro,updateRoomPic
+from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect,RoomIntroEdit,RoomIntro,updateRoomPic,findPubRoomByUserID,findPubRoomByUserNum
 from myModule.boardMsg import  allBoardMsg,boardMsgInsert
 from myModule.upload_save import uploadFile
 
@@ -41,7 +41,23 @@ def new():
     # return render_template("blueprint.html")
     # return render_template("blueprint.html")
     return render_template("content.html")
-
+@app.route("/Login")
+def newLogin():
+    return render_template("index.html")
+@app.route("/SignUp")
+def newSignUp():
+    return render_template("index.html")
+@app.route("/servicedata")
+def newservicedata():
+    return render_template("index.html")
+@app.route("/RoomIntro")
+def newRoomIntro():
+    return render_template("index.html")
+@app.route("/profile")
+def newprofile():
+    roomID = session.get("roomID")
+    # userNum = FingUserNum(roomID)
+    return render_template("index.html")
 
 ############# 註冊 #############
 @app.route("/register",methods=["POST"])
@@ -100,6 +116,32 @@ def get_current_user():
         "headshotPath":user[3],
         "introduction":user[4]
     })
+@app.route("/RoomOwner",methods = ["POST"])
+def get_RoomOwner():
+    print("get_RoomOwner in in in ")
+    # try :
+    userNum = request.json['number']
+    print("i cant find you", userNum)
+    #     if userNum == None :
+    #         return jsonify({"error": "UnAuthorized"}),401
+    #     else :
+    #         user = getUserNum(userNum)
+    # except :
+    return jsonify({"error": "UnAuthorized"}),401
+    #     userID = session.get("userID")
+    #     print("i cant find userID", userID)
+    #     if not userID :
+    #         return jsonify({"error": "UnAuthorized"}),401
+    #     user = getUserId(userID)
+    # id,name,email
+    return jsonify({
+        "userID":user[0],
+        "name":user[1],
+        "email":user[2],
+        "headshotPath":user[3],
+        "introduction":user[4]
+    })
+
 #################### model ####################
 # 更改 mtl 中的 texure 圖片
 def updateMTL(mtl,textureName):
@@ -122,13 +164,16 @@ def upload():
     mtlName = request.form.get('mtlName')
     obj = request.form.get('obj')
     mtl = request.form.get('mtl')
+    thumbnail = request.form.get('thumbnail')
+    texture = request.form.get('texture')
+    modelType = request.form.get('type')
+    print("obj content=========>",obj[:100])
+    print("modelType",modelType)
     modelName = objName.split(".obj")[0]
     sourcePath = "./static/blueprint/models/source"
     inputPath = f"{sourcePath}/{objName}"
     outputPath = f"./static/blueprint/models/js/{modelName}.js"
     # images
-    thumbnail = request.form.get('thumbnail')
-    texture = request.form.get('texture')
     thumbnailName = secrets.token_hex()+".jpg"
     textureName = secrets.token_hex()+".jpg"
     # thumbnailName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
@@ -163,7 +208,7 @@ def upload():
         thumbnailPath = f"{thumbnailPath}/{thumbnailName}"
         texturePath = f"{texturePath}/{textureName}"
         # 成功插入資料庫
-        itemID = modelInsert(thumbnailPath,texturePath,outputPath)
+        itemID = modelInsert(thumbnailPath,texturePath,outputPath,modelType)
         if  itemID > 0:
             result = "上傳成功"
         else:
@@ -285,6 +330,30 @@ def userAllRoom():
     result = findRoomByUserID(userID)
     return jsonify({'result':result})
 
+# user 所有公開房間資料
+@app.route("/userAllPubRoom",methods=["POST"])
+def userAllPubRoom():
+    # userID = session.get("userID")
+    # if (userID == None) :
+    #     roomNum = request.json['number']
+    #     if (roomNum == None) :
+    #         return
+    #     else :
+    #         result = findPubRoomByUserID(userID)
+    # else :
+    #     result = findPubRoomByUserNum(roomNum)
+    roomNum = request.json['number']
+    if (roomNum == None) :
+        userID = session.get("userID")
+        if (userID == None) :
+            return
+        else :
+            result = findPubRoomByUserID(userID)
+    else :
+        result = findPubRoomByUserNum(roomNum)
+    # print("userID ::::", userID)
+    return jsonify({'result':result})
+
 # 創建房間並插入 DB
 @app.route("/createRoom",methods=["POST"])
 def createRoom():
@@ -401,6 +470,9 @@ def allRoom():
 @app.route("/RoomIntro",methods=["POST"])
 def loadRoomInfo():
     roomID = request.json['roomID']
+    if (roomID == None) :
+        roomID = session.get("roomID")
+    print("hahaha here i stand in roomID", roomID)
     result = findRoomByRoomID(roomID)
     return jsonify({'result':result})
 ################### 留言板 #################

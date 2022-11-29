@@ -199,7 +199,7 @@ export default function RoomEdit() {
                                                         </CardActionArea>
                                                         <CardActions>
                                                             <Button variant="contained" component="label">
-                                                                上傳房間照片
+                                                                更新房間照片
                                                                 <input
                                                                     accept="image/*"
                                                                     style={{

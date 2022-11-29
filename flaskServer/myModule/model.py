@@ -25,14 +25,17 @@ def getEntireItem(modelList):
     return items
 
 # 使用者上船的 item 新增到 DB
-def modelInsert(thumbnailPath,texturePath,jsPath):
+def modelInsert(thumbnailPath,texturePath,jsPath,modelType):
     # 去掉路徑和 js
     jsName = jsPath.split("/")[-1][:-3]
     print("JSpath:",jsPath)
     print("JSName:",jsName)
     # insert into DB
     try:
-        command = f"INSERT INTO `item`(`name`, `thumbnailPath`, `texturePath`, `jsPath`) VALUES ('{jsName}','{thumbnailPath}','{texturePath}','{jsPath}')"
+        print("==============")
+        print(f"'{jsName}','{thumbnailPath}','{texturePath}','{jsPath}','{modelType}'")
+        print("==============")
+        command = f"INSERT INTO `item`(`name`, `thumbnailPath`, `texturePath`, `jsPath`, `type`) VALUES ('{jsName}','{thumbnailPath}','{texturePath}','{jsPath}','{modelType}')"
         cursor.execute(command)
         connection.commit()
         command = "select max(`id`) from item"

@@ -1,25 +1,113 @@
+<style>
+  #add-items {
+    display: none;
+    padding: 20px;
+    overflow-y: auto;
+    font-family: "Lato", sans-serif;
+    font-size: large;
+
+  }
+
+  #uploadModel{
+    vertical-align: middle;
+    text-align: center;
+    border-radius: 5px;
+  }
+  #uploadFileAppearance {
+    border: 1px solid;
+    border-color: #495057;
+    padding: 0.4rem 0.75rem 0.4rem;
+    line-height: 1.5;
+    border-radius: 5px;
+    /* width: fit-content; */
+    width:100%;
+  }
+  /* upload model 的 input 顯示*/
+  #uploadFileAppearance::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    padding: 0.4rem 0.75rem;
+    content: "Browse";
+    background-color: #e9ecef;
+  }
+  .image-preview-wrapper{
+    padding: 10px;
+  }
+  #uploadBtn{
+    background-color: #182e2e;
+    font-size: large;
+    color: #eee;
+  }
+</style>
 <!-- Add Items -->
 <div id="add-items">
             
-  <input type="file" id="recording" accept="mp3/*" />
   <!-- recording -->
-  <audio controls>
-    <!-- <source src="horse.ogg" type="audio/ogg"> -->
+  <!-- <input type="file" id="recording" accept="mp3/*" /> -->
+  <!-- <audio controls>
+    <source src="horse.ogg" type="audio/ogg">
     <source src="../static/blueprint/itemInfo/record/song.mp3" type="audio/mpeg">
-  </audio>
+  </audio> -->
   <br/>
-  <!-- 檔案顯示 -->
-  <label class="text-center mb-5 image-preview-wrapper" for="texture">
-    <img src="../static/blueprint/other/photo.png" id="canvas" alt="image-placehoder">
-  </label>
-  <input type="file" id="texture" accept="image/*" />
-  <input type="file" id="mtl" accept=".mtl"/>
-  <input type="file" id="obj" accept=".obj"/>
-  <label class="text-center mb-5 image-preview-wrapper" for="thumbnail">
-    <img src="../static/blueprint/other/photo.png" id="canvas_1" alt="image-placehoder">
-  </label>
-  <input type="file" id="thumbnail" accept="image/*"/>
-  <button id="uploadBtn" >upload model</button>
+  <!-- 上傳 model -->
+  <div id = "uploadModel">
+    <!-- 用 table 排版 -->
+    <table id = "uploadModelTable">
+      <!-- 單純上傳文件 -->
+      <tr>
+        <td>
+            <!-- mtl -->
+            <div class="col-6 col-md-3" id = "uploadFileAppearance">
+              <input type="file" class="hide" id="mtl" accept=".mtl">
+              <label for="mtl">upload mtl file</label>
+            </div>
+        </td>
+        <td>
+          <!-- obj -->
+          <div class="col-6 col-md-3" id = "uploadFileAppearance">
+            <input type="file" class="hide" id="obj" accept=".obj">
+            <label for="obj">upload obj file</label>
+          </div>
+        </td>
+      </tr>
+      <!-- 可顯示圖片的欄位 -->
+      <tr>
+        <td>
+            <!-- texture -->
+            <label class="text-center mb-5 image-preview-wrapper" for="texture">
+              <img src="../static/blueprint/other/uploadTexture.png" id="canvas" alt="image-placehoder">
+            </label>
+            <input type="file" id="texture" class = "hide" accept="image/*" />
+        </td>
+        <td>
+            <!-- model appearance -->
+            <label class="text-center mb-5 image-preview-wrapper" for="thumbnail">
+              <img src="../static/blueprint/other/uploadAppearance.png" id="canvas_1" alt="image-placehoder">
+            </label>
+            <input type="file" id="thumbnail" class = "hide" accept="image/*"/>
+        </td>
+      </tr>
+    </table>
+    <!-- 選擇類型 -->
+    <h3>選擇模型放置類型</h3>
+    <div>
+      <input class="modelType-radio" type="radio" id="inlineRadio1" value="1">
+      <label for="inlineRadio1">放在地板上的立體物</label>
+      <input class="modelType-radio" type="radio" id="inlineRadio2" value="2">
+      <label for="inlineRadio2">貼在牆上(海報、壁畫類)</label> <!-- 不會穿透牆 -->
+      <input class="modelType-radio" type="radio" id="inlineRadio3" value="3">
+      <label for="inlineRadio3">窗戶</label>  <!-- 會穿透牆 -->
+      <input class="modelType-radio" type="radio" id="inlineRadio7" value="7">
+      <label for="inlineRadio7">門</label>
+      <!-- <input class="form-check-input" type="radio" id="inlineRadio8" value="8">
+      <label class="form-check-label" for="inlineRadio8">地毯類</label> -->
+    </div>
+    <!-- 上傳檔案按鈕 -->
+    <button id="uploadBtn" >upload model</button>
+  </div>
   <div class="row" id="items-wrapper">
 
     <!-- Items added here by items.js -->

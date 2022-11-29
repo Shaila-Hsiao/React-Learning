@@ -66,6 +66,16 @@ export default function RoomIntro() {
     }
     
   }
+  // 前往個人簡介
+  function GoTOUserIntro(number) {
+    try {
+      console.log(number);
+      navigate("/profile/?number=" + number);
+    } catch (error) {
+      console.log("can't get user number");
+    }
+  };
+
   // 抓 room 簡介和作者資訊
   useEffect(() => {
     (async () => {
@@ -77,9 +87,6 @@ export default function RoomIntro() {
         const resp = await httpClient.post("../RoomIntro", {
             roomID,
         });
-        // const resp = await httpClient.post("//163.22.17.192:5000/RoomIntro", {
-        //     roomID,
-        // });
         console.log(resp.data.result);
         setRoomInfo(roomID);
         const temp = resp.data.result;
@@ -167,7 +174,7 @@ export default function RoomIntro() {
                           justifyContent="center"
                         >
                           <Typography variant='h4'>About Author : {cards[3]}</Typography>
-                          <Button variant="contained" size="large" >About</Button>
+                          <Button variant="contained" size="large" onClick={() => GoTOUserIntro(cards[7])}>About</Button>
                         </Stack>
                         <Box sx={{ p:3}} />
                         <Box
