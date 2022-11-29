@@ -528,7 +528,7 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
         'obj': objContent,
         'mtl': mtlContent,
         'texture': textureContent,
-        'type': $("input[class=modelType-radio]:checked").val()
+        'type': $("input[name=modelType-radio]:checked").val()
       },
       async: true, // 異步
       /*result為后端函式回傳的json*/
