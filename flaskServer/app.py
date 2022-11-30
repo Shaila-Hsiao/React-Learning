@@ -5,10 +5,10 @@ import os
 import secrets
 from base64 import b64encode
 # path : /flaskServer/myModule
-from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList,updatePasswd,getUserNum,getUserByRoom
+from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList,updatePasswd,getUserNum
 from myModule.model import modelInsert,getEntireItem,itemDelete
 from myModule.itemInfo import itemSelect,itemInfoInsert,itemInfoUpdate
-from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect,RoomIntroEdit,RoomIntro,updateRoomPic,findPubRoomByUserID,findPubRoomByUserNum,findPubRoomByRoomID
+from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect,RoomIntroEdit,RoomIntro,updateRoomPic,findPubRoomByUserID,findPubRoomByUserNum
 from myModule.boardMsg import  allBoardMsg,boardMsgInsert
 from myModule.upload_save import uploadFile
 
@@ -55,6 +55,8 @@ def newRoomIntro():
     return render_template("index.html")
 @app.route("/profile")
 def newprofile():
+    roomID = session.get("roomID")
+    # userNum = FingUserNum(roomID)
     return render_template("index.html")
 
 ############# 註冊 #############
@@ -101,9 +103,7 @@ def logout_user():
 def get_current_user():
     print("current_user")
     userID = session.get("userID")
-    # user = getUserId(userID)
-    
-    # print("userID",userID)
+    print("userID",userID)
     # if don't have user session
     if not userID :
         return jsonify({"error": "UnAuthorized"}),401
@@ -116,33 +116,23 @@ def get_current_user():
         "headshotPath":user[3],
         "introduction":user[4]
     })
-
-@app.route("/@meforFile",methods = ["GET"])
-def get_user_File():
-    userID = session.get("userID")
-    if(userID == None) :
-        print("yes yes yes")
-        roomID = session.get("roomID")
-        user = getUserByRoom(roomID)
-    else :
-        print("no no no")
-        user = getUserId(userID)
-    return jsonify({
-        "userID":user[0],
-        "name":user[1],
-        "email":user[2],
-        "headshotPath":user[3],
-        "introduction":user[4]
-    })
-
-@app.route("/@mebyNum",methods = ["POST"])
-def get_user():
+@app.route("/RoomOwner",methods = ["POST"])
+def get_RoomOwner():
+    print("get_RoomOwner in in in ")
+    # try :
     userNum = request.json['number']
-    user = getUserNum(userNum)
-    print("userID",userNum)
-    # if don't have user session
-    if not userNum :
-        return jsonify({"error": "UnAuthorized"}),401
+    print("i cant find you", userNum)
+    #     if userNum == None :
+    #         return jsonify({"error": "UnAuthorized"}),401
+    #     else :
+    #         user = getUserNum(userNum)
+    # except :
+    return jsonify({"error": "UnAuthorized"}),401
+    #     userID = session.get("userID")
+    #     print("i cant find userID", userID)
+    #     if not userID :
+    #         return jsonify({"error": "UnAuthorized"}),401
+    #     user = getUserId(userID)
     # id,name,email
     return jsonify({
         "userID":user[0],
@@ -231,7 +221,7 @@ def upload():
     if result == "上傳成功":
         updateItemList(itemID,userID) 
     # user 上傳的 model 做處理: obj to file and insert into database
-    return {'result':result,'id':itemID,'name':modelName,'model':outputPath,'type':modelType,'image':thumbnailPath}
+    return {'result':result,'id':itemID,'name':modelName,'model':outputPath,'type':1,'image':thumbnailPath}
 
 # 儲存模型內部資訊(照片、文字等)
 @app.route("/saveItemInfo",methods=["POST"])
@@ -356,11 +346,7 @@ def userAllPubRoom():
     if (roomNum == None) :
         userID = session.get("userID")
         if (userID == None) :
-            roomID = session.get("roomID")
-            if (roomID != None) :
-                result = findPubRoomByRoomID(roomID)
-            else :
-                return
+            return
         else :
             result = findPubRoomByUserID(userID)
     else :
