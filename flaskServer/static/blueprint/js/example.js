@@ -109,14 +109,9 @@ var ContextMenu = function (blueprint3d) {
       var checked = $(this).prop('checked');
       selectedItem.setFixed(checked);
     });
-    $("#IntroOrMove").click(function(e) {
-      // e.stopPropagation();
-      // e.preventDefault();
-
-      // console.log("e:",e.isDefaultPrevented());
+    $("#IntroOrMove").click(function() {
       // 清空資訊
       clearItemInfo();
-      console.log("itemInfoID: ",selectedItem.metadata.itemInfoID);
       // 有模型資訊就顯示
       if (selectedItem.metadata.itemInfoID != 0){
         modelInfo(selectedItem.metadata.itemInfoID)
@@ -184,7 +179,7 @@ var ContextMenu = function (blueprint3d) {
   
   // 點選Item 跳出 Info
   function modelInfo(itemInfoID) {
-    console.log("【modelInfo】 itemInfoID: ", itemInfoID);
+    console.log("【modelInfo line 182】 itemInfoID: ", itemInfoID);
     // 按下儲存即可儲存嵌入模型的資訊
     $("#SaveBtn").click(function(e){
       e.preventDefault();
@@ -238,9 +233,8 @@ var ContextMenu = function (blueprint3d) {
     
     $("#exampleIntro").hide();
     // 模型沒有資訊而且身分為訪客: 看不到模型資訊以及按鈕
-    // if (item.metadata.itemInfoID == 0 && isEditor == false) {
-    if (isEditor == false) {
-      alert("no data");
+    if (item.metadata.itemInfoID == 0 && isEditor == false) {
+    // if (isEditor == false) {
       $("#IntroOrMove").hide();
       console.log("no data");
     }
