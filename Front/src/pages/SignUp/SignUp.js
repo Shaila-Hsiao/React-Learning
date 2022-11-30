@@ -21,6 +21,8 @@ import Snackbar from '@mui/material/Snackbar';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useNavigate } from "react-router-dom";
 import httpClient from '../../httpClient';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ClearIcon from '@mui/icons-material/Clear';
 import VCode from '../../components/Vcode';
 
 import IconButton from "@mui/material/IconButton";
@@ -58,15 +60,25 @@ export  default function SignUp() {
     var email = e.target.value;
 
     if (validator.isEmail(email)) {
-      setMessage("電子郵件驗證成功！");
+      setMessage(<Typography variant='body' sx={{color:"green",fontWeight:"bold",display: { xs: 'none', md: 'flex' }}}> <CheckCircleIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> 電子郵件驗證成功！ </Typography> );
+      // setMessage("電子郵件驗證成功！");
     } else {
-      setMessage("請輸入有效的電子郵件！");
+      setMessage(<Typography variant='body' sx={{color:"red",fontWeight:"bold",display: { xs: 'none', md: 'flex' }}}> <ClearIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> 請輸入有效的電子郵件！ </Typography>);
+      // setMessage("請輸入有效的電子郵件！");
     }
   };
 
   // 密碼確認
-  const [password, setPassword] = useState("");
-	const [passwordAgain, setPasswordAgain] = useState("");
+  const [values, setValues] = React.useState({
+    passwd: '',
+    passwdAgain: '',
+    // weightRange: '',
+    // showPassword: false,
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   // 密碼顯示
   const [passwordShown, setPasswordShown] = useState(false);
@@ -113,10 +125,24 @@ export  default function SignUp() {
     console.log(Nullitem)
     if(Nullitem !== ""){
       // alert("尚未填寫以下項目: \n"+Nullitem);
-      setAlertContent("尚未填寫以下項目: \n"+Nullitem);
+      setAlertContent("尚未填寫以下項目: \n"+Nullitem+"！");
       setAlert(true);
       handleClick();
-    }else{
+    } else if (!validator.isEmail(email)){
+      setAlertContent("請輸有效的電子郵件！ \n");
+      setAlert(true);
+      handleClick();
+    }
+    else if (values.passwd.length < 5) {
+      setAlertContent("密碼不足 5 字元！ \n");
+      setAlert(true);
+      handleClick();
+    } else if (values.passwd !== values.passwdAgain) {
+      setAlertContent("密碼驗證錯誤！ \n");
+      setAlert(true);
+      handleClick();
+    }
+    else{
       try{
         const resp = await httpClient.post("./register", {
           userID,
@@ -198,7 +224,7 @@ export  default function SignUp() {
                   required
                   fullWidth
                   id="userID"
-                  label="帳號(userID)"
+                  label="帳號"
                   autoFocus
                 />
                 
@@ -209,7 +235,7 @@ export  default function SignUp() {
                   required
                   fullWidth
                   id="name"
-                  label="使用者名稱(name)"
+                  label="使用者名稱"
                   autoFocus
                 />
               </Grid>
@@ -223,16 +249,11 @@ export  default function SignUp() {
                   autoComplete="email"
                   onChange={(e) => validateEmail(e)}
                 />
-                <span
-                  style={{
-                    fontWeight: "bold",
-                    color: "red"
-                  }}
-                >
-                  {message}
-                </span>
+                  <span>
+                    {message}
+                  </span>
               </Grid>
-              <Grid item xs={12} sm={5}>
+              <Grid item xs={12} sm={4}>
               <TextField
                     required
                     fullWidth
@@ -241,37 +262,37 @@ export  default function SignUp() {
                     // type="password"
                     type={passwordShown ? "text" : "password"}
                     id="passwd"
-                    onChange={e => setPassword(e.target.value)}
+                    value={values.passwd}
+                    onChange={handleChange('passwd')}
                     InputProps={{endAdornment: 
                     <IconButton aria-label="showpasswd" onClick={togglePassword}>
                       {passwordShown ? <VisibilityOffIcon /> : <VisibilityIcon />}
                     </IconButton>}}
                   />
               </Grid>
-              <Grid item xs={12} sm={5}>
+              <Grid item xs={12} sm={4}>
                 <TextField
                   required
                   fullWidth
-                  name="password"
+                  name="passwordAgain"
                   label="密碼驗證"
                   type="password"
-                  id="password"
-                  onChange={e => setPasswordAgain(e.target.value)}
+                  id="passwdAgain"
+                  value={values.passwdAgain}
+                  onChange={handleChange('passwdAgain')}
                 />
               </Grid>
-              <Grid item xs={12} sm={2}>
-                <PasswordChecklist
-                  rules={["minLength","match"]}
-                  minLength={5}
-                  value={password}
-                  valueAgain={passwordAgain}
-                  messages={{
-                    minLength: "至少輸入 5 個字元",
-                    match: "密碼輸入一致",
-                  }}
-                />
+              <Grid item xs={12} sm={4}>
+                { (values.passwd.length >= 5  
+                  ? <Typography variant='body' sx={{color:"green",fontWeight:"bold",display: { xs: 'none', md: 'flex' }}}> <CheckCircleIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />密碼字元符合 </Typography> 
+                  : <Typography variant='body' sx={{color:"red",fontWeight:"bold",display: { xs: 'none', md: 'flex' }}}> <ClearIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> 密碼至少 5 字元 </Typography>
+                  )}
+                {values.passwdAgain === "" ? "" :
+                (values.passwd === values.passwdAgain  ? <Typography variant='body' sx={{color:"green",fontWeight:"bold",display: { xs: 'none', md: 'flex' }}}> <CheckCircleIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />密碼一致 </Typography> :
+                <Typography variant='body' sx={{color:"red",fontWeight:"bold",display: { xs: 'none', md: 'flex' }}}> <ClearIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> 密碼不一致 </Typography>
+                  )}
               </Grid>
-              <Grid item xs={12} sm={10}>
+              {/* <Grid item xs={12} sm={10}>
                 <TextField
                   required
                   fullWidth
@@ -284,12 +305,12 @@ export  default function SignUp() {
               <Box bgcolor="white" alignItems='center'>
                   <VCode />
                 </Box>
-                {/* <TextField
+                <TextField
                   required
                   fullWidth
                   label="放驗證碼的區域"
-                /> */}
-              </Grid>
+                />
+              </Grid> */}
             </Grid>
             <Button
               type="submit"
