@@ -180,7 +180,7 @@ var ContextMenu = function (blueprint3d) {
   function modelInfo(itemInfoID) {
     console.log("【modelInfo】 itemInfoID: ", itemInfoID);
     // 按下儲存即可儲存嵌入模型的資訊
-    $("#SaveBtn").click(function(){SaveItemInfo(itemID)});
+    $("#SaveBtn").click(function(){SaveItemInfo(itemInfoID)});
     $.ajax({
       url: '/getItemInfo',
       type: "POST",

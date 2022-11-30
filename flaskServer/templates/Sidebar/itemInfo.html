@@ -45,7 +45,7 @@
       </div>
       <div class="panel-body" style="background-color: #EFD9A7">
         <form>
-          <div class="col-md-5">
+          <div class="col-md-10">
             <label for="recipient-name" class="col-form-label">日期</label>
             <div  id='date1'>
               <input type="date" id="date" name="trip-start" class="form-control" min="1000-01-01" max="2222-12-31">
@@ -69,14 +69,14 @@
             </div>
             <!-- 心情描述 -->
           </div>
-          <div class="col-md-5">
+          <div class="col-md-12" style="margin-top: 10px;">
             <!-- image -->
             <!-- <img id="image" style=" max-width: 200px;" alt="IMAGE" src="../static/blueprint/other/photo.png" /> -->
-            <img id="image" src="" alt="" style="width:100%;max-width:200px">
+            <img id="image" src="" alt="" style="width:100%;max-width:150px">
             <!-- The Modal -->
-            <div id="myModal" >
+            <div id="myModal">
               <span class="close">X</span>
-              <img  id="img01" style="max-width:500px;max-height:500px">
+              <img id="img01" style="max-width:500px;max-height:500px">
               <div id="caption"></div>
             </div>
           </div>
@@ -101,13 +101,7 @@
 <!-- Context Menu -->
 <div id="context-menu">
   <div>
-    <span id="context-menu-name" class="lead"></span>
-    <br /><br />
-    <button class="btn btn-block btn-danger" id="context-menu-delete">
-      <span class="glyphicon glyphicon-trash"></span> 
-      Delete Item
-    </button>
-  <br />
+    <h2 id="context-menu-name" class="lead"></h2>
   <div class="panel panel-default" id = "itemVolume">
     <div class="panel-heading">Adjust Size</div>
     <div class="panel-body" style="color: #333333">
@@ -139,6 +133,13 @@
         </div>
       </div>
       <small><span class="text-muted">Measurements in inches.</span></small>
+    </div>
+    <div class="panel-footer">
+      <button class="btn btn-block btn-danger" id="context-menu-delete">
+        <span class="glyphicon glyphicon-trash"></span> 
+        Delete Item
+      </button>
+
     </div>
   </div>
   <label><input type="checkbox" id="fixed" /> Lock in place</label>

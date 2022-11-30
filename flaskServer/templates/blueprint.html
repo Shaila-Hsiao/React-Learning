@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style>
+      .boxLeft {
+        height: 40vw;
+        overflow-y: auto;
+        overflow-x: hidden;
+      }
+    </style>
     <title>Room</title>
 
     <link href="./static/blueprint/css/bootstrap.css" rel="stylesheet">
@@ -25,9 +32,9 @@
   <body onload="doInit()">
     {% include './Navbar/navbar.html' %}
     {% include './Sidebar/Cosidebar.html'%}
-    <div class="row main-row">
+    <div class="row main-row ">
       <!-- left -->
-      <div id = "itemInfo" class="col-xs-2">
+      <div id = "itemInfo" class="col-xs-2 boxLeft">
         <!-- Adjusting the model size & wall and floor select texture -->
         {% include './Sidebar/board.html'%}
         {% include './Sidebar/itemInfo.html'%}

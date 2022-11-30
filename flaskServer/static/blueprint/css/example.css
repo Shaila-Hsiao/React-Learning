@@ -184,14 +184,21 @@ img{
   position: relative;
   margin: auto;
 }
+#context-menu-name{
+  margin: 10px;
+  font-weight: bolder;
+  text-align: center;
+}
 #floorTexturesDiv{
   position:absolute;
-  margin:10px 20px;
+  margin:20px 30px;
+  right: 10px;
   /* padding: 10px 20; */
 }
 #wallTextures{
   position: absolute;
   margin:10px 20px;
+  right: 10px;
 }
 /* upload model */
 .hide{
