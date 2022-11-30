@@ -18,8 +18,6 @@
 
   </div>
   <!-- <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button> -->
-  <!-- 牆面和地板的材質選擇 -->
-  {% include './Sidebar/textureSelect.html'%}
   <!-- 3個功能: 縮小、reset、放大 -->
   <div id="camera-controls">
     <a href="#" class="btn btn-default bottom" id="zoom-out">
@@ -52,43 +50,5 @@
 
   <div id="loading-modal">
     <h1>Loading...</h1>
-  </div>
-  <!-- Floor textures -->
-  <div id="floorTexturesDiv" style="display:none; padding: 0 20px">
-    <div class="panel panel-default">
-      <div class="panel-heading">Adjust Floor</div>
-      <div class="panel-body" style="color: #333333">
-  
-        <div class="col-sm-6" style="padding: 3px">
-          <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/light_fine_wood.jpg" texture-stretch="false" texture-scale="300">
-            <img alt="Thumbnail light fine wood" src="./static/blueprint/rooms/thumbnails/thumbnail_light_fine_wood.jpg" />
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Wall Textures -->
-  <div id="wallTextures" style="display:none; padding: 0 20px">
-    <div class="panel panel-default">
-      <div class="panel-heading">Adjust Wall</div>
-      <div class="panel-body" style="color: #333333">
-        <div class="col-sm-6" style="padding: 3px">
-          <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/marbletiles.jpg" texture-stretch="false" texture-scale="300">
-            <img alt="Thumbnail marbletiles" src="./static/blueprint/rooms/thumbnails/thumbnail_marbletiles.jpg" />
-          </a>
-        </div>
-        <div class="col-sm-6" style="padding: 3px">
-          <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/wallmap_yellow.png" texture-stretch="true" texture-scale="">
-            <img alt="Thumbnail wallmap yellow" src="./static/blueprint/rooms/thumbnails/thumbnail_wallmap_yellow.png" />
-          </a>
-        </div>
-        <div class="col-sm-6" style="padding: 3px">
-          <a href="#" class="thumbnail texture-select-thumbnail" texture-url="./static/blueprint/rooms/textures/light_brick.jpg" texture-stretch="false" texture-scale="100">
-            <img alt="Thumbnail light brick" src="./static/blueprint/rooms/thumbnails/thumbnail_light_brick.jpg" />
-          </a>
-        </div>
-      </div>
-    </div>
   </div>
 </div>

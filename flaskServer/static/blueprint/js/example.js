@@ -132,6 +132,7 @@ var ContextMenu = function (blueprint3d) {
     $('#weather').val("");
     $('#message').val("");
     $('#image').attr("src","");
+    $('#image').attr("alt","");
     $('#AudioSource').attr("src","");
 
   }
@@ -228,10 +229,11 @@ var ContextMenu = function (blueprint3d) {
     console.log("IsEditor: ",isEditor);
     $("#context-menu-name").text(item.metadata.itemName);
     
+
     $("#exampleIntro").hide();
     // 模型沒有資訊而且身分為訪客: 看不到模型資訊以及按鈕
     if (item.metadata.itemInfoID == 0 && isEditor == false) {
-    // if (isEditor == false) {
+      // if (isEditor == false) {
       $("#IntroOrMove").hide();
       console.log("no data");
     }
@@ -240,8 +242,6 @@ var ContextMenu = function (blueprint3d) {
       console.log("info has data");
       $("#IntroOrMove").show();
     }  
-      // document.addEventListener('click', logKey);
-      // $("#exampleModal").on('click', ModelInfo(item.metadata.itemInfoID));
 
     $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
     $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
@@ -549,7 +549,7 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
         'obj': objContent,
         'mtl': mtlContent,
         'texture': textureContent,
-        'type': $("input[class=modelType-radio]:checked").val()
+        'type': $("input[name=modelType-radio]:checked").val()
       },
       async: true, // 異步
       /*result為后端函式回傳的json*/
