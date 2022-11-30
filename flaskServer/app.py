@@ -232,7 +232,7 @@ def upload():
     if result == "上傳成功":
         updateItemList(itemID,userID) 
     # user 上傳的 model 做處理: obj to file and insert into database
-    return {'result':result,'id':itemID,'name':modelName,'model':outputPath,'type':1,'image':thumbnailPath}
+    return {'result':result,'id':itemID,'name':modelName,'model':outputPath,'type':modelType,'image':thumbnailPath}
 
 # 儲存模型內部資訊(照片、文字等)
 @app.route("/saveItemInfo",methods=["POST"])

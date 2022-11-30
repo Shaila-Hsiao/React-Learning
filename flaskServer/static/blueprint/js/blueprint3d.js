@@ -3320,9 +3320,8 @@ var BP3D;
                                 switchState(states.UNSELECTED);
                                 checkWallsAndFloors();
                                 console.log("【mouseUpEvent】: intersectedObject == null && !mouseMoved");
-                                
                             }
-                            switchState(states.UNSELECTED);
+                            // switchState(states.UNSELECTED);
                             break;
                         case states.ROTATING_FREE:
                             break;
@@ -4474,7 +4473,7 @@ var BP3D;
             }
             function itemSelected(item) {
                 console.log("itemSelected 4462")
-                resetSelectedItem();
+                // resetSelectedItem();
                 if (selectedItem != item) {
                     resetSelectedItem();
                     if (item.allowRotate && !item.fixed) {
