@@ -94,8 +94,6 @@ export  default function SignUp() {
       name : data.get('name'),
       email: data.get('email'),
       passwd: data.get('passwd'),
-
-      
     });
     // 檢查是否有輸入完全
     let NullData = [];
@@ -115,7 +113,7 @@ export  default function SignUp() {
     console.log(Nullitem)
     if(Nullitem !== ""){
       // alert("尚未填寫以下項目: \n"+Nullitem);
-      setAlertContent("尚未填寫以下項目: \n"+Nullitem+"！");
+      setAlertContent("尚未填寫以下項目: \n"+Nullitem);
       setAlert(true);
       handleClick();
     } else if (!validator.isEmail(email)){
