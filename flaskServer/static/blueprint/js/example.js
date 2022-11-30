@@ -43,8 +43,6 @@ var CameraButtons = function (blueprint3d) {
     $("#move-right").dblclick(preventDefault);
     $("#move-up").dblclick(preventDefault);
     $("#move-down").dblclick(preventDefault);
-    // $("#IntroOrMove").dblclick(preventDefault);
-    // $("#SaveBtn").dblclick(preventDefault);
   }
 
   function preventDefault(e) {
@@ -109,20 +107,6 @@ var ContextMenu = function (blueprint3d) {
       var checked = $(this).prop('checked');
       selectedItem.setFixed(checked);
     });
-    $("#IntroOrMove").click(function(e) {
-      // e.stopPropagation();
-      // e.preventDefault();
-
-      // console.log("e:",e.isDefaultPrevented());
-      // 清空資訊
-      clearItemInfo();
-      console.log("itemInfoID: ",selectedItem.metadata.itemInfoID);
-      // 有模型資訊就顯示
-      if (selectedItem.metadata.itemInfoID != 0){
-        modelInfo(selectedItem.metadata.itemInfoID)
-      }
-    });
-    
   }
 
   function cmToIn(cm) {
@@ -131,15 +115,6 @@ var ContextMenu = function (blueprint3d) {
 
   function inToCm(inches) {
     return inches * 2.54;
-  }
-  // 清空模型資訊
-  function clearItemInfo(){
-    $('#exampleModalLabel').val("");
-    $('#date').val("");
-    $('#weather').val("");
-    $('#message').val("");
-    $('#image').attr("src","");
-    $('#AudioSource').attr("src","");
   }
   // 儲存模型資訊
   function SaveItemInfo(itemInfoID){
@@ -174,7 +149,6 @@ var ContextMenu = function (blueprint3d) {
       /*result為后端函式回傳的json*/
       success: function (resp) {
         console.log("success: ", resp);
-        alert("更新成功");
       }
       ,error:function(resp){
         console.log("error:",resp);
@@ -184,12 +158,9 @@ var ContextMenu = function (blueprint3d) {
   
   // 點選Item 跳出 Info
   function modelInfo(itemInfoID) {
-    console.log("【modelInfo】 itemInfoID: ", itemInfoID);
+    console.log("itemInfoID: ", itemInfoID);
     // 按下儲存即可儲存嵌入模型的資訊
-    $("#SaveBtn").click(function(e){
-      e.preventDefault();
-      SaveItemInfo(itemInfoID)
-    });
+    $("#SaveBtn").click(function(){SaveItemInfo(itemID)});
     $.ajax({
       url: '/getItemInfo',
       type: "POST",
@@ -222,9 +193,12 @@ var ContextMenu = function (blueprint3d) {
         audio[0].load();//suspends and restores all audio element
       }
     });
+
+
+
   }
 
-  // 選擇物件時 itemType
+  // 選擇物件時 
   function itemSelected(item) {
     console.log("============item==========", item);
     selectedItem = item;
@@ -232,7 +206,6 @@ var ContextMenu = function (blueprint3d) {
     console.log("log itemID in example.js line 147~~~~~", item.metadata.itemID);
     console.log("log itemName in example.js line 147~~~~~", item.metadata.itemName);
     console.log("log itemInfoID in example.js line 148~~~~~", item.metadata.itemInfoID);
-    console.log("log itemInfoType in example.js line 148~~~~~", item.metadata.itemType);
     console.log("IsEditor: ",isEditor);
     $("#context-menu-name").text(item.metadata.itemName);
     
@@ -288,10 +261,17 @@ var ContextMenu = function (blueprint3d) {
 
   function itemUnselected() {
     selectedItem = null;
+<<<<<<< HEAD
     $("#exampleIntro").hide();
     $("#IntroOrMove").hide();
     $("#context-menu").hide();
     $("#boardInfo").hide();
+=======
+    // $("#exampleIntro").hide();
+    // $("#IntroOrMove").hide();
+    // $("#context-menu").hide();
+    // $("#exampleIntroUnAuth").hide();
+>>>>>>> d1a846f5254a05d8116f0968f1c9273b4b1ad49f
   }
 
   function logKey(element) {
@@ -570,7 +550,7 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
         'obj': objContent,
         'mtl': mtlContent,
         'texture': textureContent,
-        'type': $("input[name=modelType-radio]:checked").val()
+        'type': $("input[class=modelType-radio]:checked").val()
       },
       async: true, // 異步
       /*result為后端函式回傳的json*/

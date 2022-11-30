@@ -90,37 +90,6 @@ def getUserId(userID):
         return result
     result = dataList[0]
     return result
-
-def findUserIdByRoom(roomID) :
-    command = f"SELECT userID FROM `room` WHERE id = {roomID}"
-    cursor.execute(command)
-    dataList = cursor.fetchall()
-    return dataList[0][0]
-
-def getUserByRoom(roomID):
-    userID = findUserIdByRoom(roomID)
-    result = ""
-    # 搜尋資料庫
-    sql = f"SELECT `userID`, `name`, `email`,`headshotPath`, `introduction` FROM `account` WHERE `userID` = '{userID}'"
-    cursor.execute(sql) # 執行 sql 指令
-    dataList = cursor.fetchall()
-    if len(dataList) == 0:
-        return result
-    result = dataList[0]
-    print("dataList dataList", dataList[0])
-    return result
-
-def getUserNum(userNum):
-    result = ""
-    # 搜尋資料庫
-    sql = f"SELECT `userID`, `name`, `email`,`headshotPath`, `introduction` FROM `account` WHERE `number` = '{userNum}'"
-    cursor.execute(sql) # 執行 sql 指令
-    dataList = cursor.fetchall()
-    if len(dataList) == 0:
-        return result
-    result = dataList[0]
-    return result
-
 # 更新個人資料
 def updatePersonal(userID,name,email,introduction):
     try:

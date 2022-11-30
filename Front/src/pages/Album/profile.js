@@ -101,19 +101,8 @@ function Profile() {
     useEffect(() => {
         (async () => {
             try {
-                var getUrlString = window.location.href;
-                var url = new URL(getUrlString);
-                var number = url.searchParams.get('number');
-                var resp = '';
-                if (number == null) {
-                    console.log("member ship ");
-                    resp = await httpClient.get("../@meforFile");
-                } else {
-                    console.log("only want to find other's page ");
-                    resp = await httpClient.post("../@mebyNum", {
-                        number,
-                    });
-                }
+                const resp = await httpClient.get("../@me");
+                // const resp = await httpClient.get("//163.22.17.192:5000/@me");
                 console.log(resp.data.userID)
                 console.log(resp.data.name)
                 console.log(resp.data.email)
@@ -121,6 +110,9 @@ function Profile() {
                 setUser(resp.data);
                 console.log(user);
                 // 房間部分
+                var getUrlString = window.location.href;
+                var url = new URL(getUrlString);
+                var number = url.searchParams.get('number');
                 const resp2 = await httpClient.post("../userAllPubRoom", {
                     number,
                 });
