@@ -212,7 +212,7 @@ var ContextMenu = function (blueprint3d) {
         $("#weather").val(resp.weather)
         $("#image").attr("src", resp.imagePath)
         $("#image").attr("alt", resp.itemName)
-        $("#exampleModalLabel").text(resp.itemName)
+        $("#exampleModalLabel").val(resp.itemName)
 
         // record Path
         console.log("resp.recordPath: ", resp.recordPath)
@@ -239,20 +239,27 @@ var ContextMenu = function (blueprint3d) {
     $("#exampleIntro").hide();
     // 模型沒有資訊而且身分為訪客: 看不到模型資訊以及按鈕
     // if (item.metadata.itemInfoID == 0 && isEditor == false) {
-    if (isEditor == false) {
-      alert("no data");
-      $("#IntroOrMove").hide();
-      console.log("no data");
+    if(item.metadata.itemName == "messageBoard"){
+      $("#boardInfo").show();
+      console.log("boardInfo")
+    }else{
+      $("#IntroOrMove").show();
+      
     }
+    // if (isEditor == false) {
+    //   // alert("no data");
+    //   // $("#IntroOrMove").hide();
+    //   console.log(" 【visiter】");
+    // }
     // 模型沒有資訊且身分為編輯者
     // else if (item.metadata.itemInfoID == 0){
       //   $("#IntroOrMove").show();
       // }
     // 模型有資訊
-    else {
-      console.log("info has data");
-      $("#IntroOrMove").show();
-    }  
+    // else {
+    //   console.log("info has data");
+    //   $("#IntroOrMove").show();
+    // }  
     //   // document.addEventListener('click', logKey);
     //   // $("#exampleModal").on('click', ModelInfo(item.metadata.itemInfoID));
     // }
@@ -284,6 +291,7 @@ var ContextMenu = function (blueprint3d) {
     $("#exampleIntro").hide();
     $("#IntroOrMove").hide();
     $("#context-menu").hide();
+    $("#boardInfo").hide();
   }
 
   function logKey(element) {
