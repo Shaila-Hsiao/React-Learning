@@ -43,8 +43,8 @@ var CameraButtons = function (blueprint3d) {
     $("#move-right").dblclick(preventDefault);
     $("#move-up").dblclick(preventDefault);
     $("#move-down").dblclick(preventDefault);
-    $("#IntroOrMove").dblclick(preventDefault);
-    $("#SaveBtn").dblclick(preventDefault);
+    // $("#IntroOrMove").dblclick(preventDefault);
+    // $("#SaveBtn").dblclick(preventDefault);
   }
 
   function preventDefault(e) {
@@ -109,6 +109,19 @@ var ContextMenu = function (blueprint3d) {
       var checked = $(this).prop('checked');
       selectedItem.setFixed(checked);
     });
+    $("#IntroOrMove").click(function(e) {
+      // e.stopPropagation();
+      // e.preventDefault();
+
+      // console.log("e:",e.isDefaultPrevented());
+      // 清空資訊
+      clearItemInfo();
+      console.log("itemInfoID: ",selectedItem.metadata.itemInfoID);
+      // 有模型資訊就顯示
+      if (selectedItem.metadata.itemInfoID != 0){
+        modelInfo(selectedItem.metadata.itemInfoID)
+      }
+    });
     
   }
 
@@ -119,7 +132,15 @@ var ContextMenu = function (blueprint3d) {
   function inToCm(inches) {
     return inches * 2.54;
   }
-  
+  // 清空模型資訊
+  function clearItemInfo(){
+    $('#exampleModalLabel').val("");
+    $('#date').val("");
+    $('#weather').val("");
+    $('#message').val("");
+    $('#image').attr("src","");
+    $('#AudioSource').attr("src","");
+  }
   // 儲存模型資訊
   function SaveItemInfo(itemInfoID){
     console.log("Save");
@@ -163,8 +184,7 @@ var ContextMenu = function (blueprint3d) {
   
   // 點選Item 跳出 Info
   function modelInfo(itemInfoID) {
-    console.log("itemInfoID: ", itemInfoID);
-    
+    console.log("【modelInfo】 itemInfoID: ", itemInfoID);
     // 按下儲存即可儲存嵌入模型的資訊
     $("#SaveBtn").click(function(e){
       e.preventDefault();
@@ -202,12 +222,9 @@ var ContextMenu = function (blueprint3d) {
         audio[0].load();//suspends and restores all audio element
       }
     });
-
-
-
   }
 
-  // 選擇物件時 
+  // 選擇物件時 itemType
   function itemSelected(item) {
     console.log("============item==========", item);
     selectedItem = item;
@@ -215,25 +232,25 @@ var ContextMenu = function (blueprint3d) {
     console.log("log itemID in example.js line 147~~~~~", item.metadata.itemID);
     console.log("log itemName in example.js line 147~~~~~", item.metadata.itemName);
     console.log("log itemInfoID in example.js line 148~~~~~", item.metadata.itemInfoID);
+    console.log("log itemInfoType in example.js line 148~~~~~", item.metadata.itemType);
     console.log("IsEditor: ",isEditor);
     $("#context-menu-name").text(item.metadata.itemName);
-    $("#IntroOrMove").click(function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-
-      console.log("e:",e.isDefaultPrevented());
-      modelInfo(item.metadata.itemInfoID)
-    });
-    // 模型沒有資訊
-    if (item.metadata.itemInfoID == 0) {
-      $("#exampleIntro").hide();
+    
+    $("#exampleIntro").hide();
+    // 模型沒有資訊而且身分為訪客: 看不到模型資訊以及按鈕
+    // if (item.metadata.itemInfoID == 0 && isEditor == false) {
+    if (isEditor == false) {
+      alert("no data");
       $("#IntroOrMove").hide();
       console.log("no data");
     }
+    // 模型沒有資訊且身分為編輯者
+    // else if (item.metadata.itemInfoID == 0){
+      //   $("#IntroOrMove").show();
+      // }
     // 模型有資訊
     else {
       console.log("info has data");
-      // 檢查使用者身分: 房主or 訪客
       $("#IntroOrMove").show();
     }  
     //   // document.addEventListener('click', logKey);
