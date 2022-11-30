@@ -159,7 +159,7 @@ function Profile() {
                         <Grid item xs={12} sm={4}>
                             <Box sx={{}}>
                                 <Typography variant="h3" gutterBottom>{user.name}</Typography>
-                                <Typography variant="h5" gutterBottom>10000位訂閱者</Typography>
+                                {/* <Typography variant="h5" gutterBottom>10000位訂閱者</Typography> */}
                                 <Typography variant="body1" gutterBottom>
                                     {user.introduction}
                                 </Typography>

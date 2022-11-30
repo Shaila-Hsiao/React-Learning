@@ -102,7 +102,6 @@ def get_current_user():
     print("current_user")
     userID = session.get("userID")
     # user = getUserId(userID)
-    
     # print("userID",userID)
     # if don't have user session
     if not userID :
@@ -121,9 +120,11 @@ def get_current_user():
 def get_user_File():
     userID = session.get("userID")
     if(userID == None) :
-        print("yes yes yes")
         roomID = session.get("roomID")
-        user = getUserByRoom(roomID)
+        if (roomID == None) :
+            return jsonify({"error": "UnAuthorized"}),401
+        else :
+            user = getUserByRoom(roomID)
     else :
         print("no no no")
         user = getUserId(userID)
@@ -360,7 +361,7 @@ def userAllPubRoom():
             if (roomID != None) :
                 result = findPubRoomByRoomID(roomID)
             else :
-                return
+                return jsonify({"error": "UnAuthorized"}),401
         else :
             result = findPubRoomByUserID(userID)
     else :
@@ -486,6 +487,8 @@ def loadRoomInfo():
     roomID = request.json['roomID']
     if (roomID == None) :
         roomID = session.get("roomID")
+        if (roomID == None) :
+            return jsonify({"error": "UnAuthorized"}),401
     print("hahaha here i stand in roomID", roomID)
     result = findRoomByRoomID(roomID)
     return jsonify({'result':result})
