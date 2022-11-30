@@ -261,17 +261,10 @@ var ContextMenu = function (blueprint3d) {
 
   function itemUnselected() {
     selectedItem = null;
-<<<<<<< HEAD
     $("#exampleIntro").hide();
     $("#IntroOrMove").hide();
     $("#context-menu").hide();
     $("#boardInfo").hide();
-=======
-    // $("#exampleIntro").hide();
-    // $("#IntroOrMove").hide();
-    // $("#context-menu").hide();
-    // $("#exampleIntroUnAuth").hide();
->>>>>>> d1a846f5254a05d8116f0968f1c9273b4b1ad49f
   }
 
   function logKey(element) {
