@@ -5,10 +5,10 @@ import os
 import secrets
 from base64 import b64encode
 # path : /flaskServer/myModule
-from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList,updatePasswd,getUserNum
+from myModule.user import userRegister,userLogin,userAllModel,getUserId,updatePersonal,updateHeadshot,updateItemList,updatePasswd,getUserNum,getUserByRoom
 from myModule.model import modelInsert,getEntireItem,itemDelete
 from myModule.itemInfo import itemSelect,itemInfoInsert,itemInfoUpdate
-from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect,RoomIntroEdit,RoomIntro,updateRoomPic,findPubRoomByUserID,findPubRoomByUserNum
+from myModule.room import findRoomByUserID,updateRoom,roomInsert,roomDelete,isRoomEditor,repeatRoomName,findRoomByRoomName,getAllRoom,findRoomByRoomID,roomSelect,RoomIntroEdit,RoomIntro,updateRoomPic,findPubRoomByUserID,findPubRoomByUserNum,findPubRoomByRoomID
 from myModule.boardMsg import  allBoardMsg,boardMsgInsert
 from myModule.upload_save import uploadFile
 
@@ -34,12 +34,8 @@ def root():
 @app.route("/blueprint")
 def blueprint():
     return render_template("blueprint.html")
-    # return render_template("blueprint.html")
-    # return render_template("verification.html")
 @app.route("/new")
 def new():
-    # return render_template("blueprint.html")
-    # return render_template("blueprint.html")
     return render_template("content.html")
 @app.route("/Login")
 def newLogin():
@@ -55,8 +51,6 @@ def newRoomIntro():
     return render_template("index.html")
 @app.route("/profile")
 def newprofile():
-    roomID = session.get("roomID")
-    # userNum = FingUserNum(roomID)
     return render_template("index.html")
 
 ############# 註冊 #############
@@ -103,11 +97,11 @@ def logout_user():
 def get_current_user():
     print("current_user")
     userID = session.get("userID")
-    print("userID",userID)
     # if don't have user session
-    if not userID :
+    if (userID == None):
         return jsonify({"error": "UnAuthorized"}),401
-    user = getUserId(userID)
+    else :
+        user = getUserId(userID)
     # id,name,email
     return jsonify({
         "userID":user[0],
@@ -116,23 +110,32 @@ def get_current_user():
         "headshotPath":user[3],
         "introduction":user[4]
     })
-@app.route("/RoomOwner",methods = ["POST"])
-def get_RoomOwner():
-    print("get_RoomOwner in in in ")
-    # try :
+@app.route("/@meforFile",methods = ["GET"])
+def get_user_File():
+    userID = session.get("userID")
+    if(userID == None) :
+        roomID = session.get("roomID")
+        if (roomID == None) :
+            return jsonify({"error": "UnAuthorized"}),401
+        else :
+            user = getUserByRoom(roomID)
+    else :
+        user = getUserId(userID)
+    return jsonify({
+        "userID":user[0],
+        "name":user[1],
+        "email":user[2],
+        "headshotPath":user[3],
+        "introduction":user[4]
+    })
+@app.route("/@mebyNum",methods = ["POST"])
+def get_user():
     userNum = request.json['number']
-    print("i cant find you", userNum)
-    #     if userNum == None :
-    #         return jsonify({"error": "UnAuthorized"}),401
-    #     else :
-    #         user = getUserNum(userNum)
-    # except :
-    return jsonify({"error": "UnAuthorized"}),401
-    #     userID = session.get("userID")
-    #     print("i cant find userID", userID)
-    #     if not userID :
-    #         return jsonify({"error": "UnAuthorized"}),401
-    #     user = getUserId(userID)
+    # if don't have user session
+    if (userNum == None) :
+        return jsonify({"error": "UnAuthorized"}),401
+    else :
+        user = getUserNum(userNum)
     # id,name,email
     return jsonify({
         "userID":user[0],
@@ -141,6 +144,7 @@ def get_RoomOwner():
         "headshotPath":user[3],
         "introduction":user[4]
     })
+
 
 #################### model ####################
 # 更改 mtl 中的 texure 圖片
@@ -327,31 +331,24 @@ def loadRoom():
 @app.route("/userAllRoom",methods=["GET"])
 def userAllRoom():
     userID = session.get("userID")
-    result = findRoomByUserID(userID)
+    if (userID == None) :
+        return jsonify({"error": "UnAuthorized"}),401
+    else :
+        result = findRoomByUserID(userID)
     return jsonify({'result':result})
 
 # user 所有公開房間資料
 @app.route("/userAllPubRoom",methods=["POST"])
 def userAllPubRoom():
-    # userID = session.get("userID")
-    # if (userID == None) :
-    #     roomNum = request.json['number']
-    #     if (roomNum == None) :
-    #         return
-    #     else :
-    #         result = findPubRoomByUserID(userID)
-    # else :
-    #     result = findPubRoomByUserNum(roomNum)
     roomNum = request.json['number']
     if (roomNum == None) :
         userID = session.get("userID")
         if (userID == None) :
-            return
+            return jsonify({"error": "UnAuthorized"}),401
         else :
             result = findPubRoomByUserID(userID)
     else :
         result = findPubRoomByUserNum(roomNum)
-    # print("userID ::::", userID)
     return jsonify({'result':result})
 
 # 創建房間並插入 DB
