@@ -59,7 +59,7 @@ function ServiceData() {
                             <Box
                                 sx={{
                                     bgcolor: '#efd9a7',
-                                    padding: 10,
+                                    padding: 5,
                                     alignContent: ''
                                 }}
                             >
