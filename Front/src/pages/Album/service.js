@@ -20,7 +20,7 @@ const theme = createTheme({
         },
         background: {
             default: '#efd9a7',
-            paper: '#efd9a7',
+            paper: '#94bfbf',
         },
     },
     menu: {
