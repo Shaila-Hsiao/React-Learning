@@ -44,8 +44,10 @@ export const Footer = () => {
             <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
                 National Chi Nan University Department of Information Management
             </Typography>
-            <Box sx={{ align: "center"}}>
-            </Box>
+            <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
+                <Link color="#FFFFFF"
+                href="https://forms.gle/FS75GVcXpeW2tAnS7">意見反饋</Link></Typography>
+            <hr />
             <Copyright />
         </Box>
     </ThemeProvider>
