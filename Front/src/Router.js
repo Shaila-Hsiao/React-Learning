@@ -15,6 +15,7 @@ import RoomEdit from './pages/Room/RoomEdit';
 import Search from './pages/Album/search';
 import ServiceData from './pages/Album/service';
 import Profile from "./pages/Album/profile";
+import RoomOwnerProfile from "./pages/Album/RoomOwnerProfile";
 
 export const Router = () => {
   return (
@@ -36,6 +37,7 @@ export const Router = () => {
           <Route path="/search" element={<Search />} /> {/* 搜尋房間 */}
           <Route path="/servicedata" element={<ServiceData />} /> {/* 服務支援 */}
           <Route path="/profile" element={<Profile />} /> {/* 服務支援 */}
+          <Route path="/RoomOwnerProfile" element={<RoomOwnerProfile />} />
           <Route
             path="/blueprint"
             component={() => {

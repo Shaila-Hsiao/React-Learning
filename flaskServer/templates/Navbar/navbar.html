@@ -7,10 +7,10 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
   body {
-    font-family: Arial,Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     margin: 0%;
   }
-  
+
   .navbar {
     width: 100%;
     background-color: #192D2E;
@@ -18,7 +18,7 @@
     /* display: flex; */
     margin-bottom: 0%;
   }
-  
+
   .nav {
     float: left;
     padding: 5px;
@@ -26,125 +26,141 @@
     text-decoration: none;
     font-size: 17px;
   }
+
   .navbar a {
     /* float: left; */
     padding: 19px;
     color: rgb(255, 255, 255);
     text-decoration: none;
     font-size: 17px;
-    
+
   }
-  
+
   .nav :hover {
     background-color: #192D2E;
-    
+
   }
-  .active :hover{
+
+  .active :hover {
     color: blue;
   }
+
   .active {
-   font-size: 20px;
-   letter-spacing: 0.3rem;
-   /* display: inline-block; */
+    font-size: 20px;
+    letter-spacing: 0.3rem;
+    /* display: inline-block; */
   }
-  
-  
+
+
   @media screen and (max-width: 500px) {
     .navbar a {
       float: none;
       display: block;
     }
   }
-  .home{
-    vertical-align: middle; 
+
+  .home {
+    vertical-align: middle;
     font-weight: bold;
     font-size: 20px;
   }
+
   .material-icons {
-    font-size:23px ; 
+    font-size: 23px;
     margin-right: 3px;
     vertical-align: middle;
   }
+
   .nav .openbtn {
     font-size: 20px;
     cursor: pointer;
-    background-color:#192D2E;
+    background-color: #192D2E;
     color: white;
     /* padding: 10px 15px; */
     border: none;
   }
-  .navbar .nav .navbar-nav> .active > a:hover{
-    background-color:#192D2E;
+
+  .navbar .nav .navbar-nav>.active>a:hover {
+    background-color: #192D2E;
   }
-  
+
   .avatar {
-    
+
     vertical-align: top;
     width: 40px;
     height: 40px;
     border-radius: 50%;
   }
-  #NavbarUnAuth,#NavbarAuth{
+
+  #NavbarUnAuth,
+  #NavbarAuth {
     display: none;
 
   }
-  #NavbarAuth{
+
+  #NavbarAuth {
     padding: 10px;
   }
-  
 </style>
 <script>
-  function doInit(){
+  function doInit() {
     // 跳出框框
     $.ajax({
-        url: '/@me',
-        type: "GET",
-        async: true, // 異步
-        /*result為后端函式回傳的json*/
-        success: function (result) {
-          // const str = "";
-          // $("#NavbarAuth").innerHTML = str;
-          // alert(result.result);
-          var imgUrl = result.headshotPath
+      url: '/@me',
+      type: "GET",
+      async: true, // 異步
+      /*result為后端函式回傳的json*/
+      success: function (result) {
+        // const str = "";
+        // $("#NavbarAuth").innerHTML = str;
+        // alert(result.result);
+        var imgUrl = result.headshotPath
 
-          $("#NavbarUnAuth").hide();
-          $("#NavbarAuth").show();
-          $("#AvatarImg").attr("src",imgUrl);
-          console.log("doInit: ",imgUrl);
-        },
-        error:function(){
-          $("#NavbarAuth").hide();
-          $("#NavbarUnAuth").show();
+        $("#NavbarUnAuth").hide();
+        $("#NavbarAuth").show();
+        $("#AvatarImg").attr("src", imgUrl);
+        console.log("doInit: ", imgUrl);
+      },
+      error: function () {
+        $("#NavbarAuth").hide();
+        $("#NavbarUnAuth").show();
 
-        }
-        
-      });
+      }
+
+    });
   }
 </script>
 <nav class="navbar ">
   <!-- <div class="container-fluid"> -->
-    <ul class="nav navbar-nav">
-      <li>
-        <button class="openbtn" onclick="openNav()">☰ </button>
-      </li>
-    </ul>
-    <div class="navbar-header active">
-      <a class="navbar-brand " href="/"> 
-        <i  class=" material-icons" >perm_contact_calendar</i>
-        <span class="home">首頁</span>
-      </a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li><a href="/servicedata">服務支援</a></li>
-      <li><a href="/">聯絡我們 </a></li>
-    </ul>
+  <ul class="nav navbar-nav">
+    <li>
+      <button class="openbtn" onclick="openNav()">☰ </button>
+    </li>
+  </ul>
+  <div class="navbar-header active">
+    <a class="navbar-brand " href="/">
+      <i class=" material-icons">perm_contact_calendar</i>
+      <span class="home">首頁</span>
+    </a>
+  </div>
+  <ul class="nav navbar-nav">
+    <li><a href="/servicedata">服務支援</a></li>
+    <li><a href="/">聯絡我們 </a></li>
+  </ul>
+  <div>
     <ul id="NavbarUnAuth" class="nav navbar-nav navbar-right">
       <li><a href="/Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
       <li><a href="/SignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-      
+
     </ul>
+  </div>
+  <div>
     <ul id="NavbarAuth" class="nav navbar-nav navbar-right">
-      <a href="/"><img src="../../static/headShots/user.a00227ea.jpg" id ="AvatarImg" alt="Avatar" class="avatar" ></a></li>
+      <img src="../../static/headShots/user.a00227ea.jpg" id="AvatarImg" alt="Avatar" class="avatar">
+      <!-- <a href="/"><img src="../../static/headShots/user.a00227ea.jpg" id="AvatarImg" alt="Avatar" class="avatar"></a> -->
+      </li>
     </ul>
+  </div>
+  <div> </div>
   <!-- </div> -->
 </nav>

@@ -50,11 +50,11 @@ export const Footer = () => {
                 <Button startIcon={<HowToVoteIcon fontSize="large" color='secondary' />}>
                     <Typography variant="h6" color="#FFFFFF" align="center" gutterBottom>
                         <Link color="#FFFFFF"
-                        href="">最佳影片獎</Link>、
+                        href="https://forms.gle/97h5dhKbgCvFo94DA">最佳影片獎</Link>、
                     </Typography>
                     <Typography variant="h6" align="center" gutterBottom>
                         <Link color="#FFFFFF"
-                        href="">最佳海報獎</Link>
+                        href="https://forms.gle/QtwA6g46KdMR8wRQ8">最佳海報獎</Link>
                     </Typography>
                 </Button>
                 <Button variant="outlined" startIcon={<FeedIcon fontSize="large" color='secondary' />}>

@@ -5,8 +5,8 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+// import IconButton from '@mui/material/IconButton';
+// import MenuIcon from '@mui/icons-material/Menu';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import BedroomChildIcon from '@mui/icons-material/BedroomChild';
 import Tooltip from '@mui/material/Tooltip';
@@ -101,17 +101,8 @@ function Profile() {
     useEffect(() => {
         (async () => {
             try {
-                var getUrlString = window.location.href;
-                var url = new URL(getUrlString);
-                var number = url.searchParams.get('number');
                 var resp = '';
-                if (number == null) {
-                    resp = await httpClient.get("../@me");
-                } else {
-                    resp = await httpClient.post("../@mebyNum", {
-                        number,
-                    });
-                }
+                resp = await httpClient.get("../@meforFile");
                 console.log(resp.data.userID)
                 console.log(resp.data.name)
                 console.log(resp.data.email)
@@ -119,9 +110,7 @@ function Profile() {
                 setUser(resp.data);
                 console.log(user);
                 // 房間部分
-                const resp2 = await httpClient.post("../userAllPubRoom", {
-                    number,
-                });
+                const resp2 = await httpClient.get("../OwnerRoom");
                 cards = [];
                 const temp = resp2.data.result;
                 setRoom(resp2.data.result);
@@ -148,7 +137,7 @@ function Profile() {
                     }}
                 >
                     <Grid container>
-                        <Grid item xs={12} sm={4} align='center'>
+                        <Grid item xs={12} sm={5}>
                             <Avatar
                                 alt="UserName"
                                 sx={{ mx: 'auto', width: 200, height: 200 }}
@@ -157,16 +146,15 @@ function Profile() {
                         <Grid item xs={12} sm={4}>
                             <Box sx={{}}>
                                 <Typography variant="h3" gutterBottom>{user.name}</Typography>
-                                <Typography variant="h5" gutterBottom>10000位訂閱者</Typography>
                                 <Typography variant="body1" gutterBottom>
                                     {user.introduction}
                                 </Typography>
                             </Box>
                         </Grid>
-                        <Grid item xs={12} sm={4} align='center'>
-                            <IconButton aria-label="FB" color="primary" href="https://zh-tw.facebook.com/" ><FacebookIcon fontSize="large"  /></IconButton>
-                            <IconButton aria-label="IG" color="primary" href="https://www.instagram.com/" ><InstagramIcon fontSize="large" /></IconButton>
-                            <IconButton aria-label="Twitter" color="primary" href="https://twitter.com/i/flow/login" ><TwitterIcon fontSize="large" /></IconButton>
+                        <Grid item xs={12} sm={3}>
+                            <FacebookIcon fontSize="large" />
+                            <InstagramIcon fontSize="large" />
+                            <TwitterIcon fontSize="large" />
                             <Box sx={{ p: 3 }} />
                             {/* <Button
                                 variant="contained"

@@ -89,17 +89,19 @@ def getUserId(userID):
     if len(dataList) == 0:
         return result
     result = dataList[0]
-    print("就是我超出去了", result)
     return result
 
 def findUserIdByRoom(roomID) :
     command = f"SELECT userID FROM `room` WHERE id = {roomID}"
     cursor.execute(command)
     dataList = cursor.fetchall()
+    print("dataList         @-@", dataList)
     return dataList[0][0]
 
 def getUserByRoom(roomID):
+    print("再次檢查", roomID)
     userID = findUserIdByRoom(roomID)
+    print("再次檢查", userID)
     result = ""
     # 搜尋資料庫
     sql = f"SELECT `userID`, `name`, `email`,`headshotPath`, `introduction` FROM `account` WHERE `userID` = '{userID}'"

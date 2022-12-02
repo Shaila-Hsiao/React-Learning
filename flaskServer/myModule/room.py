@@ -11,8 +11,8 @@ def repeatRoomName(roomName,userID):
     return False
 
 # 更新房間內容
-def updateRoom(roomID,roomName,roomImgPath,introduction,roomContent,private_public):
-    command = f"UPDATE `room` SET `roomName` = '{roomName}',`roomImgPath` = '{roomImgPath}',`introduction` = '{introduction}', `roomContent` = '{roomContent}', `private_public` = '{private_public}' WHERE id = '{roomID}'"
+def updateRoom(roomID,roomContent):
+    command = f"UPDATE `room` SET `roomContent` = '{roomContent}' WHERE id = '{roomID}'"
     cursor.execute(command)
     connection.commit()
 
