@@ -117,16 +117,6 @@ def get_user_File():
         return jsonify({"error": "UnAuthorized"}),401
     else :
         user = getUserByRoom(roomID)
-    # if (roomID == None) :
-    #     userID = session.get("userID")
-    #     if(userID == None) :
-    #         return jsonify({"error": "UnAuthorized"}),401
-    #     else :
-    #         user = getUserId(userID)
-    # else :
-    #     print("check check roomID got something")
-    #     print("roomID", roomID)
-    #     user = getUserByRoom(roomID)
     return jsonify({
         "userID":user[0],
         "name":user[1],

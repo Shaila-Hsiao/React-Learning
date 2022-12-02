@@ -5,8 +5,8 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+// import IconButton from '@mui/material/IconButton';
+// import MenuIcon from '@mui/icons-material/Menu';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import BedroomChildIcon from '@mui/icons-material/BedroomChild';
 import Tooltip from '@mui/material/Tooltip';
@@ -101,7 +101,8 @@ function Profile() {
     useEffect(() => {
         (async () => {
             try {
-                var resp = await httpClient.get("../@meforFile");
+                var resp = '';
+                resp = await httpClient.get("../@meforFile");
                 console.log(resp.data.userID)
                 console.log(resp.data.name)
                 console.log(resp.data.email)

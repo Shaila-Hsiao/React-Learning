@@ -273,16 +273,6 @@ var ContextMenu = function (blueprint3d) {
     $("#boardInfo").hide();
   }
 
-<<<<<<< HEAD
-  function logKey(element) {
-    var x = element.screenX;
-    var y = element.screenY;
-    // // 這邊有個重點，當父元素被下了 position 屬性之後他就會變成 offsetParent，所以這邊我們用迴圈不斷往上累加。
-    // element = element.offsetParent;
-    document.getElementById("IntroOrMove").style.left = x + "px";
-    document.getElementById("IntroOrMove").style.top = y + "px";
-  }
-=======
   // function logKey(element) {
   //   var x = element.screenX;
   //   var y = element.screenY;
@@ -291,7 +281,6 @@ var ContextMenu = function (blueprint3d) {
   //   document.getElementById("IntroOrMove").style.left = x+"px";
   //   document.getElementById("IntroOrMove").style.top = y+"px";
   // }
->>>>>>> 0c03ea2da78d49f2f358f6fcb8ea3001d9f23229
 
   init();
 }
