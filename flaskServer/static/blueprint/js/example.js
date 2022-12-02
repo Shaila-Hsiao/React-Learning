@@ -380,6 +380,7 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
     setCurrentState(scope.states.DEFAULT);
     // upload model init
     initUploadModel();
+
   }
 
   function floorplanUpdate() {
@@ -409,7 +410,6 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
     }
   }
   function setCurrentState(newState) {
-
     if (currentState == newState) {
       return;
     }
