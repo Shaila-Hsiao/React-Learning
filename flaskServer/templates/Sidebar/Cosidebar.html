@@ -70,7 +70,7 @@ body {
 <body>
 
 <div id="mySidebar" class="sidebar">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  <a href="javascript:void(0)" class="closebtn" id="sidebarClose" onclick="closeNav()">×</a>
   <li id="floorplan_tab">
     <a href="#"> 編輯房間大小</a>
   </li>
@@ -100,6 +100,10 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidebar").style.width = "0";
   document.getElementById("main").style.marginLeft= "0";
+  // 關閉 sidebar 畫面依然在瀏覽房間 => 顯示左欄模型資訊位置
+  if (document.getElementById("viewer").style.display == "block"){
+    itemInfoShow();
+  }
 }
 </script>
    
