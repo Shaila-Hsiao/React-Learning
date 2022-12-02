@@ -24,8 +24,11 @@
 
   }
   #ItemInfoAudio{
-    width: 70%;
-    margin: 10px;
+    width: 100%;
+    margin: 5px;
+  }
+  #itemInfoImageClose{
+    display: none;
   }
 </style>
 
@@ -56,7 +59,6 @@
               <!-- <text id="weather" for="recipient-name" class="col-form-label"></text> -->
               <textarea class="form-control" id="weather"></textarea>
             </div>
-            <!-- 天氣 -->
 
             <!-- 心情描述 -->
             <div class="col-md">
@@ -67,22 +69,31 @@
               <!-- <img id="image" width="200px" src = "../static/blueprint/other/photo.png"></text> -->
               <!-- <textarea class="form-control" id="message-text"></textarea>-->
             </div>
-            <!-- 心情描述 -->
           </div>
+
+          <!-- image -->
           <div class="col-md-12" style="margin-top: 10px;">
-            <!-- image -->
-            <!-- <img id="image" style=" max-width: 200px;" alt="IMAGE" src="../static/blueprint/other/photo.png" /> -->
+            <label class="text-center mb-5 image-preview-wrapper" for="texture">
+              <img src="../static/blueprint/other/uploadTexture.png" id="canvasTexture" alt="image-placehoder">
+            </label>
+            <input type="file" id="texture" class = "hide" accept="image/*" />
+
             <img id="image" src="" alt="" style="width:100%;max-width:150px">
-            <!-- The Modal -->
+            <!-- modal for enlarging image -->
             <div id="myModal">
-              <span class="close">X</span>
+              <span class="close" id="itemInfoImageClose">X</span>
               <img id="img01" style="max-width:500px;max-height:500px">
               <div id="caption"></div>
             </div>
           </div>
           <br/>
+          <!-- audio -->
           <div class="col-md-12">
-            <!-- audio -->
+            <div class="col-md">
+              <label for="recordName" class="col-form-label">音檔名字</label>
+              <!-- <text id="weather" for="recipient-name" class="col-form-label"></text> -->
+              <textarea class="form-control" id="recordName"></textarea>
+            </div>
             <audio id="ItemInfoAudio" controls>
               <source id="AudioSource" src="" type="audio/mpeg">
             </audio>
@@ -150,28 +161,24 @@
 
 
 <script>
-  // Get the modal
-  var modal = document.getElementById("myModal");
-  
   // Get the image and insert it inside the modal - use its "alt" text as a caption
-  var img = document.getElementById("image");
-  var modalImg = document.getElementById("img01");
-  var captionText = document.getElementById("caption");
-  img.onclick = function(){
-    modal.style.display = "block";
-    modalImg.src = this.src;
-    captionText.innerHTML = this.alt;
+  $("#image").click(function(){
+    $("#myModal").show();
+    $("#img01").attr("src",this.src);
+    $("#caption").val(this.alt);
     console.log("image click")
-  }
+    $("#itemInfoImageClose").show();
+  });
   
   // Get the <span> element that closes the modal
   var span = document.getElementsByClassName("close")[0];
   
   // When the user clicks on <span> (x), close the modal
-    span.onclick = function() { 
-      modal.style.display = "none";
-    }
-    
+    $("#itemInfoImageClose").click(function() { 
+    $("#myModal").hide();
+    $("#itemInfoImageClose").hide();
+  });
+  
   // user clicks the item and show the information of item
   $("#IntroOrMove").click(function(){
     $("#exampleIntro").show();

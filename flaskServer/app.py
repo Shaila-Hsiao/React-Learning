@@ -170,6 +170,7 @@ def upload():
     mtl = request.form.get('mtl')
     thumbnail = request.form.get('thumbnail')
     texture = request.form.get('texture')
+    print("=============")
     modelType = request.form.get('type')
     print("obj content=========>",obj[:100])
     print("modelType",modelType)
