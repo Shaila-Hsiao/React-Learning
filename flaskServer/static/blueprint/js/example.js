@@ -217,7 +217,42 @@ var ContextMenu = function (blueprint3d) {
 
 
   }
-
+  // 顯示所有Board Message
+  function AllBoardMsg(){
+    var str = "";
+    $.ajax({
+      url: '/getMsgBoard',
+      type: "GET",
+      /*result為后端函式回傳的json*/
+      success: function (resp) {
+        // console.log("success: ", resp.data.result );
+        // console.log("result: ", resp.result[0]);
+        // console.log("result: ", resp.result.length);
+        for(var i=0 ; i< resp.result.length;i++){
+          var obj = resp.result[i];
+          console.log(obj[0],obj[1])
+          str += `<div class=\"panel panel-default col-xs-5\">`+
+          `<div class=\"panel-heading\">From: ${obj[4]}</div>`+
+          `<div class=\"panel-body\">`+
+          `<div><label class="col-form-label">日期:</label><text id=\"boardDate\">${obj[1]}</text></div>`+
+          `<div><label class="col-form-label">內容:</label><text id=\"boardContent\">${obj[2]}</text></div>`+
+          `<div><label class="col-form-label">顏色:</label><text id=\"boardColor\">${obj[3]}</text></div>`+
+          "</div></div>";
+          console.log(str);
+        }
+        // const temp = resp.data.result;
+        // cards = [];
+        // console.log("cards", cards);
+        // for (let i = 0; i < temp.length; i++) {
+        //   cards.push(temp[i]);
+        // }
+        // console.log("cards", cards);
+        var el = document.getElementById('AllMsgComment');
+        el.innerHTML = str;
+      }
+    })
+    // str += "</div>";
+  }
   // 選擇物件時 
   function itemSelected(item) {
     console.log("============item==========", item);
@@ -230,10 +265,10 @@ var ContextMenu = function (blueprint3d) {
     $("#context-menu-name").text(item.metadata.itemName);
     
 
-    $("#exampleIntro").hide();
+    $("#context-menu").show();
     // 模型沒有資訊而且身分為訪客: 看不到模型資訊以及按鈕
+    $("#IntroOrMove").show();
     if (item.metadata.itemInfoID == 0 && isEditor == false) {
-      // if (isEditor == false) {
       $("#IntroOrMove").hide();
       console.log("no data");
     }
@@ -241,13 +276,22 @@ var ContextMenu = function (blueprint3d) {
     else {
       console.log("info has data");
       $("#IntroOrMove").show();
-    }  
-
+    }
+    // 當點選的物件為留言板時
+     // 模型為留言板時
+    if(item.metadata.itemName == "messageBoard"){ 
+      AllBoardMsg();
+      $("#boardInfo").show();
+      console.log("boardInfo")
+      $("#itemInfo").removeClass("col-xs-2").addClass("col-xs-4");
+      $("#main").removeClass("col-xs-10").addClass("col-xs-8");
+      if(isEditor == false){
+        $("#context-menu").hide();
+      }
+    }
     $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
     $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
     $("#item-depth").val(cmToIn(selectedItem.getDepth()).toFixed(0));
-
-    $("#context-menu").show();
     $("#fixed").prop('checked', item.fixed);
   }
 
@@ -270,7 +314,7 @@ var ContextMenu = function (blueprint3d) {
     $("#exampleIntro").hide();
     $("#IntroOrMove").hide();
     $("#context-menu").hide();
-    $("#boardInfo").hide();
+    // $("#boardInfo").hide();
   }
 
   function logKey(element) {

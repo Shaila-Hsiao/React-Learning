@@ -474,12 +474,13 @@ def loadRoomInfo():
     return jsonify({'result':result})
 ################### 留言板 #################
 # 獲取留言板所有訊息
-@app.route("/getMsgBoard",methods=["POST"])
+@app.route("/getMsgBoard",methods=["GET"])
 def getMsgBoard():
     roomID = session.get('roomID')
+    # print("/getMsgBoard roomID: ",roomID)
     # roomID = request.form.get('roomID')
     result = allBoardMsg(roomID)
-    return {"result":result}
+    return jsonify({'result':result})
 # 訪客寫紙條
 @app.route("/writeMsgBoard",methods=["POST"])
 def writeMsgBoard():

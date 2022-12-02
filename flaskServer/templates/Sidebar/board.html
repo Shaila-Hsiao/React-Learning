@@ -2,14 +2,53 @@
   #boardInfo{
     position:relative;
     display: none;
+    background-image: url("../../static/blueprint/other/board.jpg");
+    width: 500px;
+    border-radius: 25px;
   }
   #boardInfo > .panel-heading{
     font-size: 25px;
     font-weight: bolder;
 
   }
+  #boardInfo >.panel-body> .row >.panel{
+    margin: 2px;
+
+  }
+  #boardInfo >.panel-body> .row {
+    margin: auto;
+  }
+  #AllMsgComment> .panel {
+    padding: 0%;
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  #AllMsgComment{
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 </style>
 <div id="boardInfo" class="panel panel-default" style="display:none">
-  <div class="panel-heading">留言板</div>
-  <div class="panel-body">Panel Content</div>
+  <div class="panel-body"> 
+    <h1>留言板</h1>
+    <div id="AllMsgComment" class="row "></div>
+    <form >
+      <!-- <form action="/action_page.php"> -->
+      <div class="form-group">
+        <label for="comment">留言</label>
+        <textarea class="form-control" rows="5" id="comment"></textarea>
+      </div>
+      <button id="boardClose" type="button" class="btn btn-default">close</button>
+      <button type="submit" class="btn btn-default">留言</button>
+    </form>
+  </div>
 </div>
+
+<script>
+  $("#boardClose").click(function(){
+    $("#itemInfo").removeClass("col-xs-4").addClass("col-xs-2");
+    $("#main").removeClass("col-xs-8").addClass("col-xs-10");
+    $("#boardInfo").hide();
+  })
+</script>
