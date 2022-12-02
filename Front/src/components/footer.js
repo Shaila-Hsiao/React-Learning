@@ -3,7 +3,10 @@ import {  createTheme, ThemeProvider } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import HomeWorkIcon from '@mui/icons-material/HomeWork';
+import Divider from '@mui/material/Divider';
+import FeedIcon from '@mui/icons-material/Feed';
+import { Button } from '@mui/material';
+import HowToVoteIcon from '@mui/icons-material/HowToVote';
 
 const theme = createTheme({
     palette: {
@@ -27,9 +30,8 @@ function Copyright() {
             {'Copyright © '}
             <Link color="#FFFFFF" href="https://www.im.ncnu.edu.tw/">
                 國立暨南國際大學資訊管理學系
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
+            </Link>
+            {' 畢業專題第五組'}{new Date().getFullYear()}{'.'}
         </Typography>
     );
 }
@@ -44,10 +46,25 @@ export const Footer = () => {
             <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
                 National Chi Nan University Department of Information Management
             </Typography>
-            <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
-                <Link color="#FFFFFF"
-                href="https://forms.gle/FS75GVcXpeW2tAnS7">意見反饋</Link></Typography>
-            <hr />
+            <Box align='center'>
+                <Button startIcon={<HowToVoteIcon fontSize="large" color='secondary' />}>
+                    <Typography variant="h6" color="#FFFFFF" align="center" gutterBottom>
+                        <Link color="#FFFFFF"
+                        href="">最佳影片獎</Link>、
+                    </Typography>
+                    <Typography variant="h6" align="center" gutterBottom>
+                        <Link color="#FFFFFF"
+                        href="">最佳海報獎</Link>
+                    </Typography>
+                </Button>
+                <Button variant="outlined" startIcon={<FeedIcon fontSize="large" color='secondary' />}>
+                    <Typography variant="h6" align="center" gutterBottom>
+                        <Link color="#FFFFFF"
+                        href="https://forms.gle/FS75GVcXpeW2tAnS7">意見反饋</Link>
+                    </Typography>
+                </Button>
+            </Box>
+            <Divider color='#FFFFFF' />
             <Copyright />
         </Box>
     </ThemeProvider>
