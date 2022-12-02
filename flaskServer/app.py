@@ -49,7 +49,7 @@ def newservicedata():
 @app.route("/RoomIntro")
 def newRoomIntro():
     return render_template("index.html")
-@app.route("/profile")
+@app.route("/RoomOwnerProfile")
 def newprofile():
     return render_template("index.html")
 
@@ -112,15 +112,21 @@ def get_current_user():
     })
 @app.route("/@meforFile",methods = ["GET"])
 def get_user_File():
-    userID = session.get("userID")
-    if(userID == None) :
-        roomID = session.get("roomID")
-        if (roomID == None) :
-            return jsonify({"error": "UnAuthorized"}),401
-        else :
-            user = getUserByRoom(roomID)
+    roomID = session.get("roomID")
+    if (roomID == None) :
+        return jsonify({"error": "UnAuthorized"}),401
     else :
-        user = getUserId(userID)
+        user = getUserByRoom(roomID)
+    # if (roomID == None) :
+    #     userID = session.get("userID")
+    #     if(userID == None) :
+    #         return jsonify({"error": "UnAuthorized"}),401
+    #     else :
+    #         user = getUserId(userID)
+    # else :
+    #     print("check check roomID got something")
+    #     print("roomID", roomID)
+    #     user = getUserByRoom(roomID)
     return jsonify({
         "userID":user[0],
         "name":user[1],
@@ -349,6 +355,29 @@ def userAllPubRoom():
             result = findPubRoomByUserID(userID)
     else :
         result = findPubRoomByUserNum(roomNum)
+    # roomNum = request.json['number']
+    # if (roomNum == None) :
+    #     roomID = session.get("roomID")
+    #     if (roomID == None) :
+    #         userID = session.get("userID")
+    #         if (userID == None) :
+    #             return jsonify({"error": "UnAuthorized"}),401
+    #         else :
+    #             result = findPubRoomByUserID(userID)
+    #     else :
+    #         result = findPubRoomByRoomID(roomID)
+    # else :
+    #     result = findPubRoomByUserNum(roomNum)
+    return jsonify({'result':result})
+
+# user 所有公開房間資料
+@app.route("/OwnerRoom",methods=["GET"])
+def OwnerRoom():
+    roomID = session.get("roomID")
+    if (roomID == None) :
+        return jsonify({"error": "UnAuthorized"}),401
+    else :
+        result = findPubRoomByRoomID(roomID)
     return jsonify({'result':result})
 
 # 創建房間並插入 DB
@@ -397,31 +426,37 @@ def modifyRoomPic():
 # 儲存房間
 @app.route("/saveRoom",methods=["POST"])
 def saveRoom():
-    roomID = request.json['roomID']
+    # roomID = request.json['roomID']
+    # roomName = request.json['roomName']
+    # roomImg = request.json['roomImg'] # FIXME: 不一定要上傳房間照片
+    # roomImgPath = request.json['roomImgPath']
+    # introduction = request.json['introduction']
+    print("request.json !!!!!!!!!!")
     roomName = request.json['roomName']
-    roomImg = request.json['roomImg'] # FIXME: 不一定要上傳房間照片
-    roomImgPath = request.json['roomImgPath']
-    introduction = request.json['introduction']
+    print("roomName 是什麼我有", roomName)
     roomContent = request.json['roomContent']
-    private_public = request.json['private_public']
-    userID = session.get("userID")
-    # 不是房間編輯者
-    if isRoomEditor(roomID,userID) == False:
-        result = "您不是房間擁有者"
-    # 確認房間名字有重複
-    elif repeatRoomName(roomName,userID) == True:
-        result = "您已經有相同房間名字存在，請重新命名"
-    else:
-        # 房間截圖路徑
-        path = ""
-        # 有房間截圖
-        if roomImg:
-            roomImgName = secrets.token_hex()+".jpg"
-            # roomImgName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
-            path = f'{roomImgPath}/{roomImgName}'
-            uploadFile(roomImgName,roomImg,'image',path) # 將房間圖片儲存到房間
-        updateRoom(roomID,roomName,path,introduction,roomContent,private_public)
-        result = "房間存取成功"
+    print("roomContent 不知道有沒有改變")
+    roomID = session.get("roomID")
+    print("roomID 總該有了吧", roomID)
+    # private_public = request.json['private_public']
+    # # 不是房間編輯者
+    # if isRoomEditor(roomID,userID) == False:
+    #     result = "您不是房間擁有者"
+    # # 確認房間名字有重複
+    # elif repeatRoomName(roomName,userID) == True:
+    #     result = "您已經有相同房間名字存在，請重新命名"
+    # else:
+    # 房間截圖路徑
+    # path = ""
+    # 有房間截圖
+    # if roomImg:
+    #     roomImgName = secrets.token_hex()+".jpg"
+    #     # roomImgName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
+    #     path = f'{roomImgPath}/{roomImgName}'
+    #     uploadFile(roomImgName,roomImg,'image',path) # 將房間圖片儲存到房間
+    updateRoom(roomID,roomContent)
+    # updateRoom(roomID,roomName,path,introduction,roomContent,private_public)
+    result = "房間存取成功"
     return jsonify({'result':result})
 
 # 獲取房間簡介

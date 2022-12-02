@@ -107,15 +107,15 @@ var ContextMenu = function (blueprint3d) {
       var checked = $(this).prop('checked');
       selectedItem.setFixed(checked);
     });
-    $("#IntroOrMove").click(function() {
+    $("#IntroOrMove").click(function () {
       // 清空資訊
       clearItemInfo();
       // 有模型資訊就顯示
-      if (selectedItem.metadata.itemInfoID != 0){
+      if (selectedItem.metadata.itemInfoID != 0) {
         modelInfo(selectedItem.metadata.itemInfoID)
       }
     });
-    
+
   }
 
   function cmToIn(cm) {
@@ -126,25 +126,25 @@ var ContextMenu = function (blueprint3d) {
     return inches * 2.54;
   }
 
-  function clearItemInfo(){
+  function clearItemInfo() {
     $('#exampleModalLabel').val("");
     $('#date').val("");
     $('#weather').val("");
     $('#message').val("");
-    $('#image').attr("src","");
-    $('#image').attr("alt","");
-    $('#AudioSource').attr("src","");
+    $('#image').attr("src", "");
+    $('#image').attr("alt", "");
+    $('#AudioSource').attr("src", "");
 
   }
   // 儲存模型資訊
-  function SaveItemInfo(itemInfoID){
+  function SaveItemInfo(itemInfoID) {
     console.log("Save");
-    var itemName = $('#exampleModalLabel').val(); 
-    var date = $('#date').val(); 
-    var weather = $('#weather').val(); 
-    var message = $('#message').val(); 
-    var image = $('#image').attr("src"); 
-    var AudioSource = $('#AudioSource').attr("src"); 
+    var itemName = $('#exampleModalLabel').val();
+    var date = $('#date').val();
+    var weather = $('#weather').val();
+    var message = $('#message').val();
+    var image = $('#image').attr("src");
+    var AudioSource = $('#AudioSource').attr("src");
     var recordName = "blueprint";
     console.log(itemInfoID);
     console.log(itemName);
@@ -158,29 +158,29 @@ var ContextMenu = function (blueprint3d) {
       data: {
         'itemInfoID': itemInfoID,
         'itemName': itemName,
-        'date':date,
+        'date': date,
         'weather': weather,
-        'message':message,
+        'message': message,
         // 'image':image,
         // 'record':AudioSource,
-        'recordName':recordName,
+        'recordName': recordName,
       },
-  
+
       /*result為后端函式回傳的json*/
       success: function (resp) {
         console.log("success: ", resp);
       }
-      ,error:function(resp){
-        console.log("error:",resp);
+      , error: function (resp) {
+        console.log("error:", resp);
       }
     });
   }
-  
+
   // 點選Item 跳出 Info
   function modelInfo(itemInfoID) {
     console.log("【modelInfo】 itemInfoID: ", itemInfoID);
     // 按下儲存即可儲存嵌入模型的資訊
-    $("#SaveBtn").click(function(){SaveItemInfo(itemInfoID)});
+    $("#SaveBtn").click(function () { SaveItemInfo(itemInfoID) });
     $.ajax({
       url: '/getItemInfo',
       type: "POST",
@@ -226,9 +226,9 @@ var ContextMenu = function (blueprint3d) {
     console.log("log itemID in example.js line 147~~~~~", item.metadata.itemID);
     console.log("log itemName in example.js line 147~~~~~", item.metadata.itemName);
     console.log("log itemInfoID in example.js line 148~~~~~", item.metadata.itemInfoID);
-    console.log("IsEditor: ",isEditor);
+    console.log("IsEditor: ", isEditor);
     $("#context-menu-name").text(item.metadata.itemName);
-    
+
 
     $("#exampleIntro").hide();
     // 模型沒有資訊而且身分為訪客: 看不到模型資訊以及按鈕
@@ -241,7 +241,7 @@ var ContextMenu = function (blueprint3d) {
     else {
       console.log("info has data");
       $("#IntroOrMove").show();
-    }  
+    }
 
     $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
     $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
@@ -278,8 +278,8 @@ var ContextMenu = function (blueprint3d) {
     var y = element.screenY;
     // // 這邊有個重點，當父元素被下了 position 屬性之後他就會變成 offsetParent，所以這邊我們用迴圈不斷往上累加。
     // element = element.offsetParent;
-    document.getElementById("IntroOrMove").style.left = x+"px";
-    document.getElementById("IntroOrMove").style.top = y+"px";
+    document.getElementById("IntroOrMove").style.left = x + "px";
+    document.getElementById("IntroOrMove").style.top = y + "px";
   }
 
   init();
@@ -376,7 +376,7 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
     handleWindowResize();
 
     initItems();
-    
+
     setCurrentState(scope.states.DEFAULT);
     // upload model init
     initUploadModel();
@@ -398,7 +398,7 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
         var state = scope.states[key];
         if (state.tab == tab) {
           // 點擊新增模型就把左欄模型資訊隱藏起來
-          if (tab[0] == $("#items_tab")[0]){
+          if (tab[0] == $("#items_tab")[0]) {
             itemInfoHide();
           }
           setCurrentState(state);
@@ -434,14 +434,14 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
     // custom actions
     if (newState == scope.states.FLOORPLAN) {
       itemInfoHide();
-      console.log("new state ==>",newState);
+      console.log("new state ==>", newState);
       floorplanControls.updateFloorplanView();
       floorplanControls.handleWindowResize();
     }
-    
+
     if (currentState == scope.states.FLOORPLAN) {
       itemInfoHide();
-      console.log("current State ==>",currentState);
+      console.log("current State ==>", currentState);
       blueprint3d.model.floorplan.update();
     }
 
@@ -578,7 +578,7 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
       }
     });
   }
-  function initUploadModel(){
+  function initUploadModel() {
     $('#obj').change(handleObj);
     $('#thumbnail').change(handleThumbnail);
     $('#mtl').change(handleMtl);
@@ -744,33 +744,36 @@ var mainControls = function (blueprint3d) {
   // 存進 DB
   function saveRoomInDB() {
     var roomContent = blueprint3d.model.exportSerialized();
+    console.log("roomContent", roomContent)
+    var input = {
+      'roomName': "testToSave",
+      'roomContent': roomContent
+    };
     // 跳出框框
     $.ajax({
       url: '/saveRoom',
       type: "POST",
+      contentType: 'application/json',
       // FIXME: 以下資訊要從哪裡來
-      data: {
-        // 'roomName':$('#roomName').value,
-        'roomName': "testToSave",
-        'roomContent': roomContent,
-        // 'private_public':$('private_public').value
-        'private_public': "on"
-      },
-      async: true, // 異步
+      data: JSON.stringify(input),
+      // async: true, // 異步
       /*result為后端函式回傳的json*/
       success: function (result) {
         alert(result.result);
+      },
+      error: function () {
+        alert(result.result);
       }
     });
-  }
-  function init() {
-    // $("#new").click(newDesign);
-    $("#loadFile").change(loadDesign);
-    $("#download").click(download);
-    $("#saveRoom").click(saveRoomInDB);
-  }
+}
+function init() {
+  // $("#new").click(newDesign);
+  $("#loadFile").change(loadDesign);
+  $("#download").click(download);
+  $("#saveRoom").click(saveRoomInDB);
+}
 
-  init();
+init();
 }
 
 // =====================
@@ -832,7 +835,7 @@ $(document).ready(function () {
   var sideMenu = new SideMenu(blueprint3d, viewerFloorplanner, modalEffects);
   var textureSelector = new TextureSelector(blueprint3d, sideMenu);
   var cameraButtons = new CameraButtons(blueprint3d);
-  
+
   mainControls(blueprint3d);
   uploadRecordingInit();
   // 依據使用者的選擇的房間載入
@@ -844,14 +847,14 @@ $(document).ready(function () {
     success: function (room) {
       let data = room.roomContent  // 房間內容的 json
       isEditor = room.isEditor // 是否為房間編輯者
-      console.log("isEditor_success",isEditor)
+      console.log("isEditor_success", isEditor)
       // 訪客只能瀏覽房間，不可寫也不可移動家具
       if (isEditor == false) {
         data = data.replace(/false/gi, "true");
         $("#check").prop("checked", true);
         $("#fixed").hide();
-        $("input").attr("readonly","readonly")
-        $("textarea").attr("readonly","readonly")
+        $("input").attr("readonly", "readonly")
+        $("textarea").attr("readonly", "readonly")
         $("#context-menu-delete").hide();
         $("#main-controls").hide();
         $("#add-items").hide();
