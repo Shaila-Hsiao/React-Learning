@@ -277,7 +277,6 @@ var ContextMenu = function (blueprint3d) {
       console.log("info has data");
       $("#IntroOrMove").show();
     }
-<<<<<<< HEAD
     // 當點選的物件為留言板時
      // 模型為留言板時
     if(item.metadata.itemName == "messageBoard"){ 
@@ -290,9 +289,6 @@ var ContextMenu = function (blueprint3d) {
         $("#context-menu").hide();
       }
     }
-=======
-
->>>>>>> ca105411cebe7e4844185ddc09a6daeb10dea4f5
     $("#item-width").val(cmToIn(selectedItem.getWidth()).toFixed(0));
     $("#item-height").val(cmToIn(selectedItem.getHeight()).toFixed(0));
     $("#item-depth").val(cmToIn(selectedItem.getDepth()).toFixed(0));
