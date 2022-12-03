@@ -225,33 +225,39 @@ var ContextMenu = function (blueprint3d) {
       type: "GET",
       /*result為后端函式回傳的json*/
       success: function (resp) {
-        // console.log("success: ", resp.data.result );
-        // console.log("result: ", resp.result[0]);
-        // console.log("result: ", resp.result.length);
         for(var i=0 ; i< resp.result.length;i++){
           var obj = resp.result[i];
-          console.log(obj[0],obj[1])
-          str += `<div class=\"panel panel-default col-xs-5\">`+
-          `<div class=\"panel-heading\">From: ${obj[4]}</div>`+
-          `<div class=\"panel-body\">`+
-          `<div><label class="col-form-label">日期:</label><text id=\"boardDate\">${obj[1]}</text></div>`+
-          `<div><label class="col-form-label">內容:</label><text id=\"boardContent\">${obj[2]}</text></div>`+
-          `<div><label class="col-form-label">顏色:</label><text id=\"boardColor\">${obj[3]}</text></div>`+
-          "</div></div>";
-          console.log(str);
+          console.log("result ",obj)
+          // 身分: username 判斷
+          var identity = obj[4];
+          // date -------------
+          const IsoDate = new Date(obj[1])
+          const DateStr = IsoDate.getFullYear() + "-" + (IsoDate.getMonth() + 1) + "-" + IsoDate.getDate()
+          console.log("data: ", IsoDate)
+          console.log("date type :", typeof (IsoDate))
+          console.log("date type :", IsoDate.getFullYear())
+          console.log("DataStr  :", DateStr)
+          str += `<div class="panel panel-default col-xs-5" style="background-color:${obj[3]}">`+
+          `<div class="panel-heading">`;
+          // 留言列表顯示
+          if(identity == "visitor" ){
+            // 未登入者
+            str += `<span class="glyphicon glyphicon-user"></span> ${identity}`;
+          }else{
+            // 有登入者
+            str += `<a href="#"><span class="glyphicon glyphicon-user"></span></a> ${identity}`;
+          }
+          str +=`<div><small id="DateDOM"><label class="col-form-label">留言於: </label><span id="boardDate">${DateStr}</sapn></samll></div>`+
+                `</div>`+
+                `<div class="panel-body">`+
+                    `<div><label class="col-form-label"></label><text id="boardContent">${obj[2]}</text></div>`+
+                    "</div>"+
+                 "</div>";
         }
-        // const temp = resp.data.result;
-        // cards = [];
-        // console.log("cards", cards);
-        // for (let i = 0; i < temp.length; i++) {
-        //   cards.push(temp[i]);
-        // }
-        // console.log("cards", cards);
         var el = document.getElementById('AllMsgComment');
         el.innerHTML = str;
       }
     })
-    // str += "</div>";
   }
   // 選擇物件時 
   function itemSelected(item) {
@@ -263,8 +269,6 @@ var ContextMenu = function (blueprint3d) {
     console.log("log itemInfoID in example.js line 148~~~~~", item.metadata.itemInfoID);
     console.log("IsEditor: ", isEditor);
     $("#context-menu-name").text(item.metadata.itemName);
-
-
     $("#context-menu").show();
     // 模型沒有資訊而且身分為訪客: 看不到模型資訊以及按鈕
     $("#IntroOrMove").show();
@@ -283,8 +287,9 @@ var ContextMenu = function (blueprint3d) {
       AllBoardMsg();
       $("#boardInfo").show();
       console.log("boardInfo")
-      $("#itemInfo").removeClass("col-xs-2").addClass("col-xs-4");
-      $("#main").removeClass("col-xs-10").addClass("col-xs-8");
+      $("#itemInfo").removeClass("col-xs-2").addClass("col-xs-5");
+      $("#main").removeClass("col-xs-10").addClass("col-xs-7");
+      $("#comment-textarea").removeAttr("readonly");
       if(isEditor == false){
         $("#context-menu").hide();
       }
@@ -902,6 +907,8 @@ $(document).ready(function () {
         $("#SaveBtn").hide();
         // sidebar 新增模型連結
         $("#items_tab").hide();
+        // 留言者(不為房客)，則可看見 新增留言按鈕
+        $("#AddCommentBtn").show()
         // $("#SaveBtn").hide();
         // ("#fixed").attr('style','display:none;'); 
       }

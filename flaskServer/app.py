@@ -82,6 +82,7 @@ def login():
     if name :
         # 設置session
         session['userID'] = userID
+        session['name'] = name
         print(session)
         return jsonify({
             "login":name
@@ -91,6 +92,7 @@ def login():
 @app.route("/logout",methods=["POST"])
 def logout_user():
     session.pop("userID")
+    session.pop("name")
     return "200"
 ############# 取得使用者資料 #############
 @app.route("/@me",methods = ["GET"])
@@ -512,11 +514,16 @@ def getMsgBoard():
 def writeMsgBoard():
     roomID = session.get('roomID')
     # roomID = request.form.get('roomID')
-    weather = request.form.get('weather')
-    content = request.form.get('content')
     color = request.form.get('color')
-    msgFrom = session.get('userID')
-    result = boardMsgInsert(weather,content,color,msgFrom,roomID)
+    content = request.form.get('content')
+    msgFrom = session.get('name')
+    msgFromUserID = session.get('userID')
+    if(msgFrom == None and msgFromUserID == None):
+        msgFrom = "visitor"
+        msgFromUserID = "visitor"
+        result = boardMsgInsert(color,content,msgFrom,msgFromUserID,roomID)
+        return {"result":result}
+    result = boardMsgInsert(color,content,msgFrom,msgFromUserID,roomID)
     return {"result":result}
 
 #################### 個人資訊 ####################

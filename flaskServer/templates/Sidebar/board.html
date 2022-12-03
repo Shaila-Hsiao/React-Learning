@@ -3,7 +3,6 @@
     position:relative;
     display: none;
     background-image: url("../../static/blueprint/other/board.jpg");
-    width: 500px;
     border-radius: 25px;
   }
   #boardInfo > .panel-heading{
@@ -20,7 +19,7 @@
   }
   #AllMsgComment> .panel {
     padding: 0%;
-    height: 200px;
+    height: 150px;
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -28,27 +27,85 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
+  .panel-body > .form-group> label{
+    padding: 10px;
+    font-size: 20px;
+
+  }
+  #boardInfo button{
+    background-color:#71050F;
+    color: aliceblue;
+  }
+  #boardContent{
+    font-size: larger;
+  }
 </style>
 <div id="boardInfo" class="panel panel-default" style="display:none">
   <div class="panel-body"> 
     <h1>留言板</h1>
     <div id="AllMsgComment" class="row "></div>
-    <form >
+    <button id="AddCommentBtn" type="button" class="btn btn-default" style="display: none">新增留言</button>
+    <form id="CommentFrom" style="display: none">
       <!-- <form action="/action_page.php"> -->
-      <div class="form-group">
-        <label for="comment">留言</label>
-        <textarea class="form-control" rows="5" id="comment"></textarea>
+      <div class="form-group panel">
+        <div class="panel-body">
+          <label for="comment">留言</label>
+          <textarea class="form-control" rows="5" id="comment-textarea"></textarea>
+          <label for="comment">便條紙顏色</label>
+          <input type="color" id="myColor">
+          <button type="button" class="btn btn-default" onclick="commentBtn()">留言</button>
+          <button id="CommentClose" type="button" class="btn btn-default">關閉</button>
+        </div>
       </div>
-      <button id="boardClose" type="button" class="btn btn-default">close</button>
-      <button type="submit" class="btn btn-default">留言</button>
     </form>
+    
+    <button id="boardClose" type="button" class="btn btn-default pull-right">關閉</button>
   </div>
 </div>
 
 <script>
   $("#boardClose").click(function(){
-    $("#itemInfo").removeClass("col-xs-4").addClass("col-xs-2");
-    $("#main").removeClass("col-xs-8").addClass("col-xs-10");
+    $("#itemInfo").removeClass("col-xs-5").addClass("col-xs-2");
+    $("#main").removeClass("col-xs-7").addClass("col-xs-10");
     $("#boardInfo").hide();
+    $("#CommentFrom").hide();
   })
+  // 按下留言的按鈕
+  function commentBtn(){
+    // 取得顏色
+    var colorPicker = document.getElementById("myColor").value;
+    console.log("color:",colorPicker);
+    var comment = document.getElementById("comment-textarea").value;
+
+    // /writeMsg
+    $.ajax({
+      url: '/writeMsgBoard',
+      type: "POST",
+      data:{
+        'color':colorPicker,
+        'content' : comment
+      },
+      /*result為后端函式回傳的json*/
+      success: function (resp) {
+        console.log("Comment output: ",resp);
+        $("#comment-textarea").val("")
+      }
+      ,error: function(exp){
+        console.log("Comment Fail: ",exp);
+
+      }
+    })
+  }
+  // 點選新增留言的按鈕
+  $("#AddCommentBtn").click(function(){
+    $("#comment-textarea").val("")
+    $("#CommentFrom").show();
+  });
+  // 關閉留言按鈕
+  $("#CommentClose").click(function(){
+    $("#comment-textarea").val("")
+    $("#CommentFrom").hide();
+    }
+  );
+  
 </script>

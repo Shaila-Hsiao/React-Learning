@@ -2,7 +2,7 @@ from myModule.connectDB import connection, cursor
 from datetime import datetime
 # 從 DB 拿取所有的留言訊息
 def allBoardMsg(roomID):
-    command = f"SELECT `id`, `date`, `content`, `color`, `msgFrom`, `roomID` FROM `boardmsg` WHERE `roomID`='{roomID}';"
+    command = f"SELECT `id`, `date`, `content`, `color`, `msgFrom`,`MsgFromUserID`, `roomID` FROM `boardmsg` WHERE `roomID`='{roomID}';"
     cursor.execute(command)
     data = cursor.fetchall()
     # result = []
@@ -17,11 +17,11 @@ def allBoardMsg(roomID):
     #     result.append(content)
     return data
 # 將訪客留言寫入 DB
-def boardMsgInsert(weather,content,color,msgFrom,roomID):
+def boardMsgInsert(color,content,msgFrom,msgFromUserID,roomID):
     nowTime = datetime.now()
     currentTime = nowTime.strftime("%Y-%m-%d") # -%H-%M-%S
     try:
-        command = f"INSERT INTO `boardmsg`(`date`, `weather`, `content`, `color`, `msgFrom`, `roomID`) VALUES ('{currentTime}', '{weather}', '{content}', '{color}', '{msgFrom}', '{roomID}')"
+        command = f"INSERT INTO `boardmsg`(`date`, `color`, `content`, `msgFrom`,`msgFromUserID`, `roomID`) VALUES ('{currentTime}', '{color}', '{content}','{msgFrom}', '{msgFromUserID}','{roomID}')"
         cursor.execute(command)
         connection.commit()
         return "success"
