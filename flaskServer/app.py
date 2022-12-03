@@ -310,9 +310,10 @@ def deleteItem():
 @app.route("/userClickRoom",methods=["POST"])
 def userClickRoom():
     roomID = request.json['RoomInfo']
-    session['roomID'] = roomID
+    if roomID:
+        print("line 313=======================",roomID)
+        session['roomID'] = roomID
     return "Success"
-
 # 載入房間
 @app.route("/loadRoom",methods=["GET"])
 def loadRoom():
