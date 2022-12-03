@@ -92,7 +92,8 @@ var ContextMenu = function (blueprint3d) {
   var scope = this;
   var selectedItem;
   var three = blueprint3d.three;
-
+  // 圖片/音檔 內容
+  var itemInfoPicContent, recordContent;
   function init() {
     $("#context-menu-delete").click(function (event) {
       selectedItem.remove();
@@ -111,11 +112,38 @@ var ContextMenu = function (blueprint3d) {
       // 清空資訊
       clearItemInfo();
       // 有模型資訊就顯示
-      if (selectedItem.metadata.itemInfoID != 0) {
-        modelInfo(selectedItem.metadata.itemInfoID)
+      if (selectedItem.metadata.itemInfoID > 0) {
+        $("#exampleIntro").show();
+        modelInfo(selectedItem.metadata.itemInfoID);
+      }
+      else if (isEditor == true){
+        $("#exampleIntro").show();
       }
     });
-
+    // 上傳圖片 
+    $("#uploadImage").click(function () {
+      // 自動點擊上傳圖片的按鈕
+      $("#itemInfoPic").click();
+      // 更換圖片
+      $("#itemInfoPic").change(function () {
+        handleImage("#itemInfoPic", "#image")
+          .then(success => {
+            itemInfoPicContent = success;
+          });
+      });
+    });
+    // 上傳音訊
+    $("#uploadRecord").click(function () {
+      // 自動點擊上傳音檔
+      $("#itemInfoRecord").click();
+      // 處理音檔
+      $("#itemInfoRecord").change(function () {
+        handleRecord("#itemInfoRecord", "#record")
+          .then(success => {
+            recordContent = success;
+          });
+      });
+    });
   }
 
   function cmToIn(cm) {
@@ -133,44 +161,48 @@ var ContextMenu = function (blueprint3d) {
     $('#message').val("");
     $('#image').attr("src", "");
     $('#image').attr("alt", "");
-    $('#AudioSource').attr("src", "");
+    $('#record').attr("src", "");
+    $('#recordName').val("");
 
   }
   // 儲存模型資訊
-  function SaveItemInfo(itemInfoID) {
+  function SaveItemInfo(itemID,itemInfoID) {
     console.log("Save");
     var itemName = $('#exampleModalLabel').val();
     var date = $('#date').val();
     var weather = $('#weather').val();
     var message = $('#message').val();
-    var image = $('#image').attr("src");
-    var AudioSource = $('#AudioSource').attr("src");
-    var recordName = "blueprint";
+    // var image = $('#image').attr("src");
+    // var record = $('#record').attr("src");
+    var recordName = $('#recordName').val();;
     console.log(itemInfoID);
     console.log(itemName);
     console.log(date);
     console.log(weather);
     console.log(image);
-    console.log(AudioSource);
+    console.log(record);
     $.ajax({
       url: '/saveItemInfo',
       type: "POST",
       data: {
+        'itemID':itemID,
         'itemInfoID': itemInfoID,
         'itemName': itemName,
         'date': date,
         'weather': weather,
         'message': message,
-        // 'image':image,
-        // 'record':AudioSource,
-        'recordName': recordName,
+        'image': itemInfoPicContent,
+        'record': recordContent,
+        'recordName': recordName
       },
 
       /*result為后端函式回傳的json*/
       success: function (resp) {
+        alert(resp.result);
         console.log("success: ", resp);
       }
       , error: function (resp) {
+        alert(resp.result);
         console.log("error:", resp);
       }
     });
@@ -179,8 +211,6 @@ var ContextMenu = function (blueprint3d) {
   // 點選Item 跳出 Info
   function modelInfo(itemInfoID) {
     console.log("【modelInfo】 itemInfoID: ", itemInfoID);
-    // 按下儲存即可儲存嵌入模型的資訊
-    $("#SaveBtn").click(function () { SaveItemInfo(itemInfoID) });
     $.ajax({
       url: '/getItemInfo',
       type: "POST",
@@ -207,8 +237,8 @@ var ContextMenu = function (blueprint3d) {
 
         // record Path
         console.log("resp.recordPath: ", resp.recordPath)
-        $('#AudioSource').attr("src", resp.recordPath);
-        var audio = $("#ItemInfoAudio");
+        $('#record').attr("src", resp.recordPath);
+        var audio = $("#record");
         audio[0].pause();
         audio[0].load();//suspends and restores all audio element
       }
@@ -218,7 +248,7 @@ var ContextMenu = function (blueprint3d) {
 
   }
   // 顯示所有Board Message
-  function AllBoardMsg(){
+  function AllBoardMsg() {
     var str = "";
     $.ajax({
       url: '/getMsgBoard',
@@ -269,7 +299,13 @@ var ContextMenu = function (blueprint3d) {
     console.log("log itemInfoID in example.js line 148~~~~~", item.metadata.itemInfoID);
     console.log("IsEditor: ", isEditor);
     $("#context-menu-name").text(item.metadata.itemName);
+
+    // 按下儲存即可儲存嵌入模型的資訊
+    $("#SaveBtn").click(function () { SaveItemInfo(item.metadata.itemID,item.metadata.itemInfoID) });
+    // 出現模型長寬高資訊
     $("#context-menu").show();
+    // 每點選一個模型，先隱藏嵌入模型的資訊
+    $("#exampleIntro").hide();
     // 模型沒有資訊而且身分為訪客: 看不到模型資訊以及按鈕
     $("#IntroOrMove").show();
     if (item.metadata.itemInfoID == 0 && isEditor == false) {
@@ -282,8 +318,8 @@ var ContextMenu = function (blueprint3d) {
       $("#IntroOrMove").show();
     }
     // 當點選的物件為留言板時
-     // 模型為留言板時
-    if(item.metadata.itemName == "messageBoard"){ 
+    // 模型為留言板時
+    if (item.metadata.itemName == "messageBoard") {
       AllBoardMsg();
       $("#boardInfo").show();
       console.log("boardInfo")
@@ -554,7 +590,7 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
       return;
     }
     // 沒有選模型類型
-    else if ($("input[name=modelType-radio]:checked").val() == undefined){
+    else if ($("input[name=modelType-radio]:checked").val() == undefined) {
       alert("Please choose the type of model");
       return;
     }
@@ -600,34 +636,34 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
       }
     });
   }
-  function initUploadModel(){
-    $('#texture').change(function(){
+  function initUploadModel() {
+    $('#texture').change(function () {
       // handleTexture
       handleImage("#texture", "#canvasTexture")
-        .then(success=>{
+        .then(success => {
           textureContent = success;
         });
     });
-    $('#obj').change(function(){
+    $('#obj').change(function () {
       // handleObj
       handleFile("#obj")
-      .then(success=>{
-        objContent = success;
-      });
+        .then(success => {
+          objContent = success;
+        });
     });
-    $('#mtl').change(function(){
+    $('#mtl').change(function () {
       // handleMtl
       handleFile("#mtl")
-      .then(success=>{
-        mtlContent = success;
-      });
+        .then(success => {
+          mtlContent = success;
+        });
     });
-    $('#thumbnail').change(function(){
+    $('#thumbnail').change(function () {
       // handleThumbnail);
       handleImage("#thumbnail", "#canvasAppearance")
-      .then(success=>{
-        thumbnailContent = success;
-      });
+        .then(success => {
+          thumbnailContent = success;
+        });
     });
     $("#uploadBtn").click(uploadModel);
   }
@@ -779,6 +815,8 @@ var mainControls = function (blueprint3d) {
 
   function download() {
     var data = blueprint3d.model.exportSerialized();
+    console.log("export room data: ",data);
+    return;
     var a = window.document.createElement('a');
     var blob = new Blob([data], { type: 'text' });
     a.href = window.URL.createObjectURL(blob);
@@ -811,15 +849,15 @@ var mainControls = function (blueprint3d) {
         alert(result.result);
       }
     });
-}
-function init() {
-  // $("#new").click(newDesign);
-  $("#loadFile").change(loadDesign);
-  $("#download").click(download);
-  $("#saveRoom").click(saveRoomInDB);
-}
+  }
+  function init() {
+    // $("#new").click(newDesign);
+    $("#loadFile").change(loadDesign);
+    $("#download").click(download);
+    $("#saveRoom").click(saveRoomInDB);
+  }
 
-init();
+  init();
 }
 
 // =====================

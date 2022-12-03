@@ -190,10 +190,10 @@ def upload():
     mtl = updateMTL(mtl,textureName)
     # mtl = f"{mtl.split('map_Kd')[0]} map_Kd {textureName}.jpg"
     # 上傳檔案到本機
-    uploadFile(objName,obj,'file',sourcePath)
-    uploadFile(mtlName,mtl,'file',sourcePath)
-    uploadFile(thumbnailName,thumbnail,'image',f"{thumbnailPath}/{thumbnailName}")
-    uploadFile(textureName,texture,'image',f"{texturePath}/{textureName}")
+    uploadFile(obj,'file',inputPath)
+    uploadFile(mtl,'file',f"{sourcePath}/{mtlName}")
+    uploadFile(thumbnail,'image',f"{thumbnailPath}/{thumbnailName}")
+    uploadFile(texture,'image',f"{texturePath}/{textureName}")
     # itemID: 模型的 ID，如果上船錯誤就會回傳 itemID = 0
     itemID = 0
     # 確認有沒有 JS 重複的檔案
@@ -229,7 +229,11 @@ def upload():
 # 儲存模型內部資訊(照片、文字等)
 @app.route("/saveItemInfo",methods=["POST"])
 def saveItemInfo():
+    roomID = session.get('roomID')
+    itemID = request.form.get('itemID')
     itemInfoID = request.form.get('itemInfoID')
+    print("itemInfoID =============>",itemInfoID)
+    print("type of itemInfoID =============>",type(itemInfoID))
     itemName = request.form.get('itemName')
     date = request.form.get('date')
     weather = request.form.get('weather')
@@ -237,28 +241,29 @@ def saveItemInfo():
     image = request.form.get('image')
     record = request.form.get('record')
     recordName = request.form.get('recordName')
-    print("Form get Data :",itemInfoID,itemName,date,weather,message,image,record,recordName)
+    # print("Form get Data :",itemInfoID,itemName,date,weather,message,image,record,recordName)
+    print("============== record head ==============\n",record[:50])
     imagePath = ""
     recordPath = ""
     # 照片處理
     if image:
-        imagePath = "./static/blueprint/itemInfo/image"
-        imageName = secrets.token_hex()+".jpg"
         # imageName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
-        uploadFile(imageName,image,'image',imagePath)
-        imagePath = imagePath+'/'+imageName # 完整相對路徑
+        imageName = secrets.token_hex()+".jpg"
+        imagePath = "./static/blueprint/itemInfo/image/"+imageName
+        uploadFile(image,'image',imagePath)
     # 語音處理
     if record:
-        recordPath = "./static/blueprint/itemInfo/record"
-        fileName = b64encode(os.urandom(20)).decode('utf-8')+".mp3"
-        uploadFile(fileName,record,"recording",recordPath)
-        recordPath = recordPath+'/'+recordName # 完整相對路徑
+        # fileName = b64encode(os.urandom(20)).decode('utf-8')+".mp3"
+        fileName = secrets.token_hex()+".mp3"
+        recordPath = "./static/blueprint/itemInfo/record/"+fileName
+        uploadFile(record,"recording",recordPath)
     # 第一次寫入訊息
-    if itemInfoID == 0:
-        itemInfoID = itemInfoInsert(itemName,date,weather,message,imagePath,recordPath,recordName)
+    if int(itemInfoID) == 0:
+        itemInfoID = itemInfoInsert(roomID,itemID,itemName,date,weather,message,imagePath,recordPath,recordName)
         result = "新增成功"
     else:
         result = itemInfoUpdate(itemInfoID,itemName,date,weather,message,imagePath,recordPath,recordName)
+        result = "修正成功"
     return {'result':result,'itemInfo':itemInfoID}
 # 點擊模型取得內部資訊(照片、文字等)
 @app.route("/getItemInfo",methods=["POST"])
@@ -307,9 +312,10 @@ def deleteItem():
 @app.route("/userClickRoom",methods=["POST"])
 def userClickRoom():
     roomID = request.json['RoomInfo']
-    session['roomID'] = roomID
+    if roomID:
+        print("line 313=======================",roomID)
+        session['roomID'] = roomID
     return "Success"
-
 # 載入房間
 @app.route("/loadRoom",methods=["GET"])
 def loadRoom():
@@ -410,7 +416,7 @@ def modifyRoomPic():
     roomPicName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
     print("roomPicName in modifyHeadshot", roomPicName)
     # 將照片存到 server
-    uploadFile(roomPicName, roomPic,'image',f'./static/roomPic/{roomPicName}')
+    uploadFile(roomPic,'image',f'./static/roomPic/{roomPicName}')
     roomPicPath = f'/static/roomPic/{roomPicName}'
     # 更新大頭照路徑
     updateRoomPic(roomID, roomPicPath)
@@ -556,7 +562,7 @@ def modifyHeadshot():
     headshotName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
     print("headshotName in modifyHeadshot", headshotName)
     # 將照片存到 server
-    uploadFile(headshotName, headshot,'image',f'./static/headShots/{headshotName}')
+    uploadFile(headshot,'image',f'./static/headShots/{headshotName}')
     headshotPath = f'/static/headShots/{headshotName}'
     # 更新大頭照路徑
     updateHeadshot(userID, headshotPath)

@@ -23,7 +23,7 @@
     margin: 10px;
 
   }
-  #ItemInfoAudio{
+  #record{
     width: 100%;
     margin: 5px;
   }
@@ -73,12 +73,8 @@
 
           <!-- image -->
           <div class="col-md-12" style="margin-top: 10px;">
-            <label class="text-center mb-5 image-preview-wrapper" for="texture">
-              <img src="../static/blueprint/other/uploadTexture.png" id="canvasTexture" alt="image-placehoder">
-            </label>
-            <input type="file" id="texture" class = "hide" accept="image/*" />
-
-            <img id="image" src="" alt="" style="width:100%;max-width:150px">
+            <img id="image" src="" alt="" for = "itemInfoPic" style="width:100%;max-width:150px">
+            <input type="file" id="itemInfoPic" class = "hide" accept="image/*" />
             <!-- modal for enlarging image -->
             <div id="myModal">
               <span class="close" id="itemInfoImageClose">X</span>
@@ -92,19 +88,20 @@
             <div class="col-md">
               <label for="recordName" class="col-form-label">音檔名字</label>
               <!-- <text id="weather" for="recipient-name" class="col-form-label"></text> -->
-              <textarea class="form-control" id="recordName"></textarea>
+              <input type = "text" class="form-control" id="recordName">
             </div>
-            <audio id="ItemInfoAudio" controls>
-              <source id="AudioSource" src="" type="audio/mpeg">
-            </audio>
+            <audio id="record" src="" for = "itemInfoRecord" controls></audio>
+            <input type="file" id="itemInfoRecord" class = "hide" accept="audio/mpeg" />
+              <!-- <source id="AudioSource"  type="audio/mpeg"> -->
           </div>
-
         </form>
       </div>
       <!-- FOOTER -->
       <div class="panel-footer">
-        <button id="CloseBtn" type="button" class="btn btn-secondary" >關閉</button>
+        <button id="uploadImage" type="button" class="btn btn-primary">上傳圖片</button>
+        <button id="uploadRecord" type="button" class="btn btn-primary" >上傳音檔</button>
         <button id="SaveBtn" type="button" class="btn btn-primary">儲存</button>
+        <button id="CloseBtn" type="button" class="btn btn-secondary" >關閉</button>
       </div>
       <!-- FOOTER -->
   </div>
@@ -171,10 +168,10 @@
   });
   
   // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
+  // var span = document.getElementsByClassName("close")[0];
   
   // When the user clicks on <span> (x), close the modal
-    $("#itemInfoImageClose").click(function() { 
+  $("#itemInfoImageClose").click(function() { 
     $("#myModal").hide();
     $("#itemInfoImageClose").hide();
   });
@@ -186,21 +183,21 @@
   // 模型資訊 modal 點選關閉 => 音樂停止並隱藏模型資訊
   $("#CloseBtn").click(function () {
     console.log("Audio")
-    var oAudio = document.getElementById('ItemInfoAudio');
+    var oAudio = document.getElementById('record');
     oAudio.pause();
     $("#exampleIntro").hide();
   });
   // 模型資訊顯現
   function itemInfoShow(){
-    $("#itemInfo").addClass("col-xs-2");
-    $("#main").removeClass("col-xs-12").addClass("col-xs-10");
+    $("#itemInfo").addClass("col-xs-3");
+    $("#main").removeClass("col-xs-12").addClass("col-xs-9");
     $("#itemInfo").show();
   }
   // 模型資訊隱藏
   function itemInfoHide(){
     $("#itemInfo").hide();
-    $("#itemInfo").removeClass("col-xs-2");
-    $("#main").removeClass("col-xs-10").addClass("col-xs-12");
+    $("#itemInfo").removeClass("col-xs-3");
+    $("#main").removeClass("col-xs-9").addClass("col-xs-12");
   }
 </script>
 
