@@ -62,8 +62,8 @@ def register():
     email = request.json['email']
     headshotPath = "./static/headShots/myHeadshot.jpg"
     result = userRegister(name,userID,passwd,email,headshotPath)
-    session['userID'] = userID
     if result == "success":
+        session['userID'] = userID
         return jsonify({
             "userID":userID,
             "email":email,

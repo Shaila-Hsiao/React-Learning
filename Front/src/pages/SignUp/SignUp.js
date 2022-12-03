@@ -144,7 +144,7 @@ export  default function SignUp() {
           setAlertContent(resp.data.result);
           setAlert(true);
           handleClick();
-          await httpClient.post("../logout");
+          // await httpClient.post("../logout");
         }else{
           // if sign up success , navigate to home
           window.location.href = "/";
