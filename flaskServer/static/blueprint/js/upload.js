@@ -3,7 +3,6 @@
 async function handleImage(sourceID, showID) {
     return new Promise((resolve, reject)=>{
         let reader = new FileReader();//建立FileReader物件
-        console.log("==== ",sourceID," =====",reader);
         try{
             // 使用 readAsDataURL 將圖片轉成 Base64
             reader.readAsDataURL($(sourceID)[0].files[0]);
@@ -26,6 +25,22 @@ async function handleFile(sourceID) {
             reader.onload = function () {
                 fileContent = reader.result;
                 resolve(fileContent);
+            };
+        }catch{
+            reject("fail");
+        }
+    });
+}
+// 讀取音檔
+async function handleRecord(sourceID, showID) {
+    return new Promise((resolve, reject)=>{
+        let reader = new FileReader();//建立FileReader物件
+        try{
+            reader.readAsDataURL($(sourceID)[0].files[0]);
+            reader.onload = function (e) {
+                recordContent = e.target.result;
+                $(showID).attr('src', recordContent);//放入讀取到的圖片
+                resolve(recordContent);
             };
         }catch{
             reject("fail");

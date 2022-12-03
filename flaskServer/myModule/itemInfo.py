@@ -18,8 +18,8 @@ def itemSelect(itemInfoID):
     print("Data date: ",data['date'])
     return data
 # 插入 item 資訊
-def itemInfoInsert(itemName,date,weather,message,imagePath,recordPath,recordName):
-    command = f"INSERT INTO `iteminfo`(`itemName`, `date`, `weather`, `message`, `imagePath`, `recordPath`, `recordName`) VALUES ('{itemName}','{date}','{weather}','{message}','{imagePath}','{recordPath}','{recordName}')"
+def itemInfoInsert(roomID,itemID,itemName,date,weather,message,imagePath,recordPath,recordName):
+    command = f"INSERT INTO `iteminfo`(`roomID`,`itemID`,`itemName`, `date`, `weather`, `message`, `imagePath`, `recordPath`, `recordName`) VALUES ('{roomID}','{itemID}','{itemName}','{date}','{weather}','{message}','{imagePath}','{recordPath}','{recordName}')"
     cursor.execute(command)
     connection.commit()
     command = "select max(`id`) from `item`"
