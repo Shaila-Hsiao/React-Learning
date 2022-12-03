@@ -323,8 +323,8 @@ var ContextMenu = function (blueprint3d) {
       AllBoardMsg();
       $("#boardInfo").show();
       console.log("boardInfo")
-      $("#itemInfo").removeClass("col-xs-2").addClass("col-xs-5");
-      $("#main").removeClass("col-xs-10").addClass("col-xs-7");
+      $("#itemInfo").removeClass("col-xs-3").addClass("col-xs-5");
+      $("#main").removeClass("col-xs-9").addClass("col-xs-7");
       $("#comment-textarea").removeAttr("readonly");
       if(isEditor == false){
         $("#context-menu").hide();
