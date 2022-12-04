@@ -216,7 +216,9 @@ export const NavbarDrawer = () => {
                 <Box sx={{ mr: 2 }}>
                   <Tooltip title="Open Notifications">
                     <IconButton onClick={handleOpenNotifications} sx={{ p: 0 }} size="large" aria-label="show 4 new mails" color="inherit">
-                      <Badge badgeContent={4} color="error">
+                      <Badge 
+                        // badgeContent={} 
+                        color="error">
                         <NotificationsIcon />
                       </Badge>
                     </IconButton>
@@ -239,6 +241,9 @@ export const NavbarDrawer = () => {
                       open={Boolean(anchorElNotifications)}
                       onClose={handleCloseNotifications}
                     >
+                      <MenuItem onClick={() => navigate("")}>
+                        歡迎用戶 {user.name} 開始您的紀念館之旅！
+                      </MenuItem>
                       {/* {cards.map((card) => (
                         <MenuItem onClick={() => navigate("")}>{card}</MenuItem>
                       ))} */}
