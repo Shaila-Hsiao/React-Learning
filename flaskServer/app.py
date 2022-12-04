@@ -235,8 +235,6 @@ def saveItemInfo():
     roomID = session.get('roomID')
     itemID = request.form.get('itemID')
     itemInfoID = request.form.get('itemInfoID')
-    print("itemInfoID =============>",itemInfoID)
-    print("type of itemInfoID =============>",type(itemInfoID))
     itemName = request.form.get('itemName')
     date = request.form.get('date')
     weather = request.form.get('weather')
@@ -244,8 +242,6 @@ def saveItemInfo():
     image = request.form.get('image')
     record = request.form.get('record')
     recordName = request.form.get('recordName')
-    # print("Form get Data :",itemInfoID,itemName,date,weather,message,image,record,recordName)
-    print("============== record head ==============\n",record[:50])
     imagePath = ""
     recordPath = ""
     # 照片處理
