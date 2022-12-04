@@ -387,7 +387,7 @@ def OwnerRoom():
 def createRoom():
     roomName = request.json['roomName']
     introduction = request.json['introduction']
-    roomImgPath = "./static/roomPic/DLNJYRU24pM24N07ImaS2zz+Uig=.jpg" # 預設圖片
+    roomImgPath = request.json['roomImgPath'] # 預設圖片
     roomContent = request.json['roomContent']
     private_public = request.json['private_public']
     userID = session.get("userID")

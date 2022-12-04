@@ -9,8 +9,6 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import room1 from '../../assets/images/room1.jpg';
-import user2 from '../../assets/images/user2.jpg';
 import { NavbarDrawer } from '../../components/navbarDrawer';
 import httpClient from '../../httpClient';
 import Stack from '@mui/material/Stack';

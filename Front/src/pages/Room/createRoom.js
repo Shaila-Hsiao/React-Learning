@@ -83,28 +83,33 @@ export default function CreateRoom() {
     });
     // check Room Model
     let roomContent ="";
+    let roomImgPath ="";
     switch (RM_Radio) {
       case '0':{
+        roomImgPath = "./static/roomPic/zero.png";
         // 空白
         break;
       }
       case '1':{
         // 簡易
-        roomContent = JSON.stringify(RoomModel)
+        roomContent = JSON.stringify(RoomModel);
+        roomImgPath = "./static/roomPic/2.032e4416.png";
         console.log("roomContent_Type: ",typeof(roomContent) );
         console.log("roomContent_Switch: ",roomContent );
         break;
       }
       case '2': {
         // 書房
-        roomContent = JSON.stringify(StudyRoomModel)
+        roomContent = JSON.stringify(StudyRoomModel);
+        roomImgPath = "./static/roomPic/studyroom.png";
         console.log("roomContent_Type: ", typeof (roomContent));
         console.log("roomContent_Switch: ", roomContent);
         break;
       }
       case '3': {
         // 練團室
-        roomContent = JSON.stringify(BandRoomModel)
+        roomContent = JSON.stringify(BandRoomModel);
+        roomImgPath = "./static/roomPic/band123.jpg";
         console.log("roomContent_Type: ", typeof (roomContent));
         console.log("roomContent_Switch: ", roomContent);
         break;
@@ -118,6 +123,7 @@ export default function CreateRoom() {
       const resp = await httpClient.post("./createRoom", {
         roomName,
         introduction,
+        roomImgPath,
         roomContent,
         private_public,
       });
@@ -341,7 +347,7 @@ export default function CreateRoom() {
                 >
                   <CardMedia
                     component="img"
-                    image={studyroom}
+                    image={'./static/roomPic/studyroom.png'}
                     alt="random"
                     className="BeerListItem-img"
                   />
@@ -358,7 +364,7 @@ export default function CreateRoom() {
                 >
                   <CardMedia
                     component="img"
-                    image={bandroom}
+                    image={'./static/roomPic/band123.jpg'}
                     alt="random"
                     className="BeerListItem-img"
                   />
