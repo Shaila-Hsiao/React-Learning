@@ -184,10 +184,13 @@ export default function RoomIntro() {
                                 borderRadius: '16px'
                             }}
                         >
-                            <Typography variant='h6'>{cards[0]}</Typography>
+                            <Typography variant='h6'>房間名稱 : {cards[0]}</Typography>
                             <Typography variant='h6'>Author : {cards[3]}</Typography>
                             <Typography variant='h6'>Email : {cards[4]}</Typography>
-                            <Typography variant='h6'>{cards[5]}</Typography>
+                            { (cards[5] == null
+                              ? <Typography variant='h6'>個人簡介 : 這個人很懶，什麼都沒留下～ </Typography> 
+                              : <Typography variant='h6'>個人簡介 : {cards[5]}</Typography>
+                            )}
                         </Box>
                         <Box sx={{ p:1}} />
                         <Button variant="contained" size="large" onClick={LoadRoom} >參觀</Button>
