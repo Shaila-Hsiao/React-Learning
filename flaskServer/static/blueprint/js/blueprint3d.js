@@ -4733,11 +4733,13 @@ var BP3D;
                 domElement.style.cursor = cursorStyle;
             };
             this.updateWindowSize = function () {
+                console.log("我有進來歐~");
                 scope.heightMargin = scope.element.offset().top;
                 scope.widthMargin = scope.element.offset().left;
                 scope.elementWidth = scope.element.innerWidth();
                 if (options.resize) {
                     scope.elementHeight = window.innerHeight - scope.heightMargin;
+                    console.log("這邊再調整~");
                 }
                 else {
                     scope.elementHeight = scope.element.innerHeight();

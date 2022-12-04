@@ -50,6 +50,9 @@ def newservicedata():
 def newRoomIntro():
     return render_template("index.html")
 @app.route("/RoomOwnerProfile")
+def ownerprofile():
+    return render_template("index.html")
+@app.route("/profile")
 def newprofile():
     return render_template("index.html")
 

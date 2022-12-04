@@ -102,6 +102,8 @@ function Profile() {
         (async () => {
             try {
                 var resp = '';
+                resp = await httpClient.get("../@me");
+                setUser(resp.data);
                 resp = await httpClient.get("../@meforFile");
                 console.log(resp.data.userID)
                 console.log(resp.data.name)

@@ -119,18 +119,21 @@ function UserData() {
 
     if (file) {
       var headshot = '';
+      const resp = '';
       console.log("in ,", file)
       reader.readAsDataURL(file);
       reader.onload = () => {
         console.log(reader.result); //base64encoded string
         headshot = reader.result;
         console.log("headshot data ", headshot);
-        var resp = httpClient.post("../modifyHeadshot", {
+        resp = httpClient.post("../modifyHeadshot", {
           headshot,
         });
         console.log("headshot", resp);
         // setHeadShotPath(resp);
       };
+      console.log(resp.data.headshotPath);
+      setHeadShotPath(resp.data.headshotPath);
     }
     // navigate("/userdata");
   }
@@ -200,7 +203,7 @@ function UserData() {
                         src={user.headshotPath} />
                       <Box sx={{ textAlign: 'right' }}>
                         <Button variant="contained" component="label">
-                          編輯頭貼
+                          更新頭貼
                           <input
                             accept="image/*"
                             style={{

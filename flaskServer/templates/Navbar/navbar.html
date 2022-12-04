@@ -92,6 +92,11 @@
     border-radius: 50%;
   }
 
+  .right_a_little{
+    position: relative;
+    left:70%;
+  }
+
   #NavbarUnAuth,
   #NavbarAuth {
     display: none;
@@ -147,7 +152,8 @@
     <li><a href="/servicedata">服務支援</a></li>
     <li><a href="/">聯絡我們 </a></li>
   </ul>
-  <div>
+  <div >
+    <!-- class="left_a_little" -->
     <ul id="NavbarUnAuth" class="nav navbar-nav navbar-right">
       <li><a href="/Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
       <li><a href="/SignUp"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
@@ -155,12 +161,10 @@
     </ul>
   </div>
   <div>
-    <ul id="NavbarAuth" class="nav navbar-nav navbar-right">
-      <img src="../../static/headShots/user.a00227ea.jpg" id="AvatarImg" alt="Avatar" class="avatar">
-      <!-- <a href="/"><img src="../../static/headShots/user.a00227ea.jpg" id="AvatarImg" alt="Avatar" class="avatar"></a> -->
-      </li>
+    <ul id="NavbarAuth" class="nav navbar-nav right_a_little">
+      <!-- <img src="../../static/headShots/user.a00227ea.jpg" id="AvatarImg" alt="Avatar" class="avatar"> -->
+      <a href="/profile"><img src="../../static/headShots/user.a00227ea.jpg" id="AvatarImg" alt="Avatar" class="avatar"></a>
     </ul>
   </div>
-  <div> </div>
   <!-- </div> -->
 </nav>

@@ -1,4 +1,3 @@
-
 /*
  * Camera Buttons
  */
@@ -550,7 +549,7 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
   function handleWindowResize() {
     $(".sidebar").height(window.innerHeight);
     $("#add-items").height(window.innerHeight);
-
+    blueprint3d.three.updateWindowSize();
   };
 
   // TODO: this doesn't really belong here
