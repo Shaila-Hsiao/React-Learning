@@ -829,18 +829,18 @@ var mainControls = function (blueprint3d) {
     console.log("==>", reader);
   }
 
-  // function download() {
-  //   var data = blueprint3d.model.exportSerialized();
-  //   console.log("export room data: ", data);
-  //   // return;
-  //   var a = window.document.createElement('a');
-  //   var blob = new Blob([data], { type: 'text' });
-  //   a.href = window.URL.createObjectURL(blob);
-  //   a.download = 'design.blueprint3d';
-  //   document.body.appendChild(a)
-  //   a.click();
-  //   document.body.removeChild(a)
-  // }
+  function download() {
+    var data = blueprint3d.model.exportSerialized();
+    console.log("export room data: ", data);
+    // return;
+    var a = window.document.createElement('a');
+    var blob = new Blob([data], { type: 'text' });
+    a.href = window.URL.createObjectURL(blob);
+    a.download = 'design.blueprint3d';
+    document.body.appendChild(a)
+    a.click();
+    document.body.removeChild(a)
+  }
   // 存進 DB
   function saveRoomInDB() {
     var roomContent = blueprint3d.model.exportSerialized();
@@ -869,7 +869,7 @@ var mainControls = function (blueprint3d) {
   function init() {
     // $("#new").click(newDesign);
     $("#loadFile").change(loadDesign);
-    // $("#download").click(download);
+    $("#download").click(download);
     $("#saveRoom").click(saveRoomInDB);
   }
 
