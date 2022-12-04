@@ -31,7 +31,7 @@ function Copyright() {
             <Link color="#FFFFFF" href="https://www.im.ncnu.edu.tw/">
                 國立暨南國際大學資訊管理學系
             </Link>
-            {' 畢業專題第五組'}{new Date().getFullYear()}{'.'}
+            {' 畢業專題第五組 '}{new Date().getFullYear()}{'.'}
         </Typography>
     );
 }
