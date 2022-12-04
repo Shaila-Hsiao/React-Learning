@@ -176,7 +176,7 @@ export default function RoomEdit() {
                                                     height: '100%',
                                                 }}
                                             >
-                                                <Box bgcolor='#fff' borderRadius='4px'>
+                                                <Box bgcolor='#fff' borderRadius='4px' padding={2}>
                                                     <TextField
                                                         required
                                                         fullWidth
@@ -193,7 +193,7 @@ export default function RoomEdit() {
                                                         <CardActionArea>
                                                             <CardMedia
                                                                 component="img"
-                                                                image={room1}
+                                                                image={roomIntro.roomImgPath}
                                                                 alt="room photo"
                                                             />
                                                         </CardActionArea>
@@ -248,7 +248,7 @@ export default function RoomEdit() {
 
                                                 <Box sx={{ p: 1 }} />
 
-                                                <Box bgcolor='#fff' borderRadius='4px'>
+                                                <Box bgcolor='#fff' borderRadius='4px' padding={2}>
                                                     <TextField
                                                         required
                                                         fullWidth
