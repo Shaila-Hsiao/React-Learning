@@ -563,7 +563,7 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
             itemInfoHide();
           }
           setCurrentState(state);
-
+          blueprint3d.three.updateWindowSize();
           break;
         }
       }
@@ -688,11 +688,13 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
       success: function (item) {
         alert(item.result);
         if (item.result == "上傳成功") {
-          var html = '<div class="col-sm-4" style="height:500px">' +
-          `<a class="thumbnail add-item" num = ${i} itemInfo-id="` +
-            0 +
-            '"model-id ="' +
-            item.id +
+          var html = '<div class="col-sm-4 panel panel-default" style="padding:0px" >' +
+          `<div class="panel-heading" style="font-size:20px;font-weight: bolder">${item.name}</div>`+
+          `<div class="panel-body" style="height:300px">`+
+          `<a class="thumbnail add-item" num = ${i} itemInfo-id="`+
+            0+
+            '"model-id ="'+
+            item.id+
             '"model-name="' +
             item.name +
             '" model-url="' +
@@ -701,9 +703,8 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
             item.type +
             '"><img src="' +
             item.image +
-            '" alt="Add Item"> ' +
-            item.name +
-            `</a><button class = "deleteItem" onclick = "deleteItem(${item.id},${i})">delete</button></div>`;
+            '" alt="Add Item" style="max-width:300px;height:250px"> ' +
+            `</a>`+`</div><div class="panel-footer">`+`<button  type="button" class="btn btn-default DeleteBtn deleteItem" onclick = "deleteItem(${item.id})">刪除模型</button></div></div>`;
           $("#items-wrapper").append(html);
           initItems();
         }

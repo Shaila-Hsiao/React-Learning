@@ -174,8 +174,10 @@ function initItemList(items) {
   var itemsDiv = $("#items-wrapper")
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
-    var html = '<div class="col-sm-4" style="height:500px">' +
-      `<a class="thumbnail add-item" num = ${i} itemInfo-id="`+
+    var html = '<div class="col-sm-4 panel panel-default" style="padding:0px" >' +
+    `<div class="panel-heading" style="font-size:20px;font-weight: bolder">${item.name}</div>`+
+    `<div class="panel-body" style="height:300px">`+
+    `<a class="thumbnail add-item" num = ${i} itemInfo-id="`+
       0+
       '"model-id ="'+
       item.id+
@@ -187,9 +189,8 @@ function initItemList(items) {
       item.type +
       '"><img src="' +
       item.image +
-      '" alt="Add Item"> ' +
-      item.name +
-      `</a><button class = "deleteItem" onclick = "deleteItem(${item.id},${i})">delete</button></div>`;
+      '" alt="Add Item" style="max-width:300px;height:250px"> ' +
+      `</a>`+`</div><div class="panel-footer">`+`<button  type="button" class="btn btn-default DeleteBtn deleteItem" onclick = "deleteItem(${item.id})">刪除模型</button></div></div>`;
     itemsDiv.append(html);
     // console.log(html);
   }

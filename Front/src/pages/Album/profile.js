@@ -172,8 +172,9 @@ function Profile() {
                                         />
                                         <CardContent sx={{ flexGrow: 1 }}>
                                             <Typography gutterBottom variant="h5" component="h2">
-                                                {card[2]}
+                                                {card[1]}
                                             </Typography>
+                                            <Typography>{card[2]}</Typography>
                                         </CardContent>
                                     </CardActionArea>
                                 </Card>
