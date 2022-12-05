@@ -55,6 +55,12 @@ def ownerprofile():
 @app.route("/profile")
 def newprofile():
     return render_template("index.html")
+@app.route("/userdata")
+def newuserdata():
+    return render_template("index.html")
+@app.route("/AllRoom")
+def newAllRoom():
+    return render_template("index.html")
 
 ############# 註冊 #############
 @app.route("/register",methods=["POST"])
@@ -106,7 +112,10 @@ def get_current_user():
     if (userID == None):
         return jsonify({"error": "UnAuthorized"}),401
     else :
-        user = getUserId(userID)
+        try :
+            user = getUserId(userID)
+        except :
+            return jsonify({"error": "UnAuthorized"}),401
     # id,name,email
     return jsonify({
         "userID":user[0],
@@ -121,7 +130,13 @@ def get_user_File():
     if (roomID == None) :
         return jsonify({"error": "UnAuthorized"}),401
     else :
-        user = getUserByRoom(roomID)
+        print("meforFile get in ! test test 123")
+        try :
+            user = getUserByRoom(roomID)
+        except :
+            return jsonify({"error": "UnAuthorized"}),401
+        print("user inside 是什麼勒" , user)
+        print("meforFile get in ! test test 成功")
     return jsonify({
         "userID":user[0],
         "name":user[1],
@@ -136,7 +151,10 @@ def get_user():
     if (userNum == None) :
         return jsonify({"error": "UnAuthorized"}),401
     else :
-        user = getUserNum(userNum)
+        try :
+            user = getUserNum(userNum)
+        except :
+            return jsonify({"error": "UnAuthorized"}),401
     # id,name,email
     return jsonify({
         "userID":user[0],
@@ -379,7 +397,12 @@ def OwnerRoom():
     if (roomID == None) :
         return jsonify({"error": "UnAuthorized"}),401
     else :
-        result = findPubRoomByRoomID(roomID)
+        print("room ID take it take take ")
+        try :
+            result = findPubRoomByRoomID(roomID)
+        except :
+            return jsonify({"error": "UnAuthorized"}),401
+        print("room ID take it take take 成功")
     return jsonify({'result':result})
 
 # 創建房間並插入 DB
@@ -496,7 +519,10 @@ def filterRoomName():
 @app.route("/allRoom",methods=["GET"])
 def allRoom():
     private_public = "on"
-    result = getAllRoom(private_public)
+    try :
+        result = getAllRoom(private_public)
+    except :
+        return jsonify({"error": "UnAuthorized"}),401
     print(result)
     return jsonify({'result':result})
 

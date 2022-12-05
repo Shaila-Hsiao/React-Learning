@@ -41,7 +41,7 @@ const theme = createTheme({
 function UserData() {
   const navigate = useNavigate();
   // user 更新
-  const [user, setUser] = useState();
+  var [user, setUser] = useState();
   const [oldPasswd, setOldPass] = useState('');
   const [passwd, setNewPass] = useState('');
   const [CheckNewPass, setCheckNewPass] = useState('');
@@ -96,7 +96,6 @@ function UserData() {
     else {
       alert('new password is not same');
     }
-    navigate("/userdata");
   }
 
   const UpdateUser = async (event) => {
@@ -108,7 +107,6 @@ function UserData() {
       introduction,
     });
     console.log(resp);
-    navigate("/userdata");
   }
 
 
@@ -126,16 +124,24 @@ function UserData() {
         console.log(reader.result); //base64encoded string
         headshot = reader.result;
         console.log("headshot data ", headshot);
-        resp = httpClient.post("../modifyHeadshot", {
-          headshot,
-        });
-        console.log("headshot", resp);
-        // setHeadShotPath(resp);
+        try {
+          resp = httpClient.post("../modifyHeadshot", {
+            headshot,
+          });
+        } catch (error) {
+          console.log("圖片上傳不成功，請再試一次");
+        }
       };
-      console.log(resp.data.headshotPath);
-      setHeadShotPath(resp.data.headshotPath);
+      (async () => {
+        console.log("setHeadShotPath old index", HeadShotPath);
+        var resp2 = '';
+        resp2 = await httpClient.get("../@me");
+        console.log("resp check check", resp2.data.headshotPath);
+        setUser(resp2.data);
+      })();
     }
-    // navigate("/userdata");
+    window.location.reload(false);
+    navigate("/userdata");
   }
   // user 狀態確認
   useEffect(() => {

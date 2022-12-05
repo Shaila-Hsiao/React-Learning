@@ -96,7 +96,7 @@ def findPubRoomByUserID(userID):
     return dataList
 
 def findUserIdByNum(number) :
-    command = f"SELECT userID FROM `account` WHERE number = {number}"
+    command = f"SELECT userID FROM `account` WHERE number = '{number}'"
     cursor.execute(command)
     dataList = cursor.fetchall()
     return dataList[0][0]
@@ -109,7 +109,7 @@ def findPubRoomByUserNum(number):
     return dataList
 
 def findUserIdByRoomID(roomID) :
-    command = f"SELECT userID FROM `room` WHERE id = {roomID}"
+    command = f"SELECT userID FROM `room` WHERE id = '{roomID}'"
     cursor.execute(command)
     dataList = cursor.fetchall()
     return dataList[0][0]

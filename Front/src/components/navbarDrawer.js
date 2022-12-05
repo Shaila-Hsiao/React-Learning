@@ -239,9 +239,15 @@ export const NavbarDrawer = () => {
                       open={Boolean(anchorElNotifications)}
                       onClose={handleCloseNotifications}
                     >
-                      {/* {cards.map((card) => (
-                        <MenuItem onClick={() => navigate("")}>{card}</MenuItem>
-                      ))} */}
+                      <MenuItem onClick={() => navigate("")}>User Rita 訂閱你</MenuItem>
+                      <MenuItem onClick={() => navigate("")}>第一則通知</MenuItem>
+                      <MenuItem onClick={() => navigate("")}>第二則通知</MenuItem>
+                      <MenuItem onClick={() => navigate("")}>第三則通知</MenuItem>
+                      <MenuItem onClick={() => navigate("")}>User Rita 訂閱你</MenuItem>
+                      <MenuItem onClick={() => navigate("")}></MenuItem>
+                      <MenuItem onClick={() => navigate("")}></MenuItem>
+                      <MenuItem onClick={() => navigate("")}></MenuItem>
+
                     </Menu>
                    {/* )} */}
                 </Box>

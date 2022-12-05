@@ -92,7 +92,7 @@ def getUserId(userID):
     return result
 
 def findUserIdByRoom(roomID) :
-    command = f"SELECT userID FROM `room` WHERE id = {roomID}"
+    command = f"SELECT userID FROM `room` WHERE `id` = '{roomID}'"
     cursor.execute(command)
     dataList = cursor.fetchall()
     print("dataList         @-@", dataList)
@@ -101,7 +101,7 @@ def findUserIdByRoom(roomID) :
 def getUserByRoom(roomID):
     print("再次檢查", roomID)
     userID = findUserIdByRoom(roomID)
-    print("再次檢查", userID)
+    print("再次檢查 userID", userID)
     result = ""
     # 搜尋資料庫
     sql = f"SELECT `userID`, `name`, `email`,`headshotPath`, `introduction` FROM `account` WHERE `userID` = '{userID}'"
@@ -127,7 +127,7 @@ def getUserNum(userNum):
 # 更新個人資料
 def updatePersonal(userID,name,email,introduction):
     try:
-        command = f"UPDATE `account` SET name = '{name}', email = '{email}', introduction = '{introduction}' WHERE userID = '{userID}'"
+        command = f"UPDATE `account` SET name = '{name}', email = '{email}', introduction = '{introduction}' WHERE `userID` = '{userID}'"
         cursor.execute(command)
         connection.commit()
         return True

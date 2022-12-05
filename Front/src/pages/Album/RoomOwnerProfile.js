@@ -101,10 +101,10 @@ function Profile() {
     useEffect(() => {
         (async () => {
             try {
-                var resp = '';
-                resp = await httpClient.get("../@me");
-                setUser(resp.data);
-                resp = await httpClient.get("../@meforFile");
+                // var resp = '';
+                // resp = await httpClient.get("../@me");
+                // setUser(resp.data);
+                const resp = await httpClient.get("../@meforFile");
                 console.log(resp.data.userID)
                 console.log(resp.data.name)
                 console.log(resp.data.email)
@@ -122,6 +122,7 @@ function Profile() {
                 console.log("cards", cards);
             } catch (error) {
                 console.log("Not authenticated");
+                navigate("/RoomOwnerProfile");
             }
         })();
     }, []);
