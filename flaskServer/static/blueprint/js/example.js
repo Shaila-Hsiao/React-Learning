@@ -13,9 +13,24 @@ var CameraButtons = function (blueprint3d) {
     LEFT: 3,
     RIGHT: 4
   }
-
+  
   function init() {
-
+    // 手機版偵測
+    var mm = window.matchMedia("(max-width: 500px)");
+    mm.addEventListener('resize',resizeWidth);
+    resizeWidth(mm);
+  
+    function resizeWidth(pMatchMedia){
+      if (pMatchMedia.matches) {
+        //小於500時執行的js
+        console.log("小於500時執行的js");
+        $("itemInfo").hide();
+        $("#itemInfo").removeClass("col-xs-4").removeClass("boxLeft");
+        $("#main").removeClass("col-xs-8").addClass("col-xs-12");
+        blueprint3d.three.updateWindowSize();
+        }
+    }
+    // 手機版偵測
 
     // Camera controls
     $("#zoom-in").click(zoomIn);
@@ -359,7 +374,7 @@ var ContextMenu = function (blueprint3d) {
     console.log("log itemInfoID in example.js line 148~~~~~", item.metadata.itemInfoID);
     console.log("IsEditor: ", isEditor);
     $("#context-menu-name").text(item.metadata.itemName);
-
+    
     // 按下儲存即可儲存嵌入模型的資訊
     $("#SaveBtn").click(function () { SaveItemInfo(item.metadata.itemID, item.metadata.itemInfoID) });
     // 出現模型長寬高資訊
