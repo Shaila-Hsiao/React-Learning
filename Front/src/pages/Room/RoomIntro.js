@@ -73,6 +73,10 @@ export default function RoomIntro() {
       console.log("can't get user number");
     }
   };
+  
+  function Return(){
+    window.history.back();
+  }
 
   // 抓 room 簡介和作者資訊
   useEffect(() => {
@@ -142,7 +146,8 @@ export default function RoomIntro() {
                         <Button
                             variant="contained"
                             size="large"
-                            onClick={() => navigate("/")}
+                            // onClick={() => navigate("/")}
+                            onClick={Return}
                             sx={{ bgcolor: '#7f0808', color: '#fff' }}
                         >返回</Button>
                     </Box>
