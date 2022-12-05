@@ -17,6 +17,7 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import { NavbarDrawer } from '../../components/navbarDrawer';
 import httpClient from "../../httpClient";
 import '../../index.css';
+import { Footer } from '../../components/footer';
 
 var cards = [];
 
@@ -115,13 +116,13 @@ function Profile() {
                     }}
                 >
                     <Grid container>
-                        <Grid item xs={12} sm={5}>
+                        <Grid item xs={12} sm={4} align='center'>
                             <Avatar
                                 alt="UserName"
                                 sx={{ mx: 'auto', width: 200, height: 200 }}
                                 src={user.headshotPath} />
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} sm={4} align='center'>
                             <Box sx={{}}>
                                 <Typography variant="h3" gutterBottom>{user.name}</Typography>
                                 <Typography variant="body1" gutterBottom>
@@ -129,10 +130,10 @@ function Profile() {
                                 </Typography>
                             </Box>
                         </Grid>
-                        <Grid item xs={12} sm={3}>
-                            <FacebookIcon fontSize="large" />
-                            <InstagramIcon fontSize="large" />
-                            <TwitterIcon fontSize="large" />
+                        <Grid item xs={12} sm={4} align='center'>
+                            <IconButton aria-label="FB" color="primary" href="https://zh-tw.facebook.com/" ><FacebookIcon fontSize="large"  /></IconButton>
+                            <IconButton aria-label="IG" color="primary" href="https://www.instagram.com/" ><InstagramIcon fontSize="large" /></IconButton>
+                            <IconButton aria-label="Twitter" color="primary" href="https://twitter.com/i/flow/login" ><TwitterIcon fontSize="large" /></IconButton>
                             <Box sx={{ p: 3 }} />
                             {/* <Button
                                 variant="contained"
@@ -172,11 +173,7 @@ function Profile() {
                 </Container>
             )}
             <Box sx={{ bgcolor: '#efd9a7', p: 3 }} />
-            <Box sx={{ bgcolor: 'primary.main', p: 6 }} component="footer">
-                <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
-                    Footer
-                </Typography>
-            </Box>
+            <Footer />
         </ThemeProvider>
     );
 }
