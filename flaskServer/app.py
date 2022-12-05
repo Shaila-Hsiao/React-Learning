@@ -189,10 +189,7 @@ def upload():
     mtl = request.form.get('mtl')
     thumbnail = request.form.get('thumbnail')
     texture = request.form.get('texture')
-    print("=============")
     modelType = request.form.get('type')
-    print("obj content=========>",obj[:100])
-    print("modelType",modelType)
     modelName = objName.split(".obj")[0]
     sourcePath = "./static/blueprint/models/source"
     inputPath = f"{sourcePath}/{objName}"
@@ -305,13 +302,11 @@ def getItemInfo():
 # 取得所有 model
 @app.route("/getItem",methods=["POST"])
 def getItem():
-    # FIXME: 測試用， userID 寫死
     userID = session.get('userID')
     print(userID)
-    # userID = "test"
     itemList = userAllModel(userID) # 取得 user 所有 model 清單
     # FIXME: 以下暫時測試用
-    itemList = []
+    # itemList = []
     result = getEntireItem(itemList) # 取得 model 所有資訊
     return jsonify({'itemsInfo':result})
 

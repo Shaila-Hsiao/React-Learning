@@ -17,13 +17,15 @@ async function handleImage(sourceID, showID) {
     });
 }
 // 讀取檔案
-async function handleFile(sourceID) {
+async function handleFile(sourceID,labelID) {
     return new Promise((resolve, reject)=>{
         try{
             var reader = new FileReader();
             reader.readAsText($(sourceID)[0].files[0]);
             reader.onload = function () {
                 fileContent = reader.result;
+                $(labelID).text = $(sourceID)[0].files[0].name;
+                alert("成功上傳");
                 resolve(fileContent);
             };
         }catch{

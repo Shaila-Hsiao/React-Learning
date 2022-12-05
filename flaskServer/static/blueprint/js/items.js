@@ -175,7 +175,7 @@ function initItemList(items) {
   for (var i = 0; i < items.length; i++) {
     var item = items[i];
     var html = '<div class="col-sm-4" style="height:500px">' +
-      '<a class="thumbnail add-item" itemInfo-id="'+
+      `<a class="thumbnail add-item" num = ${i} itemInfo-id="`+
       0+
       '"model-id ="'+
       item.id+
@@ -189,13 +189,13 @@ function initItemList(items) {
       item.image +
       '" alt="Add Item"> ' +
       item.name +
-      `</a><button onclick = "deleteItem(${item.id})">delete</button></div>`;
+      `</a><button class = "deleteItem" onclick = "deleteItem(${item.id},${i})">delete</button></div>`;
     itemsDiv.append(html);
     // console.log(html);
   }
 }
 // 刪除模型
-function deleteItem(itemID){
+function deleteItem(itemID,num){
   $.ajax({
     url: '/deleteItem',
     type: "POST",
@@ -204,7 +204,10 @@ function deleteItem(itemID){
     },
     /*result為后端函式回傳的json*/
     success: function (resp) {
-      alert(resp.result)
+      alert(resp.result);
+      // 刪除畫面上的模型
+      $("#add-items").find(".add-item")[num].remove();
+      $(".deleteItem")[num].remove();
     }
   });
 }
