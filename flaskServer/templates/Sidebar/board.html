@@ -4,108 +4,109 @@
     display: none;
     background-image: url("../../static/blueprint/other/board.jpg");
     border-radius: 25px;
+    margin: 2%;
+    background-size: cover;
+    /* background-position: center center; */
+    background-repeat: no-repeat;
   }
   #boardInfo > .panel-heading{
     font-size: 25px;
     font-weight: bolder;
 
   }
-  #boardInfo >.panel-body> .row >.panel{
+  /* #boardInfo >.panel-body> .row >.panel{
     margin: 2px;
 
   }
   #boardInfo >.panel-body> .row {
     margin: auto;
-  }
-  #AllMsgComment> .panel {
-    padding: 0%;
-    height: 150px;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
+  } */
   #AllMsgComment{
+    width: 95%;
+    position: relative;
+    left: 4.5%;
+  }
+  #AllMsgComment>.row> .panel {
+    padding: 0%;
+    overflow-y: auto;
+    /* overflow-x: auto; */
+    margin: 10px;
+  }
+  #AllMsgComment>.row>.panel> .panel-body{
+    height: 100px;
+    overflow-y: auto;
+  }
+  /* #AllMsgComment>.row{
     overflow-y: auto;
     overflow-x: hidden;
-  }
-  .panel-body > .form-group> label{
+    
+  } */
+  #CommentFrom{
     padding: 10px;
     font-size: 20px;
-
   }
   #boardInfo button{
     background-color:#71050F;
     color: aliceblue;
+    font-size: 15px;
+    font-weight: bolder;
   }
   #boardContent{
-    font-size: larger;
+    font-size: 18px;
+  }
+  #CommentBoardLabel{
+    font-size: 50px;
+    font-weight: bolder;
+    background-color: #192D2E;
+    color: aliceblue;
+    border-radius: 25px;
+    padding: 10px;
+  }
+  #boardInfoLabel{
+    margin-top: 5%;
+    text-align: center;
+  }
+  #AddCommentBtn,#CommentFrom,#boardClose{ 
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+  .panel-footer>button{
+    align-content: flex-end;
+    margin-left: 10px;
+  }
+  #ColorDOM{
+    margin: 2%;
   }
 </style>
 <div id="boardInfo" class="panel panel-default" style="display:none">
+  <div id="boardInfoLabel"><span id="CommentBoardLabel">留言板</span></div>
   <div class="panel-body"> 
-    <h1>留言板</h1>
-    <div id="AllMsgComment" class="row "></div>
-    <button id="AddCommentBtn" type="button" class="btn btn-default" style="display: none">新增留言</button>
+    <div class="container" id="AllMsgComment">
+    </div>
+
+    <button id="AddCommentBtn" type="button" class="btn btn-default" style="display: none ">新增留言 <span class="glyphicon glyphicon-pencil"></span></button>
     <form id="CommentFrom" style="display: none">
       <!-- <form action="/action_page.php"> -->
       <div class="form-group panel">
         <div class="panel-body">
           <label for="comment">留言</label>
           <textarea class="form-control" rows="5" id="comment-textarea"></textarea>
-          <label for="comment">便條紙顏色</label>
-          <input type="color" id="myColor">
-          <button type="button" class="btn btn-default" onclick="commentBtn()">留言</button>
+          <div id="ColorDOM">
+            <label for="comment">便條紙顏色</label>
+            <input type="color" id="myColor" value="#ffffff">
+          </div>
+          
+        </div>
+        <div class="panel-footer">
+  
+          <button id="CommentBtn"type="button" class="btn btn-default" >留言</button>
           <button id="CommentClose" type="button" class="btn btn-default">關閉</button>
+
         </div>
       </div>
     </form>
     
-    <button id="boardClose" type="button" class="btn btn-default pull-right">關閉</button>
+    <button id="boardClose" type="button" class="btn btn-default pull-right">關閉留言板</button>
   </div>
 </div>
 
-<script>
-  $("#boardClose").click(function(){
-    $("#itemInfo").removeClass("col-xs-5").addClass("col-xs-3");
-    $("#main").removeClass("col-xs-7").addClass("col-xs-9");
-    $("#boardInfo").hide();
-    $("#CommentFrom").hide();
-  })
-  // 按下留言的按鈕
-  function commentBtn(){
-    // 取得顏色
-    var colorPicker = document.getElementById("myColor").value;
-    console.log("color:",colorPicker);
-    var comment = document.getElementById("comment-textarea").value;
-
-    // /writeMsg
-    $.ajax({
-      url: '/writeMsgBoard',
-      type: "POST",
-      data:{
-        'color':colorPicker,
-        'content' : comment
-      },
-      /*result為后端函式回傳的json*/
-      success: function (resp) {
-        console.log("Comment output: ",resp);
-        $("#comment-textarea").val("")
-      }
-      ,error: function(exp){
-        console.log("Comment Fail: ",exp);
-
-      }
-    })
-  }
-  // 點選新增留言的按鈕
-  $("#AddCommentBtn").click(function(){
-    $("#comment-textarea").val("")
-    $("#CommentFrom").show();
-  });
-  // 關閉留言按鈕
-  $("#CommentClose").click(function(){
-    $("#comment-textarea").val("")
-    $("#CommentFrom").hide();
-    }
-  );
-  
-</script>

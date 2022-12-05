@@ -527,13 +527,14 @@ def writeMsgBoard():
     content = request.form.get('content')
     msgFrom = session.get('name')
     msgFromUserID = session.get('userID')
+    # 假設這個人尚未登入: 沒有usrname 
     if(msgFrom == None and msgFromUserID == None):
         msgFrom = "visitor"
         msgFromUserID = "visitor"
-        result = boardMsgInsert(color,content,msgFrom,msgFromUserID,roomID)
-        return {"result":result}
-    result = boardMsgInsert(color,content,msgFrom,msgFromUserID,roomID)
-    return {"result":result}
+        result= boardMsgInsert(color,content,msgFrom,msgFromUserID,roomID)
+    else:
+        result= boardMsgInsert(color,content,msgFrom,msgFromUserID,roomID)
+    return jsonify({'result':result})
 
 #################### 個人資訊 ####################
 # 修改個人資訊

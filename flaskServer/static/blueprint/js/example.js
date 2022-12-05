@@ -246,15 +246,45 @@ var ContextMenu = function (blueprint3d) {
 
 
   }
+  // 按下留言的按鈕
+  $("#CommentBtn").click(commentBtn)
+  function commentBtn(){
+    // 取得顏色
+    var colorPicker = document.getElementById("myColor").value;
+    console.log("color:",colorPicker);
+    var comment = document.getElementById("comment-textarea").value;
+
+    // /writeMsg
+    $.ajax({
+      url: '/writeMsgBoard',
+      type: "POST",
+      data:{
+        'color':colorPicker,
+        'content' : comment
+      },
+      /*result為后端函式回傳的json*/
+      success: function (resp) {
+        console.log("Comment output: ",resp);
+        $("#comment-textarea").val("");
+        AllBoardMsg();
+      }
+      ,error: function(exp){
+        console.log("Comment Fail: ",exp);
+
+      }
+    })
+  }
+
   // 顯示所有Board Message
   function AllBoardMsg() {
-    var str = "";
+    var str = `<div class="row " >`;
     $.ajax({
       url: '/getMsgBoard',
       type: "GET",
       /*result為后端函式回傳的json*/
       success: function (resp) {
         for(var i=0 ; i< resp.result.length;i++){
+          
           var obj = resp.result[i];
           console.log("result ",obj)
           // 身分: username 判斷
@@ -266,8 +296,10 @@ var ContextMenu = function (blueprint3d) {
           console.log("date type :", typeof (IsoDate))
           console.log("date type :", IsoDate.getFullYear())
           console.log("DataStr  :", DateStr)
-          str += `<div class="panel panel-default col-xs-5" style="background-color:${obj[3]}">`+
-          `<div class="panel-heading">`;
+          // pannel
+          str+=`<div class="panel panel-default col-sm-5">`+
+                //heading
+                `<div class="panel-heading">`;
           // 留言列表顯示
           if(identity == "visitor" ){
             // 未登入者
@@ -276,12 +308,25 @@ var ContextMenu = function (blueprint3d) {
             // 有登入者
             str += `<a href="#"><span class="glyphicon glyphicon-user"></span></a> ${identity}`;
           }
-          str +=`<div><small id="DateDOM"><label class="col-form-label">留言於: </label><span id="boardDate">${DateStr}</sapn></samll></div>`+
+          str +=`<small class="DateDOM" style="float:right"><label class="col-form-label">留言於: </label><span id="boardDate">${DateStr}</sapn></small>`+
                 `</div>`+
-                `<div class="panel-body">`+
-                    `<div><label class="col-form-label"></label><text id="boardContent">${obj[2]}</text></div>`+
-                    "</div>"+
-                 "</div>";
+                 //heading
+                //  body
+                `<div class="panel-body"style="background-color:${obj[3]}">`+
+                    `<div ><label class="col-form-label"></label><text id="boardContent">${obj[2]}</text></div>`+
+                  "</div>"+
+                //  body
+                "</div>";
+                // pannel
+
+          console.log(`加到第${i}則留言的內容: `,str);
+          console.log(`第${i}則留言`);
+          if((i+1)%2 == 0 && i != (resp.result.length-1)){
+            console.log(`第${i}則留言，要換行囉`);
+            str+=`</div><div class="row ">`;
+          }else if(i==(resp.result.length-1)){
+            str+="</div>";
+          }
         }
         var el = document.getElementById('AllMsgComment');
         el.innerHTML = str;
@@ -320,11 +365,14 @@ var ContextMenu = function (blueprint3d) {
     // 模型為留言板時
     if (item.metadata.itemName == "messageBoard") {
       AllBoardMsg();
+      // board show 出來 
       $("#boardInfo").show();
+      // 右測3D畫面版面需要重整
       console.log("boardInfo")
       $("#itemInfo").removeClass("col-xs-3").addClass("col-xs-5");
       $("#main").removeClass("col-xs-9").addClass("col-xs-7");
       $("#comment-textarea").removeAttr("readonly");
+      blueprint3d.three.updateWindowSize();
       if(isEditor == false){
         $("#context-menu").hide();
       }
@@ -357,14 +405,26 @@ var ContextMenu = function (blueprint3d) {
     // $("#boardInfo").hide();
   }
 
-  // function logKey(element) {
-  //   var x = element.screenX;
-  //   var y = element.screenY;
-  //   // // 這邊有個重點，當父元素被下了 position 屬性之後他就會變成 offsetParent，所以這邊我們用迴圈不斷往上累加。
-  //   // element = element.offsetParent;
-  //   document.getElementById("IntroOrMove").style.left = x+"px";
-  //   document.getElementById("IntroOrMove").style.top = y+"px";
-  // }
+  // board
+  $("#boardClose").click(function(){
+    $("#itemInfo").removeClass("col-xs-5").addClass("col-xs-3");
+    $("#main").removeClass("col-xs-7").addClass("col-xs-9");
+    $("#boardInfo").hide();
+    $("#CommentFrom").hide();
+    blueprint3d.three.updateWindowSize();
+  })
+  
+  // 點選新增留言的按鈕
+  $("#AddCommentBtn").click(function(){
+    $("#comment-textarea").val("")
+    $("#CommentFrom").show();
+  });
+  // 關閉留言按鈕
+  $("#CommentClose").click(function(){
+    $("#comment-textarea").val("")
+    $("#CommentFrom").hide();
+    }
+  );
 
   init();
 }
