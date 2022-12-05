@@ -115,7 +115,7 @@ var ContextMenu = function (blueprint3d) {
         $("#exampleIntro").show();
         modelInfo(selectedItem.metadata.itemInfoID);
       }
-      else if (isEditor == true){
+      else if (isEditor == true) {
         $("#exampleIntro").show();
       }
     });
@@ -165,15 +165,16 @@ var ContextMenu = function (blueprint3d) {
 
   }
   // 儲存模型資訊
-  function SaveItemInfo(itemID,itemInfoID) {
+  function SaveItemInfo(itemID, itemInfoID) {
     console.log("Save");
+    // return;
     var itemName = $('#exampleModalLabel').val();
     var date = $('#date').val();
     var weather = $('#weather').val();
     var message = $('#message').val();
     // var image = $('#image').attr("src");
     // var record = $('#record').attr("src");
-    var recordName = $('#recordName').val();;
+    var recordName = $('#recordName').val();
     console.log(itemInfoID);
     console.log(itemName);
     console.log(date);
@@ -184,7 +185,7 @@ var ContextMenu = function (blueprint3d) {
       url: '/saveItemInfo',
       type: "POST",
       data: {
-        'itemID':itemID,
+        'itemID': itemID,
         'itemInfoID': itemInfoID,
         'itemName': itemName,
         'date': date,
@@ -198,6 +199,20 @@ var ContextMenu = function (blueprint3d) {
       /*result為后端函式回傳的json*/
       success: function (resp) {
         alert(resp.result);
+        // 取得目前房間所有模型
+        var objects = blueprint3d.model.scene.getItems();
+        // 一個一個比對 itemID => 嵌入模型資訊成功就更新 itemInfoID
+        // FIXME: 目前只限制對房間內同一個模型更改 itemInfoID
+        for (var i = 0; i < objects.length; i++) {
+          var object = objects[i];
+          if (object.metadata.itemID == itemID) {
+            object.metadata.itemInfoID = resp.itemInfoID;
+            // 只更改一個模型
+            break;
+          }
+        }
+
+        // 找到一個資訊
         console.log("success: ", resp);
       }
       , error: function (resp) {
@@ -233,9 +248,10 @@ var ContextMenu = function (blueprint3d) {
         $("#image").attr("src", resp.imagePath)
         $("#image").attr("alt", resp.itemName)
         $("#exampleModalLabel").val(resp.itemName)
-
+        
         // record Path
         console.log("resp.recordPath: ", resp.recordPath)
+        $("#recordName").val(resp.recordName)
         $('#record').attr("src", resp.recordPath);
         var audio = $("#record");
         audio[0].pause();
@@ -246,17 +262,47 @@ var ContextMenu = function (blueprint3d) {
 
 
   }
+  // 按下留言的按鈕
+  $("#CommentBtn").click(commentBtn)
+  function commentBtn(){
+    // 取得顏色
+    var colorPicker = document.getElementById("myColor").value;
+    console.log("color:",colorPicker);
+    var comment = document.getElementById("comment-textarea").value;
+
+    // /writeMsg
+    $.ajax({
+      url: '/writeMsgBoard',
+      type: "POST",
+      data:{
+        'color':colorPicker,
+        'content' : comment
+      },
+      /*result為后端函式回傳的json*/
+      success: function (resp) {
+        console.log("Comment output: ",resp);
+        $("#comment-textarea").val("");
+        AllBoardMsg();
+      }
+      ,error: function(exp){
+        console.log("Comment Fail: ",exp);
+
+      }
+    })
+  }
+
   // 顯示所有Board Message
   function AllBoardMsg() {
-    var str = "";
+    var str = `<div class="row " >`;
     $.ajax({
       url: '/getMsgBoard',
       type: "GET",
       /*result為后端函式回傳的json*/
       success: function (resp) {
         for(var i=0 ; i< resp.result.length;i++){
+          
           var obj = resp.result[i];
-          console.log("result ",obj)
+          console.log("result ", obj)
           // 身分: username 判斷
           var identity = obj[4];
           // date -------------
@@ -266,22 +312,37 @@ var ContextMenu = function (blueprint3d) {
           console.log("date type :", typeof (IsoDate))
           console.log("date type :", IsoDate.getFullYear())
           console.log("DataStr  :", DateStr)
-          str += `<div class="panel panel-default col-xs-5" style="background-color:${obj[3]}">`+
-          `<div class="panel-heading">`;
+          // pannel
+          str+=`<div class="panel panel-default col-sm-5">`+
+                //heading
+                `<div class="panel-heading">`;
           // 留言列表顯示
-          if(identity == "visitor" ){
+          if (identity == "visitor") {
             // 未登入者
             str += `<span class="glyphicon glyphicon-user"></span> ${identity}`;
-          }else{
+          } else {
             // 有登入者
             str += `<a href="#"><span class="glyphicon glyphicon-user"></span></a> ${identity}`;
           }
-          str +=`<div><small id="DateDOM"><label class="col-form-label">留言於: </label><span id="boardDate">${DateStr}</sapn></samll></div>`+
+          str +=`<small class="DateDOM" style="float:right"><label class="col-form-label">留言於: </label><span id="boardDate">${DateStr}</sapn></small>`+
                 `</div>`+
-                `<div class="panel-body">`+
-                    `<div><label class="col-form-label"></label><text id="boardContent">${obj[2]}</text></div>`+
-                    "</div>"+
-                 "</div>";
+                 //heading
+                //  body
+                `<div class="panel-body"style="background-color:${obj[3]}">`+
+                    `<div ><label class="col-form-label"></label><text id="boardContent">${obj[2]}</text></div>`+
+                  "</div>"+
+                //  body
+                "</div>";
+                // pannel
+
+          console.log(`加到第${i}則留言的內容: `,str);
+          console.log(`第${i}則留言`);
+          if((i+1)%2 == 0 && i != (resp.result.length-1)){
+            console.log(`第${i}則留言，要換行囉`);
+            str+=`</div><div class="row ">`;
+          }else if(i==(resp.result.length-1)){
+            str+="</div>";
+          }
         }
         var el = document.getElementById('AllMsgComment');
         el.innerHTML = str;
@@ -300,7 +361,7 @@ var ContextMenu = function (blueprint3d) {
     $("#context-menu-name").text(item.metadata.itemName);
 
     // 按下儲存即可儲存嵌入模型的資訊
-    $("#SaveBtn").click(function () { SaveItemInfo(item.metadata.itemID,item.metadata.itemInfoID) });
+    $("#SaveBtn").click(function () { SaveItemInfo(item.metadata.itemID, item.metadata.itemInfoID) });
     // 出現模型長寬高資訊
     $("#context-menu").show();
     // 每點選一個模型，先隱藏嵌入模型的資訊
@@ -320,11 +381,14 @@ var ContextMenu = function (blueprint3d) {
     // 模型為留言板時
     if (item.metadata.itemName == "messageBoard") {
       AllBoardMsg();
+      // board show 出來 
       $("#boardInfo").show();
+      // 右測3D畫面版面需要重整
       console.log("boardInfo")
-      $("#itemInfo").removeClass("col-xs-3").addClass("col-xs-5");
-      $("#main").removeClass("col-xs-9").addClass("col-xs-7");
+      $("#itemInfo").removeClass("col-xs-4").addClass("col-xs-5");
+      $("#main").removeClass("col-xs-8").addClass("col-xs-7");
       $("#comment-textarea").removeAttr("readonly");
+      blueprint3d.three.updateWindowSize();
       if(isEditor == false){
         $("#context-menu").hide();
       }
@@ -357,14 +421,26 @@ var ContextMenu = function (blueprint3d) {
     // $("#boardInfo").hide();
   }
 
-  // function logKey(element) {
-  //   var x = element.screenX;
-  //   var y = element.screenY;
-  //   // // 這邊有個重點，當父元素被下了 position 屬性之後他就會變成 offsetParent，所以這邊我們用迴圈不斷往上累加。
-  //   // element = element.offsetParent;
-  //   document.getElementById("IntroOrMove").style.left = x+"px";
-  //   document.getElementById("IntroOrMove").style.top = y+"px";
-  // }
+  // board
+  $("#boardClose").click(function(){
+    $("#itemInfo").removeClass("col-xs-5").addClass("col-xs-4");
+    $("#main").removeClass("col-xs-7").addClass("col-xs-8");
+    $("#boardInfo").hide();
+    $("#CommentFrom").hide();
+    blueprint3d.three.updateWindowSize();
+  })
+  
+  // 點選新增留言的按鈕
+  $("#AddCommentBtn").click(function(){
+    $("#comment-textarea").val("")
+    $("#CommentFrom").show();
+  });
+  // 關閉留言按鈕
+  $("#CommentClose").click(function(){
+    $("#comment-textarea").val("")
+    $("#CommentFrom").hide();
+    }
+  );
 
   init();
 }
@@ -805,6 +881,7 @@ var mainControls = function (blueprint3d) {
     var reader = new FileReader();
     reader.onload = function (event) {
       var data = event.target.result;
+      blueprint3d.model.loadSerialized(data);
       console.log("type of data", typeof (data));
     }
     reader.readAsText(files[0]);
@@ -814,8 +891,8 @@ var mainControls = function (blueprint3d) {
 
   function download() {
     var data = blueprint3d.model.exportSerialized();
-    console.log("export room data: ",data);
-    return;
+    console.log("export room data: ", data);
+    // return;
     var a = window.document.createElement('a');
     var blob = new Blob([data], { type: 'text' });
     a.href = window.URL.createObjectURL(blob);
@@ -950,7 +1027,7 @@ $(document).ready(function () {
         // ("#fixed").attr('style','display:none;'); 
       }
       // 只有房主可以編輯地板和牆面的材質
-      else{
+      else {
         var textureSelector = new TextureSelector(blueprint3d, sideMenu);
 
       }

@@ -253,8 +253,6 @@ def saveItemInfo():
     roomID = session.get('roomID')
     itemID = request.form.get('itemID')
     itemInfoID = request.form.get('itemInfoID')
-    print("itemInfoID =============>",itemInfoID)
-    print("type of itemInfoID =============>",type(itemInfoID))
     itemName = request.form.get('itemName')
     date = request.form.get('date')
     weather = request.form.get('weather')
@@ -262,8 +260,6 @@ def saveItemInfo():
     image = request.form.get('image')
     record = request.form.get('record')
     recordName = request.form.get('recordName')
-    # print("Form get Data :",itemInfoID,itemName,date,weather,message,image,record,recordName)
-    print("============== record head ==============\n",record[:50])
     imagePath = ""
     recordPath = ""
     # 照片處理
@@ -284,8 +280,7 @@ def saveItemInfo():
         result = "新增成功"
     else:
         result = itemInfoUpdate(itemInfoID,itemName,date,weather,message,imagePath,recordPath,recordName)
-        result = "修正成功"
-    return {'result':result,'itemInfo':itemInfoID}
+    return {'result':result,'itemInfoID':itemInfoID}
 # 點擊模型取得內部資訊(照片、文字等)
 @app.route("/getItemInfo",methods=["POST"])
 def getItemInfo():
@@ -410,7 +405,7 @@ def OwnerRoom():
 def createRoom():
     roomName = request.json['roomName']
     introduction = request.json['introduction']
-    roomImgPath = "./static/roomPic/DLNJYRU24pM24N07ImaS2zz+Uig=.jpg" # 預設圖片
+    roomImgPath = request.json['roomImgPath'] # 預設圖片
     roomContent = request.json['roomContent']
     private_public = request.json['private_public']
     userID = session.get("userID")
@@ -553,13 +548,14 @@ def writeMsgBoard():
     content = request.form.get('content')
     msgFrom = session.get('name')
     msgFromUserID = session.get('userID')
+    # 假設這個人尚未登入: 沒有usrname 
     if(msgFrom == None and msgFromUserID == None):
         msgFrom = "visitor"
         msgFromUserID = "visitor"
-        result = boardMsgInsert(color,content,msgFrom,msgFromUserID,roomID)
-        return {"result":result}
-    result = boardMsgInsert(color,content,msgFrom,msgFromUserID,roomID)
-    return {"result":result}
+        result= boardMsgInsert(color,content,msgFrom,msgFromUserID,roomID)
+    else:
+        result= boardMsgInsert(color,content,msgFrom,msgFromUserID,roomID)
+    return jsonify({'result':result})
 
 #################### 個人資訊 ####################
 # 修改個人資訊

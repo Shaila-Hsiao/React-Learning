@@ -22,8 +22,9 @@ def itemInfoInsert(roomID,itemID,itemName,date,weather,message,imagePath,recordP
     command = f"INSERT INTO `iteminfo`(`roomID`,`itemID`,`itemName`, `date`, `weather`, `message`, `imagePath`, `recordPath`, `recordName`) VALUES ('{roomID}','{itemID}','{itemName}','{date}','{weather}','{message}','{imagePath}','{recordPath}','{recordName}')"
     cursor.execute(command)
     connection.commit()
-    command = "select max(`id`) from `item`"
-    itemInfoID = cursor.execute(command)
+    command = "select max(`id`) from `iteminfo`"
+    cursor.execute(command)
+    itemInfoID = cursor.fetchone()[0]
     return itemInfoID
 def itemInfoUpdate(itemInfoID,itemName,date,weather,message,imagePath,recordPath,recordName):
     if imagePath and recordPath:
