@@ -58,7 +58,7 @@ def newprofile():
 @app.route("/userdata")
 def newuserdata():
     return render_template("index.html")
-@app.route("/AllRoom")
+@app.route("/allroom")
 def newAllRoom():
     return render_template("index.html")
 
@@ -434,7 +434,7 @@ def modifyRoomPic():
     roomID = request.json['roomID']
     roomPic = request.json['roomPic']
     # 隨機命名
-    roomPicName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
+    roomPicName = secrets.token_hex()+"jpg"
     print("roomPicName in modifyHeadshot", roomPicName)
     # 將照片存到 server
     uploadFile(roomPic,'image',f'./static/roomPic/{roomPicName}')
@@ -584,7 +584,7 @@ def modifyHeadshot():
     userID = session.get('userID')
     headshot = request.json['headshot']
     # 隨機命名
-    headshotName = b64encode(os.urandom(20)).decode('utf-8')+".jpg"
+    headshotName = secrets.token_hex()+"jpg"
     print("headshotName in modifyHeadshot", headshotName)
     # 將照片存到 server
     uploadFile(headshot,'image',f'./static/headShots/{headshotName}')
