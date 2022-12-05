@@ -115,7 +115,7 @@ var ContextMenu = function (blueprint3d) {
         $("#exampleIntro").show();
         modelInfo(selectedItem.metadata.itemInfoID);
       }
-      else if (isEditor == true){
+      else if (isEditor == true) {
         $("#exampleIntro").show();
       }
     });
@@ -165,15 +165,16 @@ var ContextMenu = function (blueprint3d) {
 
   }
   // 儲存模型資訊
-  function SaveItemInfo(itemID,itemInfoID) {
+  function SaveItemInfo(itemID, itemInfoID) {
     console.log("Save");
+    // return;
     var itemName = $('#exampleModalLabel').val();
     var date = $('#date').val();
     var weather = $('#weather').val();
     var message = $('#message').val();
     // var image = $('#image').attr("src");
     // var record = $('#record').attr("src");
-    var recordName = $('#recordName').val();;
+    var recordName = $('#recordName').val();
     console.log(itemInfoID);
     console.log(itemName);
     console.log(date);
@@ -184,7 +185,7 @@ var ContextMenu = function (blueprint3d) {
       url: '/saveItemInfo',
       type: "POST",
       data: {
-        'itemID':itemID,
+        'itemID': itemID,
         'itemInfoID': itemInfoID,
         'itemName': itemName,
         'date': date,
@@ -198,6 +199,20 @@ var ContextMenu = function (blueprint3d) {
       /*result為后端函式回傳的json*/
       success: function (resp) {
         alert(resp.result);
+        // 取得目前房間所有模型
+        var objects = blueprint3d.model.scene.getItems();
+        // 一個一個比對 itemID => 嵌入模型資訊成功就更新 itemInfoID
+        // FIXME: 目前只限制對房間內同一個模型更改 itemInfoID
+        for (var i = 0; i < objects.length; i++) {
+          var object = objects[i];
+          if (object.metadata.itemID == itemID) {
+            object.metadata.itemInfoID = resp.itemInfoID;
+            // 只更改一個模型
+            break;
+          }
+        }
+
+        // 找到一個資訊
         console.log("success: ", resp);
       }
       , error: function (resp) {
@@ -233,9 +248,10 @@ var ContextMenu = function (blueprint3d) {
         $("#image").attr("src", resp.imagePath)
         $("#image").attr("alt", resp.itemName)
         $("#exampleModalLabel").val(resp.itemName)
-
+        
         // record Path
         console.log("resp.recordPath: ", resp.recordPath)
+        $("#recordName").val(resp.recordName)
         $('#record').attr("src", resp.recordPath);
         var audio = $("#record");
         audio[0].pause();
@@ -286,7 +302,7 @@ var ContextMenu = function (blueprint3d) {
         for(var i=0 ; i< resp.result.length;i++){
           
           var obj = resp.result[i];
-          console.log("result ",obj)
+          console.log("result ", obj)
           // 身分: username 判斷
           var identity = obj[4];
           // date -------------
@@ -301,10 +317,10 @@ var ContextMenu = function (blueprint3d) {
                 //heading
                 `<div class="panel-heading">`;
           // 留言列表顯示
-          if(identity == "visitor" ){
+          if (identity == "visitor") {
             // 未登入者
             str += `<span class="glyphicon glyphicon-user"></span> ${identity}`;
-          }else{
+          } else {
             // 有登入者
             str += `<a href="#"><span class="glyphicon glyphicon-user"></span></a> ${identity}`;
           }
@@ -345,7 +361,7 @@ var ContextMenu = function (blueprint3d) {
     $("#context-menu-name").text(item.metadata.itemName);
 
     // 按下儲存即可儲存嵌入模型的資訊
-    $("#SaveBtn").click(function () { SaveItemInfo(item.metadata.itemID,item.metadata.itemInfoID) });
+    $("#SaveBtn").click(function () { SaveItemInfo(item.metadata.itemID, item.metadata.itemInfoID) });
     // 出現模型長寬高資訊
     $("#context-menu").show();
     // 每點選一個模型，先隱藏嵌入模型的資訊
@@ -865,6 +881,7 @@ var mainControls = function (blueprint3d) {
     var reader = new FileReader();
     reader.onload = function (event) {
       var data = event.target.result;
+      blueprint3d.model.loadSerialized(data);
       console.log("type of data", typeof (data));
     }
     reader.readAsText(files[0]);
@@ -874,8 +891,8 @@ var mainControls = function (blueprint3d) {
 
   function download() {
     var data = blueprint3d.model.exportSerialized();
-    console.log("export room data: ",data);
-    return;
+    console.log("export room data: ", data);
+    // return;
     var a = window.document.createElement('a');
     var blob = new Blob([data], { type: 'text' });
     a.href = window.URL.createObjectURL(blob);
@@ -1010,7 +1027,7 @@ $(document).ready(function () {
         // ("#fixed").attr('style','display:none;'); 
       }
       // 只有房主可以編輯地板和牆面的材質
-      else{
+      else {
         var textureSelector = new TextureSelector(blueprint3d, sideMenu);
 
       }

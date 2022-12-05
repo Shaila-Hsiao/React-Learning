@@ -235,8 +235,6 @@ def saveItemInfo():
     roomID = session.get('roomID')
     itemID = request.form.get('itemID')
     itemInfoID = request.form.get('itemInfoID')
-    print("itemInfoID =============>",itemInfoID)
-    print("type of itemInfoID =============>",type(itemInfoID))
     itemName = request.form.get('itemName')
     date = request.form.get('date')
     weather = request.form.get('weather')
@@ -244,8 +242,6 @@ def saveItemInfo():
     image = request.form.get('image')
     record = request.form.get('record')
     recordName = request.form.get('recordName')
-    # print("Form get Data :",itemInfoID,itemName,date,weather,message,image,record,recordName)
-    print("============== record head ==============\n",record[:50])
     imagePath = ""
     recordPath = ""
     # 照片處理
@@ -266,8 +262,7 @@ def saveItemInfo():
         result = "新增成功"
     else:
         result = itemInfoUpdate(itemInfoID,itemName,date,weather,message,imagePath,recordPath,recordName)
-        result = "修正成功"
-    return {'result':result,'itemInfo':itemInfoID}
+    return {'result':result,'itemInfoID':itemInfoID}
 # 點擊模型取得內部資訊(照片、文字等)
 @app.route("/getItemInfo",methods=["POST"])
 def getItemInfo():
