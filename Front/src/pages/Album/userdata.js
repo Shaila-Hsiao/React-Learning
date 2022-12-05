@@ -128,20 +128,25 @@ function UserData() {
           resp = httpClient.post("../modifyHeadshot", {
             headshot,
           });
+          console.log("resp  resp resp resp resp");
         } catch (error) {
           console.log("圖片上傳不成功，請再試一次");
         }
+        console.log("headshot _______________________", headshot)
+        setHeadShotPath(headshot);
+        document.getElementById("UserHeadShot").src = headshot;
       };
-      (async () => {
-        console.log("setHeadShotPath old index", HeadShotPath);
-        var resp2 = '';
-        resp2 = await httpClient.get("../@me");
-        console.log("resp check check", resp2.data.headshotPath);
-        setUser(resp2.data);
-      })();
+      // (async () => {
+      //   console.log("setHeadShotPath old index", HeadShotPath);
+      //   var resp2 = '';
+      //   resp2 = await httpClient.get("../@me");
+      //   console.log("resp check check", resp2.data.headshotPath);
+      //   setUser(resp2.data);
+      // })();
     }
-    window.location.reload(false);
-    navigate("/userdata");
+    // alert("圖片上傳成功")
+    // window.location.reload(false);
+    // navigate("/userdata");
   }
   // user 狀態確認
   useEffect(() => {
@@ -205,8 +210,9 @@ function UserData() {
                     >
                       <Avatar
                         alt="UserName"
+                        id="UserHeadShot"
                         sx={{ mx: 'auto', width: 120, height: 120 }}
-                        src={user.headshotPath} />
+                        src={HeadShotPath} />
                       <Box sx={{ textAlign: 'right' }}>
                         <Button variant="contained" component="label">
                           更新頭貼
