@@ -1,15 +1,13 @@
 from myModule.connectDB import connection,cursor
-# from datetime import datetime
-# import json
-from myModule.upload_save import  uploadFile
 # all the item in DB (FIXME: 1. 抓到 userID 的 modelList，userID 獲取哪些 model)
 def getEntireItem(modelList):
+    print(modelList)
     # list to tuple
     modelList = tuple(modelList)
     # 取得 model 資訊
-    # command = f"SELECT id,name,thumbnailPath,jsPath,type FROM `item` WHERE id in {modelList}"
+    command = f"SELECT id,name,thumbnailPath,jsPath,type FROM `item` WHERE id in {modelList}"
     # FIXME: 暫時測試，所以使用以下 command
-    command = f"SELECT id,name,thumbnailPath,jsPath,type FROM `item` WHERE 1"
+    # command = f"SELECT id,name,thumbnailPath,jsPath,type FROM `item` WHERE 1"
     cursor.execute(command)
     dataList = cursor.fetchall()
     items = []
@@ -48,7 +46,7 @@ def modelInsert(thumbnailPath,texturePath,jsPath,modelType):
 
 def itemDelete(userID,itemID):
     # 預設模型不可以刪除
-    if int(itemID) < 100:
+    if int(itemID) < 56:
         result = "預設的模型不可刪除"
     else:
         command = f"SELECT `itemList` FROM `account` WHERE userID = '{userID}'"

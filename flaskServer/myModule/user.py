@@ -20,7 +20,7 @@ def userRegister(name, userID, passwd, email, headshotPath):
     # 插入資料庫
     try:
         itemList = "1"
-        for i in range(2,26):
+        for i in range(2,56):
             itemList += f",{i}"
         sql = f"INSERT INTO `account`(`name`,`userID`, `passwd`, `email`, `headshotPath`, `itemList`) VALUES ('{name}','{userID}','{passwd}','{email}','{headshotPath}','{itemList}')"
         cursor.execute(sql)
