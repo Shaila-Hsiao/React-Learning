@@ -53,10 +53,37 @@
 
 
   @media screen and (max-width: 500px) {
-    .navbar a {
-      float: none;
-      display: block;
+    nav{
+      display: inline-block;
     }
+    #Contact
+    {
+      display: none;
+    }
+    .navbar-header{
+      float: left;
+      margin-top: 1%;
+    }
+    .NavbarAuth {
+      float: right;
+      padding-right:10% ;
+    }
+    .NavbarUnAuth{
+      float: right;
+    }
+    #NavbarUnAuth>li{
+      /* display: inline-block; */
+      list-style: none;
+      float: left;
+    }
+    button.openbtn {
+      margin-left:8px;
+    }
+    .home {
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 20px;
+  }
   }
 
   .home {
@@ -74,7 +101,7 @@
   .nav .openbtn {
     font-size: 20px;
     cursor: pointer;
-    background-color: #192D2E;
+    background-color: transparent;
     color: white;
     /* padding: 10px 15px; */
     border: none;
@@ -148,11 +175,11 @@
       <span class="home">首頁</span>
     </a>
   </div>
-  <ul class="nav navbar-nav">
+  <ul class="nav navbar-nav " id="Contact">
     <li><a href="/servicedata">服務支援</a></li>
     <li><a href="/">聯絡我們 </a></li>
   </ul>
-  <div >
+  <div class="NavbarUnAuth">
     <!-- class="left_a_little" -->
     <ul id="NavbarUnAuth" class="nav navbar-nav navbar-right">
       <li><a href="/Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
@@ -160,7 +187,7 @@
 
     </ul>
   </div>
-  <div>
+  <div class="NavbarAuth">
     <ul id="NavbarAuth" class="nav navbar-nav right_a_little">
       <!-- <img src="../../static/headShots/user.a00227ea.jpg" id="AvatarImg" alt="Avatar" class="avatar"> -->
       <a href="/profile"><img src="../../static/headShots/user.a00227ea.jpg" id="AvatarImg" alt="Avatar" class="avatar"></a>

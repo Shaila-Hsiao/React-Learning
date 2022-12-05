@@ -140,7 +140,7 @@ function UserData() {
         setUser(resp2.data);
       })();
     }
-    window.location.reload(false);
+    // window.location.reload(false);
     navigate("/userdata");
   }
   // user 狀態確認

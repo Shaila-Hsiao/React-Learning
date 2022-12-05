@@ -10,6 +10,7 @@
 
   #uploadModel{
     border-radius: 5px;
+    background-color: rgb(239, 217, 167);
   }
   #uploadFileAppearance {
     border: 1px solid;
@@ -19,6 +20,8 @@
     border-radius: 5px;
     /* width: fit-content; */
     width:100%;
+    margin-top: 20px;
+    background-color: #ffffff;
   }
   /* upload model 的 input 顯示*/
   #uploadFileAppearance::after {
@@ -41,8 +44,33 @@
   }
   .wordCenter{
     text-align: center;
+    margin-top: 1%;
     /* vertical-align: middle; */
   }
+  .uploadLabel{
+    font-size: 30px;
+    font-weight: bolder;
+    background-color: #182e2e;
+    color: #e9ecef;
+    border-radius: 25px;
+    padding: 10px;
+    
+  }
+  .Modeltype{
+    margin-top: 20px;
+  }
+  
+  #items-wrapper{
+    margin-top: 1%;
+    padding:2%;
+    background-color: rgb(240, 209, 138);
+  }
+
+  .DeleteBtn{
+    background-color: #71050F;
+    color: #e9ecef;
+  }
+  
 </style>
 <!-- Add Items -->
 <div id="add-items">
@@ -53,10 +81,11 @@
     <source src="horse.ogg" type="audio/ogg">
     <source src="../static/blueprint/itemInfo/record/song.mp3" type="audio/mpeg">
   </audio> -->
-  <br/>
   <!-- 上傳 model -->
   <div id = "uploadModel" align="center">
     <!-- 用 table 排版 -->
+  </br>
+    <div><span class="uploadLabel">上傳模型</span></div>
     <table id = "uploadModelTable" >
       <!-- 單純上傳文件 -->
       <tr>
@@ -94,8 +123,8 @@
       </tr>
     </table>
     <!-- 選擇類型 -->
-    <h3>選擇模型放置類型</h3>
-    <div>
+    <div ><span class="uploadLabel">選擇模型放置類型</span></div>
+    <div class="Modeltype">
       <input name="modelType-radio" type="radio" id="inlineRadio1" value="1">
       <label for="inlineRadio1">放在地板上的立體物</label>
       <input name="modelType-radio" type="radio" id="inlineRadio2" value="2">
@@ -108,13 +137,19 @@
       <label class="form-check-label" for="inlineRadio8">地毯類</label> -->
     </div>
     <!-- 上傳檔案按鈕 -->
-    <button id="uploadBtn" >upload model</button>
+    <button id="uploadBtn" type="button" class="btn btn-default">upload model</button>
+    <hr>
   </div>
-  <hr>
-  <h2 class="wordCenter">模型總覽</h2>
+  <div class="wordCenter"><span class="uploadLabel">模型總覽
+    <span class="glyphicon glyphicon-triangle-bottom" style="margin-left:3px;"></span></span>
+  </div>
   <div class="row" id="items-wrapper">
 
     <!-- Items added here by items.js -->
   </div>
+</br>
+</br>
+</br>
+</br>
   <!-- upload 3D model -->
 </div>
