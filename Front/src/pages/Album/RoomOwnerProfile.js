@@ -1,40 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, AlertTitle } from '@mui/material';
 import { styled, useTheme, createTheme, ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-// import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import BedroomChildIcon from '@mui/icons-material/BedroomChild';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import Avatar from '@mui/material/Avatar';
 import { useNavigate } from "react-router-dom";
-import Menu from '@mui/material/Menu';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
-import TextField from '@mui/material/TextField';
-import SearchIcon from '@mui/icons-material/Search';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { CardActionArea } from '@mui/material';
-import room1 from '../../assets/images/room1.jpg';
-import user from '../../assets/images/user.jpg';
-import Badge from '@mui/material/Badge';
-import AppBar from '@mui/material/AppBar';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
-import { useMenu } from '@mui/base/MenuUnstyled';
-import Snackbar from '@mui/material/Snackbar';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -42,6 +18,7 @@ import { NavbarDrawer } from '../../components/navbarDrawer';
 import httpClient from "../../httpClient";
 import '../../index.css';
 import { Footer } from '../../components/footer';
+import IconButton from '@mui/material/IconButton';
 
 var cards = [];
 
@@ -140,13 +117,13 @@ function Profile() {
                     }}
                 >
                     <Grid container>
-                        <Grid item xs={12} sm={5}>
+                        <Grid item xs={12} sm={4} align='center'>
                             <Avatar
                                 alt="UserName"
                                 sx={{ mx: 'auto', width: 200, height: 200 }}
                                 src={user.headshotPath} />
                         </Grid>
-                        <Grid item xs={12} sm={4}>
+                        <Grid item xs={12} sm={4} align='center'>
                             <Box sx={{}}>
                                 <Typography variant="h3" gutterBottom>{user.name}</Typography>
                                 <Typography variant="body1" gutterBottom>
@@ -154,10 +131,10 @@ function Profile() {
                                 </Typography>
                             </Box>
                         </Grid>
-                        <Grid item xs={12} sm={3}>
-                            <FacebookIcon fontSize="large" />
-                            <InstagramIcon fontSize="large" />
-                            <TwitterIcon fontSize="large" />
+                        <Grid item xs={12} sm={4} align='center'>
+                            <IconButton aria-label="FB" color="primary" href="https://zh-tw.facebook.com/" ><FacebookIcon fontSize="large"  /></IconButton>
+                            <IconButton aria-label="IG" color="primary" href="https://www.instagram.com/" ><InstagramIcon fontSize="large" /></IconButton>
+                            <IconButton aria-label="Twitter" color="primary" href="https://twitter.com/i/flow/login" ><TwitterIcon fontSize="large" /></IconButton>
                             <Box sx={{ p: 3 }} />
                             {/* <Button
                                 variant="contained"
@@ -186,8 +163,9 @@ function Profile() {
                                         />
                                         <CardContent sx={{ flexGrow: 1 }}>
                                             <Typography gutterBottom variant="h5" component="h2">
-                                                {card[2]}
+                                                {card[1]}
                                             </Typography>
+                                            <Typography>{card[2]}</Typography>
                                         </CardContent>
                                     </CardActionArea>
                                 </Card>
@@ -197,11 +175,7 @@ function Profile() {
                 </Container>
             )}
             <Box sx={{ bgcolor: '#efd9a7', p: 3 }} />
-            <Box sx={{ bgcolor: 'primary.main', p: 6 }} component="footer">
-                <Typography variant="h6" color='#FFFFFF' align="center" gutterBottom>
-                    Footer
-                </Typography>
-            </Box>
+            <Footer />
         </ThemeProvider>
     );
 }

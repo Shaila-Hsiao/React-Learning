@@ -73,7 +73,7 @@ export default function RoomIntro() {
       console.log("can't get user number");
     }
   };
-  
+
   function Return(){
     window.history.back();
   }
@@ -140,6 +140,7 @@ export default function RoomIntro() {
                                 alt="room"
                             />
                         </Card>
+                        <Box sx={{ p:2 }} />
                         <Typography variant='h6'>
                             <p>{cards[1]}</p>
                         </Typography>

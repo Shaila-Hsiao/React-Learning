@@ -72,7 +72,8 @@ function AllRoom() {
     } catch (error) {
       console.log("delete error");
     }
-    navigate("/AllRoom");
+    window.location.reload(false);
+    navigate("/allRoom");
   }
   const roomIntroEdit = async (event) => {
     try {
