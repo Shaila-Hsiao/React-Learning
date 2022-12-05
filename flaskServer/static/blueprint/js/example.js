@@ -385,8 +385,8 @@ var ContextMenu = function (blueprint3d) {
       $("#boardInfo").show();
       // 右測3D畫面版面需要重整
       console.log("boardInfo")
-      $("#itemInfo").removeClass("col-xs-3").addClass("col-xs-5");
-      $("#main").removeClass("col-xs-9").addClass("col-xs-7");
+      $("#itemInfo").removeClass("col-xs-4").addClass("col-xs-5");
+      $("#main").removeClass("col-xs-8").addClass("col-xs-7");
       $("#comment-textarea").removeAttr("readonly");
       blueprint3d.three.updateWindowSize();
       if(isEditor == false){
@@ -423,8 +423,8 @@ var ContextMenu = function (blueprint3d) {
 
   // board
   $("#boardClose").click(function(){
-    $("#itemInfo").removeClass("col-xs-5").addClass("col-xs-3");
-    $("#main").removeClass("col-xs-7").addClass("col-xs-9");
+    $("#itemInfo").removeClass("col-xs-5").addClass("col-xs-4");
+    $("#main").removeClass("col-xs-7").addClass("col-xs-8");
     $("#boardInfo").hide();
     $("#CommentFrom").hide();
     blueprint3d.three.updateWindowSize();
