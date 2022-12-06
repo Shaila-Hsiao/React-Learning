@@ -210,8 +210,11 @@ var ContextMenu = function (blueprint3d) {
             break;
           }
         }
-        // 自動點擊儲存房間
-        $("#saveRoom").click();
+        // 成功嵌入 => 儲存房間
+        if (resp.result == "新增成功"){
+          // 自動點擊儲存房間
+          $("#saveRoom").click();
+        }
         console.log("success: ", resp);
       }
       , error: function (resp) {
