@@ -5,7 +5,7 @@ def getEntireItem(modelList):
     # list to tuple
     modelList = tuple(modelList)
     # 取得 model 資訊
-    command = f"SELECT id,name,thumbnailPath,jsPath,type FROM `item` WHERE id in {modelList}"
+    command = f"SELECT `id`,`name`,`thumbnailPath`,`jsPath`,`type` FROM `item` WHERE `id` in {modelList}"
     # FIXME: 暫時測試，所以使用以下 command
     # command = f"SELECT id,name,thumbnailPath,jsPath,type FROM `item` WHERE 1"
     cursor.execute(command)
@@ -49,7 +49,7 @@ def itemDelete(userID,itemID):
     if int(itemID) < 56:
         result = "預設的模型不可刪除"
     else:
-        command = f"SELECT `itemList` FROM `account` WHERE userID = '{userID}'"
+        command = f"SELECT `itemList` FROM `account` WHERE `userID` = '{userID}'"
         cursor.execute(command)
         data = cursor.fetchone()[0]
         # data 去掉頭尾括弧 -> ()
@@ -60,11 +60,11 @@ def itemDelete(userID,itemID):
         # list to string for saving DB
         data = ",".join([str(i) for i in data])
         # 刪除 user 擁有的模型ID
-        command = f"UPDATE `account` SET `itemList`='{data}' WHERE  userID = '{userID}'"
+        command = f"UPDATE `account` SET `itemList`='{data}' WHERE  `userID` = '{userID}'"
         cursor.execute(command)
         connection.commit()
         # 刪除資料庫的模型
-        command = f"DELETE FROM `item` WHERE id = '{itemID}'"
+        command = f"DELETE FROM `item` WHERE `id` = '{itemID}'"
         cursor.execute(command)
         connection.commit()
         result = "刪除成功"
