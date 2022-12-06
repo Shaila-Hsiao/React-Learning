@@ -190,7 +190,7 @@ function initItemList(items) {
       '"><img src="' +
       item.image +
       '" alt="Add Item" style="max-width:300px;height:250px"> ' +
-      `</a>`+`</div><div class="panel-footer">`+`<button  type="button" class="btn btn-default DeleteBtn deleteItem" onclick = "deleteItem(${item.id})">刪除模型</button></div></div>`;
+      `</a>`+`</div><div class="panel-footer">`+`<button  type="button" class="btn btn-default DeleteBtn deleteItem" onclick = "deleteItem(${item.id},${i})">刪除模型</button></div></div>`;
     itemsDiv.append(html);
     // console.log(html);
   }

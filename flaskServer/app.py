@@ -271,6 +271,7 @@ def saveItemInfo():
         fileName = secrets.token_hex()+".mp3"
         recordPath = "./static/blueprint/itemInfo/record/"+fileName
         uploadFile(record,"recording",recordPath)
+    print("=======================================")
     # 第一次寫入訊息
     if int(itemInfoID) == 0:
         itemInfoID = itemInfoInsert(roomID,itemID,itemName,date,weather,message,imagePath,recordPath,recordName)

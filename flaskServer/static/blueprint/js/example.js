@@ -226,8 +226,8 @@ var ContextMenu = function (blueprint3d) {
             break;
           }
         }
+        // 自動點擊儲存房間
         $("#saveRoom").click();
-        // 找到一個資訊
         console.log("success: ", resp);
       }
       , error: function (resp) {
@@ -703,10 +703,12 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
       success: function (item) {
         alert(item.result);
         if (item.result == "上傳成功") {
+          // 目前 User 擁有的模型數量
+          let num = $("#add-items").find(".add-item").length
           var html = '<div class="col-sm-4 panel panel-default" style="padding:0px" >' +
           `<div class="panel-heading" style="font-size:20px;font-weight: bolder">${item.name}</div>`+
           `<div class="panel-body" style="height:300px">`+
-          `<a class="thumbnail add-item" num = ${i} itemInfo-id="`+
+          `<a class="thumbnail add-item" num = ${num} itemInfo-id="`+
             0+
             '"model-id ="'+
             item.id+
@@ -719,7 +721,7 @@ var SideMenu = function (blueprint3d, floorplanControls, modalEffects) {
             '"><img src="' +
             item.image +
             '" alt="Add Item" style="max-width:300px;height:250px"> ' +
-            `</a>`+`</div><div class="panel-footer">`+`<button  type="button" class="btn btn-default DeleteBtn deleteItem" onclick = "deleteItem(${item.id})">刪除模型</button></div></div>`;
+            `</a>`+`</div><div class="panel-footer">`+`<button  type="button" class="btn btn-default DeleteBtn deleteItem" onclick = "deleteItem(${item.id},${num})">刪除模型</button></div></div>`;
           $("#items-wrapper").append(html);
           initItems();
         }
