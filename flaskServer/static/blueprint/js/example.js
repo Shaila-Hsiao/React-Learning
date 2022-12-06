@@ -963,6 +963,9 @@ $(document).ready(function () {
         $("#items_tab").hide();
         // sidebar 編輯房間大小的連結隱藏
         $("#floorplan_tab").hide();
+        // 上傳圖片/音檔隱藏
+        $("#uploadImage").hide();
+        $("#uploadRecord").hide();
         // 留言者(不為房客)，則可看見 新增留言按鈕
         $("#AddCommentBtn").show()
         // $("#SaveBtn").hide();
