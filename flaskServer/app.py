@@ -576,6 +576,7 @@ def modifyPasswd():
     print(userID)
     oldPasswd = request.json['oldPasswd']
     passwd = request.json['passwd']
+    print("oldPasswd", oldPasswd, "passwd", passwd)
     result = updatePasswd(userID,oldPasswd,passwd)
     return {'result':result}
 

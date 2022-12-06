@@ -7,7 +7,7 @@ def userRegister(name, userID, passwd, email, headshotPath):
     # connection = connectDB.setting()
     # cursor = connection.cursor(dictionary = True)
     # 檢查帳號有沒有重複
-    sql = f"SELECT * FROM `account`  WHERE userID = '{userID}'"
+    sql = f"SELECT * FROM `account`  WHERE `userID` = '{userID}'"
     # 此帳號已經註冊過
     if cursor.execute(sql) != 0:
         print("duplicate account")
@@ -35,7 +35,7 @@ def userRegister(name, userID, passwd, email, headshotPath):
 def userLogin(userID, passwd):
     # 回傳使用者的 name and userID
     result = ""
-    sql = f"SELECT name,passwd FROM `account` WHERE userID = '{userID}'"
+    sql = f"SELECT `name`, `passwd` FROM `account` WHERE `userID` = '{userID}'"
     cursor.execute(sql) # 執行 sql 指令
     dataList = cursor.fetchall()
     # cursor.close()
@@ -54,7 +54,7 @@ def userLogin(userID, passwd):
 # model 上傳成功要新增到資料庫的 itemList
 def updateItemList(modelID,userID):
     # update user's itemList
-    command = f"UPDATE `account` SET `itemList`=CONCAT(`itemList`,',{modelID}') WHERE userID = '{userID}'"
+    command = f"UPDATE `account` SET `itemList`=CONCAT(`itemList`,',{modelID}') WHERE `userID` = '{userID}'"
     cursor.execute(command)
     connection.commit()
     # cursor.close()
@@ -86,10 +86,9 @@ def getUserId(userID):
     return result
 
 def findUserIdByRoom(roomID) :
-    command = f"SELECT userID FROM `room` WHERE `id` = '{roomID}'"
+    command = f"SELECT `userID` FROM `room` WHERE `id` = '{roomID}'"
     cursor.execute(command)
     dataList = cursor.fetchall()
-    print("dataList         @-@", dataList)
     return dataList[0][0]
 
 def getUserByRoom(roomID):
@@ -121,16 +120,16 @@ def getUserNum(userNum):
 # 更新個人資料
 def updatePersonal(userID,name,email,introduction):
     try:
-        command = f"UPDATE `account` SET name = '{name}', email = '{email}', introduction = '{introduction}' WHERE `userID` = '{userID}'"
+        command = f"UPDATE `account` SET `name` = '{name}', `email` = '{email}', `introduction` = '{introduction}' WHERE `userID` = '{userID}'"
         cursor.execute(command)
         connection.commit()
         return True
     except:
         return False
 # 更新個人密碼
-def updatePasswd(userID,oldPasswd,newPasswd):
+def updatePasswd(userID, oldPasswd, newPasswd):
     # 檢查密碼是否正確
-    command = f"SELECT `passwd` FROM `account` WHERE userID = '{userID}'"
+    command = f"SELECT `passwd` FROM `account` WHERE `userID` = '{userID}'"
     cursor.execute(command)
     pw = cursor.fetchone()[0]
     bcrypt = Bcrypt()
@@ -138,7 +137,7 @@ def updatePasswd(userID,oldPasswd,newPasswd):
     # 更新密碼
     if isCorrect == True:
         newPasswd = bcrypt.generate_password_hash(password=newPasswd).decode()
-        command = f"UPDATE `account` SET passwd = '{newPasswd}' WHERE userID = '{userID}'"
+        command = f"UPDATE `account` SET `passwd` = '{newPasswd}' WHERE `userID` = '{userID}'"
         cursor.execute(command)
         connection.commit()
         return True
@@ -149,7 +148,7 @@ def updatePasswd(userID,oldPasswd,newPasswd):
 def updateHeadshot(userID,headshotPath):
     # connection = connectDB.setting()
     # cursor = connection.cursor(dictionary = True)
-    command = f"UPDATE `account` SET headshotPath = '{headshotPath}' WHERE userID = '{userID}'"
+    command = f"UPDATE `account` SET `headshotPath` = '{headshotPath}' WHERE `userID` = '{userID}'"
     cursor.execute(command)
     connection.commit()
     # cursor.close()
@@ -159,7 +158,7 @@ def userAllModel(userID):
     # connection = connectDB.setting()
     # cursor = connection.cursor(dictionary = True)
     if userID:
-        sql = f"SELECT itemList FROM `account` WHERE userID = '{userID}'"
+        sql = f"SELECT `itemList` FROM `account` WHERE `userID` = '{userID}'"
         cursor.execute(sql) # 執行 sql 指令
         dataList = cursor.fetchone()
         # cursor.close()
