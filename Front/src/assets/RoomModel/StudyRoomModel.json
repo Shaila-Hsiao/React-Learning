@@ -106,7 +106,7 @@
             "scale_y": 1,
             "scale_z": 1,
             "fixed": false,
-            "itemInfoID": 0
+            "itemInfo_id": 0
         },
         {
             "item_id": 3,
@@ -121,7 +121,7 @@
             "scale_y": 0.998281508009098,
             "scale_z": 1.0332383005354289,
             "fixed": false,
-            "itemInfoID": 0
+            "itemInfo_id": 0
         },
         {
             "item_id": 1,
@@ -136,22 +136,7 @@
             "scale_y": 1,
             "scale_z": 1,
             "fixed": false,
-            "itemInfoID": 0
-        },
-        {
-            "item_id": 104,
-            "item_name": "carpet",
-            "item_type": 1,
-            "model_url": "./static/blueprint/models/js/carpet.js",
-            "xpos": 669.6709999999998,
-            "ypos": null,
-            "zpos": -2.5400000000000773,
-            "rotation": -1.8387190770405217,
-            "scale_x": 38.161602366620315,
-            "scale_y": null,
-            "scale_z": 25.656798900192022,
-            "fixed": false,
-            "itemInfoID": 0
+            "itemInfo_id": 0
         },
         {
             "item_id": 104,
@@ -166,7 +151,7 @@
             "scale_y": 119.31044201230681,
             "scale_z": 96.21299587572008,
             "fixed": false,
-            "itemInfoID": 0
+            "itemInfo_id": 0
         },
         {
             "item_id": 103,
@@ -181,7 +166,7 @@
             "scale_y": 26.16530912664525,
             "scale_z": 26.084743743607184,
             "fixed": false,
-            "itemInfoID": 0
+            "itemInfo_id": 0
         },
         {
             "item_id": 102,
@@ -196,7 +181,7 @@
             "scale_y": 1.6187795078064788,
             "scale_z": 2.380491168846364,
             "fixed": false,
-            "itemInfoID": 0
+            "itemInfo_id": 0
         },
         {
             "item_id": 99,
@@ -211,7 +196,7 @@
             "scale_y": 0.12956101090913913,
             "scale_z": 0.05415478033200718,
             "fixed": false,
-            "itemInfoID": 0
+            "itemInfo_id": 0
         },
         {
             "item_id": 97,
@@ -226,7 +211,7 @@
             "scale_y": 89.92105356321025,
             "scale_z": 168.54051873321228,
             "fixed": false,
-            "itemInfoID": 0
+            "itemInfo_id": 0
         },
         {
             "item_id": 91,
@@ -241,7 +226,7 @@
             "scale_y": 91.95398137660358,
             "scale_z": 123.71475468922756,
             "fixed": false,
-            "itemInfoID": 0
+            "itemInfo_id": 0
         },
         {
             "item_id": 91,
@@ -256,7 +241,7 @@
             "scale_y": 91.9539813766036,
             "scale_z": 123.71475468922755,
             "fixed": false,
-            "itemInfoID": 0
+            "itemInfo_id": 0
         },
         {
             "item_id": 91,
@@ -271,7 +256,7 @@
             "scale_y": 91.95398137660358,
             "scale_z": 123.71475468922755,
             "fixed": false,
-            "itemInfoID": 0
+            "itemInfo_id": 0
         },
         {
             "item_id": 90,
@@ -286,7 +271,7 @@
             "scale_y": 111.11135413682005,
             "scale_z": 88.83883446247258,
             "fixed": false,
-            "itemInfoID": 0
+            "itemInfo_id": 0
         }
     ]
 }
