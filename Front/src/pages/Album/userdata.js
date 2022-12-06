@@ -12,6 +12,11 @@ import { NavbarDrawer } from '../../components/navbarDrawer';
 import httpClient from "../../httpClient";
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ClearIcon from '@mui/icons-material/Clear';
+import IconButton from '@mui/material/IconButton';
 
 var name = '';
 var email = '';
@@ -55,31 +60,27 @@ function UserData() {
   function setUserIntro(changeUserIntro) {
     introduction = changeUserIntro;
   }
-  // const [anchorElNav, setAnchorElNav] = React.useState(null);
-  // const [anchorElUser, setAnchorElUser] = React.useState(null);
-  // const [anchorElNotifications, setAnchorElNotifications] = React.useState(null);
+  
+  // 密碼確認
+  const [values, setValues] = React.useState({
+    // amount: '',
+    passwd: '',
+    passwdAgain: '',
+    // weightRange: '',
+    // showPassword: false,
+  });
 
-  // const handleOpenNavMenu = (event) => {
-  //   setAnchorElNav(event.currentTarget);
-  // };
-  // const handleOpenUserMenu = (event) => {
-  //   setAnchorElUser(event.currentTarget);
-  // };
-  // const handleOpenNotifications = (event) => {
-  //   setAnchorElNotifications(event.currentTarget);
-  // };
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
-  // const handleCloseNavMenu = () => {
-  //   setAnchorElNav(null);
-  // };
+  // 密碼顯示
+  const [passwordShown, setPasswordShown] = useState(false);
 
-  // const handleCloseUserMenu = () => {
-  //   setAnchorElUser(null);
-  // };
+  const togglePassword = () => {
+    setPasswordShown(!passwordShown);
+  };
 
-  // const handleCloseNotifications = () => {
-  //   setAnchorElNotifications(null);
-  // };
   const UpdatePwd = async (event) => {
     console.log("update user pwd");
     if (passwd == CheckNewPass) {
@@ -240,11 +241,11 @@ function UserData() {
                               variant="contained"
                               size="large"
                               sx={{ bgcolor: '#7f0808', color: '#fff', mr: 4, flexGrow: 0 }}
+                              onClick ={UpdatePwd}
                             >更改密碼</Button>
                           </Box>
                         </Stack>
                         <TextField
-                          onChange={event => setOldPass(event.target.value)}
                           margin="normal"
                           required
                           fullWidth
@@ -252,27 +253,40 @@ function UserData() {
                           label="舊密碼"
                           type="password"
                           id="password"
-                        />
+                          onChange={event => setOldPass(event.target.value)}
+                          />
                         <TextField
-                          onChange={event => setNewPass(event.target.value)}
                           margin="normal"
                           required
                           fullWidth
                           name="password"
                           label="新密碼"
                           type="password"
+                          // value={values.passwd}
                           id="password"
+                          onChange={event => setNewPass(event.target.value)}
                         />
                         <TextField
-                          onChange={event => setCheckNewPass(event.target.value)}
                           margin="normal"
                           required
                           fullWidth
-                          name="password"
+                          name="passwdAgain"
                           label="確認密碼"
                           type="password"
-                          id="password"
+                          id="passwdAgain"
+                          // value={values.passwdAgain}
+                          onChange={event => setCheckNewPass(event.target.value)}
                         />
+                        <span>
+                          { (passwd.length >= 5  
+                            ? <Typography variant='body' sx={{color:"green",fontWeight:"bold",display: { xs: 'none', md: 'flex' }}}> <CheckCircleIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />密碼字元符合 </Typography> 
+                            : <Typography variant='body' sx={{color:"red",fontWeight:"bold",display: { xs: 'none', md: 'flex' }}}> <ClearIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> 密碼至少 5 字元 </Typography>
+                            )}
+                          {CheckNewPass === "" ? "" :
+                          (passwd === CheckNewPass  ? <Typography variant='body' sx={{color:"green",fontWeight:"bold",display: { xs: 'none', md: 'flex' }}}> <CheckCircleIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />密碼一致 </Typography> :
+                          <Typography variant='body' sx={{color:"red",fontWeight:"bold",display: { xs: 'none', md: 'flex' }}}> <ClearIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> 密碼不一致 </Typography>
+                            )}
+                        </span>
                       </Box>
                       <Box sx={{ p: 1.5 }} />
                       <Button
