@@ -1,4 +1,4 @@
-<!-- model 資ㄉ資 -->
+<!-- model 嵌入資訊 -->
 <style>
   #exampleIntro>.panel-default>.panel-heading {
     background-color: #93BFBF;
@@ -78,13 +78,12 @@
 
         <!-- image -->
         <div class="col-md-12" style="margin-top: 10px;">
-          <img id="image" src="" title="" for="itemInfoPic" style="width:100%;max-width:150px">
+          <img id="image" src="" for="itemInfoPic" style="width:100%;max-width:150px">
           <input type="file" id="itemInfoPic" class="hide" accept="image/*" />
           <!-- modal for enlarging image -->
           <div id="myModal">
             <span class="close" id="itemInfoImageClose">X</span>
             <img id="img01" style="max-width:500px;max-height:500px">
-            <div id="caption"></div>
           </div>
         </div>
         <br />
@@ -167,7 +166,6 @@
   $("#image").click(function () {
     $("#myModal").show();
     $("#img01").attr("src", this.src);
-    $("#caption").val(this.title);
     console.log("image click")
     $("#itemInfoImageClose").show();
   });
@@ -211,7 +209,6 @@
     $('#weather').val("");
     $('#message').val("");
     $('#image').attr("src", "");
-    $('#image').attr("title", "");
     $('#record').attr("src", "");
     $('#recordName').val("");
 
@@ -248,7 +245,6 @@
         $("#message").val(resp.message)
         $("#weather").val(resp.weather)
         $("#image").attr("src", resp.imagePath)
-        $("#image").attr("title", resp.itemName)
         $("#exampleModalLabel").val(resp.itemName)
 
         // record Path
