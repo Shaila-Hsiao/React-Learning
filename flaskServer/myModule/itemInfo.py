@@ -41,9 +41,9 @@ def itemInfoUpdate(itemInfoID,itemName,date,weather,message,imagePath,recordPath
         # command = f"UPDATE `iteminfo` SET `itemName`='{itemName}',`date`='{date}',`weather`='{weather}',`message`='{message}' WHERE id='{itemInfoID}'"
     command += f" WHERE id='{itemInfoID}'"
     print("commnad=================",command)
-    cursor.execute(command)
-    connection.commit()
-    # try:
-    #     return "修改成功"
-    # except:
-    #     return "修改失敗"
+    try:
+        cursor.execute(command)
+        connection.commit()
+        return "修改成功"
+    except:
+        return "修改失敗"
