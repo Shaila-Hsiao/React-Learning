@@ -33,8 +33,6 @@ def userRegister(name, userID, passwd, email, headshotPath):
     # 更新到 DB
 # login
 def userLogin(userID, passwd):
-    # connection = connectDB.setting()
-    # cursor = connection.cursor(dictionary = True)
     # 回傳使用者的 name and userID
     result = ""
     sql = f"SELECT name,passwd FROM `account` WHERE userID = '{userID}'"
@@ -55,8 +53,6 @@ def userLogin(userID, passwd):
     return result
 # model 上傳成功要新增到資料庫的 itemList
 def updateItemList(modelID,userID):
-    # connection = connectDB.setting()
-    # cursor = connection.cursor(dictionary = True)
     # update user's itemList
     command = f"UPDATE `account` SET `itemList`=CONCAT(`itemList`,',{modelID}') WHERE userID = '{userID}'"
     cursor.execute(command)
@@ -75,8 +71,6 @@ def getUserNum(number):
     return result
 
 def getUserId(userID):
-    # connection = connectDB.setting()
-    # cursor = connection.cursor(dictionary = True)
     # 回傳使用者的 name and userID
     result = ""
     # 搜尋資料庫

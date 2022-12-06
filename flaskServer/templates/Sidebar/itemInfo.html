@@ -200,5 +200,55 @@
     $("#itemInfo").removeClass("col-xs-4");
     $("#main").removeClass("col-xs-8").addClass("col-xs-12");
   }
+  // 清除模型資訊
+  function clearItemInfo() {
+    $('#exampleModalLabel').val("");
+    $('#date').val("");
+    $('#weather').val("");
+    $('#message').val("");
+    $('#image').attr("src", "");
+    $('#image').attr("title", "");
+    $('#record').attr("src", "");
+    $('#recordName').val("");
+
+  }
+    // 點選Item 跳出 Info
+    function modelInfo(itemInfoID) {
+    console.log("【modelInfo】 itemInfoID: ", itemInfoID);
+    $.ajax({
+      url: '/getItemInfo',
+      type: "POST",
+      data: {
+        'itemInfoID': itemInfoID
+      },
+      /*result為后端函式回傳的json*/
+      success: function (resp) {
+        // data = room.roomContent
+        console.log("success: ", resp);
+        // date -------------
+        const IsoDate = new Date(resp.date)
+        const DateStr = IsoDate.getFullYear() + "-" + (IsoDate.getMonth() + 1) + "-" + IsoDate.getDate()
+        console.log("data: ", IsoDate)
+        console.log("date type :", typeof (IsoDate))
+        console.log("date type :", IsoDate.getFullYear())
+        console.log("DataStr  :", DateStr)
+        $("#date").val(DateStr)
+        $("#message").val(resp.message)
+        $("#weather").val(resp.weather)
+        $("#image").attr("src", resp.imagePath)
+        $("#image").attr("title", resp.itemName)
+        $("#exampleModalLabel").val(resp.itemName)
+        
+        // record Path
+        console.log("resp.recordPath: ", resp.recordPath)
+        $("#recordName").val(resp.recordName)
+        $('#record').attr("src", resp.recordPath);
+        var audio = $("#record");
+        audio[0].pause();
+        audio[0].load();//suspends and restores all audio element
+      }
+    });
+  }
+
 </script>
 

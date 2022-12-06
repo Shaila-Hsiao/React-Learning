@@ -73,6 +73,7 @@ def register():
     result = userRegister(name,userID,passwd,email,headshotPath)
     if result == "success":
         session['userID'] = userID
+        session['name'] = name
         return jsonify({
             "userID":userID,
             "email":email,
@@ -272,12 +273,16 @@ def saveItemInfo():
         recordPath = "./static/blueprint/itemInfo/record/"+fileName
         uploadFile(record,"recording",recordPath)
     print("=======================================")
+    print("========================>",recordPath)
+    print(itemInfoID)
     # 第一次寫入訊息
     if int(itemInfoID) == 0:
         itemInfoID = itemInfoInsert(roomID,itemID,itemName,date,weather,message,imagePath,recordPath,recordName)
         result = "新增成功"
-    else:
+    elif itemInfoID != None:
         result = itemInfoUpdate(itemInfoID,itemName,date,weather,message,imagePath,recordPath,recordName)
+    else:
+        result = "新增失敗"
     return {'result':result,'itemInfoID':itemInfoID}
 # 點擊模型取得內部資訊(照片、文字等)
 @app.route("/getItemInfo",methods=["POST"])
