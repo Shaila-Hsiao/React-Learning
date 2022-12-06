@@ -117,9 +117,12 @@ def findUserIdByRoomID(roomID) :
 def findPubRoomByRoomID(roomID):
     userid = findUserIdByRoomID(roomID)
     print("is this the right user id", userid)
-    command = f"SELECT * FROM `room` WHERE Find_in_set('{userid}',room.userID) AND private_public = 'on'"
-    cursor.execute(command)
-    dataList = cursor.fetchall()
+    try :
+        command = f"SELECT * FROM `room` WHERE Find_in_set('{userid}',room.userID) AND `private_public` = 'on'"
+        cursor.execute(command)
+        dataList = cursor.fetchall()
+    except :
+        return "fail"
     return dataList
 
 # find room by roomID
