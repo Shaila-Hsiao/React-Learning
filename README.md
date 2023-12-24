@@ -1,4 +1,4 @@
-# React-Learning
+# Senior project
 
 ## 執行使用步驟
 - 同時開啟兩個視窗頁面
